@@ -138,6 +138,8 @@ export function MainSidebar({
           const moduleSubMenu = getSubMenu(module.id);
           const hasSubMenu = moduleSubMenu.length > 0;
           const showSubMenu = isCollapsed && hasSubMenu && hoveredModule === module.id;
+          // Ocultar el estado activo si hay hover en otro módulo
+          const shouldShowActive = isActive && (!isCollapsed || !hoveredModule || hoveredModule === module.id);
 
           return (
             <div
@@ -148,7 +150,7 @@ export function MainSidebar({
             >
               <Link
                 href={module.href}
-                className={`main-sidebar__item ${isActive ? 'main-sidebar__item--active' : ''} ${showSubMenu ? 'main-sidebar__item--hover-menu' : ''}`}
+                className={`main-sidebar__item ${shouldShowActive ? 'main-sidebar__item--active' : ''} ${showSubMenu ? 'main-sidebar__item--hover-menu' : ''}`}
               >
                 <span className="material-symbols-outlined">{module.icon}</span>
                 {/* Solo mostrar tooltip si no tiene submenu o la barra no está colapsada */}
