@@ -158,6 +158,33 @@
     @include transition(all);
     text-decoration: none;
 
+    // Curvas siempre presentes pero ocultas por defecto
+    &::before {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: -8px;
+      width: 8px;
+      height: 8px;
+      background: radial-gradient(circle at 0 0, transparent 8px, white 8px);
+      z-index: 99;
+      opacity: 0;
+      @include transition(opacity);
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      bottom: -8px;
+      width: 8px;
+      height: 8px;
+      background: radial-gradient(circle at 0 100%, transparent 8px, white 8px);
+      z-index: 99;
+      opacity: 0;
+      @include transition(opacity);
+    }
+
     &--svg {
       .main-sidebar__icon-filled {
         display: none;
@@ -212,28 +239,10 @@
           'opsz' 24;
       }
 
-      // Curva superior
-      &::before {
-        content: '';
-        position: absolute;
-        right: 0;
-        top: -8px;
-        width: 8px;
-        height: 8px;
-        background: radial-gradient(circle at 0 0, transparent 8px, white 8px);
-        z-index: 99;
-      }
-
-      // Curva inferior
+      // Mostrar curvas cuando está activo o en hover
+      &::before,
       &::after {
-        content: '';
-        position: absolute;
-        right: 0;
-        bottom: -8px;
-        width: 8px;
-        height: 8px;
-        background: radial-gradient(circle at 0 100%, transparent 8px, white 8px);
-        z-index: 99;
+        opacity: 1;
       }
     }
   }
