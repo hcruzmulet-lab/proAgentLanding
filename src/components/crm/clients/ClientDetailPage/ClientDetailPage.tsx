@@ -395,8 +395,31 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
         </div>
       )}
 
+      {/* Credit Cards Tab */}
+      {activeTab === 'creditCards' && (
+        <div className="client-detail__content">
+          <div className="client-detail__empty-card-state">
+            <span className="material-symbols-outlined client-detail__empty-card-icon">
+              credit_card
+            </span>
+            <h3 className="client-detail__empty-card-title">
+              {t('creditCards.emptyTitle')}
+            </h3>
+            <p className="client-detail__empty-card-description">
+              {t('creditCards.emptyDescription')}
+              <br />
+              {t('creditCards.emptySecondLine')}
+            </p>
+            <Button className="client-detail__add-card-button">
+              <span className="material-symbols-outlined">add</span>
+              {t('creditCards.addCard')}
+            </Button>
+          </div>
+        </div>
+      )}
+
       {/* Other tabs content */}
-      {activeTab !== 'about' && (
+      {activeTab !== 'about' && activeTab !== 'creditCards' && (
         <div className="client-detail__content">
           <p className="client-detail__empty-state">
             {t('emptyState')}

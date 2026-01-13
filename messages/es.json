@@ -391,6 +391,13 @@
         "associatedTravelers": "Viajeros Asociados",
         "notes": "Notas"
       },
+      "creditCards": {
+        "title": "Tarjetas de Crédito",
+        "emptyTitle": "Tarjetas de Crédito",
+        "emptyDescription": "Agrega la tarjeta de crédito de tu cliente para reservas fáciles.",
+        "emptySecondLine": "Seguro y simple de gestionar.",
+        "addCard": "Agregar Tarjeta"
+      },
       "sections": {
         "contact": "Contacto",
         "personalDetails": "Detalles Personales",

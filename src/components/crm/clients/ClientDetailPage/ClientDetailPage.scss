@@ -344,6 +344,59 @@
     font-size: 1rem;
   }
 
+  &__empty-card-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: $spacing-3xl $spacing-2xl;
+    text-align: center;
+    min-height: 400px;
+  }
+
+  &__empty-card-icon {
+    font-size: 80px;
+    color: #64748b;
+    margin-bottom: $spacing-lg;
+  }
+
+  &__empty-card-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #0f172a;
+    margin: 0 0 $spacing-md 0;
+  }
+
+  &__empty-card-description {
+    font-size: 1rem;
+    color: #64748b;
+    margin: 0 0 $spacing-xl 0;
+    line-height: 1.6;
+    max-width: 400px;
+  }
+
+  &__add-card-button {
+    background-color: #0f172a;
+    color: white;
+    font-weight: 500;
+    padding: $spacing-md $spacing-xl;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    border-radius: $radius-lg;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: #1e293b;
+    }
+
+    .material-symbols-outlined {
+      font-size: 20px;
+    }
+  }
+
   @media (max-width: $breakpoint-md) {
     &__header {
       flex-direction: column;
