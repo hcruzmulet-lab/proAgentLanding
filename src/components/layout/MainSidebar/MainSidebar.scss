@@ -283,6 +283,18 @@
     flex-direction: column;
     border-radius: $radius-lg;
     padding: $spacing-md 0;
+
+    // Elemento que conecta visualmente el botón con el submenu
+    &::before {
+      content: '';
+      position: absolute;
+      left: -8px;
+      top: 0;
+      bottom: 0;
+      width: 8px;
+      background-color: white;
+      z-index: -1;
+    }
   }
 
   &__inicio-menu-header {
