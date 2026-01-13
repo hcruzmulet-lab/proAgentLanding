@@ -23,6 +23,14 @@ export function SubscriptionIntro({ onStart }: SubscriptionIntroProps) {
     router.push('/suscripcion');
   };
 
+  const handleStart = () => {
+    if (onStart) {
+      onStart();
+    } else {
+      router.push('/suscripcion/paso-1');
+    }
+  };
+
   return (
     <div className="subscription-intro">
       {/* Navbar */}
@@ -53,7 +61,7 @@ export function SubscriptionIntro({ onStart }: SubscriptionIntroProps) {
             <p className="subscription-intro__description">{t('description')}</p>
 
             <Button 
-              onClick={onStart} 
+              onClick={handleStart} 
               className="subscription-intro__button"
             >
               {t('startButton')}

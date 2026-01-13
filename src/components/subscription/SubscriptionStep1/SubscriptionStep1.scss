@@ -1,0 +1,230 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.subscription-step1 {
+  min-height: 100vh;
+  background-color: #f1f5f9; // slate-100
+  @include flex-column;
+
+  .material-symbols-outlined {
+    font-size: 20px;
+    font-variation-settings:
+      'FILL' 0,
+      'wght' 200,
+      'GRAD' 0,
+      'opsz' 20;
+  }
+
+  &__navbar {
+    background-color: white;
+    padding: 11px 21px;
+    height: 56px;
+    @include flex-center;
+    justify-content: flex-start;
+  }
+
+  &__logo {
+    @include flex-center;
+  }
+
+  &__container {
+    @include flex-column;
+    align-items: center;
+    padding: 64px 0;
+    gap: 64px;
+  }
+
+  &__card {
+    background-color: white;
+    border-radius: $radius-lg;
+    padding: $spacing-lg;
+    width: 500px;
+    @include flex-column;
+    gap: $spacing-lg;
+  }
+
+  &__header {
+    @include flex-column;
+    gap: 0;
+  }
+
+  &__header-text {
+    @include flex-column;
+    gap: 0;
+  }
+
+  &__title {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 28px;
+    letter-spacing: -0.1px;
+    color: black;
+    margin: 0;
+  }
+
+  &__subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 28px;
+    color: black;
+    margin: 0;
+  }
+
+  &__progress {
+    @include flex-center;
+    gap: 7px;
+    width: 100%;
+  }
+
+  &__progress-bar {
+    flex: 1;
+    height: 4px;
+    background-color: #d9d9d9;
+    border-radius: 4px;
+
+    &--active {
+      background-color: #334155; // slate-700
+    }
+  }
+
+  &__form {
+    @include flex-column;
+    gap: $spacing-lg;
+  }
+
+  &__field {
+    @include flex-column;
+    gap: 6px;
+  }
+
+  &__input-wrapper {
+    position: relative;
+    @include flex-center;
+    gap: 8px;
+  }
+
+  &__info-btn {
+    @include button-reset;
+    @include flex-center;
+    width: 24px;
+    height: 24px;
+    color: #64748b; // slate-500
+    cursor: pointer;
+    flex-shrink: 0;
+    @include transition(color);
+
+    &:hover {
+      color: #334155; // slate-700
+    }
+  }
+
+  &__section {
+    @include flex-column;
+    gap: $spacing-md;
+  }
+
+  &__section-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 28px;
+    color: #334155; // slate-700
+    margin: 0;
+    @include flex-center;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+
+  &__language-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  &__language-btn {
+    @include button-reset;
+    background-color: #f8fafc; // slate-50
+    border: 1px solid #e2e8f0; // slate-200
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+    color: #0f172a; // slate-900
+    cursor: pointer;
+    @include transition(all);
+
+    &:hover {
+      background-color: #e2e8f0; // slate-200
+    }
+
+    &--active {
+      background-color: #334155; // slate-700
+      color: white;
+      border-color: #334155;
+
+      &:hover {
+        background-color: #1e293b; // slate-800
+      }
+    }
+  }
+
+  &__identity-list {
+    @include flex-column;
+    gap: 8px;
+  }
+
+  &__identity-btn {
+    @include button-reset;
+    background-color: #f8fafc; // slate-50
+    border: 1px solid #e2e8f0; // slate-200
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+    color: #0f172a; // slate-900
+    text-align: left;
+    cursor: pointer;
+    @include transition(all);
+
+    &:hover {
+      background-color: #e2e8f0; // slate-200
+    }
+
+    &--active {
+      background-color: #334155; // slate-700
+      color: white;
+      border-color: #334155;
+
+      &:hover {
+        background-color: #1e293b; // slate-800
+      }
+    }
+  }
+
+  &__social-fields {
+    @include flex-column;
+    gap: 6px;
+  }
+
+  &__continue-btn {
+    background-color: #334155; // slate-700
+    color: white;
+    width: 100%;
+    height: 40px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 6px;
+    @include transition(background-color);
+
+    &:hover {
+      background-color: #1e293b; // slate-800
+    }
+  }
+}
