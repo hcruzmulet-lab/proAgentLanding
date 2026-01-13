@@ -20,8 +20,8 @@ export function SubscriptionPlans() {
 
   const handleSelectPlan = (plan: PlanType) => {
     setSelectedPlan(plan);
-    // TODO: Navigate to payment or next step
-    router.push('/dashboard');
+    // TODO: Pass selected plan data to payment page
+    router.push('/suscripcion/pago');
   };
 
   const handleLogin = () => {

@@ -1,0 +1,257 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.subscription-payment {
+  min-height: 100vh;
+  background-color: #f1f5f9; // slate-100
+  position: relative;
+
+  .material-symbols-outlined {
+    font-size: 16px;
+    font-variation-settings:
+      'FILL' 0,
+      'wght' 200,
+      'GRAD' 0,
+      'opsz' 16;
+  }
+
+  &__container {
+    @include flex-column;
+    align-items: center;
+    padding: 32px 16px 32px;
+    margin-top: 56px;
+    width: 100%;
+  }
+
+  &__card {
+    display: flex;
+    width: 100%;
+    max-width: 800px;
+    height: 600px;
+    background-color: #f8fafc; // slate-50
+    border-radius: $radius-lg;
+    overflow: hidden;
+    box-shadow: 0px 25px 50px -12px rgba(0, 0, 0, 0.25);
+  }
+
+  // Left Panel - Order Summary
+  &__summary {
+    width: 266.66px;
+    background-color: #334155; // slate-700
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &__summary-content {
+    @include flex-column;
+    gap: $spacing-xs;
+  }
+
+  &__summary-title {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 32px;
+    letter-spacing: 0.0703px;
+    color: white;
+    margin: 0;
+  }
+
+  &__summary-subtitle {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: -0.1504px;
+    color: #90a1b9;
+    margin: 0 0 16px 0;
+
+    strong {
+      font-weight: 700;
+    }
+  }
+
+  &__breakdown {
+    @include flex-column;
+    gap: $spacing-md;
+  }
+
+  &__breakdown-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #314158;
+  }
+
+  &__breakdown-label {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: -0.3125px;
+    color: #cad5e2;
+  }
+
+  &__breakdown-value {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: -0.3125px;
+    color: white;
+  }
+
+  &__breakdown-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__breakdown-total-label {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 28px;
+    letter-spacing: -0.4395px;
+    color: white;
+  }
+
+  &__breakdown-total-value {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 28px;
+    letter-spacing: -0.4395px;
+    color: white;
+  }
+
+  &__security {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+  }
+
+  &__security-icon {
+    font-size: 12px !important;
+    color: #90a1b9;
+  }
+
+  &__security-text {
+    font-size: 12px;
+    line-height: 16px;
+    color: #90a1b9;
+  }
+
+  // Right Panel - Payment Form
+  &__form-panel {
+    flex: 1;
+    background-color: white;
+    padding: 91px 53.33px 91px 117.33px;
+    overflow-y: auto;
+  }
+
+  &__form {
+    @include flex-column;
+    gap: $spacing-lg;
+    max-width: 448px;
+  }
+
+  &__form-header {
+    @include flex-column;
+    gap: 0;
+  }
+
+  &__form-title {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 32px;
+    letter-spacing: 0.0703px;
+    color: #1d293d;
+    margin: 0;
+  }
+
+  &__form-subtitle {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: -0.1504px;
+    color: #62748e;
+    margin: 0;
+  }
+
+  &__fields {
+    @include flex-column;
+    gap: $spacing-md;
+  }
+
+  &__field {
+    @include flex-column;
+    gap: $spacing-xs;
+  }
+
+  &__field-row {
+    display: flex;
+    gap: $spacing-md;
+  }
+
+  &__field--half {
+    flex: 1;
+  }
+
+  &__label {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: -0.1504px;
+    color: #314158;
+
+    .material-symbols-outlined {
+      font-size: 16px !important;
+    }
+  }
+
+  &__input {
+    height: 50px;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.3125px;
+    background-color: #f8fafc; // slate-50
+    border: 1px solid #e2e8f0; // slate-200
+    border-radius: 10px;
+    @include transition(all);
+
+    &::placeholder {
+      color: rgba(15, 23, 43, 0.5);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: #334155; // slate-700
+    }
+
+    &:hover {
+      border-color: #cbd5e1; // slate-300
+    }
+  }
+
+  &__submit {
+    height: 52px;
+    padding: 14px 0;
+    background-color: #334155; // slate-700
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.3125px;
+    text-align: center;
+    border-radius: 10px;
+    cursor: pointer;
+    @include transition(all);
+
+    &:hover {
+      background-color: #475569; // slate-600
+    }
+  }
+}
