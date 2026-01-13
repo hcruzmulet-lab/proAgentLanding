@@ -374,34 +374,34 @@
       "cancel": "Cancelar"
     },
     "clientDetail": {
-      "actions": "Actions",
+      "actions": "Acciones",
       "stats": {
-        "bookings": "Bookings",
-        "commissionableValue": "Commissionable Value",
-        "commissions": "Commissions"
+        "bookings": "Reservas",
+        "commissionableValue": "Valor Comisionable",
+        "commissions": "Comisiones"
       },
       "tabs": {
-        "about": "About",
-        "creditCards": "Credit Cards",
-        "loyaltyPrograms": "Loyalty Programs",
-        "associatedTravelers": "Associated Travelers",
-        "notes": "Notes"
+        "about": "Acerca de",
+        "creditCards": "Tarjetas de Crédito",
+        "loyaltyPrograms": "Programas de Lealtad",
+        "associatedTravelers": "Viajeros Asociados",
+        "notes": "Notas"
       },
       "sections": {
-        "contact": "Contact",
-        "personalDetails": "Personal Details",
-        "flightInfo": "Flight Info"
+        "contact": "Contacto",
+        "personalDetails": "Detalles Personales",
+        "flightInfo": "Información de Vuelo"
       },
       "fields": {
-        "name": "Name",
-        "email": "Email",
-        "phoneNumber": "Phone Number",
-        "address": "Address",
-        "importantDates": "Important Dates",
-        "allergies": "Allergies & Dietary Restrictions",
-        "knownTravelerNumber": "Known Traveler Number"
+        "name": "Nombre",
+        "email": "Correo Electrónico",
+        "phoneNumber": "Número de Teléfono",
+        "address": "Dirección",
+        "importantDates": "Fechas Importantes",
+        "allergies": "Alergias y Restricciones Dietéticas",
+        "knownTravelerNumber": "Número de Viajero Conocido"
       },
-      "editToAdd": "Edit to add",
+      "editToAdd": "Editar para agregar",
       "emptyState": "No hay información disponible"
     }
   },
