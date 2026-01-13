@@ -1,0 +1,154 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.subscription-step3 {
+  min-height: 100vh;
+  background-color: #f1f5f9; // slate-100
+  position: relative;
+
+  &__container {
+    @include flex-column;
+    align-items: center;
+    padding: 64px 16px 32px;
+    gap: 64px;
+    margin-top: 56px;
+  }
+
+  &__card {
+    background-color: white;
+    border-radius: $radius-lg;
+    padding: $spacing-lg;
+    width: 100%;
+    max-width: 500px;
+    @include flex-column;
+    gap: $spacing-lg;
+  }
+
+  &__header {
+    @include flex-column;
+    gap: 0;
+  }
+
+  &__title {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 28px;
+    letter-spacing: -0.1px;
+    color: #000000;
+    margin: 0;
+  }
+
+  &__subtitle {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #000000;
+    margin: 0;
+  }
+
+  &__progress {
+    display: flex;
+    gap: 7px;
+    width: 100%;
+  }
+
+  &__progress-bar {
+    flex: 1;
+    height: 4px;
+    border-radius: 4px;
+
+    &--complete {
+      background-color: #03a115; // green
+    }
+
+    &--active {
+      background-color: #334155; // slate-700
+    }
+  }
+
+  &__section {
+    @include flex-column;
+    gap: $spacing-xs;
+    width: 100%;
+  }
+
+  &__label {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    color: #000000;
+    margin: 0;
+    display: block;
+  }
+
+  &__textarea {
+    width: 100%;
+    min-height: 160px;
+    padding: 8px 12px;
+    border: 1px solid #cbd5e1; // slate-300
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #000000;
+    background-color: white;
+    resize: vertical;
+    font-family: 'Inter', sans-serif;
+    @include transition(all);
+
+    &::placeholder {
+      color: #94a3b8; // slate-400
+    }
+
+    &:focus {
+      outline: none;
+      border-color: #334155; // slate-700
+    }
+
+    &:hover {
+      border-color: #94a3b8; // slate-400
+    }
+  }
+
+  &__help-text {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 20px;
+    color: #64748b; // slate-500
+    margin: 0;
+  }
+
+  &__actions {
+    display: flex;
+    gap: $spacing-xs;
+    width: 100%;
+  }
+
+  &__button {
+    flex: 1;
+    height: 40px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+    cursor: pointer;
+
+    &--back {
+      background-color: white;
+      color: #0f172a; // slate-900
+      border: 1px solid #e2e8f0; // slate-200
+
+      &:hover {
+        background-color: #f8fafc; // slate-50
+      }
+    }
+
+    &--continue {
+      background-color: #334155; // slate-700
+      color: white;
+
+      &:hover {
+        background-color: #475569; // slate-600
+      }
+    }
+  }
+}
