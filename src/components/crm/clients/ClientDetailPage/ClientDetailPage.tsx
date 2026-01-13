@@ -69,8 +69,14 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
       
       setClients(allClients);
       
-      // Find the specific client
-      const foundClient = allClients.find((c: any) => c.id === clientId);
+      // Debug logging
+      console.log('Looking for clientId:', clientId, 'Type:', typeof clientId);
+      console.log('Available clients:', allClients.map(c => ({ id: c.id, name: `${c.firstName} ${c.lastName}`, type: typeof c.id })));
+      
+      // Find the specific client - compare as strings
+      const foundClient = allClients.find((c: any) => String(c.id) === String(clientId));
+      
+      console.log('Found client:', foundClient);
       
       if (foundClient) {
         setClient({
