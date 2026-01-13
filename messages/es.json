@@ -375,6 +375,10 @@
     },
     "clientDetail": {
       "actions": "Acciones",
+      "blockClient": "Bloquear cliente",
+      "deleteClient": "Eliminar cliente",
+      "confirmBlock": "¿Estás seguro de que deseas bloquear este cliente?",
+      "confirmDelete": "¿Estás seguro de que deseas eliminar este cliente? Esta acción no se puede deshacer.",
       "stats": {
         "bookings": "Reservas",
         "commissionableValue": "Valor Comisionable",

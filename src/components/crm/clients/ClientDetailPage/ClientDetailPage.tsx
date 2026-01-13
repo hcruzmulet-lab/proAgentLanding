@@ -4,6 +4,12 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import './ClientDetailPage.scss';
 
 interface ClientDetailPageProps {
@@ -37,6 +43,21 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
 
   const handleBack = () => {
     router.push('/crm/clientes');
+  };
+
+  const handleDeleteClient = () => {
+    // TODO: Implement delete functionality
+    if (confirm(t('confirmDelete'))) {
+      console.log('Delete client:', clientId);
+      router.push('/crm/clientes');
+    }
+  };
+
+  const handleBlockClient = () => {
+    // TODO: Implement block functionality
+    if (confirm(t('confirmBlock'))) {
+      console.log('Block client:', clientId);
+    }
   };
 
   const tabs = [
@@ -82,10 +103,27 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
             </div>
           </div>
         </div>
-        <Button variant="outline" className="client-detail__actions-button">
-          {t('actions')}
-          <span className="material-symbols-outlined">expand_more</span>
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="client-detail__actions-button">
+              {t('actions')}
+              <span className="material-symbols-outlined">expand_more</span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="client-detail__actions-menu">
+            <DropdownMenuItem onClick={handleBlockClient} className="client-detail__menu-item">
+              <span className="material-symbols-outlined">block</span>
+              {t('blockClient')}
+            </DropdownMenuItem>
+            <DropdownMenuItem 
+              onClick={handleDeleteClient} 
+              className="client-detail__menu-item client-detail__menu-item--danger"
+            >
+              <span className="material-symbols-outlined">delete</span>
+              {t('deleteClient')}
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
 
       {/* Tabs */}

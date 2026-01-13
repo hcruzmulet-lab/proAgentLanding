@@ -115,6 +115,40 @@
     }
   }
 
+  &__actions-menu {
+    min-width: 200px;
+  }
+
+  &__menu-item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    padding: $spacing-sm $spacing-md;
+    cursor: pointer;
+    font-size: 0.9375rem;
+
+    .material-symbols-outlined {
+      font-size: 20px;
+      color: #64748b;
+    }
+
+    &:hover {
+      background-color: #f8fafc;
+    }
+
+    &--danger {
+      color: #ef4444;
+
+      .material-symbols-outlined {
+        color: #ef4444;
+      }
+
+      &:hover {
+        background-color: #fef2f2;
+      }
+    }
+  }
+
   &__tabs {
     display: flex;
     gap: $spacing-md;
