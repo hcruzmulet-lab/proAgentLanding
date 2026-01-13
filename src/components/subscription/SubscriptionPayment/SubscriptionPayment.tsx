@@ -22,7 +22,7 @@ export function SubscriptionPayment() {
 
   const handlePayment = () => {
     // TODO: Process payment
-    router.push('/dashboard');
+    router.push('/suscripcion/confirmacion');
   };
 
   const handleLogin = () => {
