@@ -151,13 +151,13 @@
     }
 
     &--active {
-      background: #3b82f6;
-      border-color: #3b82f6;
+      background: #334155;
+      border-color: #334155;
       color: white;
 
       &:hover {
-        background: #2563eb;
-        border-color: #2563eb;
+        background: #1e293b;
+        border-color: #1e293b;
       }
     }
   }
@@ -229,8 +229,8 @@
     color: #334155;
 
     &--name {
-      color: #3b82f6;
-      font-weight: 500;
+      color: #334155;
+      font-weight: 600;
     }
 
     &--actions {
@@ -263,8 +263,8 @@
 
     &--edit {
       &:hover {
-        background: #eff6ff;
-        color: #3b82f6;
+        background: #f1f5f9;
+        color: #334155;
       }
     }
 
@@ -378,9 +378,9 @@
     justify-content: center;
 
     &:hover {
-      background: #eff6ff;
-      border-color: #3b82f6;
-      color: #3b82f6;
+      background: #f1f5f9;
+      border-color: #334155;
+      color: #334155;
     }
 
     &--delete {
