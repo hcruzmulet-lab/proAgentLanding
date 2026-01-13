@@ -83,27 +83,15 @@ export function ClientsPage() {
     router.push(`/crm/clientes/${clientId}`);
   };
 
-  const handleDownloadAll = () => {
-    // TODO: Implement download functionality
-    console.log('Download all clients');
-  };
-
   return (
     <div className="clients-page">
       {/* Header */}
       <div className="clients-page__header">
-        <h1 className="clients-page__title">Clientes</h1>
+        <div className="clients-page__header-left">
+          <h1 className="clients-page__title">Clientes</h1>
+          <p className="clients-page__count">{clients.length} clientes</p>
+        </div>
         <div className="clients-page__actions">
-          <Button
-            variant="outline"
-            onClick={handleDownloadAll}
-            className="clients-page__download-button"
-          >
-            <span className="material-symbols-outlined clients-page__button-icon">
-              download
-            </span>
-            {t('downloadAll')}
-          </Button>
           <Button onClick={() => setIsModalOpen(true)} className="clients-page__add-button">
             <span className="material-symbols-outlined clients-page__button-icon">add</span>
             {t('addClient')}

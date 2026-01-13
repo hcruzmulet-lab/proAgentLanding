@@ -86,6 +86,30 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
     setEditedLastName(client.lastName);
   }, [client.firstName, client.lastName]);
 
+  // Sync with localStorage on mount and when clientId changes
+  useEffect(() => {
+    const updatedClients = getClients();
+    const updatedClient = updatedClients.find((c: any) => c.id === clientId);
+    
+    if (updatedClient) {
+      setClient({
+        id: clientId,
+        firstName: updatedClient.firstName,
+        lastName: updatedClient.lastName,
+        quotations: updatedClient.quotations || 0,
+        bookings: updatedClient.bookings || 0,
+        files: updatedClient.files || 0,
+        email: updatedClient.email || '',
+        phone: updatedClient.phone || '',
+        address: updatedClient.address || '',
+        importantDates: updatedClient.importantDates || '',
+        allergies: updatedClient.allergies || '',
+        knownTravelerNumber: updatedClient.knownTravelerNumber || '',
+      });
+      setClients(updatedClients);
+    }
+  }, [clientId]);
+
   const getInitials = (firstName: string, lastName: string) => {
     return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
   };
