@@ -23,6 +23,7 @@
   },
   "landing": {
     "nav": {
+      "whyProAgent": "¿Por qué ProAgent?",
       "howItWorks": "¿Cómo funciona?",
       "plans": "Planes",
       "faq": "Preguntas Frecuentes",

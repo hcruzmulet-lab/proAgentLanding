@@ -19,6 +19,7 @@ export function LandingNavbar({ onLoginClick, onJoinClick }: LandingNavbarProps)
   const t = useTranslations('landing.nav');
 
   const navItems = [
+    { label: t('whyProAgent'), href: '#why' },
     { label: t('howItWorks'), href: '#how-it-works' },
     { label: t('plans'), href: '#pricing' },
     { label: t('faq'), href: '#faq' },
