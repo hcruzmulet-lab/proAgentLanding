@@ -34,87 +34,35 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
   const [editedLastName, setEditedLastName] = useState('');
   const [isAddCardModalOpen, setIsAddCardModalOpen] = useState(false);
 
-  // Initialize client state
-  const [client, setClient] = useState<any>(null);
-  const [clients, setClients] = useState<any[]>([]);
+  // Sample clients - same as ClientsPage
+  const initialClients = [
+    { id: '1', firstName: 'Arieldi', lastName: 'Marrero', quotations: 0, bookings: 0, files: 0 },
+    { id: '2', firstName: 'Henrry', lastName: 'Mulet', quotations: 0, bookings: 0, files: 0 },
+    { id: '3', firstName: 'Gretell', lastName: 'Rojas Rodriguez', quotations: 0, bookings: 0, files: 0 },
+    { id: '4', firstName: 'Elio', lastName: 'Zambrano', quotations: 0, bookings: 0, files: 0 },
+  ];
 
-  // Load client data on mount and when clientId changes
+  const [clients, setClients] = useState<any[]>(initialClients);
+  const [client, setClient] = useState<any>(() => {
+    const found = initialClients.find(c => c.id === clientId);
+    return found || initialClients[0]; // Default to first client
+  });
+
+  // Update client when clientId changes
   useEffect(() => {
-    const loadClient = () => {
-      // Sample data
-      const sampleClients = [
-        { id: '1', firstName: 'Arieldi', lastName: 'Marrero', quotations: 0, bookings: 0, files: 0 },
-        { id: '2', firstName: 'Henrry', lastName: 'Mulet', quotations: 0, bookings: 0, files: 0 },
-        { id: '3', firstName: 'Gretell', lastName: 'Rojas Rodriguez', quotations: 0, bookings: 0, files: 0 },
-        { id: '4', firstName: 'Elio', lastName: 'Zambrano', quotations: 0, bookings: 0, files: 0 },
-      ];
-      
-      // Load clients from localStorage or use sample data
-      let allClients = sampleClients;
-      
-      if (typeof window !== 'undefined') {
-        const stored = localStorage.getItem('crm_clients');
-        if (stored) {
-          try {
-            allClients = JSON.parse(stored);
-          } catch (e) {
-            console.error('Error parsing localStorage:', e);
-            allClients = sampleClients;
-          }
-        } else {
-          // Initialize localStorage with sample data
-          localStorage.setItem('crm_clients', JSON.stringify(sampleClients));
-        }
-      }
-      
-      setClients(allClients);
-      
-      // Debug logging
-      console.log('Looking for clientId:', clientId, 'Type:', typeof clientId);
-      console.log('Available clients:', allClients.map(c => ({ id: c.id, name: `${c.firstName} ${c.lastName}`, type: typeof c.id })));
-      
-      // Find the specific client - compare as strings
-      const foundClient = allClients.find((c: any) => String(c.id) === String(clientId));
-      
-      console.log('Found client:', foundClient);
-      
-      if (foundClient) {
-        setClient({
-          id: clientId,
-          firstName: foundClient.firstName,
-          lastName: foundClient.lastName,
-          quotations: foundClient.quotations || 0,
-          bookings: foundClient.bookings || 0,
-          files: foundClient.files || 0,
-          email: foundClient.email || '',
-          phone: foundClient.phone || '',
-          address: foundClient.address || '',
-          importantDates: foundClient.importantDates || '',
-          allergies: foundClient.allergies || '',
-          knownTravelerNumber: foundClient.knownTravelerNumber || '',
-        });
-      } else {
-        // Client not found - fallback
-        console.warn('Client not found:', clientId);
-        setClient({
-          id: clientId,
-          firstName: 'Cliente',
-          lastName: 'No Encontrado',
-          quotations: 0,
-          bookings: 0,
-          files: 0,
-          email: '',
-          phone: '',
-          address: '',
-          importantDates: '',
-          allergies: '',
-          knownTravelerNumber: '',
-        });
-      }
-    };
-    
-    loadClient();
-  }, [clientId]);
+    const found = clients.find(c => c.id === clientId);
+    if (found) {
+      setClient({
+        ...found,
+        email: found.email || '',
+        phone: found.phone || '',
+        address: found.address || '',
+        importantDates: found.importantDates || '',
+        allergies: found.allergies || '',
+        knownTravelerNumber: found.knownTravelerNumber || '',
+      });
+    }
+  }, [clientId, clients]);
 
   useEffect(() => {
     if (client) {
@@ -199,15 +147,6 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
     { id: 'associatedTravelers', label: t('tabs.associatedTravelers') },
     { id: 'notes', label: t('tabs.notes') },
   ];
-
-  // Show loading state while client data is being loaded
-  if (!client) {
-    return (
-      <div className="client-detail">
-        <p>Cargando...</p>
-      </div>
-    );
-  }
 
   return (
     <div className="client-detail">
