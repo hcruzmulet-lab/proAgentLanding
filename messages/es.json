@@ -394,8 +394,7 @@
       "creditCards": {
         "title": "Tarjetas de Crédito",
         "emptyTitle": "Tarjetas de Crédito",
-        "emptyDescription": "Agrega la tarjeta de crédito de tu cliente para reservas fáciles.",
-        "emptySecondLine": "Seguro y simple de gestionar.",
+        "emptyDescription": "Agrega la tarjeta de crédito de tu cliente para reservas fáciles. Seguro y simple de gestionar.",
         "addCard": "Agregar Tarjeta",
         "modal": {
           "title": "Agregar tarjeta de crédito del cliente",

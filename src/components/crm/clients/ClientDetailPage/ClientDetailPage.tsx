@@ -415,8 +415,6 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
             </h3>
             <p className="client-detail__empty-card-description">
               {t('creditCards.emptyDescription')}
-              <br />
-              {t('creditCards.emptySecondLine')}
             </p>
             <Button 
               className="client-detail__add-card-button"
