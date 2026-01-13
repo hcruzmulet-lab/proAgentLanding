@@ -272,17 +272,18 @@
 
   &__inicio-menu {
     position: fixed;
-    left: 56px;
+    left: 48px;
     top: $spacing-sm;
     bottom: $spacing-sm;
     background-color: white;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    width: 216px;
+    width: 224px;
     z-index: 98;
     display: flex;
     flex-direction: column;
-    border-radius: $radius-lg;
-    padding: $spacing-md 0;
+    border-top-right-radius: $radius-lg;
+    border-bottom-right-radius: $radius-lg;
+    padding: $spacing-md 0 $spacing-md $spacing-sm;
   }
 
   &__inicio-menu-header {
