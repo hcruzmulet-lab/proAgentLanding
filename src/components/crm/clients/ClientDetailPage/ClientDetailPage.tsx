@@ -22,13 +22,36 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
   const [activeTab, setActiveTab] = useState('about');
 
   // TODO: Fetch client data from API
-  const client = {
+  // Sample clients data
+  const clients = [
+    { id: '1', firstName: 'Arieldi', lastName: 'Marrero', quotations: 0, bookings: 0, files: 0 },
+    { id: '2', firstName: 'Henrry', lastName: 'Mulet', quotations: 0, bookings: 0, files: 0 },
+    { id: '3', firstName: 'Gretell', lastName: 'Rojas Rodriguez', quotations: 0, bookings: 0, files: 0 },
+    { id: '4', firstName: 'Elio', lastName: 'Zambrano', quotations: 0, bookings: 0, files: 0 },
+  ];
+
+  const foundClient = clients.find(c => c.id === clientId);
+
+  const client = foundClient ? {
     id: clientId,
-    firstName: 'Miguel',
-    lastName: 'Zabala',
+    firstName: foundClient.firstName,
+    lastName: foundClient.lastName,
+    quotations: foundClient.quotations,
+    bookings: foundClient.bookings,
+    files: foundClient.files,
+    email: '',
+    phone: '',
+    address: '',
+    importantDates: '',
+    allergies: '',
+    knownTravelerNumber: '',
+  } : {
+    id: clientId,
+    firstName: 'Cliente',
+    lastName: 'Desconocido',
+    quotations: 0,
     bookings: 0,
-    commissionableValue: 0,
-    commissions: 0,
+    files: 0,
     email: '',
     phone: '',
     address: '',
@@ -87,18 +110,18 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
             </h1>
             <div className="client-detail__stats">
               <div className="client-detail__stat-item">
+                <span className="client-detail__stat-value">{client.quotations}</span>
+                <span className="client-detail__stat-label">{t('stats.quotations')}</span>
+              </div>
+              <div className="client-detail__stat-divider">|</div>
+              <div className="client-detail__stat-item">
                 <span className="client-detail__stat-value">{client.bookings}</span>
                 <span className="client-detail__stat-label">{t('stats.bookings')}</span>
               </div>
               <div className="client-detail__stat-divider">|</div>
               <div className="client-detail__stat-item">
-                <span className="client-detail__stat-value">${client.commissionableValue}</span>
-                <span className="client-detail__stat-label">{t('stats.commissionableValue')}</span>
-              </div>
-              <div className="client-detail__stat-divider">|</div>
-              <div className="client-detail__stat-item">
-                <span className="client-detail__stat-value">${client.commissions}</span>
-                <span className="client-detail__stat-label">{t('stats.commissions')}</span>
+                <span className="client-detail__stat-value">{client.files}</span>
+                <span className="client-detail__stat-label">{t('stats.files')}</span>
               </div>
             </div>
           </div>

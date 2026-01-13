@@ -380,9 +380,9 @@
       "confirmBlock": "¿Estás seguro de que deseas bloquear este cliente?",
       "confirmDelete": "¿Estás seguro de que deseas eliminar este cliente? Esta acción no se puede deshacer.",
       "stats": {
+        "quotations": "Cotizaciones",
         "bookings": "Reservas",
-        "commissionableValue": "Valor Comisionable",
-        "commissions": "Comisiones"
+        "files": "Expedientes"
       },
       "tabs": {
         "about": "Acerca de",
