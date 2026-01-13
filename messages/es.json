@@ -358,6 +358,22 @@
     "description": "Este proceso nos permite conocerte, entender tus objetivos y preparar una experiencia ProAgent alineada contigo. No es un formulario automático: todas las solicitudes son revisadas manualmente.",
     "startButton": "Empezar"
   },
+  "crm": {
+    "clients": {
+      "downloadAll": "Descargar todos los clientes",
+      "addClient": "Agregar cliente",
+      "searchByName": "Buscar por nombre",
+      "clientsCount": "clientes",
+      "quotations": "Cotizaciones",
+      "bookings": "Reservas",
+      "files": "Expedientes",
+      "firstName": "Nombre",
+      "lastName": "Apellido",
+      "enterFirstName": "Ingresa el nombre",
+      "enterLastName": "Ingresa el apellido",
+      "cancel": "Cancelar"
+    }
+  },
   "validation": {
     "required": "Este campo es requerido",
     "invalidEmail": "Correo electrónico inválido",
