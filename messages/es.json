@@ -387,6 +387,7 @@
       "tabs": {
         "about": "Acerca de",
         "creditCards": "Tarjetas de Crédito",
+        "documents": "Documentos",
         "loyaltyPrograms": "Programas de Lealtad",
         "associatedTravelers": "Viajeros Asociados",
         "notes": "Notas"
@@ -421,6 +422,36 @@
           "zipCodePlaceholder": "Ingrese código",
           "close": "Cerrar",
           "saveAndAdd": "Guardar y agregar"
+        }
+      },
+      "documents": {
+        "title": "Documentos",
+        "emptyTitle": "Documentos",
+        "emptyDescription": "Agrega documentos importantes de tu cliente para acceso rápido. Seguro y organizado.",
+        "addDocument": "Agregar Documento",
+        "modal": {
+          "title": "Agregar documento del cliente",
+          "documentInfo": "Información del documento",
+          "documentType": "Tipo de documento",
+          "documentTypePlaceholder": "Selecciona tipo",
+          "documentName": "Nombre del documento",
+          "documentNamePlaceholder": "Ingrese nombre",
+          "documentFile": "Archivo",
+          "selectFile": "Seleccionar archivo",
+          "notes": "Notas (opcional)",
+          "notesPlaceholder": "Agregar notas sobre el documento",
+          "close": "Cerrar",
+          "saveAndAdd": "Guardar y agregar",
+          "types": {
+            "passport": "Pasaporte",
+            "visa": "Visa",
+            "id": "Identificación",
+            "insurance": "Seguro de viaje",
+            "vaccination": "Certificado de vacunación",
+            "itinerary": "Itinerario",
+            "booking": "Confirmación de reserva",
+            "other": "Otro"
+          }
         }
       },
       "sections": {

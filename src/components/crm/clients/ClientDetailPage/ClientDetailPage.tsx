@@ -33,6 +33,7 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
   const [editedFirstName, setEditedFirstName] = useState('');
   const [editedLastName, setEditedLastName] = useState('');
   const [isAddCardModalOpen, setIsAddCardModalOpen] = useState(false);
+  const [isAddDocumentModalOpen, setIsAddDocumentModalOpen] = useState(false);
 
   // Sample clients - same as ClientsPage
   const initialClients = [
@@ -143,6 +144,7 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
   const tabs = [
     { id: 'about', label: t('tabs.about') },
     { id: 'creditCards', label: t('tabs.creditCards') },
+    { id: 'documents', label: t('tabs.documents') },
     { id: 'loyaltyPrograms', label: t('tabs.loyaltyPrograms') },
     { id: 'associatedTravelers', label: t('tabs.associatedTravelers') },
     { id: 'notes', label: t('tabs.notes') },
@@ -412,8 +414,32 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
         </div>
       )}
 
+      {/* Documents Tab */}
+      {activeTab === 'documents' && (
+        <div className="client-detail__content">
+          <div className="client-detail__empty-card-state">
+            <span className="material-symbols-outlined client-detail__empty-card-icon">
+              folder
+            </span>
+            <h3 className="client-detail__empty-card-title">
+              {t('documents.emptyTitle')}
+            </h3>
+            <p className="client-detail__empty-card-description">
+              {t('documents.emptyDescription')}
+            </p>
+            <Button 
+              className="client-detail__add-card-button"
+              onClick={() => setIsAddDocumentModalOpen(true)}
+            >
+              <span className="material-symbols-outlined">add</span>
+              {t('documents.addDocument')}
+            </Button>
+          </div>
+        </div>
+      )}
+
       {/* Other tabs content */}
-      {activeTab !== 'about' && activeTab !== 'creditCards' && (
+      {activeTab !== 'about' && activeTab !== 'creditCards' && activeTab !== 'documents' && (
         <div className="client-detail__content">
           <p className="client-detail__empty-state">
             {t('emptyState')}
@@ -527,6 +553,89 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
                 }}
               >
                 {t('creditCards.modal.saveAndAdd')}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Add Document Modal */}
+      <Dialog open={isAddDocumentModalOpen} onOpenChange={setIsAddDocumentModalOpen}>
+        <DialogContent className="client-detail__add-card-modal">
+          <DialogHeader className="client-detail__modal-header">
+            <DialogTitle className="client-detail__modal-title">
+              {t('documents.modal.title')}
+            </DialogTitle>
+          </DialogHeader>
+
+          <div className="client-detail__modal-body">
+            {/* Document Information */}
+            <div className="client-detail__form-section">
+              <h4 className="client-detail__form-section-title">{t('documents.modal.documentInfo')}</h4>
+              
+              {/* Document Type */}
+              <div className="client-detail__form-field">
+                <Label className="client-detail__form-label">{t('documents.modal.documentType')}</Label>
+                <select className="client-detail__select-field">
+                  <option value="">{t('documents.modal.documentTypePlaceholder')}</option>
+                  <option value="passport">{t('documents.modal.types.passport')}</option>
+                  <option value="visa">{t('documents.modal.types.visa')}</option>
+                  <option value="id">{t('documents.modal.types.id')}</option>
+                  <option value="insurance">{t('documents.modal.types.insurance')}</option>
+                  <option value="vaccination">{t('documents.modal.types.vaccination')}</option>
+                  <option value="itinerary">{t('documents.modal.types.itinerary')}</option>
+                  <option value="booking">{t('documents.modal.types.booking')}</option>
+                  <option value="other">{t('documents.modal.types.other')}</option>
+                </select>
+              </div>
+
+              {/* Document Name */}
+              <div className="client-detail__form-field">
+                <Label className="client-detail__form-label">{t('documents.modal.documentName')}</Label>
+                <Input placeholder={t('documents.modal.documentNamePlaceholder')} />
+              </div>
+
+              {/* File Upload */}
+              <div className="client-detail__form-field">
+                <Label className="client-detail__form-label">{t('documents.modal.documentFile')}</Label>
+                <div className="client-detail__file-upload">
+                  <button className="client-detail__file-upload-button">
+                    <span className="material-symbols-outlined">upload_file</span>
+                    {t('documents.modal.selectFile')}
+                  </button>
+                  <input type="file" className="client-detail__file-input" />
+                </div>
+              </div>
+
+              {/* Notes */}
+              <div className="client-detail__form-field">
+                <Label className="client-detail__form-label">{t('documents.modal.notes')}</Label>
+                <textarea 
+                  className="client-detail__textarea-field" 
+                  rows={3}
+                  placeholder={t('documents.modal.notesPlaceholder')}
+                />
+              </div>
+            </div>
+
+            {/* Modal Actions */}
+            <div className="client-detail__modal-actions">
+              <Button 
+                variant="outline" 
+                onClick={() => setIsAddDocumentModalOpen(false)}
+                className="client-detail__modal-close-button"
+              >
+                {t('documents.modal.close')}
+              </Button>
+              <Button 
+                className="client-detail__modal-save-button"
+                onClick={() => {
+                  // TODO: Implement save document functionality
+                  console.log('Save document');
+                  setIsAddDocumentModalOpen(false);
+                }}
+              >
+                {t('documents.modal.saveAndAdd')}
               </Button>
             </div>
           </div>
