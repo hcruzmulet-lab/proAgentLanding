@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
@@ -45,6 +45,8 @@ export function ClientsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newClient, setNewClient] = useState({ firstName: '', lastName: '' });
+  const [letterFilter, setLetterFilter] = useState<string>('Todos');
+  const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
 
   // Save clients to localStorage whenever they change
   useEffect(() => {
@@ -57,9 +59,34 @@ export function ClientsPage() {
     return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
   };
 
-  const filteredClients = clients.filter((client) =>
+  // Filter by search query
+  let filteredClients = clients.filter((client) =>
     `${client.firstName} ${client.lastName}`.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  // Filter by letter
+  if (letterFilter !== 'Todos') {
+    filteredClients = filteredClients.filter((client) =>
+      client.firstName.charAt(0).toUpperCase() === letterFilter
+    );
+  }
+
+  // Sort alphabetically
+  const sortedClients = [...filteredClients].sort((a, b) =>
+    `${a.firstName} ${a.lastName}`.localeCompare(`${b.firstName} ${b.lastName}`)
+  );
+
+  // Group by first letter
+  const groupedClients: { [key: string]: Client[] } = {};
+  sortedClients.forEach((client) => {
+    const firstLetter = client.firstName.charAt(0).toUpperCase();
+    if (!groupedClients[firstLetter]) {
+      groupedClients[firstLetter] = [];
+    }
+    groupedClients[firstLetter].push(client);
+  });
+
+  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
   const handleAddClient = () => {
     if (newClient.firstName && newClient.lastName) {
@@ -71,7 +98,11 @@ export function ClientsPage() {
         bookings: 0,
         files: 0,
       };
-      setClients([...clients, client]);
+      const updatedClients = [...clients, client];
+      setClients(updatedClients);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('crm_clients', JSON.stringify(updatedClients));
+      }
       setNewClient({ firstName: '', lastName: '' });
       setIsModalOpen(false);
       // Redirect to client detail page
@@ -81,6 +112,17 @@ export function ClientsPage() {
 
   const handleClientClick = (clientId: string) => {
     router.push(`/crm/clientes/${clientId}`);
+  };
+
+  const handleDeleteClient = (clientId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (confirm('¿Estás seguro de que deseas eliminar este cliente?')) {
+      const updatedClients = clients.filter((c) => c.id !== clientId);
+      setClients(updatedClients);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('crm_clients', JSON.stringify(updatedClients));
+      }
+    }
   };
 
   return (
@@ -99,61 +141,175 @@ export function ClientsPage() {
         </div>
       </div>
 
-      {/* Search */}
-      <div className="clients-page__search-container">
-        <div className="clients-page__search-wrapper">
-          <span className="material-symbols-outlined clients-page__search-icon">search</span>
-          <Input
-            type="text"
-            placeholder={t('searchByName')}
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="clients-page__search-input"
-          />
+      {/* Search and View Toggle */}
+      <div className="clients-page__controls">
+        <div className="clients-page__search-container">
+          <div className="clients-page__search-wrapper">
+            <span className="material-symbols-outlined clients-page__search-icon">search</span>
+            <Input
+              type="text"
+              placeholder={t('searchByName')}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="clients-page__search-input"
+            />
+          </div>
+        </div>
+        <div className="clients-page__view-toggle">
+          <button
+            className={`clients-page__view-button ${viewMode === 'list' ? 'clients-page__view-button--active' : ''}`}
+            onClick={() => setViewMode('list')}
+          >
+            <span className="material-symbols-outlined">view_list</span>
+          </button>
+          <button
+            className={`clients-page__view-button ${viewMode === 'grid' ? 'clients-page__view-button--active' : ''}`}
+            onClick={() => setViewMode('grid')}
+          >
+            <span className="material-symbols-outlined">grid_view</span>
+          </button>
         </div>
       </div>
 
-      {/* Count */}
-      <p className="clients-page__count">
-        {filteredClients.length} {t('clientsCount')}
-      </p>
-
-      {/* Clients List */}
-      <div className="clients-page__list">
-        {filteredClients.map((client) => (
-          <div 
-            key={client.id} 
-            className="clients-page__client-card"
-            onClick={() => handleClientClick(client.id)}
+      {/* Alphabet Filter */}
+      <div className="clients-page__alphabet-filter">
+        <button
+          className={`clients-page__letter-button ${letterFilter === 'Todos' ? 'clients-page__letter-button--active' : ''}`}
+          onClick={() => setLetterFilter('Todos')}
+        >
+          Todos
+        </button>
+        {alphabet.map((letter) => (
+          <button
+            key={letter}
+            className={`clients-page__letter-button ${letterFilter === letter ? 'clients-page__letter-button--active' : ''}`}
+            onClick={() => setLetterFilter(letter)}
           >
-            <div className="clients-page__client-info">
-              <div className="clients-page__avatar">
-                {getInitials(client.firstName, client.lastName)}
-              </div>
-              <span className="clients-page__client-name">
-                {client.firstName} {client.lastName}
-              </span>
-            </div>
-            <div className="clients-page__client-stats">
-              <div className="clients-page__stat">
-                <span className="clients-page__stat-value">{client.quotations}</span>
-                <span className="clients-page__stat-label">{t('quotations')}</span>
-              </div>
-              <div className="clients-page__stat">
-                <span className="clients-page__stat-value">{client.bookings}</span>
-                <span className="clients-page__stat-label">{t('bookings')}</span>
-              </div>
-              <div className="clients-page__stat">
-                <span className="clients-page__stat-value">{client.files}</span>
-                <span className="clients-page__stat-label">{t('files')}</span>
-              </div>
-              <button className="clients-page__chevron">
-                <span className="material-symbols-outlined">chevron_right</span>
-              </button>
-            </div>
-          </div>
+            {letter}
+          </button>
         ))}
       </div>
+
+      {/* List View */}
+      {viewMode === 'list' && (
+        <div className="clients-page__table-container">
+          <table className="clients-page__table">
+            <thead className="clients-page__table-header">
+              <tr>
+                <th className="clients-page__table-th">Nombre</th>
+                <th className="clients-page__table-th">Cotizaciones</th>
+                <th className="clients-page__table-th">Reservas</th>
+                <th className="clients-page__table-th">Expedientes</th>
+                <th className="clients-page__table-th clients-page__table-th--actions">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.keys(groupedClients).map((letter) => (
+                <React.Fragment key={letter}>
+                  <tr className="clients-page__letter-divider">
+                    <td colSpan={5}>
+                      <div className="clients-page__letter-label">{letter}</div>
+                    </td>
+                  </tr>
+                  {groupedClients[letter].map((client) => (
+                    <tr
+                      key={client.id}
+                      className="clients-page__table-row"
+                      onClick={() => handleClientClick(client.id)}
+                    >
+                      <td className="clients-page__table-td clients-page__table-td--name">
+                        {client.firstName} {client.lastName}
+                      </td>
+                      <td className="clients-page__table-td">{client.quotations}</td>
+                      <td className="clients-page__table-td">{client.bookings}</td>
+                      <td className="clients-page__table-td">{client.files}</td>
+                      <td className="clients-page__table-td clients-page__table-td--actions">
+                        <div className="clients-page__actions-buttons">
+                          <button
+                            className="clients-page__action-button clients-page__action-button--edit"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleClientClick(client.id);
+                            }}
+                          >
+                            <span className="material-symbols-outlined">edit</span>
+                          </button>
+                          <button
+                            className="clients-page__action-button clients-page__action-button--delete"
+                            onClick={(e) => handleDeleteClient(client.id, e)}
+                          >
+                            <span className="material-symbols-outlined">delete</span>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </React.Fragment>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {/* Grid View */}
+      {viewMode === 'grid' && (
+        <div className="clients-page__grid">
+          {Object.keys(groupedClients).map((letter) => (
+            <div key={letter} className="clients-page__grid-section">
+              <div className="clients-page__grid-letter">{letter}</div>
+              <div className="clients-page__grid-items">
+                {groupedClients[letter].map((client) => (
+                  <div
+                    key={client.id}
+                    className="clients-page__grid-card"
+                    onClick={() => handleClientClick(client.id)}
+                  >
+                    <div className="clients-page__grid-card-header">
+                      <div className="clients-page__avatar">
+                        {getInitials(client.firstName, client.lastName)}
+                      </div>
+                      <span className="clients-page__grid-card-name">
+                        {client.firstName} {client.lastName}
+                      </span>
+                    </div>
+                    <div className="clients-page__grid-card-stats">
+                      <div className="clients-page__grid-stat">
+                        <span className="clients-page__grid-stat-value">{client.quotations}</span>
+                        <span className="clients-page__grid-stat-label">{t('quotations')}</span>
+                      </div>
+                      <div className="clients-page__grid-stat">
+                        <span className="clients-page__grid-stat-value">{client.bookings}</span>
+                        <span className="clients-page__grid-stat-label">{t('bookings')}</span>
+                      </div>
+                      <div className="clients-page__grid-stat">
+                        <span className="clients-page__grid-stat-value">{client.files}</span>
+                        <span className="clients-page__grid-stat-label">{t('files')}</span>
+                      </div>
+                    </div>
+                    <div className="clients-page__grid-card-actions">
+                      <button
+                        className="clients-page__grid-action-button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleClientClick(client.id);
+                        }}
+                      >
+                        <span className="material-symbols-outlined">edit</span>
+                      </button>
+                      <button
+                        className="clients-page__grid-action-button clients-page__grid-action-button--delete"
+                        onClick={(e) => handleDeleteClient(client.id, e)}
+                      >
+                        <span className="material-symbols-outlined">delete</span>
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Add Client Modal */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
