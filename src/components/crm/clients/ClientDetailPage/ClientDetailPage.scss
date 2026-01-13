@@ -615,6 +615,119 @@
     }
   }
 
+  &__search-results {
+    margin-top: $spacing-sm;
+    border: 1px solid #e2e8f0;
+    border-radius: $radius-md;
+    max-height: 200px;
+    overflow-y: auto;
+    background: white;
+  }
+
+  &__search-result-item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    padding: $spacing-sm $spacing-md;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border-bottom: 1px solid #f1f5f9;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background-color: #f8fafc;
+    }
+
+    &--selected {
+      background-color: #f1f5f9;
+    }
+  }
+
+  &__search-result-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #334155;
+    flex-shrink: 0;
+  }
+
+  &__search-result-info {
+    @include flex-column;
+    gap: 4px;
+    flex: 1;
+  }
+
+  &__search-result-name {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: #0f172a;
+  }
+
+  &__search-result-stats {
+    font-size: 0.8125rem;
+    color: #64748b;
+  }
+
+  &__search-no-results {
+    margin-top: $spacing-sm;
+    padding: $spacing-md;
+    text-align: center;
+    color: #64748b;
+    font-size: 0.875rem;
+    border: 1px solid #e2e8f0;
+    border-radius: $radius-md;
+    background: #f8fafc;
+  }
+
+  &__selected-client {
+    @include flex-column;
+    gap: $spacing-sm;
+  }
+
+  &__selected-client-header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    color: #10b981;
+    font-size: 0.875rem;
+    font-weight: 500;
+
+    .material-symbols-outlined {
+      font-size: 20px;
+    }
+  }
+
+  &__selected-client-card {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    padding: $spacing-md;
+    background: #f1f5f9;
+    border-radius: $radius-md;
+    border: 1px solid #e2e8f0;
+  }
+
+  &__selected-client-name {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #0f172a;
+    margin-bottom: 4px;
+  }
+
+  &__selected-client-stats {
+    font-size: 0.8125rem;
+    color: #64748b;
+  }
+
   @media (max-width: $breakpoint-md) {
     &__header {
       flex-direction: column;

@@ -37,6 +37,8 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
   const [isAddLoyaltyModalOpen, setIsAddLoyaltyModalOpen] = useState(false);
   const [isAddTravelerModalOpen, setIsAddTravelerModalOpen] = useState(false);
   const [isAddNoteModalOpen, setIsAddNoteModalOpen] = useState(false);
+  const [travelerSearch, setTravelerSearch] = useState('');
+  const [selectedClient, setSelectedClient] = useState<any>(null);
 
   // Sample clients - same as ClientsPage
   const initialClients = [
@@ -143,6 +145,15 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
     setEditedLastName(client.lastName);
     setIsEditingLastName(false);
   };
+
+  // Filter clients for traveler search (excluding current client)
+  const filteredClientsForTraveler = clients
+    .filter((c: any) => c.id !== clientId) // Exclude current client
+    .filter((c: any) => {
+      if (!travelerSearch) return false;
+      const fullName = `${c.firstName} ${c.lastName}`.toLowerCase();
+      return fullName.includes(travelerSearch.toLowerCase());
+    });
 
   const tabs = [
     { id: 'about', label: t('tabs.about') },
@@ -781,44 +792,119 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
               {/* Search Existing Client */}
               <div className="client-detail__form-field">
                 <Label className="client-detail__form-label">{t('associatedTravelers.modal.searchClient')}</Label>
-                <Input placeholder={t('associatedTravelers.modal.searchPlaceholder')} />
+                <Input 
+                  placeholder={t('associatedTravelers.modal.searchPlaceholder')} 
+                  value={travelerSearch}
+                  onChange={(e) => {
+                    setTravelerSearch(e.target.value);
+                    setSelectedClient(null);
+                  }}
+                />
+                
+                {/* Search Results */}
+                {travelerSearch && filteredClientsForTraveler.length > 0 && (
+                  <div className="client-detail__search-results">
+                    {filteredClientsForTraveler.map((searchClient: any) => (
+                      <div
+                        key={searchClient.id}
+                        className={`client-detail__search-result-item ${selectedClient?.id === searchClient.id ? 'client-detail__search-result-item--selected' : ''}`}
+                        onClick={() => {
+                          setSelectedClient(searchClient);
+                          setTravelerSearch(`${searchClient.firstName} ${searchClient.lastName}`);
+                        }}
+                      >
+                        <div className="client-detail__search-result-avatar">
+                          {searchClient.firstName.charAt(0)}{searchClient.lastName.charAt(0)}
+                        </div>
+                        <div className="client-detail__search-result-info">
+                          <span className="client-detail__search-result-name">
+                            {searchClient.firstName} {searchClient.lastName}
+                          </span>
+                          <span className="client-detail__search-result-stats">
+                            {searchClient.quotations} cotizaciones • {searchClient.bookings} reservas
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {travelerSearch && filteredClientsForTraveler.length === 0 && (
+                  <div className="client-detail__search-no-results">
+                    No se encontraron clientes
+                  </div>
+                )}
               </div>
 
               {/* Divider */}
-              <div className="client-detail__divider">
-                <span>{t('associatedTravelers.modal.orDivider')}</span>
-              </div>
+              {!selectedClient && (
+                <div className="client-detail__divider">
+                  <span>{t('associatedTravelers.modal.orDivider')}</span>
+                </div>
+              )}
 
-              {/* First Name */}
-              <div className="client-detail__form-field">
-                <Label className="client-detail__form-label">{t('associatedTravelers.modal.firstName')}</Label>
-                <Input placeholder={t('associatedTravelers.modal.firstNamePlaceholder')} />
-              </div>
+              {/* Manual Fields - Only show if no client selected */}
+              {!selectedClient && (
+                <>
+                  {/* First Name */}
+                  <div className="client-detail__form-field">
+                    <Label className="client-detail__form-label">{t('associatedTravelers.modal.firstName')}</Label>
+                    <Input placeholder={t('associatedTravelers.modal.firstNamePlaceholder')} />
+                  </div>
 
-              {/* Last Name */}
-              <div className="client-detail__form-field">
-                <Label className="client-detail__form-label">{t('associatedTravelers.modal.lastName')}</Label>
-                <Input placeholder={t('associatedTravelers.modal.lastNamePlaceholder')} />
-              </div>
+                  {/* Last Name */}
+                  <div className="client-detail__form-field">
+                    <Label className="client-detail__form-label">{t('associatedTravelers.modal.lastName')}</Label>
+                    <Input placeholder={t('associatedTravelers.modal.lastNamePlaceholder')} />
+                  </div>
 
-              {/* Relationship */}
-              <div className="client-detail__form-field">
-                <Label className="client-detail__form-label">{t('associatedTravelers.modal.relationship')}</Label>
-                <Input placeholder={t('associatedTravelers.modal.relationshipPlaceholder')} />
-              </div>
+                  {/* Relationship */}
+                  <div className="client-detail__form-field">
+                    <Label className="client-detail__form-label">{t('associatedTravelers.modal.relationship')}</Label>
+                    <Input placeholder={t('associatedTravelers.modal.relationshipPlaceholder')} />
+                  </div>
 
-              {/* Date of Birth */}
-              <div className="client-detail__form-field">
-                <Label className="client-detail__form-label">{t('associatedTravelers.modal.dateOfBirth')}</Label>
-                <Input type="date" placeholder={t('associatedTravelers.modal.dateOfBirthPlaceholder')} />
-              </div>
+                  {/* Date of Birth */}
+                  <div className="client-detail__form-field">
+                    <Label className="client-detail__form-label">{t('associatedTravelers.modal.dateOfBirth')}</Label>
+                    <Input type="date" placeholder={t('associatedTravelers.modal.dateOfBirthPlaceholder')} />
+                  </div>
+                </>
+              )}
+
+              {/* Selected Client Info */}
+              {selectedClient && (
+                <div className="client-detail__selected-client">
+                  <div className="client-detail__selected-client-header">
+                    <span className="material-symbols-outlined">check_circle</span>
+                    <span>Cliente seleccionado</span>
+                  </div>
+                  <div className="client-detail__selected-client-card">
+                    <div className="client-detail__search-result-avatar">
+                      {selectedClient.firstName.charAt(0)}{selectedClient.lastName.charAt(0)}
+                    </div>
+                    <div>
+                      <div className="client-detail__selected-client-name">
+                        {selectedClient.firstName} {selectedClient.lastName}
+                      </div>
+                      <div className="client-detail__selected-client-stats">
+                        {selectedClient.quotations} cotizaciones • {selectedClient.bookings} reservas
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Modal Actions */}
             <div className="client-detail__modal-actions">
               <Button 
                 variant="outline" 
-                onClick={() => setIsAddTravelerModalOpen(false)}
+                onClick={() => {
+                  setIsAddTravelerModalOpen(false);
+                  setTravelerSearch('');
+                  setSelectedClient(null);
+                }}
                 className="client-detail__modal-close-button"
               >
                 {t('associatedTravelers.modal.close')}
@@ -826,8 +912,14 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
               <Button 
                 className="client-detail__modal-save-button"
                 onClick={() => {
-                  console.log('Save traveler');
+                  if (selectedClient) {
+                    console.log('Associate client:', selectedClient);
+                  } else {
+                    console.log('Save new traveler');
+                  }
                   setIsAddTravelerModalOpen(false);
+                  setTravelerSearch('');
+                  setSelectedClient(null);
                 }}
               >
                 {t('associatedTravelers.modal.saveAndAdd')}
