@@ -41,11 +41,10 @@
   &__controls {
     @include flex-column;
     align-items: center;
-    gap: $spacing-sm; // 8px entre controles
+    gap: 0; // Sin gap entre controles
     width: 100%;
-    // Total altura del grupo: 32px + 8px + 32px + 8px + 32px = 112px
-    // Subido 15px en total
-    margin-bottom: -7px;
+    // Total altura del grupo sin gaps: 32px + 32px + 32px = 96px
+    margin-bottom: 8px;
 
     // Remover el margin-bottom del search cuando está dentro de controls
     .main-sidebar__search {
@@ -102,9 +101,9 @@
     color: #334155; // slate-700
     border-radius: 8px;
     // Cuando está solo (versión expandida), debe ocupar el mismo espacio que el grupo de controles
-    // Grupo de controles: 112px (altura) + 8px (margin) = 120px
-    // Buscador: 32px + X = 120px → X = 88px
-    margin-bottom: 88px;
+    // Grupo de controles: 96px (altura) + 8px (margin) = 104px
+    // Buscador: 32px + X = 104px → X = 72px
+    margin-bottom: 72px;
     @include transition(all);
 
     &:hover {
