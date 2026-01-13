@@ -1,0 +1,209 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.subscription-step2 {
+  min-height: 100vh;
+  background-color: #f1f5f9; // slate-100
+  position: relative;
+
+  .material-symbols-outlined {
+    font-size: 20px;
+    font-variation-settings:
+      'FILL' 0,
+      'wght' 200,
+      'GRAD' 0,
+      'opsz' 20;
+  }
+
+  &__container {
+    @include flex-column;
+    align-items: center;
+    padding: 64px 16px;
+    gap: 64px;
+    margin-top: 56px;
+  }
+
+  &__card {
+    background-color: white;
+    border-radius: $radius-lg;
+    padding: $spacing-lg;
+    width: 100%;
+    max-width: 500px;
+    @include flex-column;
+    gap: $spacing-lg;
+  }
+
+  &__header {
+    @include flex-column;
+    gap: 0;
+  }
+
+  &__title {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 28px;
+    letter-spacing: -0.1px;
+    color: #000000;
+    margin: 0;
+  }
+
+  &__subtitle {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #000000;
+    margin: 0;
+  }
+
+  &__progress {
+    display: flex;
+    gap: 7px;
+    width: 100%;
+  }
+
+  &__progress-bar {
+    flex: 1;
+    height: 4px;
+    border-radius: 4px;
+
+    &--complete {
+      background-color: #03a115; // green
+    }
+
+    &--active {
+      background-color: #334155; // slate-700
+    }
+
+    &--inactive {
+      background-color: #d9d9d9; // gray
+    }
+  }
+
+  &__form {
+    @include flex-column;
+    gap: $spacing-lg;
+    width: 100%;
+  }
+
+  &__section {
+    @include flex-column;
+    gap: $spacing-md;
+    width: 100%;
+  }
+
+  &__question-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  &__question {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 28px;
+    color: #334155; // slate-700
+    margin: 0;
+    padding-right: 32px;
+  }
+
+  &__info-icon {
+    position: absolute;
+    right: 0;
+    top: 4px;
+    color: #cbd5e1; // slate-300
+    cursor: help;
+    font-size: 20px !important;
+  }
+
+  &__options {
+    @include flex-column;
+    gap: $spacing-xs;
+    width: 100%;
+
+    &--vertical {
+      @include flex-column;
+      gap: $spacing-xs;
+    }
+
+    &--grid {
+      @include flex-column;
+      gap: $spacing-xs;
+    }
+  }
+
+  &__options-row {
+    display: flex;
+    gap: $spacing-xs;
+    width: 100%;
+  }
+
+  &__option {
+    background-color: #f8fafc; // slate-50
+    border: 1px solid #e2e8f0; // slate-200
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+    color: #0f172a; // slate-900
+    text-align: left;
+    @include transition(all);
+    cursor: pointer;
+    white-space: nowrap;
+
+    &:hover {
+      background-color: #f1f5f9; // slate-100
+      border-color: #cbd5e1; // slate-300
+    }
+
+    &--selected {
+      background-color: #334155; // slate-700
+      border-color: #334155;
+      color: white;
+
+      &:hover {
+        background-color: #475569; // slate-600
+        border-color: #475569;
+      }
+    }
+
+    &--grid {
+      flex: 1;
+      min-width: 0;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: $spacing-xs;
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  &__button {
+    flex: 1;
+    height: 40px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+    cursor: pointer;
+
+    &--back {
+      background-color: white;
+      color: #0f172a; // slate-900
+      border: 1px solid #e2e8f0; // slate-200
+
+      &:hover {
+        background-color: #f8fafc; // slate-50
+      }
+    }
+
+    &--continue {
+      background-color: #334155; // slate-700
+      color: white;
+
+      &:hover {
+        background-color: #475569; // slate-600
+      }
+    }
+  }
+}
