@@ -397,7 +397,9 @@
         "flightInfo": "Información de Vuelo"
       },
       "fields": {
-        "name": "Nombre",
+        "firstName": "Nombre",
+        "lastName": "Apellido",
+        "name": "Nombre Completo",
         "email": "Correo Electrónico",
         "phoneNumber": "Número de Teléfono",
         "address": "Dirección",

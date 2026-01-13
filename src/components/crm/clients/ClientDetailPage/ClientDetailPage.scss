@@ -73,22 +73,25 @@
     display: flex;
     align-items: center;
     gap: $spacing-lg;
+    flex-wrap: wrap;
   }
 
   &__stat-item {
-    @include flex-column;
-    gap: 4px;
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
   }
 
   &__stat-value {
-    font-size: 1.25rem;
-    font-weight: 600;
+    font-size: 1.5rem;
+    font-weight: 700;
     color: #0f172a;
   }
 
   &__stat-label {
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
     color: #64748b;
+    font-weight: 400;
   }
 
   &__stat-divider {
@@ -274,6 +277,63 @@
 
     .material-symbols-outlined {
       font-size: 20px;
+    }
+  }
+
+  &__field-edit-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+  }
+
+  &__field-input {
+    flex: 1;
+    height: 36px;
+    padding: 8px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    
+    &:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+  }
+
+  &__field-save,
+  &__field-cancel {
+    background: none;
+    border: none;
+    padding: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: all 0.2s;
+
+    .material-symbols-outlined {
+      font-size: 20px;
+    }
+  }
+
+  &__field-save {
+    color: #10b981;
+
+    &:hover {
+      background: #ecfdf5;
+      color: #059669;
+    }
+  }
+
+  &__field-cancel {
+    color: #ef4444;
+
+    &:hover {
+      background: #fef2f2;
+      color: #dc2626;
     }
   }
 

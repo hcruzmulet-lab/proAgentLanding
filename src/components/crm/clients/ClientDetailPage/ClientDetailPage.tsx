@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,31 +21,43 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
   const t = useTranslations('crm.clientDetail');
   const router = useRouter();
   const [activeTab, setActiveTab] = useState('about');
+  const [isEditingFirstName, setIsEditingFirstName] = useState(false);
+  const [isEditingLastName, setIsEditingLastName] = useState(false);
+  const [editedFirstName, setEditedFirstName] = useState('');
+  const [editedLastName, setEditedLastName] = useState('');
 
-  // TODO: Fetch client data from API
-  // Sample clients data
-  const clients = [
-    { id: '1', firstName: 'Arieldi', lastName: 'Marrero', quotations: 0, bookings: 0, files: 0 },
-    { id: '2', firstName: 'Henrry', lastName: 'Mulet', quotations: 0, bookings: 0, files: 0 },
-    { id: '3', firstName: 'Gretell', lastName: 'Rojas Rodriguez', quotations: 0, bookings: 0, files: 0 },
-    { id: '4', firstName: 'Elio', lastName: 'Zambrano', quotations: 0, bookings: 0, files: 0 },
-  ];
+  // Load clients from localStorage or use sample data
+  const getClients = () => {
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('crm_clients');
+      if (stored) {
+        return JSON.parse(stored);
+      }
+    }
+    return [
+      { id: '1', firstName: 'Arieldi', lastName: 'Marrero', quotations: 0, bookings: 0, files: 0 },
+      { id: '2', firstName: 'Henrry', lastName: 'Mulet', quotations: 0, bookings: 0, files: 0 },
+      { id: '3', firstName: 'Gretell', lastName: 'Rojas Rodriguez', quotations: 0, bookings: 0, files: 0 },
+      { id: '4', firstName: 'Elio', lastName: 'Zambrano', quotations: 0, bookings: 0, files: 0 },
+    ];
+  };
 
-  const foundClient = clients.find(c => c.id === clientId);
+  const [clients, setClients] = useState(getClients());
+  const foundClient = clients.find((c: any) => c.id === clientId);
 
-  const client = foundClient ? {
+  const [client, setClient] = useState(foundClient ? {
     id: clientId,
     firstName: foundClient.firstName,
     lastName: foundClient.lastName,
     quotations: foundClient.quotations,
     bookings: foundClient.bookings,
     files: foundClient.files,
-    email: '',
-    phone: '',
-    address: '',
-    importantDates: '',
-    allergies: '',
-    knownTravelerNumber: '',
+    email: foundClient.email || '',
+    phone: foundClient.phone || '',
+    address: foundClient.address || '',
+    importantDates: foundClient.importantDates || '',
+    allergies: foundClient.allergies || '',
+    knownTravelerNumber: foundClient.knownTravelerNumber || '',
   } : {
     id: clientId,
     firstName: 'Cliente',
@@ -58,7 +71,12 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
     importantDates: '',
     allergies: '',
     knownTravelerNumber: '',
-  };
+  });
+
+  useEffect(() => {
+    setEditedFirstName(client.firstName);
+    setEditedLastName(client.lastName);
+  }, [client.firstName, client.lastName]);
 
   const getInitials = (firstName: string, lastName: string) => {
     return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
@@ -81,6 +99,52 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
     if (confirm(t('confirmBlock'))) {
       console.log('Block client:', clientId);
     }
+  };
+
+  const handleSaveFirstName = () => {
+    if (editedFirstName.trim()) {
+      const updatedClient = { ...client, firstName: editedFirstName };
+      setClient(updatedClient);
+      
+      // Update in localStorage
+      if (typeof window !== 'undefined') {
+        const updatedClients = clients.map((c: any) => 
+          c.id === clientId ? { ...c, firstName: editedFirstName } : c
+        );
+        localStorage.setItem('crm_clients', JSON.stringify(updatedClients));
+        setClients(updatedClients);
+      }
+      
+      setIsEditingFirstName(false);
+    }
+  };
+
+  const handleSaveLastName = () => {
+    if (editedLastName.trim()) {
+      const updatedClient = { ...client, lastName: editedLastName };
+      setClient(updatedClient);
+      
+      // Update in localStorage
+      if (typeof window !== 'undefined') {
+        const updatedClients = clients.map((c: any) => 
+          c.id === clientId ? { ...c, lastName: editedLastName } : c
+        );
+        localStorage.setItem('crm_clients', JSON.stringify(updatedClients));
+        setClients(updatedClients);
+      }
+      
+      setIsEditingLastName(false);
+    }
+  };
+
+  const handleCancelEditFirstName = () => {
+    setEditedFirstName(client.firstName);
+    setIsEditingFirstName(false);
+  };
+
+  const handleCancelEditLastName = () => {
+    setEditedLastName(client.lastName);
+    setIsEditingLastName(false);
   };
 
   const tabs = [
@@ -175,13 +239,78 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
             </div>
             <div className="client-detail__section-content">
               <div className="client-detail__field">
-                <span className="client-detail__field-label">{t('fields.name')}</span>
-                <span className="client-detail__field-value">
-                  {client.firstName} {client.lastName}
-                </span>
-                <button className="client-detail__field-edit">
-                  <span className="material-symbols-outlined">edit</span>
-                </button>
+                <span className="client-detail__field-label">{t('fields.firstName')}</span>
+                {isEditingFirstName ? (
+                  <div className="client-detail__field-edit-wrapper">
+                    <Input
+                      value={editedFirstName}
+                      onChange={(e) => setEditedFirstName(e.target.value)}
+                      className="client-detail__field-input"
+                      autoFocus
+                    />
+                    <button 
+                      className="client-detail__field-save" 
+                      onClick={handleSaveFirstName}
+                    >
+                      <span className="material-symbols-outlined">check</span>
+                    </button>
+                    <button 
+                      className="client-detail__field-cancel" 
+                      onClick={handleCancelEditFirstName}
+                    >
+                      <span className="material-symbols-outlined">close</span>
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    <span className="client-detail__field-value">
+                      {client.firstName}
+                    </span>
+                    <button 
+                      className="client-detail__field-edit"
+                      onClick={() => setIsEditingFirstName(true)}
+                    >
+                      <span className="material-symbols-outlined">edit</span>
+                    </button>
+                  </>
+                )}
+              </div>
+              <div className="client-detail__field">
+                <span className="client-detail__field-label">{t('fields.lastName')}</span>
+                {isEditingLastName ? (
+                  <div className="client-detail__field-edit-wrapper">
+                    <Input
+                      value={editedLastName}
+                      onChange={(e) => setEditedLastName(e.target.value)}
+                      className="client-detail__field-input"
+                      autoFocus
+                    />
+                    <button 
+                      className="client-detail__field-save" 
+                      onClick={handleSaveLastName}
+                    >
+                      <span className="material-symbols-outlined">check</span>
+                    </button>
+                    <button 
+                      className="client-detail__field-cancel" 
+                      onClick={handleCancelEditLastName}
+                    >
+                      <span className="material-symbols-outlined">close</span>
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    <span className="client-detail__field-value">
+                      {client.lastName}
+                    </span>
+                    <button 
+                      className="client-detail__field-edit"
+                      onClick={() => setIsEditingLastName(true)}
+                    >
+                      <span className="material-symbols-outlined">edit</span>
+                    </button>
+                  </>
+                )}
               </div>
               <div className="client-detail__field">
                 <span className="client-detail__field-label">{t('fields.email')}</span>
