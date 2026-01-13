@@ -132,6 +132,11 @@
     justify-content: center;
   }
 
+  // Ajustar posición de navegación cuando está colapsada
+  &--collapsed &__nav {
+    margin-top: -4px;
+  }
+
   &__secondary {
     @include flex-column;
     align-items: center;

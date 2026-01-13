@@ -89,7 +89,7 @@ export function MainSidebar({
   };
 
   return (
-    <aside className="main-sidebar">
+    <aside className={`main-sidebar ${isCollapsed ? 'main-sidebar--collapsed' : ''}`}>
       {/* Logo */}
       <div className="main-sidebar__logo">
         <Link href="/dashboard">
