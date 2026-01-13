@@ -1,0 +1,122 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.login-form {
+  @include flex-column;
+  gap: $spacing-xl;
+  width: 100%;
+  max-width: 404px;
+
+  &__logo {
+    @include flex-center;
+    width: 100%;
+  }
+
+  &__form {
+    @include flex-column;
+    gap: $spacing-lg;
+    width: 100%;
+  }
+
+  &__field {
+    @include flex-column;
+    gap: $spacing-xs;
+    width: 100%;
+  }
+
+  &__label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: #0f172a;
+  }
+
+  &__input {
+    width: 100%;
+    height: 42px;
+    padding: 8px 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    color: #0f172a;
+    background: white;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    @include transition(all);
+
+    &::placeholder {
+      color: #94a3b8;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: #334155;
+      box-shadow: 0 0 0 2px rgba(51, 65, 85, 0.1);
+    }
+  }
+
+  &__checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+  }
+
+  &__checkbox {
+    width: 14px;
+    height: 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 2px;
+    cursor: pointer;
+    accent-color: #334155;
+  }
+
+  &__checkbox-label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 14px;
+    color: black;
+    cursor: pointer;
+  }
+
+  &__submit {
+    width: 100%;
+    height: 42px;
+    padding: 8px 16px;
+    background-color: #334155 !important;
+    color: white !important;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    @include transition(all);
+
+    &:hover:not(:disabled) {
+      background-color: #1e293b !important;
+    }
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+  }
+
+  &__forgot-link {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 14px;
+    color: #334155;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    @include transition(color);
+
+    &:hover {
+      color: #1e293b;
+    }
+  }
+}

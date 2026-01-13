@@ -1,0 +1,91 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.dashboard-page {
+  @include flex-column;
+  gap: $spacing-md; // 16px
+
+  .material-symbols-outlined {
+    font-variation-settings:
+      'FILL' 0,
+      'wght' 200,
+      'GRAD' 0,
+      'opsz' 24;
+    color: #334155; // slate-700
+  }
+
+  &__header {
+    @include flex-between;
+  }
+
+  &__welcome {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #374151;
+    line-height: 1.75;
+  }
+
+  &__reminder {
+    @include flex-center;
+    gap: $spacing-sm;
+    padding: 6px 10px;
+    border-radius: $radius-lg;
+    cursor: pointer;
+    @include transition(all);
+
+    &:hover {
+      background-color: #f8fafc;
+    }
+  }
+
+  &__reminder-icon {
+    color: $text-muted;
+  }
+
+  &__reminder-text {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: $text-primary;
+  }
+
+  &__reminder-date {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #94a3b8;
+  }
+
+  &__stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); // 4 columnas iguales
+    gap: $spacing-md; // 16px
+  }
+
+  &__actions {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); // 4 columnas iguales
+    gap: $spacing-md; // 16px
+  }
+
+  &__banners-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr; // 50% 50%
+    gap: $spacing-md; // 16px
+  }
+
+  &__banners-col {
+    @include flex-column;
+    gap: $spacing-md; // 16px
+  }
+
+  &__banners-small {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); // 2 columnas iguales
+    gap: $spacing-md; // 16px
+  }
+
+  &__bottom-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); // 2 columnas iguales
+    gap: $spacing-md; // 16px
+  }
+}

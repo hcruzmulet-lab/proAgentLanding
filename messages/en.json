@@ -1,0 +1,238 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "search": "Search",
+    "filter": "Filter",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "close": "Close",
+    "submit": "Submit",
+    "actions": "Actions",
+    "viewDetails": "View details",
+    "noResults": "No results found",
+    "required": "Required"
+  },
+  "landing": {
+    "nav": {
+      "howItWorks": "How It Works?",
+      "plans": "Plans",
+      "faq": "FAQ",
+      "joinNow": "Join Now",
+      "login": "Sign In"
+    },
+    "hero": {
+      "title": "The B2B platform for travel agencies",
+      "subtitle": "Manage bookings, clients and commissions in one place. Connect with TravelCompositor and Stripe for a complete experience.",
+      "cta": "Get Started",
+      "ctaSecondary": "Watch Demo"
+    },
+    "features": {
+      "title": "Everything you need for your agency",
+      "subtitle": "Powerful tools to manage your travel business",
+      "bookings": {
+        "title": "Booking Management",
+        "description": "Direct integration with TravelCompositor to manage all your bookings in one place"
+      },
+      "clients": {
+        "title": "Client Database",
+        "description": "Keep all your client information organized and accessible"
+      },
+      "commissions": {
+        "title": "Commission Control",
+        "description": "Automatic tracking of your commissions and payments"
+      },
+      "subscriptions": {
+        "title": "Flexible Plans",
+        "description": "Stripe integration for hassle-free subscription management"
+      }
+    },
+    "pricing": {
+      "title": "Plans that adapt to your business",
+      "subtitle": "Choose the perfect plan for your agency",
+      "free": {
+        "name": "Free",
+        "price": "$0",
+        "period": "/month",
+        "features": [
+          "Up to 10 bookings per month",
+          "Basic client management",
+          "Email support"
+        ]
+      },
+      "pro": {
+        "name": "Pro",
+        "price": "$49",
+        "period": "/month",
+        "features": [
+          "Unlimited bookings",
+          "Advanced client management",
+          "Commission control",
+          "Priority support",
+          "Custom reports"
+        ]
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "price": "Custom",
+        "features": [
+          "Everything in Pro",
+          "Multi-agency",
+          "Custom API",
+          "Dedicated 24/7 support",
+          "Personalized training"
+        ]
+      }
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Answers to the most common questions",
+      "q1": {
+        "question": "How does the TravelCompositor integration work?",
+        "answer": "The integration is done through IFRAME, allowing access to all TravelCompositor functionalities directly from our platform."
+      },
+      "q2": {
+        "question": "Can I change plans at any time?",
+        "answer": "Yes, you can upgrade or change your plan at any time from your account settings."
+      },
+      "q3": {
+        "question": "Do you offer support in Spanish?",
+        "answer": "Yes, we offer support in Spanish, English, and Brazilian Portuguese."
+      },
+      "q4": {
+        "question": "Do I need a credit card for the free plan?",
+        "answer": "No, you can start with the free plan without entering payment information."
+      }
+    },
+    "cta": {
+      "title": "Ready to transform your agency?",
+      "subtitle": "Join hundreds of agencies that already trust ProAgent",
+      "button": "Start Free"
+    },
+    "subscriptions": {
+      "chooseThisPlan": "Choose This Plan"
+    },
+    "footer": {
+      "product": "Product",
+      "features": "Features",
+      "pricing": "Pricing",
+      "company": "Company",
+      "about": "About",
+      "contact": "Contact",
+      "legal": "Legal",
+      "privacy": "Privacy",
+      "terms": "Terms",
+      "rights": "All rights reserved"
+    }
+  },
+  "auth": {
+    "login": "Sign in",
+    "logout": "Sign out",
+    "register": "Sign up",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot password?",
+    "forgotPasswordLink": "Forgot password",
+    "resetPassword": "Reset password",
+    "confirmPassword": "Confirm password",
+    "rememberMe": "Remember me",
+    "rememberUser": "Remember user",
+    "enter": "Sign In",
+    "loading": "Signing in...",
+    "loginTitle": "Welcome back",
+    "loginSubtitle": "Enter your credentials to access",
+    "registerTitle": "Create account",
+    "registerSubtitle": "Fill the form to register",
+    "invalidCredentials": "Invalid credentials",
+    "emailRequired": "Email is required",
+    "passwordRequired": "Password is required",
+    "passwordMinLength": "Password must be at least 8 characters",
+    "poweredBy": "Powered By"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "bookings": "Bookings",
+    "clients": "Clients",
+    "commissions": "Commissions",
+    "agencies": "Agencies",
+    "agents": "Agents",
+    "billing": "Billing",
+    "reports": "Reports",
+    "settings": "Settings",
+    "profile": "Profile",
+    "help": "Help"
+  },
+  "dashboard": {
+    "welcome": "Welcome, {name}",
+    "overview": "Overview",
+    "recentActivity": "Recent activity",
+    "quickActions": "Quick actions",
+    "statistics": "Statistics",
+    "viewAll": "View all"
+  },
+  "bookings": {
+    "title": "Bookings",
+    "noBookings": "No bookings available",
+    "newBooking": "New booking",
+    "bookingDetails": "Booking details",
+    "status": "Status",
+    "pending": "Pending",
+    "confirmed": "Confirmed",
+    "cancelled": "Cancelled",
+    "completed": "Completed",
+    "date": "Date",
+    "client": "Client",
+    "destination": "Destination",
+    "totalAmount": "Total amount"
+  },
+  "agencies": {
+    "title": "Agencies",
+    "noAgencies": "No agencies available",
+    "newAgency": "New agency",
+    "agencyDetails": "Agency details",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "status": "Status",
+    "active": "Active",
+    "inactive": "Inactive",
+    "suspended": "Suspended"
+  },
+  "subscriptions": {
+    "title": "Subscriptions",
+    "currentPlan": "Current plan",
+    "upgradePlan": "Upgrade plan",
+    "billingCycle": "Billing cycle",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "free": "Free",
+    "pro": "Pro",
+    "enterprise": "Enterprise",
+    "features": "Features",
+    "chooseThisPlan": "Choose this plan"
+  },
+  "subscription": {
+    "label": "Join Now",
+    "title": "Application to become part of the ProAgent network",
+    "description": "This process allows us to get to know you, understand your goals and prepare a ProAgent experience aligned with you. It is not an automatic form: all applications are reviewed manually.",
+    "startButton": "Get Started"
+  },
+  "validation": {
+    "required": "This field is required",
+    "invalidEmail": "Invalid email",
+    "minLength": "Must be at least {min} characters",
+    "maxLength": "Cannot exceed {max} characters",
+    "passwordMismatch": "Passwords do not match",
+    "invalidPhone": "Invalid phone number",
+    "invalidUrl": "Invalid URL"
+  }
+}

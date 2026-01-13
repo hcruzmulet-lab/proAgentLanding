@@ -1,0 +1,78 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.data-table {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: $radius-lg;
+  border: 1px solid hsl(var(--border));
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+  }
+
+  &__header {
+    background-color: hsl(var(--muted));
+
+    th {
+      padding: $spacing-md;
+      text-align: left;
+      font-weight: 600;
+      color: hsl(var(--foreground));
+      border-bottom: 1px solid hsl(var(--border));
+    }
+  }
+
+  &__body {
+    tr {
+      border-bottom: 1px solid hsl(var(--border));
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+
+    td {
+      padding: $spacing-md;
+      color: hsl(var(--foreground));
+    }
+  }
+
+  &__row {
+    @include transition(background-color);
+
+    &:hover {
+      background-color: hsl(var(--muted) / 0.5);
+    }
+
+    &--clickable {
+      cursor: pointer;
+
+      &:hover {
+        background-color: hsl(var(--accent));
+      }
+    }
+  }
+
+  &__loading {
+    @include flex-column;
+    gap: $spacing-sm;
+    padding: $spacing-md;
+  }
+
+  &__skeleton {
+    height: 3rem;
+    width: 100%;
+  }
+}
+
+// Responsive
+@include md {
+  .data-table {
+    &__table {
+      font-size: 1rem;
+    }
+  }
+}

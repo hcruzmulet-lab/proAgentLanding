@@ -1,0 +1,116 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.landing-page-module {
+  min-height: 100vh;
+  background-color: #f1f5f9;
+
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 $spacing-xl;
+  }
+
+  &__features,
+  &__pricing,
+  &__faq {
+    padding: calc(var(--spacing-2xl) * 2) $spacing-xl;
+  }
+
+  &__features {
+    background-color: white;
+  }
+
+  &__pricing {
+    background-color: #f1f5f9;
+  }
+
+  &__faq {
+    background-color: white;
+  }
+
+  &__section-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #1b2340;
+    text-align: center;
+    margin: 0 0 $spacing-md;
+
+    @media (max-width: $breakpoint-md) {
+      font-size: 2rem;
+    }
+  }
+
+  &__section-subtitle {
+    font-size: 1.125rem;
+    color: hsl(var(--muted-foreground));
+    text-align: center;
+    margin: 0 0 $spacing-2xl;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  &__features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: $spacing-xl;
+
+    @media (max-width: $breakpoint-md) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: $spacing-xl;
+
+    @media (max-width: $breakpoint-lg) {
+      grid-template-columns: 1fr;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+  }
+
+  &__faq-list {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  &__cta {
+    background: linear-gradient(135deg, #ffa300 0%, #ff8c00 100%);
+    padding: calc(var(--spacing-2xl) * 2) $spacing-xl;
+    text-align: center;
+    color: white;
+  }
+
+  &__cta-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 0 0 $spacing-md;
+
+    @media (max-width: $breakpoint-md) {
+      font-size: 2rem;
+    }
+  }
+
+  &__cta-subtitle {
+    font-size: 1.25rem;
+    margin: 0 0 $spacing-2xl;
+    opacity: 0.95;
+  }
+
+  &__cta-button {
+    background-color: white;
+    color: #ffa300;
+    font-weight: 700;
+    font-size: 1.125rem;
+    padding: $spacing-lg $spacing-2xl;
+    height: auto;
+
+    &:hover {
+      background-color: #f1f5f9;
+    }
+  }
+}

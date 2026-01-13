@@ -1,0 +1,238 @@
+{
+  "common": {
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "create": "Criar",
+    "search": "Pesquisar",
+    "filter": "Filtrar",
+    "loading": "Carregando...",
+    "error": "Erro",
+    "success": "Sucesso",
+    "confirm": "Confirmar",
+    "back": "Voltar",
+    "next": "Próximo",
+    "previous": "Anterior",
+    "close": "Fechar",
+    "submit": "Enviar",
+    "actions": "Ações",
+    "viewDetails": "Ver detalhes",
+    "noResults": "Nenhum resultado encontrado",
+    "required": "Obrigatório"
+  },
+  "landing": {
+    "nav": {
+      "howItWorks": "Como Funciona?",
+      "plans": "Planos",
+      "faq": "Perguntas Frequentes",
+      "joinNow": "Cadastre-se",
+      "login": "Entrar"
+    },
+    "hero": {
+      "title": "A plataforma B2B para agências de viagem",
+      "subtitle": "Gerencie reservas, clientes e comissões em um só lugar. Conecte-se com TravelCompositor e Stripe para uma experiência completa.",
+      "cta": "Começar Agora",
+      "ctaSecondary": "Ver Demo"
+    },
+    "features": {
+      "title": "Tudo que você precisa para sua agência",
+      "subtitle": "Ferramentas poderosas para gerenciar seu negócio de viagens",
+      "bookings": {
+        "title": "Gestão de Reservas",
+        "description": "Integração direta com TravelCompositor para gerenciar todas as suas reservas em um só lugar"
+      },
+      "clients": {
+        "title": "Base de Clientes",
+        "description": "Mantenha todas as informações dos seus clientes organizadas e acessíveis"
+      },
+      "commissions": {
+        "title": "Controle de Comissões",
+        "description": "Rastreamento automático de suas comissões e pagamentos"
+      },
+      "subscriptions": {
+        "title": "Planos Flexíveis",
+        "description": "Integração com Stripe para gestão de assinaturas sem complicações"
+      }
+    },
+    "pricing": {
+      "title": "Planos que se adaptam ao seu negócio",
+      "subtitle": "Escolha o plano perfeito para sua agência",
+      "free": {
+        "name": "Grátis",
+        "price": "$0",
+        "period": "/mês",
+        "features": [
+          "Até 10 reservas por mês",
+          "Gestão básica de clientes",
+          "Suporte por email"
+        ]
+      },
+      "pro": {
+        "name": "Pro",
+        "price": "$49",
+        "period": "/mês",
+        "features": [
+          "Reservas ilimitadas",
+          "Gestão avançada de clientes",
+          "Controle de comissões",
+          "Suporte prioritário",
+          "Relatórios personalizados"
+        ]
+      },
+      "enterprise": {
+        "name": "Empresa",
+        "price": "Personalizado",
+        "features": [
+          "Tudo no Pro",
+          "Multi-agência",
+          "API personalizada",
+          "Suporte dedicado 24/7",
+          "Treinamento personalizado"
+        ]
+      }
+    },
+    "faq": {
+      "title": "Perguntas Frequentes",
+      "subtitle": "Respostas às perguntas mais comuns",
+      "q1": {
+        "question": "Como funciona a integração com TravelCompositor?",
+        "answer": "A integração é feita através de IFRAME, permitindo acesso a todas as funcionalidades do TravelCompositor diretamente da nossa plataforma."
+      },
+      "q2": {
+        "question": "Posso mudar de plano a qualquer momento?",
+        "answer": "Sim, você pode atualizar ou mudar seu plano a qualquer momento nas configurações da sua conta."
+      },
+      "q3": {
+        "question": "Vocês oferecem suporte em português?",
+        "answer": "Sim, oferecemos suporte em português brasileiro, inglês e espanhol."
+      },
+      "q4": {
+        "question": "Preciso de cartão de crédito para o plano gratuito?",
+        "answer": "Não, você pode começar com o plano gratuito sem precisar informar dados de pagamento."
+      }
+    },
+    "cta": {
+      "title": "Pronto para transformar sua agência?",
+      "subtitle": "Junte-se a centenas de agências que já confiam no ProAgent",
+      "button": "Começar Grátis"
+    },
+    "subscriptions": {
+      "chooseThisPlan": "Escolher este plano"
+    },
+    "footer": {
+      "product": "Produto",
+      "features": "Recursos",
+      "pricing": "Preços",
+      "company": "Empresa",
+      "about": "Sobre",
+      "contact": "Contato",
+      "legal": "Legal",
+      "privacy": "Privacidade",
+      "terms": "Termos",
+      "rights": "Todos os direitos reservados"
+    }
+  },
+  "auth": {
+    "login": "Entrar",
+    "logout": "Sair",
+    "register": "Registrar",
+    "email": "E-mail",
+    "password": "Senha",
+    "forgotPassword": "Esqueceu a senha?",
+    "forgotPasswordLink": "Esqueci a senha",
+    "resetPassword": "Redefinir senha",
+    "confirmPassword": "Confirmar senha",
+    "rememberMe": "Lembrar-me",
+    "rememberUser": "Lembrar usuário",
+    "enter": "Entrar",
+    "loading": "Entrando...",
+    "loginTitle": "Bem-vindo de volta",
+    "loginSubtitle": "Digite suas credenciais para acessar",
+    "registerTitle": "Criar conta",
+    "registerSubtitle": "Preencha o formulário para se registrar",
+    "invalidCredentials": "Credenciais inválidas",
+    "emailRequired": "E-mail é obrigatório",
+    "passwordRequired": "Senha é obrigatória",
+    "passwordMinLength": "A senha deve ter pelo menos 8 caracteres",
+    "poweredBy": "Powered By"
+  },
+  "navigation": {
+    "dashboard": "Painel",
+    "bookings": "Reservas",
+    "clients": "Clientes",
+    "commissions": "Comissões",
+    "agencies": "Agências",
+    "agents": "Agentes",
+    "billing": "Faturamento",
+    "reports": "Relatórios",
+    "settings": "Configurações",
+    "profile": "Perfil",
+    "help": "Ajuda"
+  },
+  "dashboard": {
+    "welcome": "Bem-vindo, {name}",
+    "overview": "Visão geral",
+    "recentActivity": "Atividade recente",
+    "quickActions": "Ações rápidas",
+    "statistics": "Estatísticas",
+    "viewAll": "Ver tudo"
+  },
+  "bookings": {
+    "title": "Reservas",
+    "noBookings": "Nenhuma reserva disponível",
+    "newBooking": "Nova reserva",
+    "bookingDetails": "Detalhes da reserva",
+    "status": "Status",
+    "pending": "Pendente",
+    "confirmed": "Confirmada",
+    "cancelled": "Cancelada",
+    "completed": "Concluída",
+    "date": "Data",
+    "client": "Cliente",
+    "destination": "Destino",
+    "totalAmount": "Valor total"
+  },
+  "agencies": {
+    "title": "Agências",
+    "noAgencies": "Nenhuma agência disponível",
+    "newAgency": "Nova agência",
+    "agencyDetails": "Detalhes da agência",
+    "name": "Nome",
+    "email": "E-mail",
+    "phone": "Telefone",
+    "address": "Endereço",
+    "status": "Status",
+    "active": "Ativa",
+    "inactive": "Inativa",
+    "suspended": "Suspensa"
+  },
+  "subscriptions": {
+    "title": "Assinaturas",
+    "currentPlan": "Plano atual",
+    "upgradePlan": "Atualizar plano",
+    "billingCycle": "Ciclo de faturamento",
+    "monthly": "Mensal",
+    "yearly": "Anual",
+    "free": "Grátis",
+    "pro": "Pro",
+    "enterprise": "Empresa",
+    "features": "Recursos",
+    "chooseThisPlan": "Escolher este plano"
+  },
+  "subscription": {
+    "label": "Junte-se Agora",
+    "title": "Pedido para fazer parte da rede ProAgent",
+    "description": "Este processo nos permite conhecê-lo, entender seus objetivos e preparar uma experiência ProAgent alinhada com você. Não é um formulário automático: todos os pedidos são revisados manualmente.",
+    "startButton": "Começar"
+  },
+  "validation": {
+    "required": "Este campo é obrigatório",
+    "invalidEmail": "E-mail inválido",
+    "minLength": "Deve ter pelo menos {min} caracteres",
+    "maxLength": "Não pode exceder {max} caracteres",
+    "passwordMismatch": "As senhas não coincidem",
+    "invalidPhone": "Número de telefone inválido",
+    "invalidUrl": "URL inválida"
+  }
+}

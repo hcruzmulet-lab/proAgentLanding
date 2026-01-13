@@ -1,0 +1,39 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.feature-card {
+  @include transition(all);
+  height: 100%;
+
+  &:hover {
+    @include shadow-xl;
+    transform: translateY(-4px);
+  }
+
+  &__icon-wrapper {
+    @include flex-center;
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #ffa300 0%, #ff8c00 100%);
+    border-radius: $radius-lg;
+    margin-bottom: $spacing-md;
+  }
+
+  &__icon {
+    color: white;
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1b2340;
+    margin-bottom: $spacing-sm;
+  }
+
+  &__description {
+    font-size: 1rem;
+    color: hsl(var(--muted-foreground));
+    line-height: 1.6;
+    margin: 0;
+  }
+}

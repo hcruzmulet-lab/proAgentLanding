@@ -1,0 +1,79 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 280px;
+  background-color: hsl(var(--card));
+  border-right: 1px solid hsl(var(--border));
+  z-index: $z-fixed;
+  @include transition(transform);
+  overflow-y: auto;
+  @include custom-scrollbar;
+
+  @media (max-width: $breakpoint-lg) {
+    transform: translateX(-100%);
+
+    &--open {
+      transform: translateX(0);
+    }
+  }
+
+  &--closed {
+    width: 80px;
+
+    .sidebar__label {
+      display: none;
+    }
+  }
+
+  &__nav {
+    @include flex-column;
+    padding: $spacing-lg $spacing-md;
+    gap: $spacing-xs;
+  }
+
+  &__item {
+    @include flex-between;
+    padding: $spacing-md;
+    border-radius: $radius-md;
+    color: hsl(var(--foreground));
+    text-decoration: none;
+    @include transition(all);
+    gap: $spacing-md;
+
+    &:hover {
+      background-color: hsl(var(--accent));
+    }
+
+    &--active {
+      background-color: hsl(var(--primary));
+      color: hsl(var(--primary-foreground));
+      font-weight: 600;
+
+      &:hover {
+        background-color: hsl(var(--primary) / 0.9);
+      }
+    }
+  }
+
+  &__icon {
+    flex-shrink: 0;
+  }
+
+  &__label {
+    flex: 1;
+    font-size: 0.875rem;
+  }
+
+  &__overlay {
+    @include overlay(rgba(0, 0, 0, 0.3));
+
+    @media (min-width: $breakpoint-lg) {
+      display: none;
+    }
+  }
+}

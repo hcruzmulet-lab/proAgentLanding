@@ -1,0 +1,95 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.pricing-card {
+  @include transition(all);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  &:hover {
+    @include shadow-xl;
+    transform: translateY(-4px);
+  }
+
+  &--highlighted {
+    border-color: #ffa300;
+    border-width: 2px;
+    box-shadow: 0 0 0 1px #ffa300;
+
+    &::before {
+      content: 'Popular';
+      position: absolute;
+      top: -12px;
+      right: $spacing-lg;
+      background-color: #ffa300;
+      color: white;
+      padding: $spacing-xs $spacing-md;
+      border-radius: $radius-md;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+  }
+
+  &__name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1b2340;
+    margin-bottom: $spacing-md;
+  }
+
+  &__price-wrapper {
+    @include flex-center;
+    gap: $spacing-xs;
+    align-items: baseline;
+    margin-bottom: $spacing-lg;
+  }
+
+  &__price {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #1b2340;
+  }
+
+  &__period {
+    font-size: 1rem;
+    color: hsl(var(--muted-foreground));
+  }
+
+  &__features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    @include flex-column;
+    gap: $spacing-md;
+    flex: 1;
+  }
+
+  &__feature {
+    @include flex-center;
+    gap: $spacing-sm;
+    align-items: flex-start;
+    font-size: 0.875rem;
+    color: hsl(var(--foreground));
+  }
+
+  &__check {
+    color: $color-success;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  &__cta {
+    width: 100%;
+    font-weight: 700;
+  }
+
+  .pricing-card--highlighted &__cta {
+    background-color: #ffa300;
+
+    &:hover {
+      background-color: #e69200;
+    }
+  }
+}

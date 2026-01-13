@@ -1,0 +1,108 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.onboarding-card {
+  display: flex;
+  background-color: #f1f5f9;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  height: 220px;
+
+  &__image-section {
+    position: relative;
+    width: 220px;
+    flex-shrink: 0;
+  }
+
+  &__image {
+    object-fit: cover;
+    object-position: right center;
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  &__image-content {
+    position: relative;
+    z-index: 1;
+    @include flex-column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 19px;
+  }
+
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    padding: 4px 10px;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: $radius-lg;
+    color: white;
+    font-size: 0.875rem;
+    font-weight: 400;
+  }
+
+  &__progress {
+    @include flex-between;
+  }
+
+  &__step {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: white;
+  }
+
+  &__dots {
+    @include flex-center;
+    gap: 4px;
+  }
+
+  &__dot {
+    width: 20px;
+    height: 3px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: $radius-lg;
+
+    &--active {
+      background-color: #f59e0b;
+    }
+  }
+
+  &__content {
+    @include flex-column;
+    gap: 12px;
+    padding: 20px 24px;
+    justify-content: center;
+    flex: 1;
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: $text-primary;
+    letter-spacing: -0.144px;
+    line-height: 1.333;
+  }
+
+  &__description {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: $text-primary;
+    line-height: 1.666;
+  }
+
+  &__button {
+    width: fit-content;
+    background-color: $text-primary;
+    cursor: pointer;
+
+    &:hover {
+      background-color: lighten(#334155, 5%);
+    }
+  }
+}

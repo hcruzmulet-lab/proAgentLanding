@@ -1,0 +1,61 @@
+// Brand Colors
+$brand-primary: hsl(var(--brand-primary));
+$brand-secondary: hsl(var(--brand-secondary));
+$brand-accent: hsl(var(--brand-accent));
+
+// Semantic Colors
+$color-success: hsl(var(--success));
+$color-warning: hsl(var(--warning));
+$color-error: hsl(var(--error));
+$color-info: hsl(var(--info));
+
+// Spacing Scale
+$spacing-xs: var(--spacing-xs);
+$spacing-sm: var(--spacing-sm);
+$spacing-md: var(--spacing-md);
+$spacing-lg: var(--spacing-lg);
+$spacing-xl: var(--spacing-xl);
+$spacing-2xl: var(--spacing-2xl);
+
+// Shadows
+$shadow-sm: var(--shadow-sm);
+$shadow-md: var(--shadow-md);
+$shadow-lg: var(--shadow-lg);
+$shadow-xl: var(--shadow-xl);
+
+// Transitions
+$transition-fast: var(--transition-fast);
+$transition-normal: var(--transition-normal);
+$transition-slow: var(--transition-slow);
+
+// Breakpoints
+$breakpoint-sm: 640px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1280px;
+$breakpoint-2xl: 1536px;
+
+// Z-Index Scale
+$z-dropdown: 1000;
+$z-sticky: 1020;
+$z-fixed: 1030;
+$z-modal-backdrop: 1040;
+$z-modal: 1050;
+$z-popover: 1060;
+$z-tooltip: 1070;
+
+// Border Radius
+$radius-sm: calc(var(--radius) - 4px);
+$radius-md: calc(var(--radius) - 2px);
+$radius-lg: var(--radius);
+$radius-xl: calc(var(--radius) + 4px);
+
+// Text Colors
+$text-primary: #334155;
+$text-muted: #94a3b8;
+$text-secondary: #64748b;
+
+// Background Colors
+$bg-muted: #f1f5f9;
+$bg-subtle: #f8fafc;
+$bg-dashboard: #e2e8f0; // slate-200

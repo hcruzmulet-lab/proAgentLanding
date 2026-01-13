@@ -1,0 +1,93 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.login-page {
+  display: flex;
+  min-height: 100vh;
+  background-color: white;
+
+  &__background {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+
+    @media screen and (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  &__background-image {
+    object-fit: cover;
+    object-position: right center;
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+  }
+
+  &__city-name {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    padding-left: 61px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: clamp(80px, 12vw, 160px);
+    line-height: 0.85;
+    letter-spacing: -1.5px;
+    color: white;
+    text-transform: uppercase;
+
+    span {
+      display: block;
+    }
+  }
+
+  &__footer {
+    position: absolute;
+    bottom: 91px;
+    left: 61px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+  }
+
+  &__footer-text {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 1.66;
+    letter-spacing: 0.4px;
+    color: white;
+    white-space: nowrap;
+  }
+
+  &__footer-logo {
+    flex-shrink: 0;
+  }
+
+  &__form-container {
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 500px;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px;
+    background-color: white;
+
+    @media screen and (max-width: 768px) {
+      max-width: 100%;
+      padding: 24px;
+    }
+  }
+}

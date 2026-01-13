@@ -1,0 +1,170 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.sub-sidebar {
+  @include flex-column;
+  width: 200px;
+  min-height: 100%;
+  background-color: white;
+  border-radius: $radius-lg;
+  padding: $spacing-md;
+  position: relative;
+  flex-shrink: 0;
+
+  .material-symbols-outlined {
+    font-size: 16px;
+    font-variation-settings:
+      'FILL' 0,
+      'wght' 200,
+      'GRAD' 0,
+      'opsz' 20;
+  }
+
+  &--collapsed {
+    width: 48px;
+
+    .sub-sidebar__title,
+    .sub-sidebar__item span {
+      display: none;
+    }
+
+    .sub-sidebar__header {
+      flex-direction: column;
+      gap: $spacing-sm;
+    }
+
+    .sub-sidebar__actions {
+      flex-direction: column;
+    }
+
+    .sub-sidebar__item {
+      justify-content: center;
+      padding: $spacing-sm;
+    }
+  }
+
+  &__header {
+    @include flex-between;
+    margin-bottom: $spacing-md;
+  }
+
+  &__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: $text-primary;
+    letter-spacing: -0.1px;
+  }
+
+  &__actions {
+    @include flex-center;
+    gap: $spacing-xs;
+  }
+
+  &__action-btn {
+    @include button-reset;
+    @include flex-center;
+    width: 24px;
+    height: 24px;
+    color: #334155; // slate-700
+    @include transition(color);
+
+    .material-symbols-outlined {
+      font-size: 24px;
+      font-variation-settings:
+        'FILL' 0,
+        'wght' 200,
+        'GRAD' 0,
+        'opsz' 24;
+    }
+
+    &:hover {
+      color: #1e293b; // slate-800
+
+      .material-symbols-outlined {
+        font-variation-settings:
+          'FILL' 1,
+          'wght' 200,
+          'GRAD' 0,
+          'opsz' 24;
+      }
+    }
+  }
+
+  &__notification-btn {
+    position: relative;
+
+    &:hover {
+      .material-symbols-outlined {
+        font-variation-settings:
+          'FILL' 1,
+          'wght' 200,
+          'GRAD' 0,
+          'opsz' 24;
+      }
+    }
+  }
+
+  &__notification-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    min-width: 12px;
+    height: 12px;
+    background-color: #dc2626;
+    color: white;
+    font-size: 8px;
+    font-weight: 500;
+    border-radius: 40px;
+    @include flex-center;
+    padding: 2px;
+  }
+
+  &__nav {
+    @include flex-column;
+    gap: $spacing-xs;
+  }
+
+  &__item {
+    @include flex-center;
+    justify-content: flex-start;
+    gap: $spacing-sm;
+    padding: $spacing-sm;
+    border-radius: $radius-lg;
+    color: $text-primary;
+    font-size: 0.75rem;
+    font-weight: 500;
+    @include transition(all);
+    text-decoration: none;
+
+    &:hover {
+      background-color: $bg-muted;
+    }
+
+    &--active {
+      background-color: $text-primary;
+      color: white;
+
+      .material-symbols-outlined {
+        font-variation-settings:
+          'FILL' 1,
+          'wght' 200,
+          'GRAD' 0,
+          'opsz' 20;
+      }
+
+      &:hover {
+        background-color: $text-primary;
+      }
+    }
+  }
+
+  &__footer {
+    position: absolute;
+    bottom: $spacing-md;
+    right: $spacing-md;
+  }
+
+  &__vertical-logo {
+    opacity: 0.5;
+  }
+}

@@ -1,0 +1,25 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.dashboard-layout {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  background-color: #e2e8f0;
+  padding: $spacing-sm;
+  gap: 0;
+
+  &__content {
+    flex: 1;
+    background-color: white;
+    border-radius: $radius-lg;
+    padding: $spacing-md; // 16px
+    overflow-y: auto; // Solo el contenido tiene scroll
+    overflow-x: hidden;
+  }
+
+  // Solo agregar margen cuando hay SubSidebar
+  &:has(.sub-sidebar) &__content {
+    margin-left: $spacing-sm;
+  }
+}

@@ -1,0 +1,73 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.news-card {
+  @include flex-column;
+  gap: $spacing-sm;
+  background-color: #f1f5f9;
+  border-radius: $radius-lg;
+  padding: $spacing-md;
+
+  &__header {
+    @include flex-between;
+  }
+
+  &__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: $text-primary;
+    letter-spacing: -0.1px;
+  }
+
+  &__list {
+    @include flex-column;
+    gap: 4px;
+  }
+
+  &__item {
+    @include flex-between;
+    background-color: white;
+    border-radius: $radius-lg;
+    padding: 10px;
+    cursor: pointer;
+    @include transition(all);
+
+    &:hover {
+      background-color: #f8fafc;
+    }
+  }
+
+  &__item-left {
+    @include flex-center;
+    gap: $spacing-sm;
+  }
+
+  &__item-icon {
+    color: $text-muted;
+  }
+
+  &__item-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: $text-primary;
+  }
+
+  &__item-date {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #94a3b8;
+  }
+
+  &__more-btn {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: $text-primary;
+    height: 28px;
+    padding: 0 12px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $bg-subtle;
+    }
+  }
+}

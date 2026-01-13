@@ -1,0 +1,192 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.landing-navbar {
+  position: sticky;
+  top: 0;
+  z-index: $z-sticky;
+  background-color: white;
+  border-bottom: 1px solid hsl(var(--border));
+  height: 56px;
+
+  // Responsive visibility utilities
+  &__desktop-only {
+    display: flex !important;
+
+    @media screen and (max-width: 767px) {
+      display: none !important;
+    }
+  }
+
+  &__mobile-only {
+    display: none !important;
+
+    @media screen and (max-width: 767px) {
+      display: flex !important;
+    }
+  }
+
+  &__container {
+    @include flex-between;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 $spacing-xl;
+    height: 100%;
+  }
+
+  &__logo {
+    @include flex-center;
+    @include transition(opacity);
+    z-index: calc($z-modal + 1);
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  &__nav {
+    gap: $spacing-xl;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__link {
+    font-size: 0.75rem;
+    color: #1b2340;
+    text-decoration: none;
+    font-weight: 400;
+    @include transition(color);
+
+    &:hover {
+      color: hsl(var(--brand-primary));
+    }
+  }
+
+  &__actions {
+    gap: $spacing-md;
+    align-items: center;
+  }
+
+  &__join {
+    font-size: 0.75rem;
+    font-weight: 400;
+  }
+
+  &__login {
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  // Hamburger Menu Button
+  &__hamburger {
+    @include flex-center;
+    @include button-reset;
+    width: 44px;
+    height: 44px;
+    border-radius: $radius-md;
+    color: #1b2340;
+    z-index: calc($z-modal + 1);
+    @include transition(all);
+
+    &:hover {
+      background-color: hsl(var(--muted));
+    }
+  }
+
+  // Mobile Menu
+  &__mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    max-width: 320px;
+    height: 100vh;
+    background-color: white;
+    z-index: $z-modal;
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 80px $spacing-xl $spacing-xl;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+    flex-direction: column;
+
+    @media screen and (max-width: 767px) {
+      display: flex;
+    }
+
+    &--open {
+      transform: translateX(0);
+    }
+  }
+
+  &__mobile-nav {
+    @include flex-column;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-xl;
+  }
+
+  &__mobile-link {
+    display: block;
+    padding: $spacing-md $spacing-lg;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #1b2340;
+    text-decoration: none;
+    border-radius: $radius-md;
+    @include transition(all);
+
+    &:hover {
+      background-color: hsl(var(--muted));
+      color: #ffa300;
+    }
+  }
+
+  &__mobile-actions {
+    @include flex-column;
+    gap: $spacing-md;
+    margin-top: auto;
+    padding-top: $spacing-xl;
+    border-top: 1px solid hsl(var(--border));
+  }
+
+  &__mobile-join,
+  &__mobile-login {
+    width: 100%;
+    justify-content: center;
+    height: 48px;
+    font-size: 1rem;
+  }
+
+  &__mobile-login {
+    background-color: #1b2340;
+
+    &:hover {
+      background-color: #2d3a5c;
+    }
+  }
+
+  // Overlay
+  &__overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: calc($z-modal - 1);
+    opacity: 1;
+    animation: fadeIn 0.3s ease-out;
+
+    @media screen and (max-width: 767px) {
+      display: block;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,91 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.landing-footer {
+  background-color: #1b2340;
+  color: white;
+  padding: $spacing-2xl $spacing-xl $spacing-lg;
+
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: $spacing-2xl;
+    padding-bottom: $spacing-2xl;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+    @media (max-width: $breakpoint-md) {
+      grid-template-columns: 1fr;
+      gap: $spacing-xl;
+    }
+  }
+
+  &__brand {
+    @include flex-column;
+    gap: $spacing-md;
+  }
+
+  &__tagline {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+    max-width: 300px;
+  }
+
+  &__links {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacing-xl;
+
+    @media (max-width: $breakpoint-sm) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__section {
+    @include flex-column;
+    gap: $spacing-md;
+  }
+
+  &__title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0;
+  }
+
+  &__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    @include flex-column;
+    gap: $spacing-sm;
+  }
+
+  &__link {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    @include transition(color);
+
+    &:hover {
+      color: #ffa300;
+    }
+  }
+
+  &__bottom {
+    padding-top: $spacing-lg;
+    text-align: center;
+  }
+
+  &__copyright {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0;
+  }
+}

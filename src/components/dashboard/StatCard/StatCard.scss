@@ -1,0 +1,47 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.stat-card {
+  @include flex-between;
+  background-color: #f8fafc;
+  border-radius: $radius-lg;
+  padding: 21px 19px;
+  cursor: pointer;
+  @include transition(all);
+
+  &:hover {
+    background-color: #f1f5f9;
+    transform: translateY(-2px);
+  }
+
+  &__content {
+    @include flex-column;
+  }
+
+  &__title {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #374151;
+    line-height: 1.75;
+  }
+
+  &__value {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #374151;
+    line-height: 1.75;
+    letter-spacing: -0.1px;
+  }
+
+  &__icon {
+    .material-symbols-outlined {
+      color: #cbd5e1 !important; // slate-300
+      font-size: 32px;
+      font-variation-settings:
+        'FILL' 0,
+        'wght' 200,
+        'GRAD' 0,
+        'opsz' 48;
+    }
+  }
+}

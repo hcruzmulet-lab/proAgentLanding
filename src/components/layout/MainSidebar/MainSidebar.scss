@@ -1,0 +1,469 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.main-sidebar {
+  @include flex-column;
+  align-items: center;
+  width: 48px;
+  min-height: 100vh;
+  padding: $spacing-md 0;
+  background-color: transparent;
+  position: relative;
+  flex-shrink: 0;
+  z-index: 100; // Asegurar que el sidebar y sus tooltips estén por encima
+
+  .material-symbols-outlined {
+    font-size: 24px;
+    font-variation-settings:
+      'FILL' 0,
+      'wght' 200,
+      'GRAD' 0,
+      'opsz' 24;
+    color: #334155; // slate-700
+  }
+
+  &__logo {
+    @include flex-center;
+    width: 100%;
+    height: 32px;
+    margin-bottom: $spacing-lg; // 24px
+
+    a {
+      @include flex-center;
+      @include transition(opacity);
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  &__controls {
+    @include flex-column;
+    align-items: center;
+    gap: $spacing-sm; // 8px entre controles
+    width: 100%;
+    // Total altura del grupo: 32px + 8px + 32px + 8px + 32px = 112px
+    // Subido 15px en total
+    margin-bottom: -7px;
+
+    // Remover el margin-bottom del search cuando está dentro de controls
+    .main-sidebar__search {
+      margin-bottom: 0;
+    }
+
+    // Hover para todos los botones dentro del grupo de controles
+    button:hover {
+      .material-symbols-outlined {
+        font-variation-settings:
+          'FILL' 1,
+          'wght' 200,
+          'GRAD' 0,
+          'opsz' 24;
+      }
+    }
+  }
+
+  &__notification-btn {
+    position: relative;
+
+    &:hover {
+      .material-symbols-outlined {
+        font-variation-settings:
+          'FILL' 1,
+          'wght' 200,
+          'GRAD' 0,
+          'opsz' 24;
+      }
+    }
+  }
+
+  &__notification-badge {
+    position: absolute;
+    top: 0px;
+    right: 8px;
+    min-width: 12px;
+    height: 12px;
+    background-color: #dc2626;
+    color: white;
+    font-size: 8px;
+    font-weight: 500;
+    border-radius: 40px;
+    @include flex-center;
+    padding: 2px;
+  }
+
+  &__search {
+    @include button-reset;
+    @include flex-center;
+    position: relative;
+    width: 32px;
+    height: 32px;
+    color: #334155; // slate-700
+    border-radius: 8px;
+    // Cuando está solo (versión expandida), debe ocupar el mismo espacio que el grupo de controles
+    // Grupo de controles: 112px (altura) + 8px (margin) = 120px
+    // Buscador: 32px + X = 120px → X = 88px
+    margin-bottom: 88px;
+    @include transition(all);
+
+    &:hover {
+      .material-symbols-outlined {
+        font-variation-settings:
+          'FILL' 1,
+          'wght' 200,
+          'GRAD' 0,
+          'opsz' 24;
+      }
+
+      .main-sidebar__item-tooltip {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(0);
+      }
+    }
+  }
+
+  &__nav {
+    @include flex-column;
+    align-items: center;
+    gap: $spacing-sm; // Margen reducido entre iconos
+    width: 100%;
+    flex-grow: 1;
+    justify-content: center;
+  }
+
+  &__secondary {
+    @include flex-column;
+    align-items: center;
+    gap: $spacing-sm; // Margen reducido entre iconos
+    width: 100%;
+    margin-top: $spacing-sm;
+    padding-top: $spacing-md;
+    padding-bottom: $spacing-lg; // Añadir padding inferior
+    border-top: 1px solid rgba(203, 213, 225, 0.5);
+  }
+
+  &__item-wrapper {
+    position: relative;
+    width: 48px;
+  }
+
+  &__item {
+    position: relative;
+    @include flex-center;
+    width: 48px;
+    height: 40px;
+    color: #334155; // slate-700
+    @include transition(all);
+    text-decoration: none;
+
+    &--svg {
+      .main-sidebar__icon-filled {
+        display: none;
+      }
+
+      &:hover {
+        .main-sidebar__icon-normal {
+          display: none;
+        }
+
+        .main-sidebar__icon-filled {
+          display: block;
+        }
+
+        .main-sidebar__item-tooltip {
+          opacity: 1;
+          visibility: visible;
+          transform: translateX(0);
+        }
+      }
+    }
+
+    &:hover:not(&--active):not(&--svg) {
+      .material-symbols-outlined {
+        font-variation-settings:
+          'FILL' 1,
+          'wght' 200,
+          'GRAD' 0,
+          'opsz' 24;
+      }
+
+      .main-sidebar__item-tooltip {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(0);
+      }
+    }
+
+    &--active {
+      background-color: white;
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+      color: $text-primary;
+      z-index: 1;
+
+      .material-symbols-outlined {
+        font-variation-settings:
+          'FILL' 1,
+          'wght' 200,
+          'GRAD' 0,
+          'opsz' 24;
+      }
+
+      // Curva superior
+      &::before {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: -8px;
+        width: 8px;
+        height: 8px;
+        background: radial-gradient(circle at 0 0, transparent 8px, white 8px);
+      }
+
+      // Curva inferior
+      &::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        bottom: -8px;
+        width: 8px;
+        height: 8px;
+        background: radial-gradient(circle at 0 100%, transparent 8px, white 8px);
+      }
+    }
+  }
+
+  &__item-tooltip {
+    position: absolute;
+    left: calc(100% + 16px);
+    white-space: nowrap;
+    background-color: $text-primary;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-10px);
+    transition: all 0.2s ease;
+    pointer-events: none;
+    z-index: 9999;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: -6px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 6px 6px 6px 0;
+      border-color: transparent $text-primary transparent transparent;
+    }
+  }
+
+  &__inicio-menu {
+    position: absolute;
+    left: 100%;
+    top: 0;
+    margin-left: 12px;
+    background-color: white;
+    border-radius: $radius-lg;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    min-width: 200px;
+    z-index: $z-popover;
+    animation: fadeIn 0.15s ease-out;
+
+    &::before {
+      content: '';
+      position: absolute;
+      right: 100%;
+      top: 16px;
+      border-width: 6px;
+      border-style: solid;
+      border-color: transparent white transparent transparent;
+    }
+  }
+
+  &__inicio-menu-header {
+    padding: $spacing-md $spacing-lg;
+    border-bottom: 1px solid $bg-muted;
+  }
+
+  &__inicio-menu-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: $text-primary;
+    display: block;
+  }
+
+  &__inicio-menu-item {
+    @include flex-center;
+    justify-content: flex-start;
+    gap: $spacing-sm;
+    width: 100%;
+    padding: $spacing-md $spacing-lg;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: $text-secondary;
+    @include transition(all);
+    cursor: pointer;
+    text-decoration: none;
+
+    .material-symbols-outlined {
+      font-size: 20px;
+      font-variation-settings:
+        'FILL' 0,
+        'wght' 200,
+        'GRAD' 0,
+        'opsz' 20;
+    }
+
+    &:hover {
+      background-color: $bg-muted;
+      color: $text-primary;
+
+      .material-symbols-outlined {
+        font-variation-settings:
+          'FILL' 1,
+          'wght' 200,
+          'GRAD' 0,
+          'opsz' 20;
+      }
+    }
+
+    &--active {
+      background-color: $text-primary;
+      color: white;
+
+      .material-symbols-outlined {
+        color: white;
+        font-variation-settings:
+          'FILL' 1,
+          'wght' 200,
+          'GRAD' 0,
+          'opsz' 20;
+      }
+
+      &:hover {
+        background-color: $text-primary;
+        color: white;
+
+        .material-symbols-outlined {
+          color: white;
+        }
+      }
+    }
+
+    &:last-of-type {
+      border-bottom-left-radius: $radius-lg;
+      border-bottom-right-radius: $radius-lg;
+    }
+  }
+
+  &__avatar-wrapper {
+    position: relative;
+    margin-top: $spacing-xs; // 4px - reducido para subir el avatar
+  }
+
+  &__avatar {
+    @include flex-center;
+    width: 32px;
+    height: 32px;
+    background-color: $text-primary;
+    border-radius: 50%;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    @include transition(all);
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  &__user-menu {
+    position: absolute;
+    left: 100%;
+    bottom: 0;
+    margin-left: 12px;
+    background-color: white;
+    border-radius: $radius-lg;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    min-width: 200px;
+    z-index: $z-popover;
+    animation: fadeIn 0.15s ease-out;
+
+    &::before {
+      content: '';
+      position: absolute;
+      right: 100%;
+      bottom: 12px;
+      border-width: 6px;
+      border-style: solid;
+      border-color: transparent white transparent transparent;
+    }
+  }
+
+  &__user-menu-header {
+    padding: $spacing-md $spacing-lg;
+    border-bottom: 1px solid $bg-muted;
+  }
+
+  &__user-name {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: $text-primary;
+    display: block;
+  }
+
+  &__user-menu-divider {
+    height: 1px;
+    background-color: $bg-muted;
+    margin: 0;
+  }
+
+  &__user-menu-item {
+    @include button-reset;
+    width: 100%;
+    text-align: left;
+    padding: $spacing-md $spacing-lg;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: $text-secondary;
+    @include transition(all);
+    cursor: pointer;
+
+    &:hover {
+      background-color: $bg-muted;
+      color: $text-primary;
+    }
+
+    &:first-of-type {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+
+    &:last-of-type {
+      border-bottom-left-radius: $radius-lg;
+      border-bottom-right-radius: $radius-lg;
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
