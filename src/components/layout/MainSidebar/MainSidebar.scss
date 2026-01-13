@@ -202,7 +202,7 @@
       border-top-left-radius: 10px;
       border-bottom-left-radius: 10px;
       color: $text-primary;
-      z-index: 1;
+      z-index: 99;
 
       .material-symbols-outlined {
         font-variation-settings:
@@ -221,6 +221,7 @@
         width: 8px;
         height: 8px;
         background: radial-gradient(circle at 0 0, transparent 8px, white 8px);
+        z-index: 99;
       }
 
       // Curva inferior
@@ -232,6 +233,7 @@
         width: 8px;
         height: 8px;
         background: radial-gradient(circle at 0 100%, transparent 8px, white 8px);
+        z-index: 99;
       }
     }
   }
@@ -271,25 +273,28 @@
   &__inicio-menu {
     position: fixed;
     left: 56px;
-    top: 0;
-    bottom: 0;
+    top: $spacing-md;
+    bottom: $spacing-md;
     background-color: white;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    width: 240px;
-    z-index: 99;
+    width: 216px;
+    z-index: 98;
     animation: slideIn 0.2s ease-out;
     display: flex;
     flex-direction: column;
+    border-radius: $radius-lg;
+    padding: $spacing-md 0;
   }
 
   &__inicio-menu-header {
-    padding: $spacing-lg $spacing-lg;
+    padding: 0 $spacing-md $spacing-md $spacing-md;
+    margin-bottom: $spacing-sm;
     border-bottom: 1px solid $bg-muted;
     flex-shrink: 0;
   }
 
   &__inicio-menu-title {
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 600;
     color: $text-primary;
     display: block;
@@ -298,18 +303,20 @@
   &__inicio-menu-item {
     @include flex-center;
     justify-content: flex-start;
-    gap: $spacing-md;
-    width: 100%;
-    padding: $spacing-md $spacing-lg;
-    font-size: 0.9375rem;
+    gap: $spacing-sm;
+    width: calc(100% - #{$spacing-md * 2});
+    padding: $spacing-sm $spacing-md;
+    font-size: 0.875rem;
     font-weight: 500;
     color: $text-secondary;
     @include transition(all);
     cursor: pointer;
     text-decoration: none;
+    border-radius: $radius-md;
+    margin: 0 $spacing-md;
 
     .material-symbols-outlined {
-      font-size: 20px;
+      font-size: 18px;
       font-variation-settings:
         'FILL' 0,
         'wght' 200,
