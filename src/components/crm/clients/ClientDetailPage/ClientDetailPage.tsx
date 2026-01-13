@@ -448,12 +448,6 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
           </DialogHeader>
 
           <div className="client-detail__modal-body">
-            {/* Back Button */}
-            <button className="client-detail__modal-back" onClick={() => setIsAddCardModalOpen(false)}>
-              <span className="material-symbols-outlined">arrow_back</span>
-              {t('creditCards.modal.goBack')}
-            </button>
-
             {/* Main Title */}
             <div className="client-detail__modal-main-title">
               <span className="material-symbols-outlined">lock</span>

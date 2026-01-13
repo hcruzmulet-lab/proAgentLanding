@@ -399,7 +399,6 @@
         "addCard": "Agregar Tarjeta",
         "modal": {
           "title": "Agregar tarjeta de crédito del cliente",
-          "goBack": "Regresar",
           "addPaymentCard": "Agregar tarjeta de pago",
           "secureMessage": "Todos los datos se almacenan de forma segura en una bóveda",
           "cardInformation": "Información de la tarjeta",
