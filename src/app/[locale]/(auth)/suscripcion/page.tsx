@@ -7,8 +7,7 @@ export default function SuscripcionPage() {
   const router = useRouter();
 
   const handleStart = () => {
-    // TODO: Navegar al siguiente paso del formulario
-    console.log('Iniciando proceso de suscripción');
+    router.push('/suscripcion/paso-1');
   };
 
   return <SubscriptionIntro onStart={handleStart} />;
