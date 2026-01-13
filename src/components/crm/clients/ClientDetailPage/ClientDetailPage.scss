@@ -400,39 +400,34 @@
   // Add Card Modal Styles
   &__add-card-modal {
     max-width: 700px;
-    max-height: 75vh;
+    max-height: 85vh;
     overflow-y: auto;
-    
-    .dialog-content {
-      padding: $spacing-md;
-    }
   }
 
   &__modal-header {
     border-bottom: 1px solid #e2e8f0;
-    padding-bottom: $spacing-sm;
-    margin-bottom: $spacing-sm;
+    padding-bottom: $spacing-md;
   }
 
   &__modal-title {
-    font-size: 1.125rem;
+    font-size: 1.25rem;
     font-weight: 600;
     color: #0f172a;
   }
 
   &__modal-body {
-    padding: 0;
+    padding: $spacing-md 0;
     @include flex-column;
-    gap: $spacing-sm;
+    gap: $spacing-md;
   }
 
   &__form-section {
     @include flex-column;
-    gap: $spacing-xs;
+    gap: $spacing-sm;
   }
 
   &__form-section-title {
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
     font-weight: 600;
     color: #0f172a;
     margin: 0 0 $spacing-xs 0;
@@ -441,7 +436,7 @@
   &__card-info-row {
     display: grid;
     grid-template-columns: 1fr 150px 100px;
-    gap: $spacing-sm;
+    gap: $spacing-md;
   }
 
   &__card-number-field {
@@ -451,16 +446,14 @@
 
     .material-symbols-outlined {
       position: absolute;
-      left: 10px;
+      left: 12px;
       color: #94a3b8;
-      font-size: 18px;
+      font-size: 20px;
       pointer-events: none;
     }
 
     input {
-      padding-left: 36px;
-      height: 36px;
-      font-size: 0.875rem;
+      padding-left: 40px;
     }
   }
 
@@ -470,30 +463,22 @@
   }
 
   &__form-label {
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
     font-weight: 500;
     color: #0f172a;
-    margin-bottom: 4px;
   }
 
   &__form-field {
     @include flex-column;
-    gap: 4px;
-    
-    input {
-      height: 36px;
-      padding: 6px 12px;
-      font-size: 0.875rem;
-    }
+    gap: $spacing-sm;
   }
 
   &__select-field {
     width: 100%;
-    height: 36px;
-    padding: 6px 12px;
+    padding: $spacing-sm $spacing-md;
     border: 1px solid #cbd5e1;
     border-radius: $radius-md;
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
     color: #334155;
     background-color: white;
     cursor: pointer;
@@ -512,15 +497,15 @@
   &__form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: $spacing-sm;
+    gap: $spacing-md;
   }
 
   &__modal-actions {
     display: flex;
     justify-content: flex-end;
-    gap: $spacing-sm;
-    margin-top: $spacing-sm;
-    padding-top: $spacing-sm;
+    gap: $spacing-md;
+    margin-top: $spacing-md;
+    padding-top: $spacing-md;
     border-top: 1px solid #e2e8f0;
   }
 
@@ -528,9 +513,6 @@
     background: white;
     color: #334155;
     border: 1px solid #cbd5e1;
-    height: 36px;
-    padding: 0 $spacing-md;
-    font-size: 0.875rem;
 
     &:hover {
       background: #f8fafc;
@@ -540,9 +522,6 @@
   &__modal-save-button {
     background-color: #0f172a;
     color: white;
-    height: 36px;
-    padding: 0 $spacing-md;
-    font-size: 0.875rem;
 
     &:hover {
       background-color: #1e293b;
