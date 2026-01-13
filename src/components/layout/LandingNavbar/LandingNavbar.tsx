@@ -27,6 +27,16 @@ export function LandingNavbar({ onLoginClick, onJoinClick }: LandingNavbarProps)
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    const targetId = href.replace('#', '');
+    const targetSection = document.getElementById(targetId);
+    if (targetSection) {
+      targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    closeMenu();
+  };
+
   return (
     <nav className="landing-navbar">
       <div className="landing-navbar__container">
@@ -37,7 +47,12 @@ export function LandingNavbar({ onLoginClick, onJoinClick }: LandingNavbarProps)
         {/* Desktop Navigation */}
         <div className="landing-navbar__nav landing-navbar__desktop-only">
           {navItems.map((item) => (
-            <Link key={item.href} href={item.href} className="landing-navbar__link">
+            <Link 
+              key={item.href} 
+              href={item.href} 
+              className="landing-navbar__link"
+              onClick={(e) => handleNavClick(e, item.href)}
+            >
               {item.label}
             </Link>
           ))}
@@ -73,7 +88,7 @@ export function LandingNavbar({ onLoginClick, onJoinClick }: LandingNavbarProps)
               key={item.href}
               href={item.href}
               className="landing-navbar__mobile-link"
-              onClick={closeMenu}
+              onClick={(e) => handleNavClick(e, item.href)}
             >
               {item.label}
             </Link>
