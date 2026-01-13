@@ -541,8 +541,10 @@ export function LandingPageModule() {
 
       <LandingFooter
         productLinks={[
-          { label: t('footer.features'), href: '#how-it-works' },
-          { label: t('footer.pricing'), href: '#pricing' },
+          { label: t('nav.whyProAgent'), href: '#why' },
+          { label: t('nav.howItWorks'), href: '#how-it-works' },
+          { label: t('nav.plans'), href: '#pricing' },
+          { label: t('nav.faq'), href: '#faq' },
         ]}
         companyLinks={[
           { label: t('footer.about'), href: '#' },

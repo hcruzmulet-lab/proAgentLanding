@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import './LandingFooter.scss';
@@ -22,6 +24,17 @@ export function LandingFooter({
 }: LandingFooterProps) {
   const currentYear = new Date().getFullYear();
 
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      const targetId = href.replace('#', '');
+      const targetSection = document.getElementById(targetId);
+      if (targetSection) {
+        targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  };
+
   return (
     <footer className="landing-footer">
       <div className="landing-footer__container">
@@ -39,7 +52,11 @@ export function LandingFooter({
               <ul className="landing-footer__list">
                 {productLinks.map((link) => (
                   <li key={link.href}>
-                    <Link href={link.href} className="landing-footer__link">
+                    <Link 
+                      href={link.href} 
+                      className="landing-footer__link"
+                      onClick={(e) => handleLinkClick(e, link.href)}
+                    >
                       {link.label}
                     </Link>
                   </li>
@@ -52,7 +69,11 @@ export function LandingFooter({
               <ul className="landing-footer__list">
                 {companyLinks.map((link) => (
                   <li key={link.href}>
-                    <Link href={link.href} className="landing-footer__link">
+                    <Link 
+                      href={link.href} 
+                      className="landing-footer__link"
+                      onClick={(e) => handleLinkClick(e, link.href)}
+                    >
                       {link.label}
                     </Link>
                   </li>
@@ -65,7 +86,11 @@ export function LandingFooter({
               <ul className="landing-footer__list">
                 {legalLinks.map((link) => (
                   <li key={link.href}>
-                    <Link href={link.href} className="landing-footer__link">
+                    <Link 
+                      href={link.href} 
+                      className="landing-footer__link"
+                      onClick={(e) => handleLinkClick(e, link.href)}
+                    >
                       {link.label}
                     </Link>
                   </li>
