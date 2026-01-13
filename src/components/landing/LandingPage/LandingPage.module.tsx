@@ -239,7 +239,14 @@ export function LandingPageModule() {
           <div className="landing-page-module__why-grid">
             {whyReasons.map((reason, index) => (
               <div key={index} className="landing-page-module__why-card">
-                <span className="material-symbols-outlined landing-page-module__why-icon">
+                <span 
+                  className="material-symbols-outlined landing-page-module__why-icon"
+                  style={{ 
+                    fontSize: '96px',
+                    width: '96px',
+                    height: '96px'
+                  }}
+                >
                   {reason.icon}
                 </span>
                 <h3 className="landing-page-module__why-card-title">{reason.title}</h3>
