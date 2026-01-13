@@ -151,23 +151,83 @@
       "description": "Por eso trabajamos con proveedores globales, tecnología de clase mundial y turoperadores líderes en cada mercado. Accedes tanto a los grandes jugadores de la industria como a mayoristas especializados en Estados Unidos y Latinoamérica. Todo está diseñado para que vendas con confianza, variedad y precios que compiten al más alto nivel."
     },
     "faq": {
-      "title": "Preguntas Frecuentes",
-      "subtitle": "Respuestas a las preguntas más comunes",
+      "title": "Preguntas Frecuentes — ProAgent",
+      "subtitle": "Todo lo que necesitas saber antes de comenzar. Resolvemos tus dudas más comunes sobre pagos, comisiones, capacitación, licencias, soporte y tecnología.",
       "q1": {
-        "question": "¿Qué hace diferente a ProAgent?",
-        "answer": "ProAgent integra dos inteligencias artificiales especializadas en viajes y está diseñado específicamente para agentes hispanos en EE.UU. y Latinoamérica, con todo 100% en español."
+        "question": "¿Qué es ProAgent?",
+        "answer": "ProAgent es una plataforma traveltech de nueva generación, creada en Estados Unidos y diseñada especialmente para agentes de viajes hispanos en EE.UU. y Latinoamérica. Integra motores profesionales, proveedores globales y dos inteligencias artificiales para ayudarte a construir un negocio de viajes rentable y escalable."
       },
       "q2": {
-        "question": "¿Necesito experiencia previa en turismo?",
-        "answer": "No necesariamente. ProAgent está diseñado tanto para profesionales experimentados como para quienes quieren empezar de cero. Te acompañamos con capacitación continua."
+        "question": "¿Puedo cambiar de plan más adelante?",
+        "answer": "Sí. Puedes subir o bajar de plan cuando lo necesites. Los cambios se aplican de manera inmediata."
       },
       "q3": {
-        "question": "¿Cómo funciona el proceso de verificación?",
-        "answer": "Una vez te registras, verificamos cada perfil para asegurar que quienes ingresan estén realmente listos para operar a nivel profesional. Es un proceso ágil para quienes califican."
+        "question": "¿Qué significa el split de comisiones (70/30, 80/20, 90/10)?",
+        "answer": "Es el porcentaje de la comisión que recibes tú como agente y el porcentaje que corresponde a ProAgent solo cuando realizas reservas con proveedores. Ejemplo: en un split 70/30, tú recibes el 70% y ProAgent el 30%."
       },
       "q4": {
-        "question": "¿Qué tipo de soporte ofrecen?",
-        "answer": "Ofrecemos soporte real en español desde EE.UU., con un equipo que te acompaña, te responde y te ayuda a crecer. Porque escalar un negocio de viajes no debería sentirse solo."
+        "question": "¿El plan incluye todos los motores de búsqueda?",
+        "answer": "Sí. Todos los planes incluyen motores completos de: Hoteles, Vuelos, Traslados, Actividades, Circuitos, Trenes, Seguros y eSIM. Los planes superiores añaden categorías adicionales como cruceros, Disney, autos, sport/events, routing, lujo y grupos."
+      },
+      "q5": {
+        "question": "¿La Inteligencia Artificial está realmente incluida?",
+        "answer": "Sí, pero con distintos niveles según el plan: ProAgent Plus y Master incluyen 1 IA exclusiva de ProAgent para consultas profundas, crear itinerarios y optimizar propuestas. ProAgent Elite incluye las 2 inteligencias artificiales, combinando nuestra IA exclusiva con una IA avanzada adicional que devuelve ofertas de viaje desde un solo prompt. Ejemplo práctico: 'Crea un itinerario de 5 días a Punta Cana para una familia con niños, con hotel frente al mar, actividades y traslados.' La IA entrega un plan completo listo para reservar o enviar al cliente."
+      },
+      "q6": {
+        "question": "¿Qué son los proveedores premium y los proveedores de lujo?",
+        "answer": "Proveedores Premium: mayoristas líderes en nichos especializados y turoperadores top en EE.UU., Caribe, Europa y Latinoamérica. Lujo: proveedores exclusivos de hoteles 5*, experiencias premium y DMCs high-end, disponibles en planes superiores."
+      },
+      "q7": {
+        "question": "¿Qué proveedores incluye ProAgent?",
+        "answer": "Trabajamos con: Proveedores globales y cadenas hoteleras, Turoperadores premium de Estados Unidos, Mayoristas líderes en nichos especializados, Operadores preferidos por viajeros latinos en Florida y Latinoamérica, y Socios fuertes en España y Europa. Garantizamos variedad, precios competitivos y acceso real a los grandes del mercado."
+      },
+      "q8": {
+        "question": "¿Puedo emitir vuelos, hoteles y paquetes desde la misma plataforma?",
+        "answer": "Sí. ProAgent integra motores de hoteles, vuelos, paquetes, circuitos, cruceros, traslados, actividades, autos, eventos, trenes y seguros. Además, incluye Trip Planner, tu herramienta premium para crear viajes a medida desde un solo lugar."
+      },
+      "q9": {
+        "question": "¿Qué diferencia a ProAgent de otros host agencies tradicionales?",
+        "answer": "Todo. ProAgent es una plataforma para agentes de última generación, diseñada para el futuro de los viajes. Integra IA, proveedores globales, herramientas avanzadas y la fuerza de la marca sombrilla Azúcar Travel. Vendemos viajes. Sabemos cómo hacerlo."
+      },
+      "q10": {
+        "question": "¿Cuándo cobro mis comisiones?",
+        "answer": "Las comisiones se pagan hasta 7-15 días después de que el proveedor liquida a ProAgent, una vez que el viaje del cliente ha finalizado."
+      },
+      "q11": {
+        "question": "¿Qué soporte recibo como asesor?",
+        "answer": "Depende del plan elegido: Estándar (atención vía tickets), Prioritario Plus (respuesta más rápida y acompañamiento mejorado + whatsapp), VIP Master (acceso directo, prioridad absoluta y soporte especializado + whatsapp). Todos los planes incluyen capacitación esencial y acompañamiento básico para ayudarte a vender mejor, aunque sea tu primera vez."
+      },
+      "q12": {
+        "question": "¿Necesito experiencia previa para usar ProAgent?",
+        "answer": "No. ProAgent está diseñada tanto para agentes nuevos como para agentes experimentados. La IA y la capacitación continua te ayudan a aprender mientras vendes."
+      },
+      "q13": {
+        "question": "¿Puedo trabajar desde cualquier país?",
+        "answer": "Sí. ProAgent funciona en EE.UU., Latinoamérica y en cualquier lugar donde puedas vender legalmente. Muchos agentes operan de forma 100% remota."
+      },
+      "q14": {
+        "question": "¿Necesito licencias para vender viajes?",
+        "answer": "Si resides en EE.UU., ProAgent te cubre bajo la estructura de Host Agency. Si estás en Latinoamérica, puedes operar sin problemas con proveedores internacionales. Si venderás bajo tu propia marca oficial, probablemente necesitarás licencias. Te asesoramos en el proceso."
+      },
+      "q15": {
+        "question": "¿Los precios de los planes incluyen impuestos o cargos adicionales?",
+        "answer": "Sí. Los precios son finales, sin tarifas ocultas."
+      },
+      "q16": {
+        "question": "¿Hay contrato o permanencia mínima?",
+        "answer": "No. Puedes cancelar cuando desees. No existe permanencia obligatoria. ProAgent se reserva el derecho de readmisión."
+      },
+      "q17": {
+        "question": "¿ProAgent me entrega clientes?",
+        "answer": "ProAgent te ayuda principalmente a generarlos. Sin embargo, los agentes certificados pueden acceder a leads verificados con comisión compartida, a través del sistema global de generación de leads y del Acelerador de Leads. Todo lo que funciona para ProAgent —ventas, campañas, influencers, contenido y hooks reales— se transfiere a ti para que generes tus propios clientes con procesos probados."
+      },
+      "q18": {
+        "question": "¿Puedo operar con mi propia marca dentro de ProAgent?",
+        "answer": "Sí. ProAgent permite operar con tu propia marca y estructura comercial, utilizando la tecnología, los proveedores y el respaldo de ProAgent como soporte."
+      },
+      "q19": {
+        "question": "¿Cómo me beneficia ser parte de la marca Azúcar Travel ProAgent?",
+        "answer": "Porque te integras a una marca que vende, viaja y entiende qué funciona en el mercado real. Accedes a campañas validadas, guiones de venta, plantillas, estrategias avanzadas de publicidad y una plataforma tecnológica completa para planificar, cotizar, vender y dar seguimiento a un viaje sin salir del sistema."
       }
     },
     "cta": {
