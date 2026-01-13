@@ -279,7 +279,6 @@
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     width: 216px;
     z-index: 98;
-    animation: slideIn 0.2s ease-out;
     display: flex;
     flex-direction: column;
     border-radius: $radius-lg;
@@ -458,15 +457,6 @@
     to {
       opacity: 1;
       transform: translateY(0);
-    }
-  }
-
-  @keyframes slideIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
     }
   }
 }
