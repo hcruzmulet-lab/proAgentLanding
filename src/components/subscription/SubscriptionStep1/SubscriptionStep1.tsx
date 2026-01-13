@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { LandingNavbar } from '@/components/layout/LandingNavbar';
 import './SubscriptionStep1.scss';
 
 const languages = [
@@ -45,20 +45,18 @@ export function SubscriptionStep1() {
     router.push('/suscripcion/paso-2');
   };
 
+  const handleLogin = () => {
+    router.push('/login');
+  };
+
+  const handleJoin = () => {
+    router.push('/suscripcion');
+  };
+
   return (
     <div className="subscription-step1">
       {/* Navbar */}
-      <div className="subscription-step1__navbar">
-        <div className="subscription-step1__logo">
-          <Image
-            src="/logo-full.svg"
-            alt="ProAgent"
-            width={118}
-            height={34}
-            priority
-          />
-        </div>
-      </div>
+      <LandingNavbar onLoginClick={handleLogin} onJoinClick={handleJoin} />
 
       {/* Main Content */}
       <div className="subscription-step1__container">

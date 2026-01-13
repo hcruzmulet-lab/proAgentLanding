@@ -4,7 +4,7 @@
 .subscription-step1 {
   min-height: 100vh;
   background-color: #f1f5f9; // slate-100
-  @include flex-column;
+  position: relative;
 
   .material-symbols-outlined {
     font-size: 20px;
@@ -15,30 +15,20 @@
       'opsz' 20;
   }
 
-  &__navbar {
-    background-color: white;
-    padding: 11px 21px;
-    height: 56px;
-    @include flex-center;
-    justify-content: flex-start;
-  }
-
-  &__logo {
-    @include flex-center;
-  }
-
   &__container {
     @include flex-column;
     align-items: center;
-    padding: 64px 0;
+    padding: 64px 16px;
     gap: 64px;
+    margin-top: 56px;
   }
 
   &__card {
     background-color: white;
     border-radius: $radius-lg;
     padding: $spacing-lg;
-    width: 500px;
+    width: 100%;
+    max-width: 500px;
     @include flex-column;
     gap: $spacing-lg;
   }
