@@ -1,11 +1,5 @@
-import { DashboardLayout } from '@/components/layout/DashboardLayout';
-import { AGENT_NAV } from '@/config/navigation';
-import { Providers } from '@/lib/providers';
+import { ReactNode } from 'react';
 
-export default function AgentLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <Providers>
-      <DashboardLayout navItems={AGENT_NAV}>{children}</DashboardLayout>
-    </Providers>
-  );
+export default function AgentLayout({ children }: { children: ReactNode }) {
+  return <>{children}</>;
 }
