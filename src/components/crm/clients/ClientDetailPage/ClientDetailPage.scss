@@ -397,6 +397,177 @@
     }
   }
 
+  // Add Card Modal Styles
+  &__add-card-modal {
+    max-width: 700px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  &__modal-header {
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: $spacing-md;
+  }
+
+  &__modal-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #0f172a;
+  }
+
+  &__modal-body {
+    padding: $spacing-lg 0;
+    @include flex-column;
+    gap: $spacing-lg;
+  }
+
+  &__modal-back {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    background: none;
+    border: none;
+    color: #64748b;
+    font-size: 0.9375rem;
+    cursor: pointer;
+    padding: $spacing-sm 0;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #334155;
+    }
+
+    .material-symbols-outlined {
+      font-size: 20px;
+    }
+  }
+
+  &__modal-main-title {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #0f172a;
+
+    .material-symbols-outlined {
+      font-size: 28px;
+    }
+  }
+
+  &__modal-subtitle {
+    color: #64748b;
+    font-size: 0.9375rem;
+    margin-top: -$spacing-sm;
+  }
+
+  &__form-section {
+    @include flex-column;
+    gap: $spacing-md;
+  }
+
+  &__form-section-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #0f172a;
+    margin: 0;
+  }
+
+  &__card-info-row {
+    display: grid;
+    grid-template-columns: 1fr 150px 100px;
+    gap: $spacing-md;
+  }
+
+  &__card-number-field {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    .material-symbols-outlined {
+      position: absolute;
+      left: 12px;
+      color: #94a3b8;
+      font-size: 20px;
+      pointer-events: none;
+    }
+
+    input {
+      padding-left: 40px;
+    }
+  }
+
+  &__expiry-field,
+  &__cvc-field {
+    text-align: center;
+  }
+
+  &__form-label {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: #0f172a;
+  }
+
+  &__form-field {
+    @include flex-column;
+    gap: $spacing-sm;
+  }
+
+  &__select-field {
+    width: 100%;
+    padding: $spacing-sm $spacing-md;
+    border: 1px solid #cbd5e1;
+    border-radius: $radius-md;
+    font-size: 0.9375rem;
+    color: #334155;
+    background-color: white;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: #3b82f6;
+    }
+
+    &:hover {
+      border-color: #94a3b8;
+    }
+  }
+
+  &__form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-md;
+  }
+
+  &__modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: $spacing-md;
+    margin-top: $spacing-lg;
+    padding-top: $spacing-lg;
+    border-top: 1px solid #e2e8f0;
+  }
+
+  &__modal-close-button {
+    background: white;
+    color: #334155;
+    border: 1px solid #cbd5e1;
+
+    &:hover {
+      background: #f8fafc;
+    }
+  }
+
+  &__modal-save-button {
+    background-color: #0f172a;
+    color: white;
+
+    &:hover {
+      background-color: #1e293b;
+    }
+  }
+
   @media (max-width: $breakpoint-md) {
     &__header {
       flex-direction: column;

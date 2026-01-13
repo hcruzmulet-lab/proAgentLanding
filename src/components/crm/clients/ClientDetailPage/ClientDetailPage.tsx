@@ -5,6 +5,13 @@ import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,6 +32,7 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
   const [isEditingLastName, setIsEditingLastName] = useState(false);
   const [editedFirstName, setEditedFirstName] = useState('');
   const [editedLastName, setEditedLastName] = useState('');
+  const [isAddCardModalOpen, setIsAddCardModalOpen] = useState(false);
 
   // Load clients from localStorage or use sample data
   const getClients = () => {
@@ -410,7 +418,10 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
               <br />
               {t('creditCards.emptySecondLine')}
             </p>
-            <Button className="client-detail__add-card-button">
+            <Button 
+              className="client-detail__add-card-button"
+              onClick={() => setIsAddCardModalOpen(true)}
+            >
               <span className="material-symbols-outlined">add</span>
               {t('creditCards.addCard')}
             </Button>
@@ -426,6 +437,131 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
           </p>
         </div>
       )}
+
+      {/* Add Credit Card Modal */}
+      <Dialog open={isAddCardModalOpen} onOpenChange={setIsAddCardModalOpen}>
+        <DialogContent className="client-detail__add-card-modal">
+          <DialogHeader className="client-detail__modal-header">
+            <DialogTitle className="client-detail__modal-title">
+              {t('creditCards.modal.title')}
+            </DialogTitle>
+          </DialogHeader>
+
+          <div className="client-detail__modal-body">
+            {/* Back Button */}
+            <button className="client-detail__modal-back" onClick={() => setIsAddCardModalOpen(false)}>
+              <span className="material-symbols-outlined">arrow_back</span>
+              {t('creditCards.modal.goBack')}
+            </button>
+
+            {/* Main Title */}
+            <div className="client-detail__modal-main-title">
+              <span className="material-symbols-outlined">lock</span>
+              <h3>{t('creditCards.modal.addPaymentCard')}</h3>
+            </div>
+            <p className="client-detail__modal-subtitle">{t('creditCards.modal.secureMessage')}</p>
+
+            {/* Card Information */}
+            <div className="client-detail__form-section">
+              <h4 className="client-detail__form-section-title">{t('creditCards.modal.cardInformation')}</h4>
+              <div className="client-detail__card-info-row">
+                <div className="client-detail__card-number-field">
+                  <span className="material-symbols-outlined client-detail__card-icon">credit_card</span>
+                  <Input placeholder={t('creditCards.modal.cardNumberPlaceholder')} />
+                </div>
+                <Input 
+                  placeholder={t('creditCards.modal.expiryDate')} 
+                  className="client-detail__expiry-field"
+                />
+                <Input 
+                  placeholder={t('creditCards.modal.cvc')} 
+                  className="client-detail__cvc-field"
+                />
+              </div>
+            </div>
+
+            {/* Cardholder Name */}
+            <div className="client-detail__form-section">
+              <Label className="client-detail__form-label">{t('creditCards.modal.cardholderName')}</Label>
+              <Input placeholder={t('creditCards.modal.cardholderNamePlaceholder')} />
+            </div>
+
+            {/* Card Label */}
+            <div className="client-detail__form-section">
+              <Label className="client-detail__form-label">{t('creditCards.modal.cardLabel')}</Label>
+              <Input placeholder={t('creditCards.modal.cardLabelPlaceholder')} />
+            </div>
+
+            {/* Billing Address */}
+            <div className="client-detail__form-section">
+              <h4 className="client-detail__form-section-title">{t('creditCards.modal.billingAddress')}</h4>
+              
+              {/* Country */}
+              <div className="client-detail__form-field">
+                <Label className="client-detail__form-label">{t('creditCards.modal.countryOrRegion')}</Label>
+                <select className="client-detail__select-field">
+                  <option>Estados Unidos de América</option>
+                  <option>México</option>
+                  <option>España</option>
+                  <option>Colombia</option>
+                  <option>Argentina</option>
+                </select>
+              </div>
+
+              {/* Address */}
+              <div className="client-detail__form-field">
+                <Label className="client-detail__form-label">{t('creditCards.modal.address')}</Label>
+                <Input placeholder={t('creditCards.modal.addressPlaceholder')} />
+              </div>
+
+              {/* Apt Number */}
+              <div className="client-detail__form-field">
+                <Label className="client-detail__form-label">{t('creditCards.modal.aptNumber')}</Label>
+                <Input placeholder={t('creditCards.modal.aptPlaceholder')} />
+              </div>
+
+              {/* City and State */}
+              <div className="client-detail__form-row">
+                <div className="client-detail__form-field">
+                  <Label className="client-detail__form-label">{t('creditCards.modal.city')}</Label>
+                  <Input placeholder={t('creditCards.modal.cityPlaceholder')} />
+                </div>
+                <div className="client-detail__form-field">
+                  <Label className="client-detail__form-label">{t('creditCards.modal.state')}</Label>
+                  <Input placeholder={t('creditCards.modal.statePlaceholder')} />
+                </div>
+              </div>
+
+              {/* Zip Code */}
+              <div className="client-detail__form-field">
+                <Label className="client-detail__form-label">{t('creditCards.modal.zipCode')}</Label>
+                <Input placeholder={t('creditCards.modal.zipCodePlaceholder')} />
+              </div>
+            </div>
+
+            {/* Modal Actions */}
+            <div className="client-detail__modal-actions">
+              <Button 
+                variant="outline" 
+                onClick={() => setIsAddCardModalOpen(false)}
+                className="client-detail__modal-close-button"
+              >
+                {t('creditCards.modal.close')}
+              </Button>
+              <Button 
+                className="client-detail__modal-save-button"
+                onClick={() => {
+                  // TODO: Implement save card functionality
+                  console.log('Save card');
+                  setIsAddCardModalOpen(false);
+                }}
+              >
+                {t('creditCards.modal.saveAndAdd')}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
