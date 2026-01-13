@@ -548,6 +548,7 @@ export function LandingPageModule() {
         ]}
         companyLinks={[
           { label: t('footer.about'), href: '#' },
+          { label: t('footer.azucarTravel'), href: 'https://azucartravel.com' },
           { label: t('footer.contact'), href: '#' },
         ]}
         legalLinks={[

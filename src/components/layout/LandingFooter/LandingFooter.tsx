@@ -25,6 +25,7 @@ export function LandingFooter({
   const currentYear = new Date().getFullYear();
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    // Only handle anchor links, let external links work normally
     if (href.startsWith('#')) {
       e.preventDefault();
       const targetId = href.replace('#', '');
@@ -33,6 +34,7 @@ export function LandingFooter({
         targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }
+    // External links (starting with http/https) will work normally with target="_blank"
   };
 
   return (
@@ -56,6 +58,8 @@ export function LandingFooter({
                       href={link.href} 
                       className="landing-footer__link"
                       onClick={(e) => handleLinkClick(e, link.href)}
+                      target={link.href.startsWith('http') ? '_blank' : undefined}
+                      rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                     >
                       {link.label}
                     </Link>
@@ -73,6 +77,8 @@ export function LandingFooter({
                       href={link.href} 
                       className="landing-footer__link"
                       onClick={(e) => handleLinkClick(e, link.href)}
+                      target={link.href.startsWith('http') ? '_blank' : undefined}
+                      rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                     >
                       {link.label}
                     </Link>
@@ -90,6 +96,8 @@ export function LandingFooter({
                       href={link.href} 
                       className="landing-footer__link"
                       onClick={(e) => handleLinkClick(e, link.href)}
+                      target={link.href.startsWith('http') ? '_blank' : undefined}
+                      rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                     >
                       {link.label}
                     </Link>
