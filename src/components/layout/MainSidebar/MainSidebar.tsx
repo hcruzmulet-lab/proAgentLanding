@@ -5,7 +5,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useUiStore } from '@/stores/ui/uiStore';
-import { inicioMenuItems, crmMenuItems } from '@/config/menus';
+import { 
+  inicioMenuItems, 
+  crmMenuItems, 
+  reservasMenuItems, 
+  gestionMenuItems, 
+  academiaMenuItems 
+} from '@/config/menus';
 import './MainSidebar.scss';
 
 interface MainSidebarProps {
@@ -55,7 +61,7 @@ export function MainSidebar({
   notificationCount = 0,
 }: MainSidebarProps) {
   const [showUserMenu, setShowUserMenu] = useState(false);
-  const [showModuleMenu, setShowModuleMenu] = useState(false);
+  const [hoveredModule, setHoveredModule] = useState<string | null>(null);
   const router = useRouter();
   const { toggleNotifications } = useUiStore();
 
@@ -64,18 +70,23 @@ export function MainSidebar({
     router.push('/login');
   };
 
-  // Obtener submenu según el módulo activo
-  const getSubMenu = () => {
-    switch (activeModule) {
+  // Obtener submenu según el módulo
+  const getSubMenu = (moduleId: string) => {
+    switch (moduleId) {
+      case 'inicio':
+        return inicioMenuItems;
       case 'crm':
         return crmMenuItems;
-      case 'inicio':
+      case 'reservas':
+        return reservasMenuItems;
+      case 'gestion':
+        return gestionMenuItems;
+      case 'academia':
+        return academiaMenuItems;
       default:
-        return inicioMenuItems;
+        return [];
     }
   };
-
-  const currentSubMenu = getSubMenu();
 
   return (
     <aside className="main-sidebar">
@@ -124,15 +135,16 @@ export function MainSidebar({
       <nav className="main-sidebar__nav">
         {mainModules.map((module) => {
           const isActive = activeModule === module.id;
-          const hasSubMenu = module.id === 'inicio' || module.id === 'crm';
-          const showSubMenu = isCollapsed && hasSubMenu && isActive && showModuleMenu;
+          const moduleSubMenu = getSubMenu(module.id);
+          const hasSubMenu = moduleSubMenu.length > 0;
+          const showSubMenu = isCollapsed && hasSubMenu && hoveredModule === module.id;
 
           return (
             <div
               key={module.id}
               className="main-sidebar__item-wrapper"
-              onMouseEnter={() => isCollapsed && hasSubMenu && isActive && setShowModuleMenu(true)}
-              onMouseLeave={() => isCollapsed && hasSubMenu && isActive && setShowModuleMenu(false)}
+              onMouseEnter={() => isCollapsed && hasSubMenu && setHoveredModule(module.id)}
+              onMouseLeave={() => isCollapsed && hasSubMenu && setHoveredModule(null)}
             >
               <Link
                 href={module.href}
@@ -148,7 +160,7 @@ export function MainSidebar({
                   <div className="main-sidebar__inicio-menu-header">
                     <span className="main-sidebar__inicio-menu-title">{module.label}</span>
                   </div>
-                  {currentSubMenu.map((item) => (
+                  {moduleSubMenu.map((item) => (
                     <Link
                       key={item.id}
                       href={item.href}
