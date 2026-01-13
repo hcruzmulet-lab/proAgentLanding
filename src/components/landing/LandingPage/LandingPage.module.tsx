@@ -199,6 +199,13 @@ export function LandingPageModule() {
     router.push('/suscripcion');
   };
 
+  const handleRequestDemo = () => {
+    const demoSection = document.getElementById('demo-request');
+    if (demoSection) {
+      demoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   const handleDemoSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // TODO: Implementar envío del formulario
@@ -221,7 +228,7 @@ export function LandingPageModule() {
         ctaPrimary={t('hero.cta')}
         ctaSecondary={t('hero.ctaSecondary')}
         onPrimaryClick={handleJoin}
-        onSecondaryClick={() => {}}
+        onSecondaryClick={handleRequestDemo}
       />
 
       <section id="why" className="landing-page-module__why">
