@@ -34,6 +34,9 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
   const [editedLastName, setEditedLastName] = useState('');
   const [isAddCardModalOpen, setIsAddCardModalOpen] = useState(false);
   const [isAddDocumentModalOpen, setIsAddDocumentModalOpen] = useState(false);
+  const [isAddLoyaltyModalOpen, setIsAddLoyaltyModalOpen] = useState(false);
+  const [isAddTravelerModalOpen, setIsAddTravelerModalOpen] = useState(false);
+  const [isAddNoteModalOpen, setIsAddNoteModalOpen] = useState(false);
 
   // Sample clients - same as ClientsPage
   const initialClients = [
@@ -438,12 +441,75 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
         </div>
       )}
 
-      {/* Other tabs content */}
-      {activeTab !== 'about' && activeTab !== 'creditCards' && activeTab !== 'documents' && (
+      {/* Loyalty Programs Tab */}
+      {activeTab === 'loyaltyPrograms' && (
         <div className="client-detail__content">
-          <p className="client-detail__empty-state">
-            {t('emptyState')}
-          </p>
+          <div className="client-detail__empty-card-state">
+            <span className="material-symbols-outlined client-detail__empty-card-icon">
+              workspace_premium
+            </span>
+            <h3 className="client-detail__empty-card-title">
+              {t('loyaltyPrograms.emptyTitle')}
+            </h3>
+            <p className="client-detail__empty-card-description">
+              {t('loyaltyPrograms.emptyDescription')}
+            </p>
+            <Button 
+              className="client-detail__add-card-button"
+              onClick={() => setIsAddLoyaltyModalOpen(true)}
+            >
+              <span className="material-symbols-outlined">add</span>
+              {t('loyaltyPrograms.addProgram')}
+            </Button>
+          </div>
+        </div>
+      )}
+
+      {/* Associated Travelers Tab */}
+      {activeTab === 'associatedTravelers' && (
+        <div className="client-detail__content">
+          <div className="client-detail__empty-card-state">
+            <span className="material-symbols-outlined client-detail__empty-card-icon">
+              group
+            </span>
+            <h3 className="client-detail__empty-card-title">
+              {t('associatedTravelers.emptyTitle')}
+            </h3>
+            <p className="client-detail__empty-card-description">
+              {t('associatedTravelers.emptyDescription')}
+            </p>
+            <Button 
+              className="client-detail__add-card-button"
+              onClick={() => setIsAddTravelerModalOpen(true)}
+            >
+              <span className="material-symbols-outlined">add</span>
+              {t('associatedTravelers.addTraveler')}
+            </Button>
+          </div>
+        </div>
+      )}
+
+      {/* Notes Tab */}
+      {activeTab === 'notes' && (
+        <div className="client-detail__content">
+          <div className="client-detail__empty-card-state">
+            <span className="material-symbols-outlined client-detail__empty-card-icon">
+              edit_note
+            </span>
+            <h3 className="client-detail__empty-card-title">
+              {t('notes.emptyTitle')}
+            </h3>
+            <p className="client-detail__empty-card-description">
+              {t('notes.emptyDescription')}
+            </p>
+            <Button 
+              className="client-detail__add-card-button"
+              onClick={() => setIsAddNoteModalOpen(true)}
+            >
+              <span className="material-symbols-outlined">add</span>
+              {t('notes.addNote')}
+            </Button>
+          </div>
         </div>
       )}
 
@@ -636,6 +702,186 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
                 }}
               >
                 {t('documents.modal.saveAndAdd')}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Add Loyalty Program Modal */}
+      <Dialog open={isAddLoyaltyModalOpen} onOpenChange={setIsAddLoyaltyModalOpen}>
+        <DialogContent className="client-detail__add-card-modal">
+          <DialogHeader className="client-detail__modal-header">
+            <DialogTitle className="client-detail__modal-title">
+              {t('loyaltyPrograms.modal.title')}
+            </DialogTitle>
+          </DialogHeader>
+
+          <div className="client-detail__modal-body">
+            <div className="client-detail__form-section">
+              {/* Program Name */}
+              <div className="client-detail__form-field">
+                <Label className="client-detail__form-label">{t('loyaltyPrograms.modal.programName')}</Label>
+                <Input placeholder={t('loyaltyPrograms.modal.programNamePlaceholder')} />
+              </div>
+
+              {/* Membership Number */}
+              <div className="client-detail__form-field">
+                <Label className="client-detail__form-label">{t('loyaltyPrograms.modal.membershipNumber')}</Label>
+                <Input placeholder={t('loyaltyPrograms.modal.membershipNumberPlaceholder')} />
+              </div>
+
+              {/* Tier Level */}
+              <div className="client-detail__form-field">
+                <Label className="client-detail__form-label">{t('loyaltyPrograms.modal.tierLevel')}</Label>
+                <Input placeholder={t('loyaltyPrograms.modal.tierLevelPlaceholder')} />
+              </div>
+
+              {/* Expiry Date */}
+              <div className="client-detail__form-field">
+                <Label className="client-detail__form-label">{t('loyaltyPrograms.modal.expiryDate')}</Label>
+                <Input type="date" placeholder={t('loyaltyPrograms.modal.expiryDatePlaceholder')} />
+              </div>
+            </div>
+
+            {/* Modal Actions */}
+            <div className="client-detail__modal-actions">
+              <Button 
+                variant="outline" 
+                onClick={() => setIsAddLoyaltyModalOpen(false)}
+                className="client-detail__modal-close-button"
+              >
+                {t('loyaltyPrograms.modal.close')}
+              </Button>
+              <Button 
+                className="client-detail__modal-save-button"
+                onClick={() => {
+                  console.log('Save loyalty program');
+                  setIsAddLoyaltyModalOpen(false);
+                }}
+              >
+                {t('loyaltyPrograms.modal.saveAndAdd')}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Add Associated Traveler Modal */}
+      <Dialog open={isAddTravelerModalOpen} onOpenChange={setIsAddTravelerModalOpen}>
+        <DialogContent className="client-detail__add-card-modal">
+          <DialogHeader className="client-detail__modal-header">
+            <DialogTitle className="client-detail__modal-title">
+              {t('associatedTravelers.modal.title')}
+            </DialogTitle>
+          </DialogHeader>
+
+          <div className="client-detail__modal-body">
+            <div className="client-detail__form-section">
+              {/* Search Existing Client */}
+              <div className="client-detail__form-field">
+                <Label className="client-detail__form-label">{t('associatedTravelers.modal.searchClient')}</Label>
+                <Input placeholder={t('associatedTravelers.modal.searchPlaceholder')} />
+              </div>
+
+              {/* Divider */}
+              <div className="client-detail__divider">
+                <span>{t('associatedTravelers.modal.orDivider')}</span>
+              </div>
+
+              {/* First Name */}
+              <div className="client-detail__form-field">
+                <Label className="client-detail__form-label">{t('associatedTravelers.modal.firstName')}</Label>
+                <Input placeholder={t('associatedTravelers.modal.firstNamePlaceholder')} />
+              </div>
+
+              {/* Last Name */}
+              <div className="client-detail__form-field">
+                <Label className="client-detail__form-label">{t('associatedTravelers.modal.lastName')}</Label>
+                <Input placeholder={t('associatedTravelers.modal.lastNamePlaceholder')} />
+              </div>
+
+              {/* Relationship */}
+              <div className="client-detail__form-field">
+                <Label className="client-detail__form-label">{t('associatedTravelers.modal.relationship')}</Label>
+                <Input placeholder={t('associatedTravelers.modal.relationshipPlaceholder')} />
+              </div>
+
+              {/* Date of Birth */}
+              <div className="client-detail__form-field">
+                <Label className="client-detail__form-label">{t('associatedTravelers.modal.dateOfBirth')}</Label>
+                <Input type="date" placeholder={t('associatedTravelers.modal.dateOfBirthPlaceholder')} />
+              </div>
+            </div>
+
+            {/* Modal Actions */}
+            <div className="client-detail__modal-actions">
+              <Button 
+                variant="outline" 
+                onClick={() => setIsAddTravelerModalOpen(false)}
+                className="client-detail__modal-close-button"
+              >
+                {t('associatedTravelers.modal.close')}
+              </Button>
+              <Button 
+                className="client-detail__modal-save-button"
+                onClick={() => {
+                  console.log('Save traveler');
+                  setIsAddTravelerModalOpen(false);
+                }}
+              >
+                {t('associatedTravelers.modal.saveAndAdd')}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Add Note Modal */}
+      <Dialog open={isAddNoteModalOpen} onOpenChange={setIsAddNoteModalOpen}>
+        <DialogContent className="client-detail__add-card-modal">
+          <DialogHeader className="client-detail__modal-header">
+            <DialogTitle className="client-detail__modal-title">
+              {t('notes.modal.title')}
+            </DialogTitle>
+          </DialogHeader>
+
+          <div className="client-detail__modal-body">
+            <div className="client-detail__form-section">
+              {/* Note Title */}
+              <div className="client-detail__form-field">
+                <Label className="client-detail__form-label">{t('notes.modal.noteTitle')}</Label>
+                <Input placeholder={t('notes.modal.noteTitlePlaceholder')} />
+              </div>
+
+              {/* Note Content */}
+              <div className="client-detail__form-field">
+                <Label className="client-detail__form-label">{t('notes.modal.noteContent')}</Label>
+                <textarea 
+                  className="client-detail__textarea-field" 
+                  rows={6}
+                  placeholder={t('notes.modal.noteContentPlaceholder')}
+                />
+              </div>
+            </div>
+
+            {/* Modal Actions */}
+            <div className="client-detail__modal-actions">
+              <Button 
+                variant="outline" 
+                onClick={() => setIsAddNoteModalOpen(false)}
+                className="client-detail__modal-close-button"
+              >
+                {t('notes.modal.close')}
+              </Button>
+              <Button 
+                className="client-detail__modal-save-button"
+                onClick={() => {
+                  console.log('Save note');
+                  setIsAddNoteModalOpen(false);
+                }}
+              >
+                {t('notes.modal.saveAndAdd')}
               </Button>
             </div>
           </div>

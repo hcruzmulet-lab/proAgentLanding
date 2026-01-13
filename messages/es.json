@@ -454,6 +454,62 @@
           }
         }
       },
+      "loyaltyPrograms": {
+        "title": "Programas de Lealtad",
+        "emptyTitle": "Programas de Lealtad",
+        "emptyDescription": "Lleva registro de las membresías y números de lealtad de tu cliente.",
+        "addProgram": "Agregar Programa de Lealtad",
+        "modal": {
+          "title": "Agregar programa de lealtad",
+          "programName": "Nombre del programa",
+          "programNamePlaceholder": "Ej: American Airlines AAdvantage",
+          "membershipNumber": "Número de membresía",
+          "membershipNumberPlaceholder": "Ingrese número de membresía",
+          "tierLevel": "Nivel de tier (opcional)",
+          "tierLevelPlaceholder": "Ej: Gold, Platinum",
+          "expiryDate": "Fecha de expiración (opcional)",
+          "expiryDatePlaceholder": "Seleccionar fecha",
+          "close": "Cerrar",
+          "saveAndAdd": "Guardar y agregar"
+        }
+      },
+      "associatedTravelers": {
+        "title": "Viajeros Asociados",
+        "emptyTitle": "No se encontraron viajeros asociados",
+        "emptyDescription": "Guarda información sobre todas las personas que podrían viajar con tu cliente.",
+        "addTraveler": "Agregar Viajero",
+        "modal": {
+          "title": "Agregar viajero asociado",
+          "searchClient": "Buscar cliente existente",
+          "searchPlaceholder": "Buscar por nombre...",
+          "orDivider": "O agregar nuevo viajero",
+          "firstName": "Nombre",
+          "firstNamePlaceholder": "Ingrese nombre",
+          "lastName": "Apellido",
+          "lastNamePlaceholder": "Ingrese apellido",
+          "relationship": "Relación",
+          "relationshipPlaceholder": "Ej: Esposa, Hijo, Amigo",
+          "dateOfBirth": "Fecha de nacimiento",
+          "dateOfBirthPlaceholder": "Seleccionar fecha",
+          "close": "Cerrar",
+          "saveAndAdd": "Guardar y agregar"
+        }
+      },
+      "notes": {
+        "title": "Notas",
+        "emptyTitle": "Notas",
+        "emptyDescription": "Usa la sección de notas para llevar registro de detalles personalizados que deseas guardar.",
+        "addNote": "Agregar Nota",
+        "modal": {
+          "title": "Agregar nota",
+          "noteTitle": "Título de la nota (opcional)",
+          "noteTitlePlaceholder": "Ingrese título",
+          "noteContent": "Contenido de la nota",
+          "noteContentPlaceholder": "Escribe tu nota aquí...",
+          "close": "Cerrar",
+          "saveAndAdd": "Guardar y agregar"
+        }
+      },
       "sections": {
         "contact": "Contacto",
         "personalDetails": "Detalles Personales",
