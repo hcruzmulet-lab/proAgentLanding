@@ -148,10 +148,13 @@ export function MainSidebar({
             >
               <Link
                 href={module.href}
-                className={`main-sidebar__item ${isActive ? 'main-sidebar__item--active' : ''}`}
+                className={`main-sidebar__item ${isActive ? 'main-sidebar__item--active' : ''} ${showSubMenu ? 'main-sidebar__item--hover-menu' : ''}`}
               >
                 <span className="material-symbols-outlined">{module.icon}</span>
-                <span className="main-sidebar__item-tooltip">{module.label}</span>
+                {/* Solo mostrar tooltip si no tiene submenu o la barra no está colapsada */}
+                {(!hasSubMenu || !isCollapsed) && (
+                  <span className="main-sidebar__item-tooltip">{module.label}</span>
+                )}
               </Link>
 
               {/* Submenu when collapsed */}
