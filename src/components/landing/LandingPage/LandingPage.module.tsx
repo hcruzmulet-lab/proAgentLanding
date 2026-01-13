@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import {
@@ -15,6 +16,8 @@ import { FeatureCard } from '@/components/shared/FeatureCard';
 import { PricingCard } from '@/components/shared/PricingCard';
 import { FAQItem } from '@/components/shared/FAQItem';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import './LandingPage.scss';
 
 export function LandingPageModule() {
@@ -212,12 +215,32 @@ export function LandingPageModule() {
     },
   ];
 
+  const [demoForm, setDemoForm] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    company: '',
+    message: '',
+  });
+
   const handleLogin = () => {
     router.push('/login');
   };
 
   const handleJoin = () => {
     router.push('/suscripcion');
+  };
+
+  const handleDemoSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // TODO: Implementar envío del formulario
+    console.log('Demo request:', demoForm);
+    alert('¡Gracias por tu interés! Nos pondremos en contacto contigo pronto.');
+    setDemoForm({ name: '', email: '', phone: '', company: '', message: '' });
+  };
+
+  const handleDemoChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setDemoForm({ ...demoForm, [e.target.name]: e.target.value });
   };
 
   return (
@@ -303,6 +326,83 @@ export function LandingPageModule() {
             {faqs.map((faq, index) => (
               <FAQItem key={index} {...faq} />
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="demo-request" className="landing-page-module__demo-request">
+        <div className="landing-page-module__container">
+          <div className="landing-page-module__demo-content">
+            <div className="landing-page-module__demo-header">
+              <h2 className="landing-page-module__section-title">{t('demoRequest.title')}</h2>
+              <p className="landing-page-module__section-subtitle">{t('demoRequest.subtitle')}</p>
+            </div>
+            <form onSubmit={handleDemoSubmit} className="landing-page-module__demo-form">
+              <div className="landing-page-module__form-grid">
+                <div className="landing-page-module__form-group">
+                  <Label htmlFor="name">{t('demoRequest.form.name')}</Label>
+                  <Input
+                    id="name"
+                    name="name"
+                    type="text"
+                    required
+                    value={demoForm.name}
+                    onChange={handleDemoChange}
+                    placeholder={t('demoRequest.form.name')}
+                  />
+                </div>
+                <div className="landing-page-module__form-group">
+                  <Label htmlFor="email">{t('demoRequest.form.email')}</Label>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    required
+                    value={demoForm.email}
+                    onChange={handleDemoChange}
+                    placeholder={t('demoRequest.form.email')}
+                  />
+                </div>
+                <div className="landing-page-module__form-group">
+                  <Label htmlFor="phone">{t('demoRequest.form.phone')}</Label>
+                  <Input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    required
+                    value={demoForm.phone}
+                    onChange={handleDemoChange}
+                    placeholder={t('demoRequest.form.phone')}
+                  />
+                </div>
+                <div className="landing-page-module__form-group">
+                  <Label htmlFor="company">{t('demoRequest.form.company')}</Label>
+                  <Input
+                    id="company"
+                    name="company"
+                    type="text"
+                    value={demoForm.company}
+                    onChange={handleDemoChange}
+                    placeholder={t('demoRequest.form.company')}
+                  />
+                </div>
+              </div>
+              <div className="landing-page-module__form-group landing-page-module__form-group--full">
+                <Label htmlFor="message">{t('demoRequest.form.message')}</Label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows={4}
+                  value={demoForm.message}
+                  onChange={handleDemoChange}
+                  placeholder={t('demoRequest.form.message')}
+                  className="landing-page-module__textarea"
+                />
+              </div>
+              <Button type="submit" size="lg" className="landing-page-module__demo-submit">
+                {t('demoRequest.form.submit')}
+              </Button>
+            </form>
           </div>
         </div>
       </section>

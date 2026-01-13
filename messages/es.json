@@ -33,7 +33,19 @@
       "title": "La plataforma para agentes más moderna del mercado",
       "subtitle": "Con dos inteligencias artificiales, creada en EE.UU., pero diseñada específicamente para agentes hispanos en EE.UU. y Latinoamérica.",
       "cta": "Únete Ahora",
-      "ctaSecondary": "Ver Demo"
+      "ctaSecondary": "Solicitar Demo"
+    },
+    "demoRequest": {
+      "title": "¿Quieres ver ProAgent en acción?",
+      "subtitle": "Agenda una demo personalizada y descubre cómo podemos ayudarte a transformar tu negocio de viajes.",
+      "form": {
+        "name": "Nombre completo",
+        "email": "Correo electrónico",
+        "phone": "Teléfono",
+        "company": "Agencia o Empresa (opcional)",
+        "message": "¿Qué te gustaría conocer de ProAgent?",
+        "submit": "Solicitar Demo"
+      }
     },
     "why": {
       "title": "¿Por qué unirte a ProAgent?",
