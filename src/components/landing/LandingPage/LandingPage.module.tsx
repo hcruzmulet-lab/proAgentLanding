@@ -17,7 +17,6 @@ import { PricingCard } from '@/components/shared/PricingCard';
 import { FAQItem } from '@/components/shared/FAQItem';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import './LandingPage.scss';
 
 export function LandingPageModule() {
@@ -219,8 +218,6 @@ export function LandingPageModule() {
     name: '',
     email: '',
     phone: '',
-    company: '',
-    message: '',
   });
 
   const handleLogin = () => {
@@ -236,7 +233,7 @@ export function LandingPageModule() {
     // TODO: Implementar envío del formulario
     console.log('Demo request:', demoForm);
     alert('¡Gracias por tu interés! Nos pondremos en contacto contigo pronto.');
-    setDemoForm({ name: '', email: '', phone: '', company: '', message: '' });
+    setDemoForm({ name: '', email: '', phone: '' });
   };
 
   const handleDemoChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -338,9 +335,8 @@ export function LandingPageModule() {
               <p className="landing-page-module__section-subtitle">{t('demoRequest.subtitle')}</p>
             </div>
             <form onSubmit={handleDemoSubmit} className="landing-page-module__demo-form">
-              <div className="landing-page-module__form-grid">
+              <div className="landing-page-module__form-row">
                 <div className="landing-page-module__form-group">
-                  <Label htmlFor="name">{t('demoRequest.form.name')}</Label>
                   <Input
                     id="name"
                     name="name"
@@ -349,10 +345,10 @@ export function LandingPageModule() {
                     value={demoForm.name}
                     onChange={handleDemoChange}
                     placeholder={t('demoRequest.form.name')}
+                    className="landing-page-module__input"
                   />
                 </div>
                 <div className="landing-page-module__form-group">
-                  <Label htmlFor="email">{t('demoRequest.form.email')}</Label>
                   <Input
                     id="email"
                     name="email"
@@ -361,10 +357,10 @@ export function LandingPageModule() {
                     value={demoForm.email}
                     onChange={handleDemoChange}
                     placeholder={t('demoRequest.form.email')}
+                    className="landing-page-module__input"
                   />
                 </div>
                 <div className="landing-page-module__form-group">
-                  <Label htmlFor="phone">{t('demoRequest.form.phone')}</Label>
                   <Input
                     id="phone"
                     name="phone"
@@ -373,35 +369,13 @@ export function LandingPageModule() {
                     value={demoForm.phone}
                     onChange={handleDemoChange}
                     placeholder={t('demoRequest.form.phone')}
+                    className="landing-page-module__input"
                   />
                 </div>
-                <div className="landing-page-module__form-group">
-                  <Label htmlFor="company">{t('demoRequest.form.company')}</Label>
-                  <Input
-                    id="company"
-                    name="company"
-                    type="text"
-                    value={demoForm.company}
-                    onChange={handleDemoChange}
-                    placeholder={t('demoRequest.form.company')}
-                  />
-                </div>
+                <Button type="submit" size="lg" className="landing-page-module__demo-submit">
+                  {t('demoRequest.form.submit')}
+                </Button>
               </div>
-              <div className="landing-page-module__form-group landing-page-module__form-group--full">
-                <Label htmlFor="message">{t('demoRequest.form.message')}</Label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={4}
-                  value={demoForm.message}
-                  onChange={handleDemoChange}
-                  placeholder={t('demoRequest.form.message')}
-                  className="landing-page-module__textarea"
-                />
-              </div>
-              <Button type="submit" size="lg" className="landing-page-module__demo-submit">
-                {t('demoRequest.form.submit')}
-              </Button>
             </form>
           </div>
         </div>

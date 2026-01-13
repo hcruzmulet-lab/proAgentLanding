@@ -207,27 +207,35 @@
   }
 
   &__demo-content {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
   }
 
   &__demo-header {
     text-align: center;
-    margin-bottom: $spacing-2xl;
+    margin-bottom: $spacing-xl;
   }
 
   &__demo-form {
     background: white;
     padding: $spacing-2xl;
-    border-radius: $radius-lg;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   }
 
-  &__form-grid {
+  &__form-row {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: $spacing-lg;
-    margin-bottom: $spacing-lg;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    gap: $spacing-md;
+    align-items: center;
+
+    @media (max-width: $breakpoint-lg) {
+      grid-template-columns: 1fr 1fr;
+      
+      .landing-page-module__demo-submit {
+        grid-column: 1 / -1;
+      }
+    }
 
     @media (max-width: $breakpoint-md) {
       grid-template-columns: 1fr;
@@ -237,53 +245,41 @@
   &__form-group {
     display: flex;
     flex-direction: column;
-    gap: $spacing-sm;
-
-    label {
-      font-weight: 600;
-      color: #1b2340;
-      font-size: 0.9375rem;
-    }
-
-    &--full {
-      grid-column: 1 / -1;
-    }
   }
 
-  &__textarea {
-    width: 100%;
-    padding: $spacing-md;
-    border: 1px solid #e2e8f0;
-    border-radius: $radius-md;
+  &__input {
+    height: 56px;
     font-size: 1rem;
-    font-family: inherit;
-    resize: vertical;
+    border: 2px solid #e2e8f0;
     transition: all 0.2s ease;
 
     &:focus {
-      outline: none;
       border-color: #ffa300;
       box-shadow: 0 0 0 3px rgba(255, 163, 0, 0.1);
     }
 
     &::placeholder {
-      color: hsl(var(--muted-foreground));
+      color: #94a3b8;
     }
   }
 
   &__demo-submit {
-    width: 100%;
     background: linear-gradient(135deg, #ffa300 0%, #ff8c00 100%);
     color: white;
     font-weight: 700;
-    font-size: 1.125rem;
-    padding: $spacing-lg $spacing-2xl;
-    height: auto;
-    margin-top: $spacing-md;
+    font-size: 1rem;
+    padding: 0 $spacing-2xl;
+    height: 56px;
+    white-space: nowrap;
+    border: none;
 
     &:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 16px rgba(255, 163, 0, 0.3);
+    }
+
+    @media (max-width: $breakpoint-lg) {
+      width: 100%;
     }
   }
 }

@@ -36,14 +36,12 @@
       "ctaSecondary": "Solicitar Demo"
     },
     "demoRequest": {
-      "title": "¿Quieres ver ProAgent en acción?",
-      "subtitle": "Agenda una demo personalizada y descubre cómo podemos ayudarte a transformar tu negocio de viajes.",
+      "title": "Solicitar Demo",
+      "subtitle": "Completa el formulario y nos pondremos en contacto contigo para agendar tu demo personalizada.",
       "form": {
         "name": "Nombre completo",
         "email": "Correo electrónico",
         "phone": "Teléfono",
-        "company": "Agencia o Empresa (opcional)",
-        "message": "¿Qué te gustaría conocer de ProAgent?",
         "submit": "Solicitar Demo"
       }
     },
