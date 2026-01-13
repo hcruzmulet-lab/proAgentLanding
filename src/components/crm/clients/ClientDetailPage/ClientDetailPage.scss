@@ -1,0 +1,314 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.client-detail {
+  @include flex-column;
+  gap: $spacing-lg;
+  padding-bottom: $spacing-2xl;
+
+  &__back {
+    background: none;
+    border: none;
+    color: #64748b;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: $radius-md;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: #f1f5f9;
+      color: #334155;
+    }
+
+    .material-symbols-outlined {
+      font-size: 24px;
+    }
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: $spacing-lg;
+  }
+
+  &__header-main {
+    display: flex;
+    gap: $spacing-lg;
+    align-items: center;
+  }
+
+  &__avatar-large {
+    width: 112px;
+    height: 112px;
+    border-radius: 50%;
+    background-color: #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 2.5rem;
+    color: #334155;
+    flex-shrink: 0;
+  }
+
+  &__header-info {
+    @include flex-column;
+    gap: $spacing-md;
+  }
+
+  &__name {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #0f172a;
+    margin: 0;
+  }
+
+  &__stats {
+    display: flex;
+    align-items: center;
+    gap: $spacing-lg;
+  }
+
+  &__stat-item {
+    @include flex-column;
+    gap: 4px;
+  }
+
+  &__stat-value {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #0f172a;
+  }
+
+  &__stat-label {
+    font-size: 0.875rem;
+    color: #64748b;
+  }
+
+  &__stat-divider {
+    color: #cbd5e1;
+    font-size: 1.25rem;
+  }
+
+  &__actions-button {
+    background-color: #f1f5f9;
+    color: #334155;
+    border: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-sm $spacing-lg;
+
+    &:hover {
+      background-color: #e2e8f0;
+    }
+
+    .material-symbols-outlined {
+      font-size: 20px;
+    }
+  }
+
+  &__tabs {
+    display: flex;
+    gap: $spacing-md;
+    border-bottom: 2px solid #e2e8f0;
+    margin-top: $spacing-lg;
+  }
+
+  &__tab {
+    background: none;
+    border: none;
+    color: #64748b;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: $spacing-md $spacing-sm;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #334155;
+    }
+
+    &--active {
+      color: #0f172a;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: #0f172a;
+      }
+    }
+  }
+
+  &__content {
+    @include flex-column;
+    gap: $spacing-lg;
+    margin-top: $spacing-md;
+  }
+
+  &__section {
+    background: #f8fafc;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  &__section-header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    padding: $spacing-lg;
+    background: #f1f5f9;
+  }
+
+  &__section-icon {
+    font-size: 24px;
+    color: #0f172a;
+  }
+
+  &__section-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #0f172a;
+    margin: 0;
+  }
+
+  &__section-content {
+    @include flex-column;
+  }
+
+  &__field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-lg $spacing-xl;
+    background: white;
+    border-bottom: 1px solid #e2e8f0;
+    transition: background-color 0.2s ease;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background-color: #f8fafc;
+    }
+  }
+
+  &__field-label {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: #0f172a;
+    min-width: 180px;
+  }
+
+  &__field-value {
+    flex: 1;
+    font-size: 0.9375rem;
+    color: #334155;
+
+    &--empty {
+      color: #94a3b8;
+    }
+  }
+
+  &__field-edit {
+    background: none;
+    border: none;
+    color: #64748b;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #334155;
+    }
+
+    .material-symbols-outlined {
+      font-size: 20px;
+    }
+  }
+
+  &__empty-state {
+    text-align: center;
+    color: #64748b;
+    padding: $spacing-2xl;
+    font-size: 1rem;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    &__header {
+      flex-direction: column;
+    }
+
+    &__header-main {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    &__avatar-large {
+      width: 80px;
+      height: 80px;
+      font-size: 1.75rem;
+    }
+
+    &__name {
+      font-size: 1.5rem;
+    }
+
+    &__stats {
+      flex-wrap: wrap;
+    }
+
+    &__actions-button {
+      width: 100%;
+      justify-content: center;
+    }
+
+    &__tabs {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    &__tab {
+      white-space: nowrap;
+    }
+
+    &__field {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: $spacing-sm;
+    }
+
+    &__field-label {
+      min-width: auto;
+      width: 100%;
+    }
+
+    &__field-value {
+      width: 100%;
+    }
+
+    &__field-edit {
+      align-self: flex-end;
+    }
+  }
+}

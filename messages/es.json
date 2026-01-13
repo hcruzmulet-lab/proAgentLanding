@@ -372,6 +372,37 @@
       "enterFirstName": "Ingresa el nombre",
       "enterLastName": "Ingresa el apellido",
       "cancel": "Cancelar"
+    },
+    "clientDetail": {
+      "actions": "Actions",
+      "stats": {
+        "bookings": "Bookings",
+        "commissionableValue": "Commissionable Value",
+        "commissions": "Commissions"
+      },
+      "tabs": {
+        "about": "About",
+        "creditCards": "Credit Cards",
+        "loyaltyPrograms": "Loyalty Programs",
+        "associatedTravelers": "Associated Travelers",
+        "notes": "Notes"
+      },
+      "sections": {
+        "contact": "Contact",
+        "personalDetails": "Personal Details",
+        "flightInfo": "Flight Info"
+      },
+      "fields": {
+        "name": "Name",
+        "email": "Email",
+        "phoneNumber": "Phone Number",
+        "address": "Address",
+        "importantDates": "Important Dates",
+        "allergies": "Allergies & Dietary Restrictions",
+        "knownTravelerNumber": "Known Traveler Number"
+      },
+      "editToAdd": "Edit to add",
+      "emptyState": "No hay información disponible"
     }
   },
   "validation": {

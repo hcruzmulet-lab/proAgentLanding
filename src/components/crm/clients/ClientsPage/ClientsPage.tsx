@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -19,6 +20,7 @@ interface Client {
 
 export function ClientsPage() {
   const t = useTranslations('crm.clients');
+  const router = useRouter();
   const [clients, setClients] = useState<Client[]>([
     { id: '1', firstName: 'Arieldi', lastName: 'Marrero', quotations: 0, bookings: 0, files: 0 },
     { id: '2', firstName: 'Henrry', lastName: 'Mulet', quotations: 0, bookings: 0, files: 0 },
@@ -50,7 +52,13 @@ export function ClientsPage() {
       setClients([...clients, client]);
       setNewClient({ firstName: '', lastName: '' });
       setIsModalOpen(false);
+      // Redirect to client detail page
+      router.push(`/crm/clientes/${client.id}`);
     }
+  };
+
+  const handleClientClick = (clientId: string) => {
+    router.push(`/crm/clientes/${clientId}`);
   };
 
   const handleDownloadAll = () => {
@@ -103,7 +111,11 @@ export function ClientsPage() {
       {/* Clients List */}
       <div className="clients-page__list">
         {filteredClients.map((client) => (
-          <div key={client.id} className="clients-page__client-card">
+          <div 
+            key={client.id} 
+            className="clients-page__client-card"
+            onClick={() => handleClientClick(client.id)}
+          >
             <div className="clients-page__client-info">
               <div className="clients-page__avatar">
                 {getInitials(client.firstName, client.lastName)}
