@@ -34,81 +34,63 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
   const [editedLastName, setEditedLastName] = useState('');
   const [isAddCardModalOpen, setIsAddCardModalOpen] = useState(false);
 
-  // Load clients from localStorage or use sample data
-  const getClients = () => {
-    if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem('crm_clients');
-      if (stored) {
-        return JSON.parse(stored);
+  // Initialize client state
+  const [client, setClient] = useState<any>(null);
+  const [clients, setClients] = useState<any[]>([]);
+
+  // Load client data on mount and when clientId changes
+  useEffect(() => {
+    const loadClient = () => {
+      // Load clients from localStorage or use sample data
+      let allClients = [];
+      
+      if (typeof window !== 'undefined') {
+        const stored = localStorage.getItem('crm_clients');
+        if (stored) {
+          allClients = JSON.parse(stored);
+        } else {
+          // Sample data if no localStorage
+          allClients = [
+            { id: '1', firstName: 'Arieldi', lastName: 'Marrero', quotations: 0, bookings: 0, files: 0 },
+            { id: '2', firstName: 'Henrry', lastName: 'Mulet', quotations: 0, bookings: 0, files: 0 },
+            { id: '3', firstName: 'Gretell', lastName: 'Rojas Rodriguez', quotations: 0, bookings: 0, files: 0 },
+            { id: '4', firstName: 'Elio', lastName: 'Zambrano', quotations: 0, bookings: 0, files: 0 },
+          ];
+        }
       }
-    }
-    return [
-      { id: '1', firstName: 'Arieldi', lastName: 'Marrero', quotations: 0, bookings: 0, files: 0 },
-      { id: '2', firstName: 'Henrry', lastName: 'Mulet', quotations: 0, bookings: 0, files: 0 },
-      { id: '3', firstName: 'Gretell', lastName: 'Rojas Rodriguez', quotations: 0, bookings: 0, files: 0 },
-      { id: '4', firstName: 'Elio', lastName: 'Zambrano', quotations: 0, bookings: 0, files: 0 },
-    ];
-  };
-
-  const [clients, setClients] = useState(getClients());
-  const foundClient = clients.find((c: any) => c.id === clientId);
-
-  const [client, setClient] = useState(foundClient ? {
-    id: clientId,
-    firstName: foundClient.firstName,
-    lastName: foundClient.lastName,
-    quotations: foundClient.quotations,
-    bookings: foundClient.bookings,
-    files: foundClient.files,
-    email: foundClient.email || '',
-    phone: foundClient.phone || '',
-    address: foundClient.address || '',
-    importantDates: foundClient.importantDates || '',
-    allergies: foundClient.allergies || '',
-    knownTravelerNumber: foundClient.knownTravelerNumber || '',
-  } : {
-    id: clientId,
-    firstName: 'Cliente',
-    lastName: 'Desconocido',
-    quotations: 0,
-    bookings: 0,
-    files: 0,
-    email: '',
-    phone: '',
-    address: '',
-    importantDates: '',
-    allergies: '',
-    knownTravelerNumber: '',
-  });
-
-  useEffect(() => {
-    setEditedFirstName(client.firstName);
-    setEditedLastName(client.lastName);
-  }, [client.firstName, client.lastName]);
-
-  // Sync with localStorage on mount and when clientId changes
-  useEffect(() => {
-    const updatedClients = getClients();
-    const updatedClient = updatedClients.find((c: any) => c.id === clientId);
+      
+      setClients(allClients);
+      
+      // Find the specific client
+      const foundClient = allClients.find((c: any) => c.id === clientId);
+      
+      if (foundClient) {
+        setClient({
+          id: clientId,
+          firstName: foundClient.firstName,
+          lastName: foundClient.lastName,
+          quotations: foundClient.quotations || 0,
+          bookings: foundClient.bookings || 0,
+          files: foundClient.files || 0,
+          email: foundClient.email || '',
+          phone: foundClient.phone || '',
+          address: foundClient.address || '',
+          importantDates: foundClient.importantDates || '',
+          allergies: foundClient.allergies || '',
+          knownTravelerNumber: foundClient.knownTravelerNumber || '',
+        });
+      }
+    };
     
-    if (updatedClient) {
-      setClient({
-        id: clientId,
-        firstName: updatedClient.firstName,
-        lastName: updatedClient.lastName,
-        quotations: updatedClient.quotations || 0,
-        bookings: updatedClient.bookings || 0,
-        files: updatedClient.files || 0,
-        email: updatedClient.email || '',
-        phone: updatedClient.phone || '',
-        address: updatedClient.address || '',
-        importantDates: updatedClient.importantDates || '',
-        allergies: updatedClient.allergies || '',
-        knownTravelerNumber: updatedClient.knownTravelerNumber || '',
-      });
-      setClients(updatedClients);
-    }
+    loadClient();
   }, [clientId]);
+
+  useEffect(() => {
+    if (client) {
+      setEditedFirstName(client.firstName);
+      setEditedLastName(client.lastName);
+    }
+  }, [client]);
 
   const getInitials = (firstName: string, lastName: string) => {
     return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
@@ -186,6 +168,15 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
     { id: 'associatedTravelers', label: t('tabs.associatedTravelers') },
     { id: 'notes', label: t('tabs.notes') },
   ];
+
+  // Show loading state while client data is being loaded
+  if (!client) {
+    return (
+      <div className="client-detail">
+        <p>Cargando...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="client-detail">
