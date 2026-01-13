@@ -446,13 +446,6 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
           </DialogHeader>
 
           <div className="client-detail__modal-body">
-            {/* Main Title */}
-            <div className="client-detail__modal-main-title">
-              <span className="material-symbols-outlined">lock</span>
-              <h3>{t('creditCards.modal.addPaymentCard')}</h3>
-            </div>
-            <p className="client-detail__modal-subtitle">{t('creditCards.modal.secureMessage')}</p>
-
             {/* Card Information */}
             <div className="client-detail__form-section">
               <h4 className="client-detail__form-section-title">{t('creditCards.modal.cardInformation')}</h4>
