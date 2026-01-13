@@ -30,30 +30,83 @@
       "login": "Iniciar Sesión"
     },
     "hero": {
-      "title": "La plataforma B2B para agencias de viaje",
-      "subtitle": "Gestiona reservas, clientes y comisiones en un solo lugar. Conecta con TravelCompositor y Stripe para una experiencia completa.",
-      "cta": "Comenzar Ahora",
+      "title": "La plataforma para agentes más moderna del mercado",
+      "subtitle": "Con dos inteligencias artificiales, creada en EE.UU., pero diseñada específicamente para agentes hispanos en EE.UU. y Latinoamérica.",
+      "cta": "Únete Ahora",
       "ctaSecondary": "Ver Demo"
     },
+    "why": {
+      "title": "¿Por qué unirte a ProAgent?",
+      "reasons": {
+        "professional": {
+          "title": "Vive del turismo de forma profesional",
+          "description": "Porque ProAgent nace para quienes quieren vivir del turismo de forma profesional, rentable y escalable."
+        },
+        "future": {
+          "title": "Somos el futuro",
+          "description": "Porque no encajamos en una categoría tradicional, somos el futuro. Somos un ecosistema TravelTech creado para formar, potenciar y respaldar a quienes venden viajes o los que quieren empezar de 0."
+        },
+        "ai": {
+          "title": "Tecnología que piensa como tú",
+          "description": "ProAgent integra dos inteligencias artificiales especializadas en viajes, diseñadas para ayudarte a vender mejor"
+        },
+        "copilot": {
+          "title": "Tu Copiloto de viajes",
+          "description": "Analiza, propone y construye itinerarios y experiencias como lo haría un experto."
+        },
+        "engine": {
+          "title": "Tu motor inteligente",
+          "description": "Interpreta lo que escribes y encuentra automáticamente las mejores opciones disponibles entre múltiples motores."
+        },
+        "origin": {
+          "title": "Creado en Estados Unidos",
+          "list": [
+            "100 % en español.",
+            "Pensado para agentes de EE. UU. y Latinoamérica."
+          ]
+        },
+        "allinone": {
+          "title": "Todo en un solo lugar",
+          "description": "Somos agentes de viajes, construyendo una plataforma para agentes de viajes, sabemos exactamente lo que necesitas… y aquí te lo incluimos",
+          "list": [
+            "Menos fricción.",
+            "Más control.",
+            "Más ventas."
+          ]
+        },
+        "income": {
+          "title": "Modelo pensado para generar ingresos reales",
+          "description": "ProAgent está diseñado para que conviertas cada oportunidad en una venta. Comisiones en dólares, estructura clara y una forma profesional de escalar tu negocio de viajes."
+        },
+        "support": {
+          "title": "Soporte real, cuando lo necesitas",
+          "description": "Detrás de ProAgent hay personas reales. Un equipo que te acompaña, te responde y te ayuda a crecer. Porque escalar un negocio de viajes no debería sentirse solo."
+        },
+        "mission": {
+          "description": "Ya sabemos hacer viajes. Ahora estamos empoderando a la próxima generación de asesores de viajes."
+        }
+      }
+    },
     "features": {
-      "title": "Todo lo que necesitas para tu agencia",
-      "subtitle": "Herramientas potentes para gestionar tu negocio de viajes",
+      "title": "Cómo Funciona",
+      "subtitle": "Tecnología avanzada. Proceso simple. Resultados extraordinarios.",
       "bookings": {
-        "title": "Gestión de Reservas",
-        "description": "Integración directa con TravelCompositor para gestionar todas tus reservas en un solo lugar"
+        "title": "Accede al ecosistema ProAgent",
+        "description": "Una vez te registras, verificamos cada perfil para asegurar que quienes ingresan estén realmente listos para operar a nivel profesional. Exclusivo en esencia. Ágil para quienes califican."
       },
       "clients": {
-        "title": "Base de Clientes",
-        "description": "Mantén toda la información de tus clientes organizada y accesible"
+        "title": "Desbloquea herramientas que usan las grandes OTAs",
+        "description": "Una vez dentro, accedes a motores inteligentes que te permiten planificar viajes a medida, crear itinerarios con inteligencia artificial, vender hoteles, vuelos, paquetes, circuitos, seguros, eventos, traslados y gestionar todo desde tu propio CRM en una sola plataforma. Tecnología poderosa, diseñada para ser intuitiva."
       },
       "commissions": {
-        "title": "Control de Comisiones",
-        "description": "Seguimiento automático de tus comisiones y pagos"
+        "title": "Vende con precisión y velocidad",
+        "description": "Cotiza en segundos, crea propuestas premium y cierra más ventas con menos esfuerzo, operando con una marca que te respalda, facilidades de cobro, soporte constante y acceso a licencias y estructura legal sin necesidad de crear nada desde cero. Tu productividad se multiplica desde el primer día."
       },
       "subscriptions": {
-        "title": "Planes Flexibles",
-        "description": "Integración con Stripe para gestión de suscripciones sin complicaciones"
-      }
+        "title": "Crece con acompañamiento real",
+        "description": "Te acompañamos con capacitación continua, soporte en español desde EE.UU., estrategias de venta y acceso a planes de marketing y generación de leads para que tu negocio crezca de forma sostenible. ProAgent evoluciona contigo."
+      },
+      "conclusion": "Ser parte de ProAgent es un privilegio. Usar la plataforma es sumamente sencillo."
     },
     "pricing": {
       "title": "Planes que se adaptan a tu negocio",
@@ -92,30 +145,35 @@
         ]
       }
     },
+    "partners": {
+      "title": "Nuestros Partners",
+      "subtitle": "En ProAgent nos enfocamos en una sola cosa: que seas realmente competitivo.",
+      "description": "Por eso trabajamos con proveedores globales, tecnología de clase mundial y turoperadores líderes en cada mercado. Accedes tanto a los grandes jugadores de la industria como a mayoristas especializados en Estados Unidos y Latinoamérica. Todo está diseñado para que vendas con confianza, variedad y precios que compiten al más alto nivel."
+    },
     "faq": {
       "title": "Preguntas Frecuentes",
       "subtitle": "Respuestas a las preguntas más comunes",
       "q1": {
-        "question": "¿Cómo funciona la integración con TravelCompositor?",
-        "answer": "La integración se realiza mediante IFRAME, permitiendo acceder a todas las funcionalidades de TravelCompositor directamente desde nuestra plataforma."
+        "question": "¿Qué hace diferente a ProAgent?",
+        "answer": "ProAgent integra dos inteligencias artificiales especializadas en viajes y está diseñado específicamente para agentes hispanos en EE.UU. y Latinoamérica, con todo 100% en español."
       },
       "q2": {
-        "question": "¿Puedo cambiar de plan en cualquier momento?",
-        "answer": "Sí, puedes actualizar o cambiar tu plan en cualquier momento desde la configuración de tu cuenta."
+        "question": "¿Necesito experiencia previa en turismo?",
+        "answer": "No necesariamente. ProAgent está diseñado tanto para profesionales experimentados como para quienes quieren empezar de cero. Te acompañamos con capacitación continua."
       },
       "q3": {
-        "question": "¿Ofrecen soporte en español?",
-        "answer": "Sí, ofrecemos soporte en español, inglés y portugués brasileño."
+        "question": "¿Cómo funciona el proceso de verificación?",
+        "answer": "Una vez te registras, verificamos cada perfil para asegurar que quienes ingresan estén realmente listos para operar a nivel profesional. Es un proceso ágil para quienes califican."
       },
       "q4": {
-        "question": "¿Necesito tarjeta de crédito para el plan gratuito?",
-        "answer": "No, puedes comenzar con el plan gratuito sin necesidad de ingresar información de pago."
+        "question": "¿Qué tipo de soporte ofrecen?",
+        "answer": "Ofrecemos soporte real en español desde EE.UU., con un equipo que te acompaña, te responde y te ayuda a crecer. Porque escalar un negocio de viajes no debería sentirse solo."
       }
     },
     "cta": {
-      "title": "¿Listo para transformar tu agencia?",
-      "subtitle": "Únete a cientos de agencias que ya confían en ProAgent",
-      "button": "Comenzar Gratis"
+      "title": "¿Listo para unirte a la próxima generación de asesores de viajes?",
+      "subtitle": "Empieza tu camino profesional en el turismo con ProAgent",
+      "button": "Únete Ahora"
     },
     "subscriptions": {
       "chooseThisPlan": "Elegir este plan"

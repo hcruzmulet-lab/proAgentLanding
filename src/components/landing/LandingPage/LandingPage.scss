@@ -11,13 +11,23 @@
     padding: 0 $spacing-xl;
   }
 
+  &__why,
   &__features,
+  &__partners,
   &__pricing,
   &__faq {
     padding: calc(var(--spacing-2xl) * 2) $spacing-xl;
   }
 
+  &__why {
+    background-color: white;
+  }
+
   &__features {
+    background-color: #f1f5f9;
+  }
+
+  &__partners {
     background-color: white;
   }
 
@@ -112,5 +122,79 @@
     &:hover {
       background-color: #f1f5f9;
     }
+  }
+
+  &__why-grid {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xl;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  &__why-item {
+    h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1b2340;
+      margin-bottom: $spacing-md;
+    }
+
+    p {
+      font-size: 1rem;
+      color: hsl(var(--muted-foreground));
+      line-height: 1.7;
+      margin-bottom: $spacing-md;
+    }
+
+    ul {
+      list-style: disc;
+      padding-left: $spacing-lg;
+      margin: $spacing-md 0;
+
+      li {
+        font-size: 1rem;
+        color: hsl(var(--muted-foreground));
+        line-height: 1.7;
+        margin-bottom: $spacing-sm;
+
+        strong {
+          color: #1b2340;
+        }
+      }
+    }
+
+    &--highlight {
+      text-align: center;
+      font-style: italic;
+      padding: $spacing-lg;
+      background: linear-gradient(135deg, #ffa300 0%, #ff8c00 100%);
+      border-radius: $radius-lg;
+
+      p {
+        color: white;
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin: 0;
+      }
+    }
+  }
+
+  &__features-conclusion {
+    text-align: center;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1b2340;
+    margin-top: $spacing-2xl;
+    font-style: italic;
+  }
+
+  &__partners-description {
+    font-size: 1.125rem;
+    color: hsl(var(--muted-foreground));
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+    line-height: 1.7;
   }
 }
