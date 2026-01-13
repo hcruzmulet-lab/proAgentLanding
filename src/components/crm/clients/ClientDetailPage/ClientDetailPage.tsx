@@ -143,8 +143,8 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
 
   const tabs = [
     { id: 'about', label: t('tabs.about') },
-    { id: 'creditCards', label: t('tabs.creditCards') },
     { id: 'documents', label: t('tabs.documents') },
+    { id: 'creditCards', label: t('tabs.creditCards') },
     { id: 'loyaltyPrograms', label: t('tabs.loyaltyPrograms') },
     { id: 'associatedTravelers', label: t('tabs.associatedTravelers') },
     { id: 'notes', label: t('tabs.notes') },
