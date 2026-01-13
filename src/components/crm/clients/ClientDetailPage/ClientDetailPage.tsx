@@ -41,21 +41,29 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
   // Load client data on mount and when clientId changes
   useEffect(() => {
     const loadClient = () => {
+      // Sample data
+      const sampleClients = [
+        { id: '1', firstName: 'Arieldi', lastName: 'Marrero', quotations: 0, bookings: 0, files: 0 },
+        { id: '2', firstName: 'Henrry', lastName: 'Mulet', quotations: 0, bookings: 0, files: 0 },
+        { id: '3', firstName: 'Gretell', lastName: 'Rojas Rodriguez', quotations: 0, bookings: 0, files: 0 },
+        { id: '4', firstName: 'Elio', lastName: 'Zambrano', quotations: 0, bookings: 0, files: 0 },
+      ];
+      
       // Load clients from localStorage or use sample data
-      let allClients = [];
+      let allClients = sampleClients;
       
       if (typeof window !== 'undefined') {
         const stored = localStorage.getItem('crm_clients');
         if (stored) {
-          allClients = JSON.parse(stored);
+          try {
+            allClients = JSON.parse(stored);
+          } catch (e) {
+            console.error('Error parsing localStorage:', e);
+            allClients = sampleClients;
+          }
         } else {
-          // Sample data if no localStorage
-          allClients = [
-            { id: '1', firstName: 'Arieldi', lastName: 'Marrero', quotations: 0, bookings: 0, files: 0 },
-            { id: '2', firstName: 'Henrry', lastName: 'Mulet', quotations: 0, bookings: 0, files: 0 },
-            { id: '3', firstName: 'Gretell', lastName: 'Rojas Rodriguez', quotations: 0, bookings: 0, files: 0 },
-            { id: '4', firstName: 'Elio', lastName: 'Zambrano', quotations: 0, bookings: 0, files: 0 },
-          ];
+          // Initialize localStorage with sample data
+          localStorage.setItem('crm_clients', JSON.stringify(sampleClients));
         }
       }
       
@@ -78,6 +86,23 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
           importantDates: foundClient.importantDates || '',
           allergies: foundClient.allergies || '',
           knownTravelerNumber: foundClient.knownTravelerNumber || '',
+        });
+      } else {
+        // Client not found - fallback
+        console.warn('Client not found:', clientId);
+        setClient({
+          id: clientId,
+          firstName: 'Cliente',
+          lastName: 'No Encontrado',
+          quotations: 0,
+          bookings: 0,
+          files: 0,
+          email: '',
+          phone: '',
+          address: '',
+          importantDates: '',
+          allergies: '',
+          knownTravelerNumber: '',
         });
       }
     };
