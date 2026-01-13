@@ -125,59 +125,56 @@
   }
 
   &__why-grid {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: $spacing-xl;
-    max-width: 900px;
-    margin: 0 auto;
+    margin-top: $spacing-2xl;
+
+    @media (max-width: $breakpoint-lg) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: $breakpoint-md) {
+      grid-template-columns: 1fr;
+    }
   }
 
-  &__why-item {
-    h3 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #1b2340;
-      margin-bottom: $spacing-md;
+  &__why-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: $radius-lg;
+    padding: $spacing-xl;
+    text-align: center;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+      border-color: #ffa300;
     }
+  }
 
-    p {
-      font-size: 1rem;
-      color: hsl(var(--muted-foreground));
-      line-height: 1.7;
-      margin-bottom: $spacing-md;
-    }
+  &__why-icon {
+    font-size: 3rem;
+    color: #ffa300;
+    margin-bottom: $spacing-lg;
+    display: block;
+    font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48;
+  }
 
-    ul {
-      list-style: disc;
-      padding-left: $spacing-lg;
-      margin: $spacing-md 0;
+  &__why-card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1b2340;
+    margin-bottom: $spacing-md;
+    line-height: 1.4;
+  }
 
-      li {
-        font-size: 1rem;
-        color: hsl(var(--muted-foreground));
-        line-height: 1.7;
-        margin-bottom: $spacing-sm;
-
-        strong {
-          color: #1b2340;
-        }
-      }
-    }
-
-    &--highlight {
-      text-align: center;
-      font-style: italic;
-      padding: $spacing-lg;
-      background: linear-gradient(135deg, #ffa300 0%, #ff8c00 100%);
-      border-radius: $radius-lg;
-
-      p {
-        color: white;
-        font-size: 1.25rem;
-        font-weight: 600;
-        margin: 0;
-      }
-    }
+  &__why-card-description {
+    font-size: 0.9375rem;
+    color: hsl(var(--muted-foreground));
+    line-height: 1.6;
+    margin: 0;
   }
 
   &__features-conclusion {

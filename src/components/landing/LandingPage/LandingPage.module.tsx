@@ -85,6 +85,54 @@ export function LandingPageModule() {
     },
   ];
 
+  const whyReasons = [
+    {
+      icon: t('why.reasons.professional.icon'),
+      title: t('why.reasons.professional.title'),
+      description: t('why.reasons.professional.description'),
+    },
+    {
+      icon: t('why.reasons.future.icon'),
+      title: t('why.reasons.future.title'),
+      description: t('why.reasons.future.description'),
+    },
+    {
+      icon: t('why.reasons.ai.icon'),
+      title: t('why.reasons.ai.title'),
+      description: t('why.reasons.ai.description'),
+    },
+    {
+      icon: t('why.reasons.copilot.icon'),
+      title: t('why.reasons.copilot.title'),
+      description: t('why.reasons.copilot.description'),
+    },
+    {
+      icon: t('why.reasons.engine.icon'),
+      title: t('why.reasons.engine.title'),
+      description: t('why.reasons.engine.description'),
+    },
+    {
+      icon: t('why.reasons.origin.icon'),
+      title: t('why.reasons.origin.title'),
+      description: t('why.reasons.origin.description'),
+    },
+    {
+      icon: t('why.reasons.allinone.icon'),
+      title: t('why.reasons.allinone.title'),
+      description: t('why.reasons.allinone.description'),
+    },
+    {
+      icon: t('why.reasons.income.icon'),
+      title: t('why.reasons.income.title'),
+      description: t('why.reasons.income.description'),
+    },
+    {
+      icon: t('why.reasons.support.icon'),
+      title: t('why.reasons.support.title'),
+      description: t('why.reasons.support.description'),
+    },
+  ];
+
   const faqs = [
     {
       question: t('faq.q1.question'),
@@ -189,49 +237,15 @@ export function LandingPageModule() {
         <div className="landing-page-module__container">
           <h2 className="landing-page-module__section-title">{t('why.title')}</h2>
           <div className="landing-page-module__why-grid">
-            <div className="landing-page-module__why-item">
-              <h3>{t('why.reasons.professional.title')}</h3>
-              <p>{t('why.reasons.professional.description')}</p>
-            </div>
-            <div className="landing-page-module__why-item">
-              <h3>{t('why.reasons.future.title')}</h3>
-              <p>{t('why.reasons.future.description')}</p>
-            </div>
-            <div className="landing-page-module__why-item">
-              <h3>{t('why.reasons.ai.title')}</h3>
-              <p>{t('why.reasons.ai.description')}</p>
-              <ul>
-                <li><strong>{t('why.reasons.copilot.title')}:</strong> {t('why.reasons.copilot.description')}</li>
-                <li><strong>{t('why.reasons.engine.title')}:</strong> {t('why.reasons.engine.description')}</li>
-              </ul>
-            </div>
-            <div className="landing-page-module__why-item">
-              <h3>{t('why.reasons.origin.title')}</h3>
-              <ul>
-                <li>{t('why.reasons.origin.list.0')}</li>
-                <li>{t('why.reasons.origin.list.1')}</li>
-              </ul>
-            </div>
-            <div className="landing-page-module__why-item">
-              <h3>{t('why.reasons.allinone.title')}</h3>
-              <p>{t('why.reasons.allinone.description')}</p>
-              <ul>
-                <li>{t('why.reasons.allinone.list.0')}</li>
-                <li>{t('why.reasons.allinone.list.1')}</li>
-                <li>{t('why.reasons.allinone.list.2')}</li>
-              </ul>
-            </div>
-            <div className="landing-page-module__why-item">
-              <h3>{t('why.reasons.income.title')}</h3>
-              <p>{t('why.reasons.income.description')}</p>
-            </div>
-            <div className="landing-page-module__why-item">
-              <h3>{t('why.reasons.support.title')}</h3>
-              <p>{t('why.reasons.support.description')}</p>
-            </div>
-            <div className="landing-page-module__why-item landing-page-module__why-item--highlight">
-              <p>{t('why.reasons.mission.description')}</p>
-            </div>
+            {whyReasons.map((reason, index) => (
+              <div key={index} className="landing-page-module__why-card">
+                <span className="material-symbols-outlined landing-page-module__why-icon">
+                  {reason.icon}
+                </span>
+                <h3 className="landing-page-module__why-card-title">{reason.title}</h3>
+                <p className="landing-page-module__why-card-description">{reason.description}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>

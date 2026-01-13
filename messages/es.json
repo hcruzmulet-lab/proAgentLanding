@@ -39,51 +39,49 @@
       "title": "¿Por qué unirte a ProAgent?",
       "reasons": {
         "professional": {
+          "icon": "workspace_premium",
           "title": "Vive del turismo de forma profesional",
           "description": "Porque ProAgent nace para quienes quieren vivir del turismo de forma profesional, rentable y escalable."
         },
         "future": {
+          "icon": "rocket_launch",
           "title": "Somos el futuro",
           "description": "Porque no encajamos en una categoría tradicional, somos el futuro. Somos un ecosistema TravelTech creado para formar, potenciar y respaldar a quienes venden viajes o los que quieren empezar de 0."
         },
         "ai": {
+          "icon": "psychology",
           "title": "Tecnología que piensa como tú",
           "description": "ProAgent integra dos inteligencias artificiales especializadas en viajes, diseñadas para ayudarte a vender mejor"
         },
         "copilot": {
+          "icon": "travel_explore",
           "title": "Tu Copiloto de viajes",
           "description": "Analiza, propone y construye itinerarios y experiencias como lo haría un experto."
         },
         "engine": {
+          "icon": "search_insights",
           "title": "Tu motor inteligente",
           "description": "Interpreta lo que escribes y encuentra automáticamente las mejores opciones disponibles entre múltiples motores."
         },
         "origin": {
+          "icon": "language",
           "title": "Creado en Estados Unidos",
-          "list": [
-            "100 % en español.",
-            "Pensado para agentes de EE. UU. y Latinoamérica."
-          ]
+          "description": "100 % en español. Pensado para agentes de EE. UU. y Latinoamérica."
         },
         "allinone": {
+          "icon": "dashboard",
           "title": "Todo en un solo lugar",
-          "description": "Somos agentes de viajes, construyendo una plataforma para agentes de viajes, sabemos exactamente lo que necesitas… y aquí te lo incluimos",
-          "list": [
-            "Menos fricción.",
-            "Más control.",
-            "Más ventas."
-          ]
+          "description": "Somos agentes de viajes, construyendo una plataforma para agentes de viajes, sabemos exactamente lo que necesitas… y aquí te lo incluimos. Menos fricción. Más control. Más ventas."
         },
         "income": {
+          "icon": "trending_up",
           "title": "Modelo pensado para generar ingresos reales",
           "description": "ProAgent está diseñado para que conviertas cada oportunidad en una venta. Comisiones en dólares, estructura clara y una forma profesional de escalar tu negocio de viajes."
         },
         "support": {
+          "icon": "support_agent",
           "title": "Soporte real, cuando lo necesitas",
           "description": "Detrás de ProAgent hay personas reales. Un equipo que te acompaña, te responde y te ayuda a crecer. Porque escalar un negocio de viajes no debería sentirse solo."
-        },
-        "mission": {
-          "description": "Ya sabemos hacer viajes. Ahora estamos empoderando a la próxima generación de asesores de viajes."
         }
       }
     },
