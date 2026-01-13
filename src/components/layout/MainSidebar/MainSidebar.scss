@@ -127,7 +127,7 @@
   &__nav {
     @include flex-column;
     align-items: center;
-    gap: $spacing-sm; // Margen reducido entre iconos
+    gap: 0; // Sin margen entre iconos para transición fluida del submenu
     width: 100%;
     flex-grow: 1;
     justify-content: center;
