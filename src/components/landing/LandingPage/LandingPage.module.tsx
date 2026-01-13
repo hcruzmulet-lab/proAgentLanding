@@ -13,7 +13,6 @@ import { LandingNavbar } from '@/components/layout/LandingNavbar';
 import { LandingFooter } from '@/components/layout/LandingFooter';
 import { HeroSection } from '@/components/shared/HeroSection';
 import { FeatureCard } from '@/components/shared/FeatureCard';
-import { PricingCard } from '@/components/shared/PricingCard';
 import { FAQItem } from '@/components/shared/FAQItem';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -44,46 +43,6 @@ export function LandingPageModule() {
       icon: mdiCreditCardOutline,
       title: t('features.subscriptions.title'),
       description: t('features.subscriptions.description'),
-    },
-  ];
-
-  const pricingPlans = [
-    {
-      name: t('pricing.free.name'),
-      price: t('pricing.free.price'),
-      period: t('pricing.free.period'),
-      features: [
-        t('pricing.free.features.0'),
-        t('pricing.free.features.1'),
-        t('pricing.free.features.2'),
-      ],
-      highlighted: false,
-    },
-    {
-      name: t('pricing.pro.name'),
-      price: t('pricing.pro.price'),
-      period: t('pricing.pro.period'),
-      features: [
-        t('pricing.pro.features.0'),
-        t('pricing.pro.features.1'),
-        t('pricing.pro.features.2'),
-        t('pricing.pro.features.3'),
-        t('pricing.pro.features.4'),
-      ],
-      highlighted: true,
-    },
-    {
-      name: t('pricing.enterprise.name'),
-      price: t('pricing.enterprise.price'),
-      period: '',
-      features: [
-        t('pricing.enterprise.features.0'),
-        t('pricing.enterprise.features.1'),
-        t('pricing.enterprise.features.2'),
-        t('pricing.enterprise.features.3'),
-        t('pricing.enterprise.features.4'),
-      ],
-      highlighted: false,
     },
   ];
 
@@ -220,6 +179,24 @@ export function LandingPageModule() {
     phone: '',
   });
 
+  const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'annual'>('monthly');
+
+  // Precios según período de facturación
+  const prices = {
+    monthly: {
+      plus: '$39',
+      master: '$99',
+      elite: '$199',
+    },
+    annual: {
+      plus: '$390',
+      master: '$990',
+      elite: '$1,990',
+    },
+  };
+
+  const currentPrices = prices[billingPeriod];
+
   const handleLogin = () => {
     router.push('/login');
   };
@@ -299,18 +276,188 @@ export function LandingPageModule() {
       </section>
 
       <section id="pricing" className="landing-page-module__pricing">
-        <div className="landing-page-module__container">
-          <h2 className="landing-page-module__section-title">{t('pricing.title')}</h2>
-          <p className="landing-page-module__section-subtitle">{t('pricing.subtitle')}</p>
-          <div className="landing-page-module__pricing-grid">
-            {pricingPlans.map((plan, index) => (
-              <PricingCard
-                key={index}
-                {...plan}
-                onSelectPlan={handleJoin}
-                ctaText={t('subscriptions.chooseThisPlan')}
-              />
-            ))}
+        <div className="landing-page-module__pricing-container">
+          {/* Header */}
+          <div className="landing-page-module__pricing-header">
+            <h2 className="landing-page-module__section-title">Planes de Suscripción</h2>
+            
+            {/* Billing Period Tabs */}
+            <div className="landing-page-module__pricing-tabs">
+              <button
+                className={`landing-page-module__pricing-tab ${billingPeriod === 'monthly' ? 'landing-page-module__pricing-tab--active' : ''}`}
+                onClick={() => setBillingPeriod('monthly')}
+              >
+                Mensual
+              </button>
+              <button
+                className={`landing-page-module__pricing-tab ${billingPeriod === 'annual' ? 'landing-page-module__pricing-tab--active' : ''}`}
+                onClick={() => setBillingPeriod('annual')}
+              >
+                Anual
+              </button>
+            </div>
+          </div>
+
+          {/* Pricing Table */}
+          <div className="landing-page-module__pricing-table-wrapper">
+            <table className="landing-page-module__pricing-table">
+              <thead>
+                <tr className="landing-page-module__pricing-table-header-row">
+                  <th className="landing-page-module__pricing-table-header">Características</th>
+                  <th className="landing-page-module__pricing-table-header">ProAgent Plus</th>
+                  <th className="landing-page-module__pricing-table-header">ProAgent Master</th>
+                  <th className="landing-page-module__pricing-table-header">ProAgent Elite</th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* Precio */}
+                <tr>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--label">Valor USD</td>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--price">{currentPrices.plus}</td>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--price">{currentPrices.master}</td>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--price">{currentPrices.elite}</td>
+                </tr>
+                
+                {/* Comisión */}
+                <tr>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--label">*Comisión / Split</td>
+                  <td className="landing-page-module__pricing-table-cell">70/30</td>
+                  <td className="landing-page-module__pricing-table-cell">80/20**</td>
+                  <td className="landing-page-module__pricing-table-cell">90/10**</td>
+                </tr>
+                
+                {/* Motores integrados */}
+                <tr>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--label">Motores integrados</td>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--small">paquetes, circuitos, trenes, actividades, seguros , esim</td>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--small">Igual ProAgent Plus + sport/event+renta de autos+routing+grupos</td>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--small">Igual ProAgent Master+ Cruceros+Disney+LUJO</td>
+                </tr>
+                
+                {/* Paquetes */}
+                <tr>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--label">Paquetes</td>
+                  <td className="landing-page-module__pricing-table-cell">Dinámicos+Propios</td>
+                  <td className="landing-page-module__pricing-table-cell">Igual</td>
+                  <td className="landing-page-module__pricing-table-cell">Igual</td>
+                </tr>
+                
+                {/* CRM */}
+                <tr>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--label">CRM</td>
+                  <td className="landing-page-module__pricing-table-cell">incluido</td>
+                  <td className="landing-page-module__pricing-table-cell">incluido</td>
+                  <td className="landing-page-module__pricing-table-cell">incluido</td>
+                </tr>
+                
+                {/* IA */}
+                <tr>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--label">Inteligencia artificial</td>
+                  <td className="landing-page-module__pricing-table-cell">incluido</td>
+                  <td className="landing-page-module__pricing-table-cell">incluido</td>
+                  <td className="landing-page-module__pricing-table-cell">incluido</td>
+                </tr>
+                
+                {/* Constructor de planes */}
+                <tr>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--label">Constructor de planes a medidas</td>
+                  <td className="landing-page-module__pricing-table-cell">incluido</td>
+                  <td className="landing-page-module__pricing-table-cell">incluido</td>
+                  <td className="landing-page-module__pricing-table-cell">incluido</td>
+                </tr>
+                
+                {/* Marketing Pro */}
+                <tr>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--label">Marketing Pro</td>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--small">Recursos y herramientas</td>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--small">Recursos y herramientas + Activación de campañas META</td>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--small">Recursos y herramientas + Activación de campañas MULTICANAL</td>
+                </tr>
+                
+                {/* Correo corporativo */}
+                <tr>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--label">Correo corporativo</td>
+                  <td className="landing-page-module__pricing-table-cell">incluido</td>
+                  <td className="landing-page-module__pricing-table-cell">incluido</td>
+                  <td className="landing-page-module__pricing-table-cell">incluido</td>
+                </tr>
+                
+                {/* Página web */}
+                <tr>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--label">Página web</td>
+                  <td className="landing-page-module__pricing-table-cell">Microsite</td>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--small">Tu propia página web B2C</td>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--small">+ Landing page+Generador de QR ilimitado.</td>
+                </tr>
+                
+                {/* Academia */}
+                <tr>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--label">Academia ProAgent</td>
+                  <td className="landing-page-module__pricing-table-cell">incluido</td>
+                  <td className="landing-page-module__pricing-table-cell">incluido</td>
+                  <td className="landing-page-module__pricing-table-cell">incluido</td>
+                </tr>
+                
+                {/* Proveedores */}
+                <tr>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--label">Proveedores</td>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--small">Todos los del Motor principal+ Marketplace</td>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--small">Motor + Marketplace+Proveedores premium</td>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--small">Motor + Marketplace+Proveedores premium+lujo</td>
+                </tr>
+                
+                {/* Soporte */}
+                <tr>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--label">Soporte</td>
+                  <td className="landing-page-module__pricing-table-cell">Estándar</td>
+                  <td className="landing-page-module__pricing-table-cell">Prioritario</td>
+                  <td className="landing-page-module__pricing-table-cell">VIP</td>
+                </tr>
+                
+                {/* Cuota primer afiliación */}
+                <tr>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--label landing-page-module__pricing-table-cell--red">Cuota primer afiliación</td>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--bold">$450</td>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--bold">$450</td>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--bold">$450</td>
+                </tr>
+                
+                {/* Botones */}
+                <tr>
+                  <td className="landing-page-module__pricing-table-cell"></td>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--button">
+                    <Button
+                      className="landing-page-module__pricing-select-button"
+                      onClick={handleJoin}
+                    >
+                      Seleccionar
+                    </Button>
+                  </td>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--button">
+                    <Button
+                      className="landing-page-module__pricing-select-button"
+                      onClick={handleJoin}
+                    >
+                      Seleccionar
+                    </Button>
+                  </td>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--button">
+                    <Button
+                      className="landing-page-module__pricing-select-button"
+                      onClick={handleJoin}
+                    >
+                      Seleccionar
+                    </Button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            
+            {/* Footnotes */}
+            <div className="landing-page-module__pricing-footnotes">
+              <p>* Comisión más alta para el agente.</p>
+              <p>** El split no se activa de forma automática.</p>
+            </div>
           </div>
         </div>
       </section>
