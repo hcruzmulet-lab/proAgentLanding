@@ -5,8 +5,6 @@
   min-height: 100vh;
   background-color: #f1f5f9; // slate-100
   position: relative;
-  display: flex;
-  align-items: center;
 
   &__container {
     @include flex-column;
