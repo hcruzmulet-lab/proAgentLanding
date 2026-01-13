@@ -32,6 +32,22 @@ export function SubscriptionPlans() {
     router.push('/suscripcion');
   };
 
+  // Precios según período de facturación
+  const prices = {
+    monthly: {
+      plus: '$39',
+      master: '$99',
+      elite: '$199',
+    },
+    annual: {
+      plus: '$390',
+      master: '$990',
+      elite: '$1,990',
+    },
+  };
+
+  const currentPrices = prices[billingPeriod];
+
   return (
     <div className="subscription-plans">
       {/* Navbar */}
@@ -77,9 +93,9 @@ export function SubscriptionPlans() {
                 {/* Precio */}
                 <tr>
                   <td className="subscription-plans__table-cell subscription-plans__table-cell--label">Valor USD</td>
-                  <td className="subscription-plans__table-cell subscription-plans__table-cell--price">$39</td>
-                  <td className="subscription-plans__table-cell subscription-plans__table-cell--price">$99</td>
-                  <td className="subscription-plans__table-cell subscription-plans__table-cell--price">$199</td>
+                  <td className="subscription-plans__table-cell subscription-plans__table-cell--price">{currentPrices.plus}</td>
+                  <td className="subscription-plans__table-cell subscription-plans__table-cell--price">{currentPrices.master}</td>
+                  <td className="subscription-plans__table-cell subscription-plans__table-cell--price">{currentPrices.elite}</td>
                 </tr>
                 
                 {/* Comisión */}
