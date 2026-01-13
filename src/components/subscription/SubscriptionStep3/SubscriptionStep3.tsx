@@ -15,8 +15,8 @@ export function SubscriptionStep3() {
   };
 
   const handleContinue = () => {
-    // TODO: Validate and submit all subscription data
-    router.push('/dashboard');
+    // TODO: Validate and save data
+    router.push('/suscripcion/planes');
   };
 
   const handleLogin = () => {

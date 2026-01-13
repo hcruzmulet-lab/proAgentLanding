@@ -1,0 +1,217 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.subscription-plans {
+  min-height: 100vh;
+  background-color: #f1f5f9; // slate-100
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  &__container {
+    @include flex-column;
+    align-items: center;
+    padding: 32px 16px 64px;
+    gap: 64px;
+    margin-top: 56px;
+    width: 100%;
+  }
+
+  &__card {
+    background-color: white;
+    border-radius: $radius-lg;
+    padding: $spacing-lg;
+    width: 100%;
+    max-width: 1174px;
+    @include flex-column;
+    gap: $spacing-lg;
+    align-items: center;
+  }
+
+  &__header {
+    @include flex-column;
+    gap: $spacing-lg;
+    align-items: center;
+    width: 100%;
+    padding: 0 48px;
+  }
+
+  &__title {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 36px;
+    letter-spacing: 0.0703px;
+    color: #334155; // slate-700
+    text-align: center;
+    margin: 0;
+  }
+
+  &__tabs {
+    display: flex;
+    background-color: #f1f5f9; // slate-100
+    border-radius: 6px;
+    padding: 5px;
+  }
+
+  &__tab {
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    color: #334155; // slate-700
+    background-color: transparent;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    @include transition(all);
+
+    &--active {
+      background-color: white;
+      color: #0f172a; // slate-900
+    }
+
+    &:hover:not(&--active) {
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+  }
+
+  &__table-wrapper {
+    @include flex-column;
+    gap: $spacing-lg;
+    width: 100%;
+    max-width: 1071px;
+    padding: 0 32px;
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1), 0px 1px 2px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  &__table-header-row {
+    background-color: #e2e8f0; // slate-200
+  }
+
+  &__table-header {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 28px;
+    letter-spacing: -0.4492px;
+    color: #101828;
+    text-align: center;
+    padding: 16px;
+    border-right: 1px solid #e5e7eb;
+    height: 84.5px;
+
+    &:first-child {
+      font-size: 14px;
+      font-weight: 400;
+      text-align: left;
+    }
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+
+  &__table-cell {
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: -0.3125px;
+    color: #0a0a0a;
+    text-align: center;
+    border-right: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
+
+    &:first-child {
+      text-align: left;
+    }
+
+    &:last-child {
+      border-right: none;
+    }
+
+    &--label {
+      font-weight: 700;
+      color: #101828;
+    }
+
+    &--price {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 28px;
+      letter-spacing: -0.4395px;
+    }
+
+    &--small {
+      font-size: 14px;
+      line-height: 20px;
+      letter-spacing: -0.1504px;
+    }
+
+    &--bold {
+      font-weight: 700;
+    }
+
+    &--red {
+      color: #ef4444; // red-500
+    }
+
+    &--button {
+      padding: 16.5px;
+    }
+  }
+
+  &__select-button {
+    background-color: #334155; // slate-700
+    color: white;
+    height: 40px;
+    min-width: 129px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #475569; // slate-600
+    }
+  }
+
+  &__footnotes {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 20px;
+    color: #475569; // slate-600
+    
+    p {
+      margin: 0;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    width: 100%;
+    max-width: 1174px;
+  }
+
+  &__back-button {
+    background-color: white;
+    color: #0f172a; // slate-900
+    border: 1px solid #e2e8f0; // slate-200
+    height: 40px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #f8fafc; // slate-50
+    }
+  }
+}
