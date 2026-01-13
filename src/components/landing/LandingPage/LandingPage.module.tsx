@@ -3,12 +3,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import {
-  mdiCalendarCheck,
-  mdiAccountGroup,
-  mdiCurrencyUsd,
-  mdiCreditCardOutline,
-} from '@mdi/js';
 import { LandingNavbar } from '@/components/layout/LandingNavbar';
 import { LandingFooter } from '@/components/layout/LandingFooter';
 import { HeroSection } from '@/components/shared/HeroSection';
@@ -25,22 +19,22 @@ export function LandingPageModule() {
 
   const features = [
     {
-      icon: mdiCalendarCheck,
+      icon: t('features.bookings.icon'),
       title: t('features.bookings.title'),
       description: t('features.bookings.description'),
     },
     {
-      icon: mdiAccountGroup,
+      icon: t('features.clients.icon'),
       title: t('features.clients.title'),
       description: t('features.clients.description'),
     },
     {
-      icon: mdiCurrencyUsd,
+      icon: t('features.commissions.icon'),
       title: t('features.commissions.title'),
       description: t('features.commissions.description'),
     },
     {
-      icon: mdiCreditCardOutline,
+      icon: t('features.subscriptions.icon'),
       title: t('features.subscriptions.title'),
       description: t('features.subscriptions.description'),
     },

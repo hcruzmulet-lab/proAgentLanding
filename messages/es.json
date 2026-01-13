@@ -99,18 +99,22 @@
       "title": "Cómo Funciona",
       "subtitle": "Tecnología avanzada. Proceso simple. Resultados extraordinarios.",
       "bookings": {
+        "icon": "verified_user",
         "title": "Accede al ecosistema ProAgent",
         "description": "Una vez te registras, verificamos cada perfil para asegurar que quienes ingresan estén realmente listos para operar a nivel profesional. Exclusivo en esencia. Ágil para quienes califican."
       },
       "clients": {
+        "icon": "lock_open",
         "title": "Desbloquea herramientas que usan las grandes OTAs",
         "description": "Una vez dentro, accedes a motores inteligentes que te permiten planificar viajes a medida, crear itinerarios con inteligencia artificial, vender hoteles, vuelos, paquetes, circuitos, seguros, eventos, traslados y gestionar todo desde tu propio CRM en una sola plataforma. Tecnología poderosa, diseñada para ser intuitiva."
       },
       "commissions": {
+        "icon": "speed",
         "title": "Vende con precisión y velocidad",
         "description": "Cotiza en segundos, crea propuestas premium y cierra más ventas con menos esfuerzo, operando con una marca que te respalda, facilidades de cobro, soporte constante y acceso a licencias y estructura legal sin necesidad de crear nada desde cero. Tu productividad se multiplica desde el primer día."
       },
       "subscriptions": {
+        "icon": "trending_up",
         "title": "Crece con acompañamiento real",
         "description": "Te acompañamos con capacitación continua, soporte en español desde EE.UU., estrategias de venta y acceso a planes de marketing y generación de leads para que tu negocio crezca de forma sostenible. ProAgent evoluciona contigo."
       },
