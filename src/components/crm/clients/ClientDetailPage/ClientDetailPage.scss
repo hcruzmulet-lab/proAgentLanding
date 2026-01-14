@@ -338,8 +338,7 @@
     font-size: 1rem;
     color: #64748b;
     margin: 0 0 $spacing-xl 0;
-    line-height: 1.6;
-    max-width: 500px;
+    white-space: nowrap;
   }
 
   &__add-card-button {
