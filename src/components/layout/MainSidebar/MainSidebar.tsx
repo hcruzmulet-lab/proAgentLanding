@@ -10,12 +10,13 @@ import {
   crmMenuItems, 
   reservasMenuItems, 
   gestionMenuItems, 
-  academiaMenuItems 
+  academiaMenuItems,
+  miCuentaMenuItems 
 } from '@/config/menus';
 import './MainSidebar.scss';
 
 interface MainSidebarProps {
-  activeModule?: 'inicio' | 'crm' | 'reservas' | 'gestion' | 'academia';
+  activeModule?: 'inicio' | 'crm' | 'reservas' | 'gestion' | 'academia' | 'mi-cuenta';
   activeSubItem?: string;
   userInitials?: string;
   userName?: string;
@@ -83,6 +84,8 @@ export function MainSidebar({
         return gestionMenuItems;
       case 'academia':
         return academiaMenuItems;
+      case 'mi-cuenta':
+        return miCuentaMenuItems;
       default:
         return [];
     }
@@ -165,16 +168,38 @@ export function MainSidebar({
                   <div className="main-sidebar__inicio-menu-header">
                     <span className="main-sidebar__inicio-menu-title">{module.label}</span>
                   </div>
-                  {moduleSubMenu.map((item) => (
-                    <Link
-                      key={item.id}
-                      href={item.href}
-                      className={`main-sidebar__inicio-menu-item ${activeSubItem === item.id ? 'main-sidebar__inicio-menu-item--active' : ''}`}
-                    >
-                      <span className="material-symbols-outlined">{item.icon}</span>
-                      <span>{item.label}</span>
-                    </Link>
-                  ))}
+                  {moduleSubMenu.map((item) => {
+                    if (item.isDivider) {
+                      return <div key={item.id} className="main-sidebar__inicio-menu-divider" />;
+                    }
+                    
+                    // Si es un link externo, usar <a> en lugar de <Link>
+                    if (item.isExternal) {
+                      return (
+                        <a
+                          key={item.id}
+                          href={item.href!}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`main-sidebar__inicio-menu-item ${activeSubItem === item.id ? 'main-sidebar__inicio-menu-item--active' : ''}`}
+                        >
+                          <span className="material-symbols-outlined">{item.icon}</span>
+                          <span>{item.label}</span>
+                        </a>
+                      );
+                    }
+                    
+                    return (
+                      <Link
+                        key={item.id}
+                        href={item.href!}
+                        className={`main-sidebar__inicio-menu-item ${activeSubItem === item.id ? 'main-sidebar__inicio-menu-item--active' : ''}`}
+                      >
+                        <span className="material-symbols-outlined">{item.icon}</span>
+                        <span>{item.label}</span>
+                      </Link>
+                    );
+                  })}
                 </div>
               )}
             </div>
@@ -233,7 +258,7 @@ export function MainSidebar({
               <div className="main-sidebar__user-menu-divider"></div>
               <button 
                 className="main-sidebar__user-menu-item"
-                onClick={() => router.push('/profile')}
+                onClick={() => router.push('/mi-cuenta/perfil')}
               >
                 Mi Cuenta
               </button>

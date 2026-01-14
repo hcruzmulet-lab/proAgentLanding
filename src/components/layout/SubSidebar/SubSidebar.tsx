@@ -8,7 +8,7 @@ import './SubSidebar.scss';
 interface SubSidebarProps {
   title: string;
   activeItem?: string;
-  menuItems: Array<{ id: string; icon: string; label: string; href: string }>;
+  menuItems: Array<{ id: string; icon?: string; label?: string; href?: string; isDivider?: boolean; isExternal?: boolean }>;
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
   notificationCount?: number;
@@ -52,16 +52,38 @@ export function SubSidebar({
 
       {/* Menu Items */}
       <nav className="sub-sidebar__nav">
-        {menuItems.map((item) => (
-          <Link
-            key={item.id}
-            href={item.href}
-            className={`sub-sidebar__item ${activeItem === item.id ? 'sub-sidebar__item--active' : ''}`}
-          >
-            <span className="material-symbols-outlined">{item.icon}</span>
-            <span>{item.label}</span>
-          </Link>
-        ))}
+        {menuItems.map((item) => {
+          if (item.isDivider) {
+            return <div key={item.id} className="sub-sidebar__divider" />;
+          }
+          
+          // Si es un link externo, usar <a> en lugar de <Link>
+          if (item.isExternal) {
+            return (
+              <a
+                key={item.id}
+                href={item.href!}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`sub-sidebar__item ${activeItem === item.id ? 'sub-sidebar__item--active' : ''}`}
+              >
+                <span className="material-symbols-outlined">{item.icon}</span>
+                <span>{item.label}</span>
+              </a>
+            );
+          }
+          
+          return (
+            <Link
+              key={item.id}
+              href={item.href!}
+              className={`sub-sidebar__item ${activeItem === item.id ? 'sub-sidebar__item--active' : ''}`}
+            >
+              <span className="material-symbols-outlined">{item.icon}</span>
+              <span>{item.label}</span>
+            </Link>
+          );
+        })}
       </nav>
 
       {/* ProAgent Vertical Logo */}

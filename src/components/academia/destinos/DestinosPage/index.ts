@@ -1,0 +1,1 @@
+export { DestinosPage } from './DestinosPage';

@@ -312,6 +312,12 @@
     display: block;
   }
 
+  &__inicio-menu-divider {
+    height: 1px;
+    background-color: #e2e8f0; // slate-200
+    margin: $spacing-xs $spacing-md;
+  }
+
   &__inicio-menu-item {
     @include flex-center;
     justify-content: flex-start;

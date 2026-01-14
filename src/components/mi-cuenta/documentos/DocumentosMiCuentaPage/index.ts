@@ -1,0 +1,1 @@
+export { DocumentosMiCuentaPage } from './DocumentosMiCuentaPage';

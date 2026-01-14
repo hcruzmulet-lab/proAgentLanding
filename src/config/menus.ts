@@ -17,26 +17,50 @@ export const crmMenuItems = [
 ];
 
 export const reservasMenuItems = [
-  { id: 'nueva-reserva', icon: 'add_circle', label: 'Nueva Reserva', href: '/reservas/nueva' },
-  { id: 'mis-reservas', icon: 'airplane_ticket', label: 'Mis Reservas', href: '/reservas' },
-  { id: 'vuelos', icon: 'flight', label: 'Vuelos', href: '/reservas/vuelos' },
-  { id: 'hoteles', icon: 'hotel', label: 'Hoteles', href: '/reservas/hoteles' },
-  { id: 'tours', icon: 'explore', label: 'Tours', href: '/reservas/tours' },
-  { id: 'transportes', icon: 'directions_car', label: 'Transportes', href: '/reservas/transportes' },
+  { id: 'reservas', icon: 'airplane_ticket', label: 'Reservas', href: '/reservas' },
+  { id: 'vuelos', icon: 'flight_takeoff', label: 'Vuelo', href: 'https://azucartravel.com/?tripType=ONLY_FLIGHT', isExternal: true },
+  { id: 'hoteles', icon: 'hotel', label: 'Hotel', href: 'https://azucartravel.com/?tripType=ONLY_HOTEL', isExternal: true },
+  { id: 'traslados', icon: 'directions_bus', label: 'Traslados', href: 'https://azucartravel.com/?tripType=ONLY_TRANSFER', isExternal: true },
+  { id: 'paquetes', icon: 'luggage', label: 'Paquetes', href: 'https://azucartravel.com/?tripType=HOLIDAYS', isExternal: true },
+  { id: 'actividades', icon: 'directions_walk', label: 'Actividades', href: 'https://azucartravel.com/?tripType=ONLY_TICKET', isExternal: true },
+  { id: 'cruceros', icon: 'directions_boat', label: 'Cruceros', href: 'https://azucartravel.com/?tripType=TRIP_PLANNER', isExternal: true },
+  { id: 'autos', icon: 'directions_car', label: 'Autos', href: 'https://azucartravel.com/?tripType=ONLY_CAR', isExternal: true },
+  { id: 'seguros', icon: 'shield_with_heart', label: 'Seguros', href: '/reservas/seguros' },
+  { id: 'sports-events', icon: 'local_activity', label: 'Sports & Events', href: 'https://azucartravel.com/?tripType=ONLY_TICKET', isExternal: true },
+  { id: 'divider-1', isDivider: true },
+  { id: 'grupos', icon: 'groups', label: 'Grupos', href: 'https://taap.hotelplanner.com/Group-Rate/?kw=taap_group_button&ol=1&locale=es_MX', isExternal: true },
+  { id: 'divider-2', isDivider: true },
+  { id: 'disney-parques', icon: 'attractions', label: 'Disney & Parques', href: 'https://azucartravel.com/?tripType=ONLY_TICKET', isExternal: true },
+  { id: 'alg-vacations', icon: 'beach_access', label: 'ALG Vacations', href: '/reservas/alg-vacations' },
+  { id: 'expedia', icon: 'arrow_outward', label: 'Expedia TAAP', href: 'https://www.expediataap.com/', isExternal: true },
+  { id: 'especializados', icon: 'travel_luggage_and_bags', label: "Especializados & DMC's", href: '/reservas/especializados' },
+  { id: 'divider-3', isDivider: true },
+  { id: 'lujo', icon: 'diamond_shine', label: 'Lujo', href: '/reservas/lujo' },
 ];
 
 export const gestionMenuItems = [
-  { id: 'documentos', icon: 'folder_managed', label: 'Documentos', href: '/gestion/documentos' },
-  { id: 'contratos', icon: 'description', label: 'Contratos', href: '/gestion/contratos' },
-  { id: 'proveedores', icon: 'handshake', label: 'Proveedores', href: '/gestion/proveedores' },
-  { id: 'reportes', icon: 'bar_chart', label: 'Reportes', href: '/gestion/reportes' },
-  { id: 'configuracion', icon: 'settings', label: 'Configuración', href: '/gestion/configuracion' },
+  { id: 'perfil', icon: 'account_circle', label: 'Perfil público', href: '/gestion/perfil' },
+  { id: 'materiales', icon: 'folder_copy', label: 'Materiales del agente', href: '/gestion/materiales' },
+  { id: 'galeria', icon: 'imagesmode', label: 'Galería de imágenes', href: '/gestion/galeria' },
+  { id: 'prompts', icon: 'chat', label: 'Prompts IA', href: '/gestion/prompts' },
 ];
 
 export const academiaMenuItems = [
-  { id: 'mis-cursos', icon: 'book_3', label: 'Mis Cursos', href: '/academia/mis-cursos' },
-  { id: 'explorar', icon: 'explore', label: 'Explorar', href: '/academia/explorar' },
-  { id: 'certificaciones', icon: 'workspace_premium', label: 'Certificaciones', href: '/academia/certificaciones' },
-  { id: 'webinars', icon: 'video_call', label: 'Webinars', href: '/academia/webinars' },
-  { id: 'recursos', icon: 'library_books', label: 'Recursos', href: '/academia/recursos' },
+  { id: 'imprescindibles', icon: 'assignment_turned_in', label: 'Imprescindibles', href: '/academia/imprescindibles' },
+  { id: 'proveedores', icon: 'storefront', label: 'Proveedores', href: '/academia/proveedores' },
+  { id: 'destinos', icon: 'south_america', label: 'Destinos & Experiencias', href: '/academia/destinos' },
+  { id: 'marketing', icon: 'ads_click', label: 'Marketing & Ventas', href: '/academia/marketing' },
+  { id: 'operacion', icon: 'support_agent', label: 'Operación & Soporte', href: '/academia/operacion' },
+  { id: 'webinar', icon: 'nest_cam_iq', label: 'Webinars', href: '/academia/webinar' },
+  { id: 'todos-cursos', icon: 'book_2', label: 'Todos los cursos', href: '/academia/todos-cursos' },
+];
+
+export const miCuentaMenuItems = [
+  { id: 'perfil', icon: 'badge', label: 'Perfil del agente', href: '/mi-cuenta/perfil' },
+  { id: 'preferencias', icon: 'tune', label: 'Preferencias plataforma', href: '/mi-cuenta/preferencias' },
+  { id: 'documentos', icon: 'folder_open', label: 'Documentos del agente', href: '/mi-cuenta/documentos' },
+  { id: 'estado', icon: 'ads_click', label: 'Estado de Suscripción', href: '/mi-cuenta/estado' },
+  { id: 'soporte', icon: 'task', label: 'Soporte (Tickets)', href: '/mi-cuenta/soporte' },
+  { id: 'certificado', icon: 'developer_guide', label: 'Certificación Azúcar Travel', href: '/mi-cuenta/certificado' },
+  { id: 'seguridad', icon: 'lock', label: 'Seguridad', href: '/mi-cuenta/seguridad' },
 ];

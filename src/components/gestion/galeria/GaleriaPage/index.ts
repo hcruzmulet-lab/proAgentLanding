@@ -1,0 +1,1 @@
+export { GaleriaPage } from './GaleriaPage';

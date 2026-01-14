@@ -1,0 +1,1 @@
+export { ProveedoresAcademiaPage } from './ProveedoresAcademiaPage';

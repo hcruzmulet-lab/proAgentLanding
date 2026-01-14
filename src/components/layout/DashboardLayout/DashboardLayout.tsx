@@ -4,12 +4,12 @@ import { MainSidebar } from '@/components/layout/MainSidebar';
 import { SubSidebar } from '@/components/layout/SubSidebar';
 import { NotificationsDrawer } from '@/components/layout/NotificationsDrawer';
 import { useUiStore } from '@/stores/ui/uiStore';
-import { inicioMenuItems, crmMenuItems } from '@/config/menus';
+import { inicioMenuItems, crmMenuItems, reservasMenuItems, gestionMenuItems, academiaMenuItems, miCuentaMenuItems } from '@/config/menus';
 import './DashboardLayout.scss';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
-  activeModule?: 'inicio' | 'crm' | 'reservas' | 'gestion' | 'academia';
+  activeModule?: 'inicio' | 'crm' | 'reservas' | 'gestion' | 'academia' | 'mi-cuenta';
   activeSubItem?: string;
   title?: string;
 }
@@ -27,6 +27,14 @@ export function DashboardLayout({
     switch (activeModule) {
       case 'crm':
         return crmMenuItems;
+      case 'reservas':
+        return reservasMenuItems;
+      case 'gestion':
+        return gestionMenuItems;
+      case 'academia':
+        return academiaMenuItems;
+      case 'mi-cuenta':
+        return miCuentaMenuItems;
       case 'inicio':
       default:
         return inicioMenuItems;

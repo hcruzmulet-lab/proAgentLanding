@@ -124,6 +124,12 @@
     gap: $spacing-xs;
   }
 
+  &__divider {
+    height: 1px;
+    background-color: #e2e8f0; // slate-200
+    margin: 0;
+  }
+
   &__item {
     @include flex-center;
     justify-content: flex-start;
@@ -132,7 +138,7 @@
     border-radius: $radius-lg;
     color: $text-primary;
     font-size: 0.75rem;
-    font-weight: 500;
+    font-weight: 400;
     @include transition(all);
     text-decoration: none;
 

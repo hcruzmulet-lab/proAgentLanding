@@ -1,0 +1,1 @@
+export { ComisionesPage } from './ComisionesPage';

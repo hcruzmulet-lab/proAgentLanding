@@ -1,0 +1,1 @@
+export { EstadoPage } from './EstadoPage';

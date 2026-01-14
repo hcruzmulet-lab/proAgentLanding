@@ -1,0 +1,1 @@
+export { SoportePage } from './SoportePage';

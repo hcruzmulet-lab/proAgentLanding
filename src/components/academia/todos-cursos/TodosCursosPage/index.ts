@@ -1,0 +1,1 @@
+export { TodosCursosPage } from './TodosCursosPage';
