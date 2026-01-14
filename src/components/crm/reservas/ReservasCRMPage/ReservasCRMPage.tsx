@@ -1,29 +1,426 @@
 'use client';
 
-import React from 'react';
-import './ReservasCRMPage.scss';
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+
+interface Reserva {
+  id: string;
+  localizador: string;
+  fechaCreacion: string;
+  fechaSalida: string;
+  nombre: string;
+  destino: string;
+  pasajeros: number;
+  ubicaciones: number;
+  autos: number;
+  hoteles: number;
+  noches: number;
+  precio: number;
+  comision: number;
+  estado: 'finalizada' | 'pendiente' | 'cancelada';
+}
+
+const reservasMock: Reserva[] = [
+  {
+    id: '1',
+    localizador: 'AZC-2',
+    fechaCreacion: '30 dic 2025',
+    fechaSalida: '24 ene 2026',
+    nombre: 'Arieldi Marrero',
+    destino: '',
+    pasajeros: 2,
+    ubicaciones: 2,
+    autos: 0,
+    hoteles: 0,
+    noches: 2,
+    precio: 651.55,
+    comision: 0,
+    estado: 'finalizada'
+  },
+  {
+    id: '2',
+    localizador: 'AZC-1',
+    fechaCreacion: '26 dic 2025',
+    fechaSalida: '24 ene 2026',
+    nombre: 'Arieldi Marrero',
+    destino: '',
+    pasajeros: 2,
+    ubicaciones: 2,
+    autos: 1,
+    hoteles: 0,
+    noches: 2,
+    precio: 298.53,
+    comision: 0,
+    estado: 'finalizada'
+  }
+];
 
 export function ReservasCRMPage() {
-  return (
-    <div className="reservas-crm-page">
-      <div className="reservas-crm-page__header">
-        <h1 className="reservas-crm-page__title">Reservas</h1>
-        <p className="reservas-crm-page__subtitle">
-          Gestiona todas las reservas confirmadas de tus clientes
-        </p>
-      </div>
+  const [filtros, setFiltros] = useState({
+    buscar: 'todas',
+    destino: '',
+    localizador: '',
+    nombre: ''
+  });
 
-      <div className="reservas-crm-page__content">
-        <div className="reservas-crm-page__empty-state">
-          <span className="material-symbols-outlined reservas-crm-page__empty-icon">
-            airplane_ticket
-          </span>
-          <h2 className="reservas-crm-page__empty-title">No hay reservas aún</h2>
-          <p className="reservas-crm-page__empty-description">
-            Las reservas confirmadas aparecerán aquí
-          </p>
+  const [reservas, setReservas] = useState<Reserva[]>(reservasMock);
+  const [isNewReservaModalOpen, setIsNewReservaModalOpen] = useState(false);
+  const [sortField, setSortField] = useState<'fechaCreacion' | 'fechaSalida' | null>('fechaCreacion');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+
+  const handleLimpiar = () => {
+    setFiltros({
+      buscar: 'todas',
+      destino: '',
+      localizador: '',
+      nombre: ''
+    });
+  };
+
+  const handleBuscar = () => {
+    console.log('Buscando con filtros:', filtros);
+  };
+
+  const handleSort = (field: 'fechaCreacion' | 'fechaSalida') => {
+    if (sortField === field) {
+      // Si ya está ordenado por este campo, cambiar la dirección
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      // Si es un nuevo campo, ordenar descendente por defecto
+      setSortField(field);
+      setSortOrder('desc');
+    }
+
+    const sorted = [...reservas].sort((a, b) => {
+      const dateA = new Date(a[field]).getTime();
+      const dateB = new Date(b[field]).getTime();
+      
+      if (sortField === field && sortOrder === 'asc') {
+        return dateB - dateA; // Cambiar a desc
+      } else {
+        return dateA - dateB; // Cambiar a asc
+      }
+    });
+
+    setReservas(sorted);
+  };
+
+  return (
+    <TooltipProvider>
+      <div className="space-y-6">
+        {/* Título y botón */}
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-semibold text-slate-900">Mis reservas</h1>
+          <Button 
+            className="bg-slate-700 hover:bg-slate-800 text-white"
+            onClick={() => setIsNewReservaModalOpen(true)}
+          >
+            <span className="material-symbols-outlined mr-2" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>add</span>
+            Nueva Reserva
+          </Button>
         </div>
+
+        {/* Cards informativos superiores */}
+        <div className="grid grid-cols-4 gap-4">
+          <div className="flex items-center justify-between bg-[#f8fafc] rounded-lg px-[19px] py-[21px]">
+            <div className="flex flex-col">
+              <p className="text-base font-normal text-[#374151]">Reservas</p>
+              <p className="text-xl font-semibold text-[#374151] tracking-tight">2</p>
+            </div>
+            <span className="material-symbols-outlined text-[#cbd5e1] text-[32px]" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48" }}>event_available</span>
+          </div>
+          
+          <div className="flex items-center justify-between bg-[#f8fafc] rounded-lg px-[19px] py-[21px]">
+            <div className="flex flex-col">
+              <p className="text-base font-normal text-[#374151]">Destinos</p>
+              <p className="text-xl font-semibold text-[#374151] tracking-tight">4</p>
+            </div>
+            <span className="material-symbols-outlined text-[#cbd5e1] text-[32px]" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48" }}>map</span>
+          </div>
+          
+          <div className="flex items-center justify-between bg-[#f8fafc] rounded-lg px-[19px] py-[21px]">
+            <div className="flex flex-col">
+              <p className="text-base font-normal text-[#374151]">Hoteles</p>
+              <p className="text-xl font-semibold text-[#374151] tracking-tight">0</p>
+            </div>
+            <span className="material-symbols-outlined text-[#cbd5e1] text-[32px]" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48" }}>hotel</span>
+          </div>
+          
+          <div className="flex items-center justify-between bg-[#f8fafc] rounded-lg px-[19px] py-[21px]">
+            <div className="flex flex-col">
+              <p className="text-base font-normal text-[#374151]">Transportes</p>
+              <p className="text-xl font-semibold text-[#374151] tracking-tight">1</p>
+            </div>
+            <span className="material-symbols-outlined text-[#cbd5e1] text-[32px]" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48" }}>flight_takeoff</span>
+          </div>
+        </div>
+
+        <div className="space-y-6">
+
+          {/* Filtros */}
+          <Card>
+            <CardContent className="pt-6">
+              <div className="flex items-end gap-3">
+                <div className="flex-1">
+                  <label className="text-sm font-medium text-slate-700 mb-2 block">Buscar:</label>
+                  <Select value={filtros.buscar} onValueChange={(value) => setFiltros({...filtros, buscar: value})}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Todas" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="todas">Todas</SelectItem>
+                      <SelectItem value="finalizadas">Finalizadas</SelectItem>
+                      <SelectItem value="pendientes">Pendientes</SelectItem>
+                      <SelectItem value="canceladas">Canceladas</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="flex-1">
+                  <label className="text-sm font-medium text-slate-700 mb-2 block">Destino</label>
+                  <Input 
+                    value={filtros.destino}
+                    onChange={(e) => setFiltros({...filtros, destino: e.target.value})}
+                    placeholder="Buscar destino"
+                  />
+                </div>
+
+                <div className="flex-1">
+                  <label className="text-sm font-medium text-slate-700 mb-2 block">Localizador</label>
+                  <Input 
+                    value={filtros.localizador}
+                    onChange={(e) => setFiltros({...filtros, localizador: e.target.value})}
+                    placeholder="Buscar localizador"
+                  />
+                </div>
+
+                <div className="flex-1">
+                  <label className="text-sm font-medium text-slate-700 mb-2 block">Nombre</label>
+                  <Input 
+                    value={filtros.nombre}
+                    onChange={(e) => setFiltros({...filtros, nombre: e.target.value})}
+                    placeholder="Buscar nombre"
+                  />
+                </div>
+
+                <Button 
+                  variant="outline" 
+                  onClick={handleLimpiar}
+                  className="px-6"
+                >
+                  Limpiar
+                </Button>
+                <Button 
+                  onClick={handleBuscar}
+                  className="px-6 bg-slate-700 hover:bg-slate-800 text-white"
+                >
+                  Buscar
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Header de tabla */}
+          <div className="grid grid-cols-12 gap-4 px-4 py-3 bg-slate-50 rounded-lg text-xs font-medium text-slate-600 uppercase items-center">
+            <div className="col-span-1">Localizador</div>
+            <div 
+              className="col-span-2 flex items-center gap-1 cursor-pointer hover:text-slate-900 transition-colors"
+              onClick={() => handleSort('fechaCreacion')}
+            >
+              Fecha de creación
+              {sortField === 'fechaCreacion' && (
+                <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20" }}>
+                  {sortOrder === 'desc' ? 'expand_more' : 'expand_less'}
+                </span>
+              )}
+            </div>
+            <div 
+              className="col-span-2 flex items-center gap-1 cursor-pointer hover:text-slate-900 transition-colors"
+              onClick={() => handleSort('fechaSalida')}
+            >
+              Fecha de salida
+              {sortField === 'fechaSalida' && (
+                <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20" }}>
+                  {sortOrder === 'desc' ? 'expand_more' : 'expand_less'}
+                </span>
+              )}
+            </div>
+            <div className="col-span-2">Nombre</div>
+            <div className="col-span-2">Viaje</div>
+            <div className="col-span-3 text-right">Precio total</div>
+          </div>
+
+          {/* Lista de reservas */}
+          <div className="space-y-4">
+            {reservas.map((reserva) => (
+              <Card key={reserva.id} className="overflow-hidden">
+                <CardContent className="p-6">
+                  <div className="grid grid-cols-12 gap-4 items-start">
+                    {/* Localizador */}
+                    <div className="col-span-1">
+                      <div className="text-lg font-semibold text-slate-700">{reserva.localizador}</div>
+                    </div>
+
+                    {/* Fecha de creación */}
+                    <div className="col-span-2">
+                      <p className="text-sm text-slate-900">{reserva.fechaCreacion}</p>
+                    </div>
+
+                    {/* Fecha de salida */}
+                    <div className="col-span-2">
+                      <p className="text-sm text-slate-900">{reserva.fechaSalida}</p>
+                    </div>
+
+                    {/* Nombre */}
+                    <div className="col-span-2">
+                      <p className="text-sm text-slate-900 font-medium">{reserva.nombre}</p>
+                      <p className="text-xs text-slate-500">{reserva.destino}</p>
+                    </div>
+
+                    {/* Viaje - Iconos */}
+                    <div className="col-span-2">
+                      <div className="flex flex-wrap gap-3">
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <div className="flex items-center gap-1 text-sm cursor-default">
+                              <span className="material-symbols-outlined text-base" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>person</span>
+                              <span>{reserva.pasajeros}</span>
+                            </div>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Adultos</p>
+                          </TooltipContent>
+                        </Tooltip>
+
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <div className="flex items-center gap-1 text-sm cursor-default">
+                              <span className="material-symbols-outlined text-base" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>location_on</span>
+                              <span>{reserva.ubicaciones}</span>
+                            </div>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Destinos</p>
+                          </TooltipContent>
+                        </Tooltip>
+
+                        {reserva.autos > 0 && (
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <div className="flex items-center gap-1 text-sm cursor-default">
+                                <span className="material-symbols-outlined text-base" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>directions_car</span>
+                                <span>{reserva.autos}</span>
+                              </div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Transportes</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        )}
+
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <div className="flex items-center gap-1 text-sm cursor-default">
+                              <span className="material-symbols-outlined text-base" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>hotel</span>
+                              <span>{reserva.hoteles}</span>
+                            </div>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Hoteles</p>
+                          </TooltipContent>
+                        </Tooltip>
+
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <div className="flex items-center gap-1 text-sm cursor-default">
+                              <span className="material-symbols-outlined text-base" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>nightlight</span>
+                              <span>{reserva.noches}</span>
+                            </div>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>Noches de alojamiento</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </div>
+                    </div>
+
+                    {/* Precio */}
+                    <div className="col-span-3 text-right">
+                      <p className="text-lg font-semibold text-slate-900">US${reserva.precio.toFixed(2)}</p>
+                      <p className="text-sm text-slate-600">Comisión: US${reserva.comision.toFixed(2)}</p>
+                    </div>
+                  </div>
+
+                  {/* Botones de acción */}
+                  <div className="flex items-center justify-between mt-6 pt-4 border-t">
+                    <Badge className="bg-green-100 text-green-700 hover:bg-green-200 whitespace-nowrap border-0">
+                      Reserva Finalizada
+                    </Badge>
+                    <div className="flex items-center gap-3">
+                      <Button className="bg-slate-700 hover:bg-slate-800 text-white">
+                        Modificar
+                      </Button>
+                      <Button variant="outline">
+                        Detalles
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+
+        {/* Modal Nueva Reserva */}
+        <Dialog open={isNewReservaModalOpen} onOpenChange={setIsNewReservaModalOpen}>
+          <DialogContent className="sm:max-w-[600px]">
+            <DialogHeader>
+              <DialogTitle className="text-2xl font-semibold text-slate-900">Nueva Reserva</DialogTitle>
+            </DialogHeader>
+            <div className="grid grid-cols-2 gap-6 py-6">
+              {/* Reserva con Motor */}
+              <button 
+                className="flex flex-col items-center gap-4 p-6 bg-white border-2 border-slate-200 rounded-lg hover:border-slate-700 hover:shadow-md transition-all cursor-pointer"
+                onClick={() => {
+                  window.open('https://azucartravel.com/?tripType=TRIP_PLANNER', '_blank', 'noopener,noreferrer');
+                  setIsNewReservaModalOpen(false);
+                }}
+              >
+                <span className="material-symbols-outlined text-slate-700 text-6xl" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48" }}>
+                  travel_explore
+                </span>
+                <div className="text-center">
+                  <h3 className="text-lg font-semibold text-slate-900">Reserva con Motor</h3>
+                  <p className="text-sm text-slate-500 mt-1">Buscar y reservar con nuestro motor de búsqueda</p>
+                </div>
+              </button>
+
+              {/* Reserva Manual */}
+              <button 
+                className="flex flex-col items-center gap-4 p-6 bg-white border-2 border-slate-200 rounded-lg hover:border-slate-700 hover:shadow-md transition-all cursor-pointer"
+                onClick={() => {
+                  // TODO: Implementar navegación a reserva manual
+                  console.log('Reserva Manual');
+                }}
+              >
+                <span className="material-symbols-outlined text-slate-700 text-6xl" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48" }}>
+                  edit_note
+                </span>
+                <div className="text-center">
+                  <h3 className="text-lg font-semibold text-slate-900">Reserva Manual</h3>
+                  <p className="text-sm text-slate-500 mt-1">Crear una reserva de forma manual</p>
+                </div>
+              </button>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
-    </div>
+    </TooltipProvider>
   );
 }

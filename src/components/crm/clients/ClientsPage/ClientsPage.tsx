@@ -18,7 +18,7 @@ interface Client {
 }
 
 const initialClients: Client[] = [
-  { id: '1', firstName: 'Arieldi', lastName: 'Marrero', quotations: 0, bookings: 0, files: 0 },
+  { id: '1', firstName: 'Arieldi', lastName: 'Marrero', quotations: 0, bookings: 2, files: 0 },
   { id: '2', firstName: 'Henrry', lastName: 'Mulet', quotations: 0, bookings: 0, files: 0 },
   { id: '3', firstName: 'Gretell', lastName: 'Rojas Rodriguez', quotations: 0, bookings: 0, files: 0 },
   { id: '4', firstName: 'Elio', lastName: 'Zambrano', quotations: 0, bookings: 0, files: 0 },
@@ -52,6 +52,21 @@ export function ClientsPage() {
       localStorage.setItem('crm_clients', JSON.stringify(clients));
     }
   }, [clients]);
+
+  // Update Arieldi's bookings count if needed
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const arieldiClient = clients.find(c => c.id === '1' && c.firstName === 'Arieldi');
+      if (arieldiClient && arieldiClient.bookings !== 2) {
+        const updatedClients = clients.map(c => 
+          c.id === '1' && c.firstName === 'Arieldi' 
+            ? { ...c, bookings: 2 } 
+            : c
+        );
+        setClients(updatedClients);
+      }
+    }
+  }, []);
 
   const getInitials = (firstName: string, lastName: string) => {
     return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();

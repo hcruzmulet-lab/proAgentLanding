@@ -19,6 +19,7 @@ interface DashboardPageProps {
 export function DashboardPage({ userName = 'Arieldi' }: DashboardPageProps) {
   const router = useRouter();
   const [clientsCount, setClientsCount] = useState(0);
+  const [bookingsCount, setBookingsCount] = useState(2); // Count from CRM Reservas module
   const [isNewClientModalOpen, setIsNewClientModalOpen] = useState(false);
 
   // Get clients count from localStorage
@@ -46,7 +47,7 @@ export function DashboardPage({ userName = 'Arieldi' }: DashboardPageProps) {
   const stats = [
     { title: 'Clientes', value: clientsCount, icon: 'group', onClick: () => router.push('/es/crm/clientes') },
     { title: 'Expedientes', value: 46, icon: 'folder_open' },
-    { title: 'Reservas', value: 57, icon: 'airplane_ticket' },
+    { title: 'Reservas', value: bookingsCount, icon: 'airplane_ticket', onClick: () => router.push('/es/crm/reservas') },
     { title: 'Cotizaciones', value: 78, icon: 'description' },
   ];
 
