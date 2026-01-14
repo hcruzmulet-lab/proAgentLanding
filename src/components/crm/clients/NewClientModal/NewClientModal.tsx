@@ -62,12 +62,12 @@ export function NewClientModal({ isOpen, onClose, onClientAdded }: NewClientModa
           <span className="material-symbols-outlined">close</span>
         </button>
         <DialogHeader>
-          <DialogTitle className="new-client-modal__title">{t('addClient')}</DialogTitle>
+          <DialogTitle className="new-client-modal__title">Nuevo Cliente</DialogTitle>
         </DialogHeader>
         <div className="new-client-modal__form">
           <div className="new-client-modal__form-group">
             <Label htmlFor="firstName" className="new-client-modal__label">
-              {t('firstName')} <span className="new-client-modal__required">Required</span>
+              {t('firstName')}
             </Label>
             <Input
               id="firstName"
@@ -79,7 +79,7 @@ export function NewClientModal({ isOpen, onClose, onClientAdded }: NewClientModa
           </div>
           <div className="new-client-modal__form-group">
             <Label htmlFor="lastName" className="new-client-modal__label">
-              {t('lastName')} <span className="new-client-modal__required">Required</span>
+              {t('lastName')}
             </Label>
             <Input
               id="lastName"
