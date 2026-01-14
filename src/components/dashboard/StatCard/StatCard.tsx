@@ -11,7 +11,10 @@ interface StatCardProps {
 
 export function StatCard({ title, value, icon, onClick }: StatCardProps) {
   return (
-    <div className="stat-card" onClick={onClick}>
+    <div 
+      className={`stat-card ${onClick ? 'stat-card--clickable' : ''}`} 
+      onClick={onClick}
+    >
       <div className="stat-card__content">
         <p className="stat-card__title">{title}</p>
         <p className="stat-card__value">{value}</p>

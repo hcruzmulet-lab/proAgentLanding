@@ -1,5 +1,7 @@
 'use client';
 
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { StatCard } from '@/components/dashboard/StatCard';
 import { QuickAction } from '@/components/dashboard/QuickAction';
@@ -14,8 +16,22 @@ interface DashboardPageProps {
 }
 
 export function DashboardPage({ userName = 'Arieldi' }: DashboardPageProps) {
+  const router = useRouter();
+  const [clientsCount, setClientsCount] = useState(0);
+
+  // Get clients count from localStorage
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('crm_clients');
+      if (stored) {
+        const clients = JSON.parse(stored);
+        setClientsCount(clients.length);
+      }
+    }
+  }, []);
+
   const stats = [
-    { title: 'Clientes', value: 24, icon: 'group' },
+    { title: 'Clientes', value: clientsCount, icon: 'group', onClick: () => router.push('/es/crm/clientes') },
     { title: 'Expedientes', value: 46, icon: 'folder_open' },
     { title: 'Reservas', value: 57, icon: 'airplane_ticket' },
     { title: 'Cotizaciones', value: 78, icon: 'description' },
@@ -46,7 +62,13 @@ export function DashboardPage({ userName = 'Arieldi' }: DashboardPageProps) {
         {/* Stats Row */}
         <div className="dashboard-page__stats">
           {stats.map((stat) => (
-            <StatCard key={stat.title} title={stat.title} value={stat.value} icon={stat.icon} />
+            <StatCard 
+              key={stat.title} 
+              title={stat.title} 
+              value={stat.value} 
+              icon={stat.icon}
+              onClick={stat.onClick}
+            />
           ))}
         </div>
 

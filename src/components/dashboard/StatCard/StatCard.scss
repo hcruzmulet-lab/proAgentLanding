@@ -6,12 +6,15 @@
   background-color: #f8fafc;
   border-radius: $radius-lg;
   padding: 21px 19px;
-  cursor: pointer;
   @include transition(all);
 
-  &:hover {
-    background-color: #f1f5f9;
-    transform: translateY(-2px);
+  &--clickable {
+    cursor: pointer;
+
+    &:hover {
+      background-color: #f1f5f9;
+      transform: translateY(-2px);
+    }
   }
 
   &__content {
