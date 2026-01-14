@@ -9,6 +9,10 @@ import { PromoBanner } from '@/components/dashboard/PromoBanner';
 import { CalendarCard } from '@/components/dashboard/CalendarCard';
 import { NewsCard } from '@/components/dashboard/NewsCard';
 import { OnboardingCard } from '@/components/dashboard/OnboardingCard';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
 import './DashboardPage.scss';
 
 interface DashboardPageProps {
@@ -18,6 +22,8 @@ interface DashboardPageProps {
 export function DashboardPage({ userName = 'Arieldi' }: DashboardPageProps) {
   const router = useRouter();
   const [clientsCount, setClientsCount] = useState(0);
+  const [isNewClientModalOpen, setIsNewClientModalOpen] = useState(false);
+  const [newClient, setNewClient] = useState({ firstName: '', lastName: '' });
 
   // Get clients count from localStorage
   useEffect(() => {
@@ -30,6 +36,31 @@ export function DashboardPage({ userName = 'Arieldi' }: DashboardPageProps) {
     }
   }, []);
 
+  // Handle add new client
+  const handleAddClient = () => {
+    if (newClient.firstName.trim() && newClient.lastName.trim()) {
+      if (typeof window !== 'undefined') {
+        const stored = localStorage.getItem('crm_clients');
+        const clients = stored ? JSON.parse(stored) : [];
+        const client = {
+          id: Date.now().toString(),
+          firstName: newClient.firstName.trim(),
+          lastName: newClient.lastName.trim(),
+          quotations: 0,
+          bookings: 0,
+          files: 0,
+        };
+        const updatedClients = [...clients, client];
+        localStorage.setItem('crm_clients', JSON.stringify(updatedClients));
+        setClientsCount(updatedClients.length);
+        setNewClient({ firstName: '', lastName: '' });
+        setIsNewClientModalOpen(false);
+        // Redirect to client detail page
+        router.push(`/es/crm/clientes/${client.id}`);
+      }
+    }
+  };
+
   const stats = [
     { title: 'Clientes', value: clientsCount, icon: 'group', onClick: () => router.push('/es/crm/clientes') },
     { title: 'Expedientes', value: 46, icon: 'folder_open' },
@@ -38,7 +69,7 @@ export function DashboardPage({ userName = 'Arieldi' }: DashboardPageProps) {
   ];
 
   const quickActions = [
-    { title: 'Nuevo Cliente', icon: 'person' },
+    { title: 'Nuevo Cliente', icon: 'person', onClick: () => setIsNewClientModalOpen(true) },
     { title: 'Nueva Cotización', icon: 'description' },
     { title: 'Nueva Reserva', icon: 'airplane_ticket' },
     { title: 'Nuevo Expediente', icon: 'folder' },
@@ -75,7 +106,12 @@ export function DashboardPage({ userName = 'Arieldi' }: DashboardPageProps) {
         {/* Quick Actions Row */}
         <div className="dashboard-page__actions">
           {quickActions.map((action) => (
-            <QuickAction key={action.title} title={action.title} icon={action.icon} />
+            <QuickAction 
+              key={action.title} 
+              title={action.title} 
+              icon={action.icon}
+              onClick={action.onClick}
+            />
           ))}
         </div>
 
@@ -115,6 +151,60 @@ export function DashboardPage({ userName = 'Arieldi' }: DashboardPageProps) {
           <NewsCard />
           <OnboardingCard />
         </div>
+
+        {/* New Client Modal */}
+        <Dialog open={isNewClientModalOpen} onOpenChange={setIsNewClientModalOpen}>
+          <DialogContent className="dashboard-page__modal">
+            <button
+              className="dashboard-page__modal-close"
+              onClick={() => setIsNewClientModalOpen(false)}
+              aria-label="Close"
+            >
+              <span className="material-symbols-outlined">close</span>
+            </button>
+            <DialogHeader>
+              <DialogTitle className="dashboard-page__modal-title">Agregar Cliente</DialogTitle>
+            </DialogHeader>
+            <div className="dashboard-page__modal-form">
+              <div className="dashboard-page__form-group">
+                <Label htmlFor="firstName" className="dashboard-page__label">
+                  Nombre <span className="dashboard-page__required">Required</span>
+                </Label>
+                <Input
+                  id="firstName"
+                  placeholder="Ingresa el nombre"
+                  value={newClient.firstName}
+                  onChange={(e) => setNewClient({ ...newClient, firstName: e.target.value })}
+                  className="dashboard-page__input"
+                />
+              </div>
+              <div className="dashboard-page__form-group">
+                <Label htmlFor="lastName" className="dashboard-page__label">
+                  Apellido <span className="dashboard-page__required">Required</span>
+                </Label>
+                <Input
+                  id="lastName"
+                  placeholder="Ingresa el apellido"
+                  value={newClient.lastName}
+                  onChange={(e) => setNewClient({ ...newClient, lastName: e.target.value })}
+                  className="dashboard-page__input"
+                />
+              </div>
+              <div className="dashboard-page__modal-actions">
+                <Button
+                  variant="outline"
+                  onClick={() => setIsNewClientModalOpen(false)}
+                  className="dashboard-page__cancel-button"
+                >
+                  Cancelar
+                </Button>
+                <Button onClick={handleAddClient} className="dashboard-page__add-button">
+                  Agregar Cliente
+                </Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     </DashboardLayout>
   );
