@@ -95,10 +95,10 @@ export function NewClientModal({ isOpen, onClose, onClientAdded }: NewClientModa
               onClick={handleClose}
               className="new-client-modal__cancel-button"
             >
-              {t('cancel')}
+              Cancelar
             </Button>
             <Button onClick={handleAddClient} className="new-client-modal__add-button">
-              {t('addClient')}
+              Guardar
             </Button>
           </div>
         </div>
