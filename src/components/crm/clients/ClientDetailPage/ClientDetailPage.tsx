@@ -8,6 +8,14 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
+import {
   Dialog,
   DialogContent,
   DialogHeader,
@@ -213,10 +221,23 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
 
   return (
     <div className="client-detail">
-      {/* Back Button */}
-      <button className="client-detail__back" onClick={handleBack}>
-        <span className="material-symbols-outlined">arrow_back</span>
-      </button>
+      {/* Breadcrumb */}
+      <Breadcrumb className="client-detail__breadcrumb">
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink 
+              onClick={() => router.push('/es/crm/clientes')}
+              className="cursor-pointer"
+            >
+              Clientes
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>{client.firstName} {client.lastName}</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
 
       {/* Header */}
       <div className="client-detail__header">
