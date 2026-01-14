@@ -5,8 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Label } from '@/components/ui/label';
+import { NewClientModal } from '@/components/crm/clients/NewClientModal';
 import './ClientsPage.scss';
 
 interface Client {
@@ -44,7 +43,6 @@ export function ClientsPage() {
   
   const [searchQuery, setSearchQuery] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [newClient, setNewClient] = useState({ firstName: '', lastName: '' });
   const [letterFilter, setLetterFilter] = useState<string>('Todos');
   const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
 
@@ -88,25 +86,13 @@ export function ClientsPage() {
 
   const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
-  const handleAddClient = () => {
-    if (newClient.firstName && newClient.lastName) {
-      const client: Client = {
-        id: Date.now().toString(),
-        firstName: newClient.firstName,
-        lastName: newClient.lastName,
-        quotations: 0,
-        bookings: 0,
-        files: 0,
-      };
-      const updatedClients = [...clients, client];
-      setClients(updatedClients);
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('crm_clients', JSON.stringify(updatedClients));
+  const handleClientAdded = () => {
+    // Refresh clients from localStorage
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('crm_clients');
+      if (stored) {
+        setClients(JSON.parse(stored));
       }
-      setNewClient({ firstName: '', lastName: '' });
-      setIsModalOpen(false);
-      // Redirect to client detail page
-      router.push(`/crm/clientes/${client.id}`);
     }
   };
 
@@ -312,62 +298,11 @@ export function ClientsPage() {
       )}
 
       {/* Add Client Modal */}
-      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="clients-page__modal">
-          <button
-            className="clients-page__modal-close"
-            onClick={() => setIsModalOpen(false)}
-            aria-label="Close"
-          >
-            <span className="material-symbols-outlined">close</span>
-          </button>
-          <DialogHeader>
-            <DialogTitle className="clients-page__modal-title">{t('addClient')}</DialogTitle>
-          </DialogHeader>
-          <div className="clients-page__modal-form">
-            <div className="clients-page__form-group">
-              <Label htmlFor="firstName" className="clients-page__label">
-                {t('firstName')} <span className="clients-page__required">Required</span>
-              </Label>
-              <Input
-                id="firstName"
-                placeholder={t('enterFirstName')}
-                value={newClient.firstName}
-                onChange={(e) => setNewClient({ ...newClient, firstName: e.target.value })}
-                className="clients-page__input"
-              />
-            </div>
-            <div className="clients-page__form-group">
-              <Label htmlFor="lastName" className="clients-page__label">
-                {t('lastName')} <span className="clients-page__required">Required</span>
-              </Label>
-              <Input
-                id="lastName"
-                placeholder={t('enterLastName')}
-                value={newClient.lastName}
-                onChange={(e) => setNewClient({ ...newClient, lastName: e.target.value })}
-                className="clients-page__input"
-              />
-            </div>
-            <div className="clients-page__modal-actions">
-              <Button
-                variant="outline"
-                onClick={() => setIsModalOpen(false)}
-                className="clients-page__cancel-button"
-              >
-                {t('cancel')}
-              </Button>
-              <Button
-                onClick={handleAddClient}
-                disabled={!newClient.firstName || !newClient.lastName}
-                className="clients-page__submit-button"
-              >
-                {t('addClient')}
-              </Button>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
+      <NewClientModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onClientAdded={handleClientAdded}
+      />
     </div>
   );
 }
