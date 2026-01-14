@@ -271,9 +271,9 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
 
       {/* Tabs */}
       <Tabs defaultValue="about" className="client-detail__tabs-wrapper">
-        <TabsList className="client-detail__tabs">
+        <TabsList>
           {tabs.map((tab) => (
-            <TabsTrigger key={tab.id} value={tab.id} className="client-detail__tab">
+            <TabsTrigger key={tab.id} value={tab.id}>
               {tab.label}
             </TabsTrigger>
           ))}
