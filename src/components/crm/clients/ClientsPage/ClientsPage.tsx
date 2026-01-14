@@ -122,7 +122,7 @@ export function ClientsPage() {
         <div className="clients-page__actions">
           <Button onClick={() => setIsModalOpen(true)} className="clients-page__add-button">
             <span className="material-symbols-outlined clients-page__button-icon">add</span>
-            {t('addClient')}
+            Nuevo Cliente
           </Button>
         </div>
       </div>
