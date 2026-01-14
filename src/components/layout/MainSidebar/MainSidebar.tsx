@@ -25,6 +25,15 @@ interface MainSidebarProps {
   notificationCount?: number;
 }
 
+interface MenuItem {
+  id: string;
+  icon: string;
+  label: string;
+  href?: string;
+  isExternal?: boolean;
+  isDivider?: boolean;
+}
+
 const mainModules = [
   { id: 'inicio', icon: 'home', label: 'Inicio', href: '/dashboard' },
   { id: 'crm', icon: 'person', label: 'CRM', href: '/crm' },
@@ -72,20 +81,20 @@ export function MainSidebar({
   };
 
   // Obtener submenu según el módulo
-  const getSubMenu = (moduleId: string) => {
+  const getSubMenu = (moduleId: string): MenuItem[] => {
     switch (moduleId) {
       case 'inicio':
-        return inicioMenuItems;
+        return inicioMenuItems as MenuItem[];
       case 'crm':
-        return crmMenuItems;
+        return crmMenuItems as MenuItem[];
       case 'reservas':
-        return reservasMenuItems;
+        return reservasMenuItems as MenuItem[];
       case 'gestion':
-        return gestionMenuItems;
+        return gestionMenuItems as MenuItem[];
       case 'academia':
-        return academiaMenuItems;
+        return academiaMenuItems as MenuItem[];
       case 'mi-cuenta':
-        return miCuentaMenuItems;
+        return miCuentaMenuItems as MenuItem[];
       default:
         return [];
     }
