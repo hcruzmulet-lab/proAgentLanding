@@ -37,15 +37,22 @@ export function NewClientModal({ isOpen, onClose, onClientAdded }: NewClientModa
         const updatedClients = [...clients, client];
         console.log('NewClientModal - Updated clients array:', updatedClients);
         localStorage.setItem('crm_clients', JSON.stringify(updatedClients));
-        console.log('NewClientModal - Saved to localStorage, redirecting to:', `/es/crm/clientes/${client.id}`);
+        
+        // Verify save
+        const verify = localStorage.getItem('crm_clients');
+        console.log('NewClientModal - Verified localStorage after save:', verify);
+        console.log('NewClientModal - Redirecting to:', `/es/crm/clientes/${client.id}`);
         
         setNewClient({ firstName: '', lastName: '' });
         onClose();
         if (onClientAdded) {
           onClientAdded();
         }
-        // Redirect to client detail page
-        router.push(`/es/crm/clientes/${client.id}`);
+        
+        // Use setTimeout to ensure localStorage is fully written before navigation
+        setTimeout(() => {
+          router.push(`/es/crm/clientes/${client.id}`);
+        }, 100);
       }
     }
   };
