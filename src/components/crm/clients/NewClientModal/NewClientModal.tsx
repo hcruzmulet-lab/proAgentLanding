@@ -33,8 +33,12 @@ export function NewClientModal({ isOpen, onClose, onClientAdded }: NewClientModa
           bookings: 0,
           files: 0,
         };
+        console.log('NewClientModal - Creating client:', client);
         const updatedClients = [...clients, client];
+        console.log('NewClientModal - Updated clients array:', updatedClients);
         localStorage.setItem('crm_clients', JSON.stringify(updatedClients));
+        console.log('NewClientModal - Saved to localStorage, redirecting to:', `/es/crm/clientes/${client.id}`);
+        
         setNewClient({ firstName: '', lastName: '' });
         onClose();
         if (onClientAdded) {

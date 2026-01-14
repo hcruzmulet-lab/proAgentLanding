@@ -47,12 +47,18 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const stored = localStorage.getItem('crm_clients');
+      console.log('ClientDetailPage - localStorage data:', stored);
+      console.log('ClientDetailPage - Looking for clientId:', clientId);
+      
       if (stored) {
         const allClients = JSON.parse(stored);
+        console.log('ClientDetailPage - All clients:', allClients);
         setClients(allClients);
         
         // Find the specific client by ID
         const found = allClients.find((c: any) => String(c.id) === String(clientId));
+        console.log('ClientDetailPage - Found client:', found);
+        
         if (found) {
           setClient({
             ...found,
@@ -63,7 +69,41 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
             allergies: found.allergies || '',
             knownTravelerNumber: found.knownTravelerNumber || '',
           });
+        } else {
+          // Client not found, set a default empty state
+          console.error('ClientDetailPage - Client not found with ID:', clientId);
+          setClient({
+            id: clientId,
+            firstName: 'Cliente',
+            lastName: 'No Encontrado',
+            quotations: 0,
+            bookings: 0,
+            files: 0,
+            email: '',
+            phone: '',
+            address: '',
+            importantDates: '',
+            allergies: '',
+            knownTravelerNumber: '',
+          });
         }
+      } else {
+        console.error('ClientDetailPage - No clients in localStorage');
+        // No clients in localStorage
+        setClient({
+          id: clientId,
+          firstName: 'Cliente',
+          lastName: 'No Encontrado',
+          quotations: 0,
+          bookings: 0,
+          files: 0,
+          email: '',
+          phone: '',
+          address: '',
+          importantDates: '',
+          allergies: '',
+          knownTravelerNumber: '',
+        });
       }
     }
   }, [clientId]);
