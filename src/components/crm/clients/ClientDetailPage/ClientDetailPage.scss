@@ -30,6 +30,15 @@
     }
   }
 
+  &__loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $spacing-2xl;
+    font-size: 1rem;
+    color: #64748b;
+  }
+
   &__header {
     display: flex;
     justify-content: space-between;

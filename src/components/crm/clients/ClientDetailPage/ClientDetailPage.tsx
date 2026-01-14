@@ -40,35 +40,33 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
   const [travelerSearch, setTravelerSearch] = useState('');
   const [selectedClient, setSelectedClient] = useState<any>(null);
 
-  // Sample clients - same as ClientsPage
-  const initialClients = [
-    { id: '1', firstName: 'Arieldi', lastName: 'Marrero', quotations: 0, bookings: 0, files: 0 },
-    { id: '2', firstName: 'Henrry', lastName: 'Mulet', quotations: 0, bookings: 0, files: 0 },
-    { id: '3', firstName: 'Gretell', lastName: 'Rojas Rodriguez', quotations: 0, bookings: 0, files: 0 },
-    { id: '4', firstName: 'Elio', lastName: 'Zambrano', quotations: 0, bookings: 0, files: 0 },
-  ];
+  const [clients, setClients] = useState<any[]>([]);
+  const [client, setClient] = useState<any>(null);
 
-  const [clients, setClients] = useState<any[]>(initialClients);
-  const [client, setClient] = useState<any>(() => {
-    const found = initialClients.find(c => c.id === clientId);
-    return found || initialClients[0]; // Default to first client
-  });
-
-  // Update client when clientId changes
+  // Load clients from localStorage and find the specific client
   useEffect(() => {
-    const found = clients.find(c => c.id === clientId);
-    if (found) {
-      setClient({
-        ...found,
-        email: found.email || '',
-        phone: found.phone || '',
-        address: found.address || '',
-        importantDates: found.importantDates || '',
-        allergies: found.allergies || '',
-        knownTravelerNumber: found.knownTravelerNumber || '',
-      });
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('crm_clients');
+      if (stored) {
+        const allClients = JSON.parse(stored);
+        setClients(allClients);
+        
+        // Find the specific client by ID
+        const found = allClients.find((c: any) => String(c.id) === String(clientId));
+        if (found) {
+          setClient({
+            ...found,
+            email: found.email || '',
+            phone: found.phone || '',
+            address: found.address || '',
+            importantDates: found.importantDates || '',
+            allergies: found.allergies || '',
+            knownTravelerNumber: found.knownTravelerNumber || '',
+          });
+        }
+      }
     }
-  }, [clientId, clients]);
+  }, [clientId]);
 
   useEffect(() => {
     if (client) {
@@ -163,6 +161,15 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
     { id: 'associatedTravelers', label: t('tabs.associatedTravelers') },
     { id: 'notes', label: t('tabs.notes') },
   ];
+
+  // Show loading state
+  if (!client) {
+    return (
+      <div className="client-detail">
+        <div className="client-detail__loading">Cargando...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="client-detail">
