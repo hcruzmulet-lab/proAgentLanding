@@ -39,9 +39,9 @@ export function DashboardPage({ userName = 'Arieldi' }: DashboardPageProps) {
 
   const quickActions = [
     { title: 'Nuevo Cliente', icon: 'person' },
-    { title: 'Nuevo Expediente', icon: 'folder' },
-    { title: 'Nueva Reserva', icon: 'airplane_ticket' },
     { title: 'Nueva Cotización', icon: 'description' },
+    { title: 'Nueva Reserva', icon: 'airplane_ticket' },
+    { title: 'Nuevo Expediente', icon: 'folder' },
   ];
 
   return (
