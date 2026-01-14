@@ -168,7 +168,7 @@ export function DashboardPage({ userName = 'Arieldi' }: DashboardPageProps) {
             <div className="dashboard-page__modal-form">
               <div className="dashboard-page__form-group">
                 <Label htmlFor="firstName" className="dashboard-page__label">
-                  Nombre <span className="dashboard-page__required">Required</span>
+                  Nombre
                 </Label>
                 <Input
                   id="firstName"
@@ -180,7 +180,7 @@ export function DashboardPage({ userName = 'Arieldi' }: DashboardPageProps) {
               </div>
               <div className="dashboard-page__form-group">
                 <Label htmlFor="lastName" className="dashboard-page__label">
-                  Apellido <span className="dashboard-page__required">Required</span>
+                  Apellido
                 </Label>
                 <Input
                   id="lastName"
