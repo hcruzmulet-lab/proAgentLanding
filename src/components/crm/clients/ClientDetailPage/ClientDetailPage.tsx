@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import {
   Dialog,
   DialogContent,
@@ -27,7 +28,6 @@ interface ClientDetailPageProps {
 export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
   const t = useTranslations('crm.clientDetail');
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState('about');
   const [isEditingFirstName, setIsEditingFirstName] = useState(false);
   const [isEditingLastName, setIsEditingLastName] = useState(false);
   const [editedFirstName, setEditedFirstName] = useState('');
@@ -270,20 +270,17 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
       </div>
 
       {/* Tabs */}
-      <div className="client-detail__tabs">
-        {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            className={`client-detail__tab ${activeTab === tab.id ? 'client-detail__tab--active' : ''}`}
-            onClick={() => setActiveTab(tab.id)}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
+      <Tabs defaultValue="about" className="client-detail__tabs-wrapper">
+        <TabsList className="client-detail__tabs">
+          {tabs.map((tab) => (
+            <TabsTrigger key={tab.id} value={tab.id} className="client-detail__tab">
+              {tab.label}
+            </TabsTrigger>
+          ))}
+        </TabsList>
 
-      {/* Content */}
-      {activeTab === 'about' && (
+        {/* About Tab Content */}
+        <TabsContent value="about" className="client-detail__tab-content">
         <div className="client-detail__content">
           {/* Contact Section */}
           <div className="client-detail__section">
@@ -449,10 +446,10 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
             </div>
           </div>
         </div>
-      )}
+        </TabsContent>
 
-      {/* Credit Cards Tab */}
-      {activeTab === 'creditCards' && (
+        {/* Credit Cards Tab Content */}
+        <TabsContent value="creditCards" className="client-detail__tab-content">
         <div className="client-detail__content">
           <div className="client-detail__empty-card-state">
             <span className="material-symbols-outlined client-detail__empty-card-icon">
@@ -473,10 +470,10 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
             </Button>
           </div>
         </div>
-      )}
+        </TabsContent>
 
-      {/* Documents Tab */}
-      {activeTab === 'documents' && (
+        {/* Documents Tab Content */}
+        <TabsContent value="documents" className="client-detail__tab-content">
         <div className="client-detail__content">
           <div className="client-detail__empty-card-state">
             <span className="material-symbols-outlined client-detail__empty-card-icon">
@@ -497,10 +494,10 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
             </Button>
           </div>
         </div>
-      )}
+        </TabsContent>
 
-      {/* Loyalty Programs Tab */}
-      {activeTab === 'loyaltyPrograms' && (
+        {/* Loyalty Programs Tab Content */}
+        <TabsContent value="loyaltyPrograms" className="client-detail__tab-content">
         <div className="client-detail__content">
           <div className="client-detail__empty-card-state">
             <span className="material-symbols-outlined client-detail__empty-card-icon">
@@ -521,10 +518,10 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
             </Button>
           </div>
         </div>
-      )}
+        </TabsContent>
 
-      {/* Associated Travelers Tab */}
-      {activeTab === 'associatedTravelers' && (
+        {/* Associated Travelers Tab Content */}
+        <TabsContent value="associatedTravelers" className="client-detail__tab-content">
         <div className="client-detail__content">
           <div className="client-detail__empty-card-state">
             <span className="material-symbols-outlined client-detail__empty-card-icon">
@@ -545,10 +542,10 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
             </Button>
           </div>
         </div>
-      )}
+        </TabsContent>
 
-      {/* Notes Tab */}
-      {activeTab === 'notes' && (
+        {/* Notes Tab Content */}
+        <TabsContent value="notes" className="client-detail__tab-content">
         <div className="client-detail__content">
           <div className="client-detail__empty-card-state">
             <span className="material-symbols-outlined client-detail__empty-card-icon">
@@ -569,7 +566,8 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
             </Button>
           </div>
         </div>
-      )}
+        </TabsContent>
+      </Tabs>
 
       {/* Add Credit Card Modal */}
       <Dialog open={isAddCardModalOpen} onOpenChange={setIsAddCardModalOpen}>
