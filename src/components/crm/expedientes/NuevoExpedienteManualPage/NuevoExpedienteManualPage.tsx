@@ -82,17 +82,17 @@ export function NuevoExpedienteManualPage() {
       nroCotizacion: 'COT-001',
       cliente: 'Miguel Zabala',
       destino: 'Cancún, México',
-      fecha: '15 Feb 2026',
-      monto: 2500,
+      fecha: '15 feb 2026',
+      monto: 1250.00,
       estado: 'Enviada'
     },
     {
       id: '2',
       nroCotizacion: 'COT-002',
       cliente: 'Arieldi Marrero',
-      destino: 'Punta Cana, RD',
-      fecha: '20 Mar 2026',
-      monto: 3200,
+      destino: 'Punta Cana, República Dominicana',
+      fecha: '20 mar 2026',
+      monto: 2800.00,
       estado: 'Pendiente'
     }
   ];
@@ -100,21 +100,21 @@ export function NuevoExpedienteManualPage() {
   const reservasMock: Reserva[] = [
     {
       id: '1',
-      localizador: 'ABC123',
-      cliente: 'Miguel Zabala',
+      localizador: 'AZC-2',
+      cliente: 'Arieldi Marrero',
       destino: 'Cancún, México',
-      fechaSalida: '10 Feb 2026',
-      monto: 2800,
-      estado: 'Confirmada'
+      fechaSalida: '24 ene 2026',
+      monto: 651.55,
+      estado: 'Finalizada'
     },
     {
       id: '2',
-      localizador: 'XYZ789',
+      localizador: 'AZC-1',
       cliente: 'Arieldi Marrero',
       destino: 'Punta Cana, RD',
-      fechaSalida: '15 Mar 2026',
-      monto: 4200,
-      estado: 'Confirmada'
+      fechaSalida: '24 ene 2026',
+      monto: 298.53,
+      estado: 'Finalizada'
     }
   ];
   
