@@ -16,6 +16,9 @@ interface Client {
   lastName: string;
   email?: string;
   phone?: string;
+  tipoCliente?: 'persona' | 'empresa';
+  nombreEmpresa?: string;
+  nacionalidad?: string;
   quotations: number;
   bookings: number;
   files: number;
