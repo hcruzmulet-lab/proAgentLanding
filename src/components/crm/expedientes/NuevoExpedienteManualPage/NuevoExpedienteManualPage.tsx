@@ -18,6 +18,7 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 import { ImageSearchModal } from '@/components/shared/ImageSearchModal';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 interface Cliente {
   id: string;
@@ -30,7 +31,7 @@ interface Cliente {
 
 interface ElementoExpediente {
   id: string;
-  tipo: 'cotizacion' | 'reserva';
+  tipo: 'cotizacion' | 'reserva' | 'itinerario';
   numero: string;
   descripcion: string;
   monto: number;
@@ -59,6 +60,16 @@ interface Reserva {
   estado: string;
 }
 
+interface Itinerario {
+  id: string;
+  numeroItinerario: string;
+  cliente: string;
+  destino: string;
+  fecha: string;
+  monto: number;
+  estado: string;
+}
+
 export function NuevoExpedienteManualPage() {
   const router = useRouter();
   const [coverImage, setCoverImage] = useState<string>('');
@@ -72,8 +83,9 @@ export function NuevoExpedienteManualPage() {
   const [buscarTraveler, setBuscarTraveler] = useState('');
   const [isImageSearchOpen, setIsImageSearchOpen] = useState(false);
   const [buscarElemento, setBuscarElemento] = useState('');
-  const [tipoElementoBusqueda, setTipoElementoBusqueda] = useState<'cotizacion' | 'reserva'>('cotizacion');
+  const [tipoElementoBusqueda, setTipoElementoBusqueda] = useState<'cotizacion' | 'reserva' | 'itinerario'>('cotizacion');
   const [mostrarResultadosBusqueda, setMostrarResultadosBusqueda] = useState(false);
+  const [isNewItinerarioModalOpen, setIsNewItinerarioModalOpen] = useState(false);
   
   // Datos mock de cotizaciones y reservas del sistema
   const cotizacionesMock: Cotizacion[] = [
@@ -115,6 +127,27 @@ export function NuevoExpedienteManualPage() {
       fechaSalida: '24 ene 2026',
       monto: 298.53,
       estado: 'Finalizada'
+    }
+  ];
+
+  const itinerariosMock: Itinerario[] = [
+    {
+      id: '1',
+      numeroItinerario: 'ITI-001',
+      cliente: 'Miguel Zabala',
+      destino: 'Toscana, Italia',
+      fecha: '15 feb 2026',
+      monto: 476.00,
+      estado: 'Enviado'
+    },
+    {
+      id: '2',
+      numeroItinerario: 'ITI-002',
+      cliente: 'Arieldi Marrero',
+      destino: 'Punta Cana, República Dominicana',
+      fecha: '20 mar 2026',
+      monto: 2800.00,
+      estado: 'Pendiente'
     }
   ];
   
@@ -230,6 +263,19 @@ export function NuevoExpedienteManualPage() {
     });
   };
 
+  // Buscar itinerarios
+  const getItinerariosDisponibles = (): Itinerario[] => {
+    if (buscarElemento.length < 2) return [];
+    return itinerariosMock.filter(iti => {
+      const yaAgregado = elementos.find(e => e.id === iti.id && e.tipo === 'itinerario');
+      const coincide = 
+        iti.numeroItinerario.toLowerCase().includes(buscarElemento.toLowerCase()) ||
+        iti.cliente.toLowerCase().includes(buscarElemento.toLowerCase()) ||
+        iti.destino.toLowerCase().includes(buscarElemento.toLowerCase());
+      return coincide && !yaAgregado;
+    });
+  };
+
   // Agregar cotización
   const handleAgregarCotizacion = (cotizacion: Cotizacion) => {
     const nuevoElemento: ElementoExpediente = {
@@ -258,6 +304,23 @@ export function NuevoExpedienteManualPage() {
       cliente: reserva.cliente,
       destino: reserva.destino,
       fecha: reserva.fechaSalida,
+    };
+    setElementos([...elementos, nuevoElemento]);
+    setBuscarElemento('');
+    setMostrarResultadosBusqueda(false);
+  };
+
+  // Agregar itinerario
+  const handleAgregarItinerario = (itinerario: Itinerario) => {
+    const nuevoElemento: ElementoExpediente = {
+      id: itinerario.id,
+      tipo: 'itinerario',
+      numero: itinerario.numeroItinerario,
+      descripcion: itinerario.destino,
+      monto: itinerario.monto,
+      cliente: itinerario.cliente,
+      destino: itinerario.destino,
+      fecha: itinerario.fecha,
     };
     setElementos([...elementos, nuevoElemento]);
     setBuscarElemento('');
@@ -683,20 +746,20 @@ export function NuevoExpedienteManualPage() {
           </Card>
 
 
-          {/* Cotizaciones y Reservas */}
+          {/* Cotizaciones, Reservas e Itinerarios */}
           <Card className="shadow-none">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <span className="material-symbols-outlined text-slate-700" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24" }}>folder_open</span>
-                Cotizaciones y Reservas
+                Cotizaciones, Reservas e Itinerarios
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-sm text-slate-600">Busca y agrega cotizaciones o reservas existentes del sistema</p>
+              <p className="text-sm text-slate-600">Busca y agrega cotizaciones, reservas o itinerarios existentes del sistema</p>
               
               {/* Selector de tipo y buscador */}
               <div className="space-y-3">
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-3 gap-3">
                   <Button
                     type="button"
                     variant={tipoElementoBusqueda === 'cotizacion' ? 'default' : 'outline'}
@@ -727,18 +790,55 @@ export function NuevoExpedienteManualPage() {
                     </span>
                     Reservas
                   </Button>
+                  <Button
+                    type="button"
+                    variant={tipoElementoBusqueda === 'itinerario' ? 'default' : 'outline'}
+                    onClick={() => {
+                      setTipoElementoBusqueda('itinerario');
+                      setBuscarElemento('');
+                      setMostrarResultadosBusqueda(false);
+                    }}
+                    className={tipoElementoBusqueda === 'itinerario' ? 'bg-slate-700 hover:bg-slate-800' : ''}
+                  >
+                    <span className="material-symbols-outlined mr-2" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>
+                      route
+                    </span>
+                    Itinerarios
+                  </Button>
                 </div>
 
                 <div className="relative">
-                  <Input
-                    placeholder={`Buscar ${tipoElementoBusqueda === 'cotizacion' ? 'cotizaciones' : 'reservas'} por número, cliente o destino`}
-                    value={buscarElemento}
-                    onChange={(e) => {
-                      setBuscarElemento(e.target.value);
-                      setMostrarResultadosBusqueda(e.target.value.length >= 2);
-                    }}
-                    onFocus={() => buscarElemento.length >= 2 && setMostrarResultadosBusqueda(true)}
-                  />
+                  <div className="flex gap-2">
+                    <Input
+                      placeholder={`Buscar ${tipoElementoBusqueda === 'cotizacion' ? 'cotizaciones' : tipoElementoBusqueda === 'reserva' ? 'reservas' : 'itinerarios'} por número, cliente o destino`}
+                      value={buscarElemento}
+                      onChange={(e) => {
+                        setBuscarElemento(e.target.value);
+                        setMostrarResultadosBusqueda(e.target.value.length >= 2);
+                      }}
+                      onFocus={() => buscarElemento.length >= 2 && setMostrarResultadosBusqueda(true)}
+                      className="flex-1"
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => {
+                        if (tipoElementoBusqueda === 'cotizacion') {
+                          router.push('/es/crm/cotizaciones/nueva-manual');
+                        } else if (tipoElementoBusqueda === 'reserva') {
+                          router.push('/es/crm/reservas/nueva-manual');
+                        } else {
+                          setIsNewItinerarioModalOpen(true);
+                        }
+                      }}
+                      className="whitespace-nowrap"
+                    >
+                      <span className="material-symbols-outlined mr-2" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>
+                        add
+                      </span>
+                      {tipoElementoBusqueda === 'cotizacion' ? 'Nueva Cotización' : tipoElementoBusqueda === 'reserva' ? 'Nueva Reserva' : 'Nuevo Itinerario'}
+                    </Button>
+                  </div>
                   
                   {mostrarResultadosBusqueda && (
                     <div className="absolute z-10 w-full mt-1 bg-white border border-slate-200 rounded-md shadow-lg max-h-60 overflow-y-auto">
@@ -764,7 +864,7 @@ export function NuevoExpedienteManualPage() {
                             </div>
                           </button>
                         ))
-                      ) : (
+                      ) : tipoElementoBusqueda === 'reserva' ? (
                         // Resultados de reservas
                         getReservasDisponibles().map((reserva) => (
                           <button
@@ -786,6 +886,28 @@ export function NuevoExpedienteManualPage() {
                             </div>
                           </button>
                         ))
+                      ) : (
+                        // Resultados de itinerarios
+                        getItinerariosDisponibles().map((itinerario) => (
+                          <button
+                            key={itinerario.id}
+                            type="button"
+                            className="w-full px-4 py-3 text-left hover:bg-slate-50 flex items-center gap-3 border-b last:border-b-0"
+                            onClick={() => handleAgregarItinerario(itinerario)}
+                          >
+                            <span className="material-symbols-outlined text-slate-400" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>
+                              route
+                            </span>
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2">
+                                <span className="font-medium text-slate-900">{itinerario.numeroItinerario}</span>
+                                <Badge variant="outline" className="text-xs">{itinerario.estado}</Badge>
+                              </div>
+                              <div className="text-sm text-slate-600">{itinerario.cliente} • {itinerario.destino}</div>
+                              <div className="text-xs text-slate-500">{itinerario.fecha} • ${itinerario.monto.toFixed(2)}</div>
+                            </div>
+                          </button>
+                        ))
                       )}
                       
                       {/* Empty state cuando no hay resultados */}
@@ -797,6 +919,11 @@ export function NuevoExpedienteManualPage() {
                       {tipoElementoBusqueda === 'reserva' && getReservasDisponibles().length === 0 && (
                         <div className="px-4 py-6 text-center text-slate-500">
                           <p className="text-sm">No se encontraron reservas</p>
+                        </div>
+                      )}
+                      {tipoElementoBusqueda === 'itinerario' && getItinerariosDisponibles().length === 0 && (
+                        <div className="px-4 py-6 text-center text-slate-500">
+                          <p className="text-sm">No se encontraron itinerarios</p>
                         </div>
                       )}
                     </div>
@@ -813,7 +940,7 @@ export function NuevoExpedienteManualPage() {
                       <div key={elemento.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-200">
                         <div className="flex items-center gap-3">
                           <span className="material-symbols-outlined text-slate-600" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>
-                            {elemento.tipo === 'cotizacion' ? 'description' : 'airplane_ticket'}
+                            {elemento.tipo === 'cotizacion' ? 'description' : elemento.tipo === 'reserva' ? 'airplane_ticket' : 'route'}
                           </span>
                           <div className="flex-1">
                             <div className="flex items-center gap-2">
@@ -845,7 +972,7 @@ export function NuevoExpedienteManualPage() {
                 <div className="text-center py-6 text-slate-500 border-2 border-dashed border-slate-200 rounded-lg">
                   <span className="material-symbols-outlined text-4xl mb-2" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48" }}>search</span>
                   <p className="text-sm">No hay elementos agregados</p>
-                  <p className="text-xs mt-1">Busca cotizaciones o reservas del sistema</p>
+                  <p className="text-xs mt-1">Busca cotizaciones, reservas o itinerarios del sistema</p>
                 </div>
               )}
             </CardContent>
@@ -946,6 +1073,9 @@ export function NuevoExpedienteManualPage() {
                     <div className="text-xs text-slate-500">
                       Reservas: {elementos.filter(e => e.tipo === 'reserva').length}
                     </div>
+                    <div className="text-xs text-slate-500">
+                      Itinerarios: {elementos.filter(e => e.tipo === 'itinerario').length}
+                    </div>
                   </div>
                 )}
               </div>
@@ -976,6 +1106,50 @@ export function NuevoExpedienteManualPage() {
         onClose={() => setIsImageSearchOpen(false)}
         onSelectImage={(imageUrl) => setCoverImage(imageUrl)}
       />
+
+      {/* Modal Nuevo Itinerario */}
+      <Dialog open={isNewItinerarioModalOpen} onOpenChange={setIsNewItinerarioModalOpen}>
+        <DialogContent className="sm:max-w-[600px]">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-semibold text-slate-900">Nuevo Itinerario</DialogTitle>
+          </DialogHeader>
+          <div className="grid grid-cols-2 gap-6 py-6">
+            {/* Itinerario con Motor */}
+            <button 
+              className="flex flex-col items-center gap-4 p-6 bg-white border-2 border-slate-200 rounded-lg hover:border-slate-700 hover:shadow-md transition-all cursor-pointer"
+              onClick={() => {
+                window.open('https://azucartravel.com/?tripType=TRIP_PLANNER', '_blank', 'noopener,noreferrer');
+                setIsNewItinerarioModalOpen(false);
+              }}
+            >
+              <span className="material-symbols-outlined text-slate-700 text-6xl" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48" }}>
+                travel_explore
+              </span>
+              <div className="text-center">
+                <h3 className="text-lg font-semibold text-slate-900">Itinerario con Motor</h3>
+                <p className="text-sm text-slate-500 mt-1">Crear itinerario con nuestro motor de búsqueda</p>
+              </div>
+            </button>
+
+            {/* Itinerario Manual */}
+            <button 
+              className="flex flex-col items-center gap-4 p-6 bg-white border-2 border-slate-200 rounded-lg hover:border-slate-700 hover:shadow-md transition-all cursor-pointer"
+              onClick={() => {
+                router.push('/es/crm/itinerarios-ia/nuevo-manual');
+                setIsNewItinerarioModalOpen(false);
+              }}
+            >
+              <span className="material-symbols-outlined text-slate-700 text-6xl" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48" }}>
+                edit_note
+              </span>
+              <div className="text-center">
+                <h3 className="text-lg font-semibold text-slate-900">Itinerario Manual</h3>
+                <p className="text-sm text-slate-500 mt-1">Crear un itinerario de forma manual</p>
+              </div>
+            </button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
