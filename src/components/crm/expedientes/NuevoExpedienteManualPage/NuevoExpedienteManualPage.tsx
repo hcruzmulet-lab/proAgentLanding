@@ -741,8 +741,6 @@ export function NuevoExpedienteManualPage() {
                   />
                   
                   {mostrarResultadosBusqueda && (
-                    tipoElementoBusqueda === 'cotizacion' ? getCotizacionesDisponibles().length > 0 : getReservasDisponibles().length > 0
-                  ) && (
                     <div className="absolute z-10 w-full mt-1 bg-white border border-slate-200 rounded-md shadow-lg max-h-60 overflow-y-auto">
                       {tipoElementoBusqueda === 'cotizacion' ? (
                         // Resultados de cotizaciones
@@ -788,6 +786,18 @@ export function NuevoExpedienteManualPage() {
                             </div>
                           </button>
                         ))
+                      )}
+                      
+                      {/* Empty state cuando no hay resultados */}
+                      {tipoElementoBusqueda === 'cotizacion' && getCotizacionesDisponibles().length === 0 && (
+                        <div className="px-4 py-6 text-center text-slate-500">
+                          <p className="text-sm">No se encontraron cotizaciones</p>
+                        </div>
+                      )}
+                      {tipoElementoBusqueda === 'reserva' && getReservasDisponibles().length === 0 && (
+                        <div className="px-4 py-6 text-center text-slate-500">
+                          <p className="text-sm">No se encontraron reservas</p>
+                        </div>
                       )}
                     </div>
                   )}
