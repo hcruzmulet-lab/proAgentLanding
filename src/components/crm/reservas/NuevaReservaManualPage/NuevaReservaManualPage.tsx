@@ -35,14 +35,14 @@ export function NuevaReservaManualPage() {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>Reserva Manual</BreadcrumbPage>
+            <BreadcrumbPage>Reserva externa</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
 
       {/* Header */}
       <div className="space-y-2">
-        <h1 className="text-3xl font-semibold text-slate-900">Nueva Reserva Manual</h1>
+        <h1 className="text-3xl font-semibold text-slate-900">Reserva externa</h1>
         <p className="text-slate-600">Elige uno de los siguientes métodos para enviar una nueva reserva.</p>
       </div>
 

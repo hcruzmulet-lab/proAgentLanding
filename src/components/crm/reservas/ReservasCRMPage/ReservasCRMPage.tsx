@@ -420,7 +420,7 @@ export function ReservasCRMPage() {
                 </div>
               </button>
 
-              {/* Reserva Manual */}
+              {/* Reservas Externas */}
               <button 
                 className="flex flex-col items-center gap-4 p-6 bg-white border-2 border-slate-200 rounded-lg hover:border-slate-700 hover:shadow-md transition-all cursor-pointer"
                 onClick={() => {
@@ -432,8 +432,8 @@ export function ReservasCRMPage() {
                   edit_note
                 </span>
                 <div className="text-center">
-                  <h3 className="text-lg font-semibold text-slate-900">Reserva Manual</h3>
-                  <p className="text-sm text-slate-500 mt-1">Crear una reserva de forma manual</p>
+                  <h3 className="text-lg font-semibold text-slate-900">Reservas externas</h3>
+                  <p className="text-sm text-slate-500 mt-1">Sube tus reservas externas</p>
                 </div>
               </button>
             </div>

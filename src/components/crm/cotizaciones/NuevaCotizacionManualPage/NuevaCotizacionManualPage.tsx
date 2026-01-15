@@ -22,7 +22,7 @@ import { ImageSearchModal } from '@/components/shared/ImageSearchModal';
 
 interface Servicio {
   id: string;
-  tipo: 'vuelo' | 'hotel' | 'traslado' | 'tren' | 'bus' | 'crucero' | 'actividad' | 'otro';
+  tipo: 'vuelo' | 'hotel' | 'traslado' | 'tren' | 'bus' | 'crucero' | 'actividad' | 'paquetes' | 'otro';
   datos: any;
 }
 
@@ -50,10 +50,13 @@ export function NuevaCotizacionManualPage() {
   const [cotizacion, setCotizacion] = useState({
     titulo: '',
     // Cliente
+    tipoCliente: 'persona' as 'persona' | 'empresa',
     clienteNombre: '',
     clienteEmail: '',
     clienteTelefono: '',
     clienteDireccion: '',
+    clienteNacionalidad: '',
+    nombreEmpresa: '',
     // Pasajeros
     adultos: 1,
     ninos: 0,
@@ -82,9 +85,15 @@ export function NuevaCotizacionManualPage() {
     setCotizacion({...cotizacion, clienteNombre: texto});
     
     if (texto.length >= 2) {
+      const textoLower = texto.toLowerCase();
       const filtrados = clientes.filter(cliente => {
         const nombreCompleto = `${cliente.firstName} ${cliente.lastName}`.toLowerCase();
-        return nombreCompleto.includes(texto.toLowerCase());
+        const email = (cliente.email || '').toLowerCase();
+        const telefono = (cliente.phone || '').toLowerCase();
+        
+        return nombreCompleto.includes(textoLower) || 
+               email.includes(textoLower) || 
+               telefono.includes(textoLower);
       });
       setClientesFiltrados(filtrados);
       setMostrarSugerencias(filtrados.length > 0);
@@ -130,6 +139,8 @@ export function NuevaCotizacionManualPage() {
         return { origen: '', destino: '', fecha: '', clase: '', precio: 0 };
       case 'bus':
         return { origen: '', destino: '', fecha: '', compania: '', precio: 0 };
+      case 'paquetes':
+        return { nombre: '', destino: '', fechaInicio: '', fechaFin: '', noches: 1, descripcion: '', precio: 0 };
       case 'crucero':
         return { naviera: '', itinerario: '', fechaInicio: '', fechaFin: '', cabina: '', precio: 0 };
       case 'actividad':
@@ -336,13 +347,41 @@ export function NuevaCotizacionManualPage() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
+              <div>
+                <Label htmlFor="tipoCliente">Tipo de Cliente *</Label>
+                <Select
+                  value={cotizacion.tipoCliente}
+                  onValueChange={(value: 'persona' | 'empresa') => setCotizacion({...cotizacion, tipoCliente: value, nombreEmpresa: value === 'persona' ? '' : cotizacion.nombreEmpresa})}
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="persona">Persona</SelectItem>
+                    <SelectItem value="empresa">Empresa</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {cotizacion.tipoCliente === 'empresa' && (
+                <div>
+                  <Label htmlFor="nombreEmpresa">Nombre de la Empresa *</Label>
+                  <Input
+                    id="nombreEmpresa"
+                    placeholder="Nombre de la empresa"
+                    value={cotizacion.nombreEmpresa}
+                    onChange={(e) => setCotizacion({...cotizacion, nombreEmpresa: e.target.value})}
+                  />
+                </div>
+              )}
+
               <div className="grid grid-cols-2 gap-4">
                 <div className="col-span-2 relative">
-                  <Label htmlFor="clienteNombre">Nombre Completo *</Label>
+                  <Label htmlFor="clienteNombre">{cotizacion.tipoCliente === 'empresa' ? 'Contacto Principal *' : 'Nombre Completo *'}</Label>
                   <div className="relative">
                     <Input
                       id="clienteNombre"
-                      placeholder="Buscar cliente existente o escribir nuevo nombre"
+                      placeholder="Buscar por nombre, correo o teléfono..."
                       value={cotizacion.clienteNombre}
                       onChange={(e) => handleBuscarCliente(e.target.value)}
                       onFocus={() => {
@@ -375,13 +414,18 @@ export function NuevaCotizacionManualPage() {
                             <div className="w-10 h-10 bg-slate-700 text-white rounded-full flex items-center justify-center font-semibold">
                               {cliente.firstName.charAt(0)}{cliente.lastName.charAt(0)}
                             </div>
-                            <div>
+                            <div className="flex-1 min-w-0">
                               <p className="font-medium text-slate-900">
                                 {cliente.firstName} {cliente.lastName}
                               </p>
-                              {cliente.email && (
-                                <p className="text-sm text-slate-500">{cliente.email}</p>
-                              )}
+                              <div className="flex flex-col gap-0.5 mt-0.5">
+                                {cliente.email && (
+                                  <p className="text-sm text-slate-500 truncate">{cliente.email}</p>
+                                )}
+                                {cliente.phone && (
+                                  <p className="text-sm text-slate-500 truncate">{cliente.phone}</p>
+                                )}
+                              </div>
                             </div>
                           </div>
                         </button>
@@ -422,6 +466,15 @@ export function NuevaCotizacionManualPage() {
                     placeholder="Dirección completa"
                     value={cotizacion.clienteDireccion}
                     onChange={(e) => setCotizacion({...cotizacion, clienteDireccion: e.target.value})}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="clienteNacionalidad">Nacionalidad</Label>
+                  <Input
+                    id="clienteNacionalidad"
+                    placeholder="Ej: Estadounidense, Mexicana, etc."
+                    value={cotizacion.clienteNacionalidad}
+                    onChange={(e) => setCotizacion({...cotizacion, clienteNacionalidad: e.target.value})}
                   />
                 </div>
               </div>
@@ -546,6 +599,12 @@ export function NuevaCotizacionManualPage() {
                       <span className="flex items-center gap-2">
                         <span className="material-symbols-outlined text-base" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>directions_boat</span>
                         Crucero
+                      </span>
+                    </SelectItem>
+                    <SelectItem value="paquetes">
+                      <span className="flex items-center gap-2">
+                        <span className="material-symbols-outlined text-base" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>luggage</span>
+                        Paquete
                       </span>
                     </SelectItem>
                     <SelectItem value="actividad">
@@ -715,6 +774,7 @@ function ServicioCard({ servicio, onUpdate, onDelete }: { servicio: Servicio; on
     tren: 'train',
     bus: 'directions_bus',
     crucero: 'directions_boat',
+    paquetes: 'luggage',
     actividad: 'local_activity',
     otro: 'more_horiz',
   };
@@ -726,6 +786,7 @@ function ServicioCard({ servicio, onUpdate, onDelete }: { servicio: Servicio; on
     tren: 'Tren',
     bus: 'Bus',
     crucero: 'Crucero',
+    paquetes: 'Paquete',
     actividad: 'Actividad',
     otro: 'Otro Servicio',
   };
@@ -903,6 +964,39 @@ function ServicioCard({ servicio, onUpdate, onDelete }: { servicio: Servicio; on
         </div>
       )}
 
+      {servicio.tipo === 'paquetes' && (
+        <div className="grid grid-cols-2 gap-3">
+          <div className="col-span-2">
+            <Label>Nombre del Paquete</Label>
+            <Input placeholder="Nombre del paquete" value={servicio.datos.nombre} onChange={(e) => onUpdate({...servicio.datos, nombre: e.target.value})} />
+          </div>
+          <div className="col-span-2">
+            <Label>Destino</Label>
+            <Input placeholder="Ciudad, País" value={servicio.datos.destino} onChange={(e) => onUpdate({...servicio.datos, destino: e.target.value})} />
+          </div>
+          <div>
+            <Label>Fecha Inicio</Label>
+            <Input type="date" value={servicio.datos.fechaInicio} onChange={(e) => onUpdate({...servicio.datos, fechaInicio: e.target.value})} />
+          </div>
+          <div>
+            <Label>Fecha Fin</Label>
+            <Input type="date" value={servicio.datos.fechaFin} onChange={(e) => onUpdate({...servicio.datos, fechaFin: e.target.value})} />
+          </div>
+          <div>
+            <Label>Noches</Label>
+            <Input type="number" placeholder="Número de noches" value={servicio.datos.noches} onChange={(e) => onUpdate({...servicio.datos, noches: parseInt(e.target.value) || 1})} />
+          </div>
+          <div className="col-span-2">
+            <Label>Descripción</Label>
+            <Textarea placeholder="Descripción del paquete" rows={3} value={servicio.datos.descripcion} onChange={(e) => onUpdate({...servicio.datos, descripcion: e.target.value})} />
+          </div>
+          <div className="col-span-2">
+            <Label>Precio (USD)</Label>
+            <Input type="number" placeholder="0.00" value={servicio.datos.precio} onChange={(e) => onUpdate({...servicio.datos, precio: parseFloat(e.target.value)})} />
+          </div>
+        </div>
+      )}
+
       {servicio.tipo === 'actividad' && (
         <div className="grid grid-cols-2 gap-3">
           <div className="col-span-2">
@@ -997,6 +1091,7 @@ function CotizacionPreview({ cotizacion, servicios, coverImage }: { cotizacion: 
           </svg>
         </div>
         <div className="text-right text-sm text-slate-600 space-y-1">
+          <p className="text-base font-semibold text-slate-900 mb-2">Proagent Travel LLC</p>
           <p className="flex items-center justify-end gap-2">
             <span className="material-symbols-outlined text-base" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>mail</span>
             contacto@proagent.com
@@ -1034,9 +1129,15 @@ function CotizacionPreview({ cotizacion, servicios, coverImage }: { cotizacion: 
       <div className="grid grid-cols-2 gap-6">
         <div className="space-y-2">
           <h3 className="font-semibold text-slate-900">Información del Cliente</h3>
-          <p className="text-sm"><strong>Nombre:</strong> {cotizacion.clienteNombre}</p>
+          {cotizacion.tipoCliente === 'empresa' && cotizacion.nombreEmpresa && (
+            <p className="text-sm"><strong>Empresa:</strong> {cotizacion.nombreEmpresa}</p>
+          )}
+          <p className="text-sm"><strong>{cotizacion.tipoCliente === 'empresa' ? 'Contacto Principal:' : 'Nombre:'}</strong> {cotizacion.clienteNombre}</p>
           <p className="text-sm"><strong>Email:</strong> {cotizacion.clienteEmail}</p>
           <p className="text-sm"><strong>Teléfono:</strong> {cotizacion.clienteTelefono}</p>
+          {cotizacion.clienteNacionalidad && (
+            <p className="text-sm"><strong>Nacionalidad:</strong> {cotizacion.clienteNacionalidad}</p>
+          )}
         </div>
         <div className="space-y-2">
           <h3 className="font-semibold text-slate-900">Detalles del Viaje</h3>
@@ -1051,7 +1152,7 @@ function CotizacionPreview({ cotizacion, servicios, coverImage }: { cotizacion: 
         <h3 className="font-semibold text-slate-900 text-lg">Servicios Incluidos</h3>
         {servicios.map((servicio, index) => (
           <div key={servicio.id} className="border rounded-lg p-4">
-            <h4 className="font-medium text-slate-900 mb-2">Servicio {index + 1}: {servicio.tipo.charAt(0).toUpperCase() + servicio.tipo.slice(1)}</h4>
+            <h4 className="font-medium text-slate-900 mb-2">{servicio.tipo.charAt(0).toUpperCase() + servicio.tipo.slice(1)}</h4>
             <div className="text-sm text-slate-600 space-y-1">
               {Object.entries(servicio.datos)
                 .filter(([key, value]) => key !== 'precio' && value)
@@ -1086,12 +1187,6 @@ function CotizacionPreview({ cotizacion, servicios, coverImage }: { cotizacion: 
           <p className="text-sm text-slate-600">{cotizacion.terminosCondiciones}</p>
         </div>
       )}
-
-      {/* Footer */}
-      <div className="border-t pt-4 text-center text-sm text-slate-500">
-        <p>Esta cotización es válida por 7 días a partir de la fecha de emisión</p>
-        <p className="mt-2">¡Gracias por confiar en ProAgent para tu próximo viaje!</p>
-      </div>
     </div>
   );
 }

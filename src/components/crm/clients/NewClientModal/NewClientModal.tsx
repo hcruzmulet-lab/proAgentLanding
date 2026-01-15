@@ -7,6 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import './NewClientModal.scss';
 
 interface NewClientModalProps {
@@ -18,7 +19,12 @@ interface NewClientModalProps {
 export function NewClientModal({ isOpen, onClose, onClientAdded }: NewClientModalProps) {
   const t = useTranslations('crm.clients');
   const router = useRouter();
-  const [newClient, setNewClient] = useState({ firstName: '', lastName: '' });
+  const [newClient, setNewClient] = useState({ 
+    firstName: '', 
+    lastName: '',
+    tipoCliente: 'persona' as 'persona' | 'empresa',
+    nombreEmpresa: ''
+  });
 
   const handleAddClient = () => {
     if (newClient.firstName.trim() && newClient.lastName.trim()) {
@@ -29,6 +35,8 @@ export function NewClientModal({ isOpen, onClose, onClientAdded }: NewClientModa
           id: Date.now().toString(),
           firstName: newClient.firstName.trim(),
           lastName: newClient.lastName.trim(),
+          tipoCliente: newClient.tipoCliente,
+          nombreEmpresa: newClient.tipoCliente === 'empresa' ? newClient.nombreEmpresa.trim() : '',
           quotations: 0,
           bookings: 0,
           files: 0,
@@ -43,7 +51,7 @@ export function NewClientModal({ isOpen, onClose, onClientAdded }: NewClientModa
         console.log('NewClientModal - Verified localStorage after save:', verify);
         console.log('NewClientModal - Redirecting to:', `/es/crm/clientes/${client.id}`);
         
-        setNewClient({ firstName: '', lastName: '' });
+        setNewClient({ firstName: '', lastName: '', tipoCliente: 'persona', nombreEmpresa: '' });
         onClose();
         if (onClientAdded) {
           onClientAdded();
@@ -58,7 +66,7 @@ export function NewClientModal({ isOpen, onClose, onClientAdded }: NewClientModa
   };
 
   const handleClose = () => {
-    setNewClient({ firstName: '', lastName: '' });
+    setNewClient({ firstName: '', lastName: '', tipoCliente: 'persona', nombreEmpresa: '' });
     onClose();
   };
 
@@ -100,6 +108,37 @@ export function NewClientModal({ isOpen, onClose, onClientAdded }: NewClientModa
               className="new-client-modal__input"
             />
           </div>
+          <div className="new-client-modal__form-group">
+            <Label htmlFor="tipoCliente" className="new-client-modal__label">
+              Tipo de Cliente *
+            </Label>
+            <Select
+              value={newClient.tipoCliente}
+              onValueChange={(value: 'persona' | 'empresa') => setNewClient({...newClient, tipoCliente: value, nombreEmpresa: value === 'persona' ? '' : newClient.nombreEmpresa})}
+            >
+              <SelectTrigger className="new-client-modal__input">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="persona">Persona</SelectItem>
+                <SelectItem value="empresa">Empresa</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          {newClient.tipoCliente === 'empresa' && (
+            <div className="new-client-modal__form-group">
+              <Label htmlFor="nombreEmpresa" className="new-client-modal__label">
+                Nombre de la Empresa *
+              </Label>
+              <Input
+                id="nombreEmpresa"
+                placeholder="Nombre de la empresa"
+                value={newClient.nombreEmpresa}
+                onChange={(e) => setNewClient({ ...newClient, nombreEmpresa: e.target.value })}
+                className="new-client-modal__input"
+              />
+            </div>
+          )}
           <div className="new-client-modal__actions">
             <Button
               variant="outline"

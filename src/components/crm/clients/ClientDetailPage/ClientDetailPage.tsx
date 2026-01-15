@@ -6,6 +6,8 @@ import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import {
   Breadcrumb,
@@ -38,8 +40,23 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
   const router = useRouter();
   const [isEditingFirstName, setIsEditingFirstName] = useState(false);
   const [isEditingLastName, setIsEditingLastName] = useState(false);
+  const [isEditingEmail, setIsEditingEmail] = useState(false);
+  const [isEditingPhone, setIsEditingPhone] = useState(false);
+  const [isEditingAddress, setIsEditingAddress] = useState(false);
+  const [isEditingNacionalidad, setIsEditingNacionalidad] = useState(false);
+  const [isEditingTipoCliente, setIsEditingTipoCliente] = useState(false);
+  const [isEditingNombreEmpresa, setIsEditingNombreEmpresa] = useState(false);
   const [editedFirstName, setEditedFirstName] = useState('');
   const [editedLastName, setEditedLastName] = useState('');
+  const [editedEmail, setEditedEmail] = useState('');
+  const [editedPhone, setEditedPhone] = useState('');
+  const [editedAddress, setEditedAddress] = useState('');
+  const [editedNacionalidad, setEditedNacionalidad] = useState('');
+  const [editedTipoCliente, setEditedTipoCliente] = useState<'persona' | 'empresa'>('persona');
+  const [editedNombreEmpresa, setEditedNombreEmpresa] = useState('');
+  const [isAddImportantDateModalOpen, setIsAddImportantDateModalOpen] = useState(false);
+  const [editingDateId, setEditingDateId] = useState<string | null>(null);
+  const [newDate, setNewDate] = useState({ fecha: '', descripcion: '' });
   const [isAddCardModalOpen, setIsAddCardModalOpen] = useState(false);
   const [isAddDocumentModalOpen, setIsAddDocumentModalOpen] = useState(false);
   const [isAddLoyaltyModalOpen, setIsAddLoyaltyModalOpen] = useState(false);
@@ -77,7 +94,10 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
             email: found.email || '',
             phone: found.phone || '',
             address: found.address || '',
-            importantDates: found.importantDates || '',
+            nacionalidad: found.nacionalidad || '',
+            tipoCliente: found.tipoCliente || 'persona',
+            nombreEmpresa: found.nombreEmpresa || '',
+            importantDates: found.importantDates || [],
             allergies: found.allergies || '',
             knownTravelerNumber: found.knownTravelerNumber || '',
           });
@@ -94,7 +114,10 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
             email: '',
             phone: '',
             address: '',
-            importantDates: '',
+            nacionalidad: '',
+            tipoCliente: 'persona',
+            nombreEmpresa: '',
+            importantDates: [],
             allergies: '',
             knownTravelerNumber: '',
           });
@@ -112,7 +135,10 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
           email: '',
           phone: '',
           address: '',
-          importantDates: '',
+          nacionalidad: '',
+          tipoCliente: 'persona',
+          nombreEmpresa: '',
+          importantDates: [],
           allergies: '',
           knownTravelerNumber: '',
         });
@@ -124,6 +150,12 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
     if (client) {
       setEditedFirstName(client.firstName);
       setEditedLastName(client.lastName);
+      setEditedEmail(client.email || '');
+      setEditedPhone(client.phone || '');
+      setEditedAddress(client.address || '');
+      setEditedNacionalidad(client.nacionalidad || '');
+      setEditedTipoCliente(client.tipoCliente || 'persona');
+      setEditedNombreEmpresa(client.nombreEmpresa || '');
     }
   }, [client]);
 
@@ -196,6 +228,101 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
     setIsEditingLastName(false);
   };
 
+  const handleSaveField = (fieldName: string, value: any) => {
+    const updatedClient = { ...client, [fieldName]: value };
+    setClient(updatedClient);
+    
+    if (typeof window !== 'undefined') {
+      const updatedClients = clients.map((c: any) => 
+        c.id === clientId ? { ...c, [fieldName]: value } : c
+      );
+      localStorage.setItem('crm_clients', JSON.stringify(updatedClients));
+      setClients(updatedClients);
+    }
+  };
+
+  const handleSaveEmail = () => {
+    handleSaveField('email', editedEmail);
+    setIsEditingEmail(false);
+  };
+
+  const handleSavePhone = () => {
+    handleSaveField('phone', editedPhone);
+    setIsEditingPhone(false);
+  };
+
+  const handleSaveAddress = () => {
+    handleSaveField('address', editedAddress);
+    setIsEditingAddress(false);
+  };
+
+  const handleSaveNacionalidad = () => {
+    handleSaveField('nacionalidad', editedNacionalidad);
+    setIsEditingNacionalidad(false);
+  };
+
+  const handleSaveTipoCliente = () => {
+    handleSaveField('tipoCliente', editedTipoCliente);
+    if (editedTipoCliente === 'persona') {
+      handleSaveField('nombreEmpresa', '');
+    }
+    setIsEditingTipoCliente(false);
+  };
+
+  const handleSaveNombreEmpresa = () => {
+    handleSaveField('nombreEmpresa', editedNombreEmpresa);
+    setIsEditingNombreEmpresa(false);
+  };
+
+  const handleAddImportantDate = () => {
+    if (newDate.fecha && newDate.descripcion) {
+      const fechaImportante = {
+        id: Date.now().toString(),
+        fecha: newDate.fecha,
+        descripcion: newDate.descripcion,
+      };
+      const fechasActuales = Array.isArray(client.importantDates) ? client.importantDates : [];
+      const updatedDates = [...fechasActuales, fechaImportante];
+      handleSaveField('importantDates', updatedDates);
+      setNewDate({ fecha: '', descripcion: '' });
+      setIsAddImportantDateModalOpen(false);
+    }
+  };
+
+  const handleEditImportantDate = (dateId: string) => {
+    const fecha = (client.importantDates || []).find((d: any) => d.id === dateId);
+    if (fecha) {
+      setNewDate({ fecha: fecha.fecha, descripcion: fecha.descripcion });
+      setEditingDateId(dateId);
+      setIsAddImportantDateModalOpen(true);
+    }
+  };
+
+  const handleUpdateImportantDate = () => {
+    if (newDate.fecha && newDate.descripcion && editingDateId) {
+      const fechasActuales = Array.isArray(client.importantDates) ? client.importantDates : [];
+      const updatedDates = fechasActuales.map((d: any) =>
+        d.id === editingDateId ? { ...d, fecha: newDate.fecha, descripcion: newDate.descripcion } : d
+      );
+      handleSaveField('importantDates', updatedDates);
+      setNewDate({ fecha: '', descripcion: '' });
+      setEditingDateId(null);
+      setIsAddImportantDateModalOpen(false);
+    }
+  };
+
+  const handleDeleteImportantDate = (dateId: string) => {
+    const fechasActuales = Array.isArray(client.importantDates) ? client.importantDates : [];
+    const updatedDates = fechasActuales.filter((d: any) => d.id !== dateId);
+    handleSaveField('importantDates', updatedDates);
+  };
+
+  const handleCloseImportantDateModal = () => {
+    setNewDate({ fecha: '', descripcion: '' });
+    setEditingDateId(null);
+    setIsAddImportantDateModalOpen(false);
+  };
+
   // Filter clients for traveler search (excluding current client)
   const filteredClientsForTraveler = clients
     .filter((c: any) => c.id !== clientId) // Exclude current client
@@ -208,7 +335,6 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
   const tabs = [
     { id: 'about', label: t('tabs.about') },
     { id: 'documents', label: t('tabs.documents') },
-    { id: 'creditCards', label: t('tabs.creditCards') },
     { id: 'loyaltyPrograms', label: t('tabs.loyaltyPrograms') },
     { id: 'associatedTravelers', label: t('tabs.associatedTravelers') },
     { id: 'notes', label: t('tabs.notes') },
@@ -306,7 +432,7 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
 
         {/* About Tab Content */}
         <TabsContent value="about" className="client-detail__tab-content">
-        <div className="client-detail__content">
+          <div className="client-detail__content">
           {/* Contact Section */}
           <div className="client-detail__section">
             <div className="client-detail__section-header">
@@ -392,82 +518,301 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
               </div>
               <div className="client-detail__field">
                 <span className="client-detail__field-label">{t('fields.email')}</span>
-                <span className="client-detail__field-value client-detail__field-value--empty">
-                  {client.email || t('editToAdd')}
-                </span>
-                <button className="client-detail__field-edit">
-                  <span className="material-symbols-outlined">edit</span>
-                </button>
+                {isEditingEmail ? (
+                  <div className="client-detail__field-edit-wrapper">
+                    <Input
+                      type="email"
+                      value={editedEmail}
+                      onChange={(e) => setEditedEmail(e.target.value)}
+                      className="client-detail__field-input"
+                      autoFocus
+                    />
+                    <button className="client-detail__field-save" onClick={handleSaveEmail}>
+                      <span className="material-symbols-outlined">check</span>
+                    </button>
+                    <button className="client-detail__field-cancel" onClick={() => { setEditedEmail(client.email || ''); setIsEditingEmail(false); }}>
+                      <span className="material-symbols-outlined">close</span>
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    <span className="client-detail__field-value client-detail__field-value--empty">
+                      {client.email || t('editToAdd')}
+                    </span>
+                    <button className="client-detail__field-edit" onClick={() => setIsEditingEmail(true)}>
+                      <span className="material-symbols-outlined">edit</span>
+                    </button>
+                  </>
+                )}
               </div>
               <div className="client-detail__field">
                 <span className="client-detail__field-label">{t('fields.phoneNumber')}</span>
-                <span className="client-detail__field-value client-detail__field-value--empty">
-                  {client.phone || t('editToAdd')}
-                </span>
-                <button className="client-detail__field-edit">
-                  <span className="material-symbols-outlined">edit</span>
-                </button>
+                {isEditingPhone ? (
+                  <div className="client-detail__field-edit-wrapper">
+                    <Input
+                      value={editedPhone}
+                      onChange={(e) => setEditedPhone(e.target.value)}
+                      className="client-detail__field-input"
+                      autoFocus
+                    />
+                    <button className="client-detail__field-save" onClick={handleSavePhone}>
+                      <span className="material-symbols-outlined">check</span>
+                    </button>
+                    <button className="client-detail__field-cancel" onClick={() => { setEditedPhone(client.phone || ''); setIsEditingPhone(false); }}>
+                      <span className="material-symbols-outlined">close</span>
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    <span className="client-detail__field-value client-detail__field-value--empty">
+                      {client.phone || t('editToAdd')}
+                    </span>
+                    <button className="client-detail__field-edit" onClick={() => setIsEditingPhone(true)}>
+                      <span className="material-symbols-outlined">edit</span>
+                    </button>
+                  </>
+                )}
               </div>
               <div className="client-detail__field">
                 <span className="client-detail__field-label">{t('fields.address')}</span>
-                <span className="client-detail__field-value client-detail__field-value--empty">
-                  {client.address || t('editToAdd')}
-                </span>
-                <button className="client-detail__field-edit">
-                  <span className="material-symbols-outlined">edit</span>
-                </button>
+                {isEditingAddress ? (
+                  <div className="client-detail__field-edit-wrapper">
+                    <Input
+                      value={editedAddress}
+                      onChange={(e) => setEditedAddress(e.target.value)}
+                      className="client-detail__field-input"
+                      autoFocus
+                    />
+                    <button className="client-detail__field-save" onClick={handleSaveAddress}>
+                      <span className="material-symbols-outlined">check</span>
+                    </button>
+                    <button className="client-detail__field-cancel" onClick={() => { setEditedAddress(client.address || ''); setIsEditingAddress(false); }}>
+                      <span className="material-symbols-outlined">close</span>
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    <span className="client-detail__field-value client-detail__field-value--empty">
+                      {client.address || t('editToAdd')}
+                    </span>
+                    <button className="client-detail__field-edit" onClick={() => setIsEditingAddress(true)}>
+                      <span className="material-symbols-outlined">edit</span>
+                    </button>
+                  </>
+                )}
+              </div>
+              <div className="client-detail__field">
+                <span className="client-detail__field-label">Tipo de Cliente</span>
+                {isEditingTipoCliente ? (
+                  <div className="client-detail__field-edit-wrapper">
+                    <Select value={editedTipoCliente} onValueChange={(value: 'persona' | 'empresa') => setEditedTipoCliente(value)}>
+                      <SelectTrigger className="client-detail__field-input">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="persona">Persona</SelectItem>
+                        <SelectItem value="empresa">Empresa</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <button className="client-detail__field-save" onClick={handleSaveTipoCliente}>
+                      <span className="material-symbols-outlined">check</span>
+                    </button>
+                    <button className="client-detail__field-cancel" onClick={() => { setEditedTipoCliente(client.tipoCliente || 'persona'); setIsEditingTipoCliente(false); }}>
+                      <span className="material-symbols-outlined">close</span>
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    <span className="client-detail__field-value">
+                      {client.tipoCliente === 'empresa' ? 'Empresa' : 'Persona'}
+                    </span>
+                    <button className="client-detail__field-edit" onClick={() => setIsEditingTipoCliente(true)}>
+                      <span className="material-symbols-outlined">edit</span>
+                    </button>
+                  </>
+                )}
+              </div>
+              {(client.tipoCliente === 'empresa' || editedTipoCliente === 'empresa') && (
+                <div className="client-detail__field">
+                  <span className="client-detail__field-label">Nombre de la Empresa</span>
+                  {isEditingNombreEmpresa ? (
+                    <div className="client-detail__field-edit-wrapper">
+                      <Input
+                        value={editedNombreEmpresa}
+                        onChange={(e) => setEditedNombreEmpresa(e.target.value)}
+                        className="client-detail__field-input"
+                        autoFocus
+                      />
+                      <button className="client-detail__field-save" onClick={handleSaveNombreEmpresa}>
+                        <span className="material-symbols-outlined">check</span>
+                      </button>
+                      <button className="client-detail__field-cancel" onClick={() => { setEditedNombreEmpresa(client.nombreEmpresa || ''); setIsEditingNombreEmpresa(false); }}>
+                        <span className="material-symbols-outlined">close</span>
+                      </button>
+                    </div>
+                  ) : (
+                    <>
+                      <span className="client-detail__field-value client-detail__field-value--empty">
+                        {client.nombreEmpresa || t('editToAdd')}
+                      </span>
+                      <button className="client-detail__field-edit" onClick={() => setIsEditingNombreEmpresa(true)}>
+                        <span className="material-symbols-outlined">edit</span>
+                      </button>
+                    </>
+                  )}
+                </div>
+              )}
+              <div className="client-detail__field">
+                <span className="client-detail__field-label">Nacionalidad</span>
+                {isEditingNacionalidad ? (
+                  <div className="client-detail__field-edit-wrapper">
+                    <Input
+                      value={editedNacionalidad}
+                      onChange={(e) => setEditedNacionalidad(e.target.value)}
+                      className="client-detail__field-input"
+                      placeholder="Ej: Estadounidense, Mexicana, etc."
+                      autoFocus
+                    />
+                    <button className="client-detail__field-save" onClick={handleSaveNacionalidad}>
+                      <span className="material-symbols-outlined">check</span>
+                    </button>
+                    <button className="client-detail__field-cancel" onClick={() => { setEditedNacionalidad(client.nacionalidad || ''); setIsEditingNacionalidad(false); }}>
+                      <span className="material-symbols-outlined">close</span>
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    <span className="client-detail__field-value client-detail__field-value--empty">
+                      {client.nacionalidad || t('editToAdd')}
+                    </span>
+                    <button className="client-detail__field-edit" onClick={() => setIsEditingNacionalidad(true)}>
+                      <span className="material-symbols-outlined">edit</span>
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           </div>
 
-          {/* Personal Details Section */}
+          {/* Perfil del Viajero Section */}
           <div className="client-detail__section">
             <div className="client-detail__section-header">
               <span className="material-symbols-outlined client-detail__section-icon">
                 person
               </span>
-              <h2 className="client-detail__section-title">{t('sections.personalDetails')}</h2>
+              <h2 className="client-detail__section-title">Perfil del viajero</h2>
             </div>
             <div className="client-detail__section-content">
-              <div className="client-detail__field">
-                <span className="client-detail__field-label">{t('fields.importantDates')}</span>
-                <span className="client-detail__field-value client-detail__field-value--empty">
-                  {client.importantDates || t('editToAdd')}
-                </span>
-                <button className="client-detail__field-edit">
-                  <span className="material-symbols-outlined">edit</span>
-                </button>
-              </div>
-              <div className="client-detail__field">
-                <span className="client-detail__field-label">{t('fields.allergies')}</span>
-                <span className="client-detail__field-value client-detail__field-value--empty">
-                  {client.allergies || t('editToAdd')}
-                </span>
-                <button className="client-detail__field-edit">
-                  <span className="material-symbols-outlined">edit</span>
-                </button>
+              <div className="client-detail__tags-container">
+                <div className="client-detail__tag-item">
+                  <Checkbox id="viaja-ninos" defaultChecked />
+                  <Label htmlFor="viaja-ninos" className="client-detail__tag-label">Viaja con niños</Label>
+                </div>
+                <div className="client-detail__tag-item">
+                  <Checkbox id="pareja" defaultChecked />
+                  <Label htmlFor="pareja" className="client-detail__tag-label">Pareja</Label>
+                </div>
+                <div className="client-detail__tag-item">
+                  <Checkbox id="viaje-individual" defaultChecked />
+                  <Label htmlFor="viaje-individual" className="client-detail__tag-label">Viaje individual</Label>
+                </div>
+                <div className="client-detail__tag-item">
+                  <Checkbox id="grupos-familia" defaultChecked />
+                  <Label htmlFor="grupos-familia" className="client-detail__tag-label">Grupos / familia</Label>
+                </div>
+                <div className="client-detail__tag-item">
+                  <Checkbox id="multigeneracional" defaultChecked />
+                  <Label htmlFor="multigeneracional" className="client-detail__tag-label">Multigeneracional</Label>
+                </div>
+                <div className="client-detail__tag-item">
+                  <Checkbox id="en-blanco" defaultChecked />
+                  <Label htmlFor="en-blanco" className="client-detail__tag-label">En blanco para rellenar</Label>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Flight Info Section */}
+          {/* Intereses - Estilo de Viaje Section */}
           <div className="client-detail__section">
             <div className="client-detail__section-header">
               <span className="material-symbols-outlined client-detail__section-icon">
-                flight_takeoff
+                explore
               </span>
-              <h2 className="client-detail__section-title">{t('sections.flightInfo')}</h2>
+              <h2 className="client-detail__section-title">Intereses – Estilo de viaje</h2>
             </div>
             <div className="client-detail__section-content">
-              <div className="client-detail__field">
-                <span className="client-detail__field-label">{t('fields.knownTravelerNumber')}</span>
-                <span className="client-detail__field-value client-detail__field-value--empty">
-                  {client.knownTravelerNumber || t('editToAdd')}
-                </span>
-                <button className="client-detail__field-edit">
-                  <span className="material-symbols-outlined">edit</span>
-                </button>
+              <div className="client-detail__tags-container">
+                <div className="client-detail__tag-item">
+                  <Checkbox id="viajes-economicos" defaultChecked />
+                  <Label htmlFor="viajes-economicos" className="client-detail__tag-label">Viajes económicos</Label>
+                </div>
+                <div className="client-detail__tag-item">
+                  <Checkbox id="gama-media" defaultChecked />
+                  <Label htmlFor="gama-media" className="client-detail__tag-label">Gama media</Label>
+                </div>
+                <div className="client-detail__tag-item">
+                  <Checkbox id="premium-lujo" defaultChecked />
+                  <Label htmlFor="premium-lujo" className="client-detail__tag-label">Premium / lujo</Label>
+                </div>
+                <div className="client-detail__tag-item">
+                  <Checkbox id="playa-descanso" defaultChecked />
+                  <Label htmlFor="playa-descanso" className="client-detail__tag-label">Playa y descanso</Label>
+                </div>
+                <div className="client-detail__tag-item">
+                  <Checkbox id="ciudades-experiencias" defaultChecked />
+                  <Label htmlFor="ciudades-experiencias" className="client-detail__tag-label">Ciudades y experiencias</Label>
+                </div>
               </div>
+            </div>
+          </div>
+
+          {/* Fechas Importantes Section */}
+          <div className="client-detail__section">
+            <div className="client-detail__section-header">
+              <span className="material-symbols-outlined client-detail__section-icon">
+                event
+              </span>
+              <h2 className="client-detail__section-title">Fechas importantes</h2>
+            </div>
+            <div className="client-detail__section-content">
+              {Array.isArray(client.importantDates) && client.importantDates.length > 0 ? (
+                <div className="client-detail__dates-list">
+                  {client.importantDates.map((fecha: any) => (
+                    <div key={fecha.id} className="client-detail__date-item">
+                      <div className="client-detail__date-content">
+                        <span className="client-detail__date-fecha">{fecha.fecha}</span>
+                        <span className="client-detail__date-descripcion">{fecha.descripcion}</span>
+                      </div>
+                      <div className="client-detail__date-actions">
+                        <button
+                          className="client-detail__date-action-button"
+                          onClick={() => handleEditImportantDate(fecha.id)}
+                        >
+                          <span className="material-symbols-outlined">edit</span>
+                        </button>
+                        <button
+                          className="client-detail__date-action-button client-detail__date-action-button--delete"
+                          onClick={() => handleDeleteImportantDate(fecha.id)}
+                        >
+                          <span className="material-symbols-outlined">delete</span>
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="client-detail__empty-dates">
+                  <p className="client-detail__empty-dates-text">No hay fechas importantes agregadas</p>
+                </div>
+              )}
+              <Button
+                variant="outline"
+                onClick={() => setIsAddImportantDateModalOpen(true)}
+                className="client-detail__add-date-button"
+              >
+                <span className="material-symbols-outlined">add</span>
+                Agregar fecha importante
+              </Button>
             </div>
           </div>
         </div>
@@ -993,6 +1338,47 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
                 }}
               >
                 {t('associatedTravelers.modal.saveAndAdd')}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Add/Edit Important Date Modal */}
+      <Dialog open={isAddImportantDateModalOpen} onOpenChange={handleCloseImportantDateModal}>
+        <DialogContent className="client-detail__add-card-modal">
+          <DialogHeader>
+            <DialogTitle>{editingDateId ? 'Editar Fecha Importante' : 'Agregar Fecha Importante'}</DialogTitle>
+          </DialogHeader>
+          <div className="client-detail__modal-body">
+            <div className="client-detail__form-field">
+              <Label className="client-detail__form-label">Fecha *</Label>
+              <Input
+                type="date"
+                value={newDate.fecha}
+                onChange={(e) => setNewDate({ ...newDate, fecha: e.target.value })}
+                className="client-detail__field-input"
+              />
+            </div>
+            <div className="client-detail__form-field">
+              <Label className="client-detail__form-label">Descripción *</Label>
+              <Input
+                type="text"
+                placeholder="Ej: Cumpleaños, Aniversario, etc."
+                value={newDate.descripcion}
+                onChange={(e) => setNewDate({ ...newDate, descripcion: e.target.value })}
+                className="client-detail__field-input"
+              />
+            </div>
+            <div className="client-detail__modal-actions">
+              <Button variant="outline" onClick={handleCloseImportantDateModal} className="client-detail__modal-close-button">
+                Cancelar
+              </Button>
+              <Button
+                onClick={editingDateId ? handleUpdateImportantDate : handleAddImportantDate}
+                className="client-detail__modal-save-button"
+              >
+                {editingDateId ? 'Actualizar' : 'Agregar'}
               </Button>
             </div>
           </div>

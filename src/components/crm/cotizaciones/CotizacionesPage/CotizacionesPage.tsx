@@ -72,6 +72,7 @@ export function CotizacionesPage() {
   const [isNewCotizacionModalOpen, setIsNewCotizacionModalOpen] = useState(false);
   const [sortField, setSortField] = useState<'fechaCreacion' | 'fechaViaje' | null>('fechaCreacion');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+  const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
 
   const handleLimpiar = () => {
     setFiltros({
@@ -227,38 +228,67 @@ export function CotizacionesPage() {
             </CardContent>
           </Card>
 
-          {/* Header de tabla */}
-          <div className="grid grid-cols-12 gap-4 px-4 py-3 bg-slate-50 rounded-lg text-xs font-medium text-slate-600 uppercase items-center">
-            <div className="col-span-1">N° Cotización</div>
-            <div 
-              className="col-span-2 flex items-center gap-1 cursor-pointer hover:text-slate-900 transition-colors"
-              onClick={() => handleSort('fechaCreacion')}
-            >
-              Fecha de creación
-              {sortField === 'fechaCreacion' && (
-                <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20" }}>
-                  {sortOrder === 'desc' ? 'expand_more' : 'expand_less'}
-                </span>
-              )}
+          {/* View Toggle */}
+          <div className="flex justify-end mb-4">
+            <div className="flex gap-1 bg-slate-100 rounded-lg p-1">
+              <button
+                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                  viewMode === 'list' 
+                    ? 'bg-white text-slate-900 shadow-sm' 
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+                onClick={() => setViewMode('list')}
+              >
+                <span className="material-symbols-outlined text-lg">view_list</span>
+              </button>
+              <button
+                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                  viewMode === 'grid' 
+                    ? 'bg-white text-slate-900 shadow-sm' 
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+                onClick={() => setViewMode('grid')}
+              >
+                <span className="material-symbols-outlined text-lg">grid_view</span>
+              </button>
             </div>
-            <div 
-              className="col-span-2 flex items-center gap-1 cursor-pointer hover:text-slate-900 transition-colors"
-              onClick={() => handleSort('fechaViaje')}
-            >
-              Fecha de viaje
-              {sortField === 'fechaViaje' && (
-                <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20" }}>
-                  {sortOrder === 'desc' ? 'expand_more' : 'expand_less'}
-                </span>
-              )}
-            </div>
-            <div className="col-span-2">Cliente</div>
-            <div className="col-span-2">Detalles</div>
-            <div className="col-span-3 text-right">Precio total</div>
           </div>
 
-          {/* Lista de cotizaciones */}
-          <div className="space-y-4">
+          {/* List View */}
+          {viewMode === 'list' && (
+            <>
+              {/* Header de tabla */}
+              <div className="grid grid-cols-12 gap-4 px-4 py-3 bg-slate-50 rounded-lg text-xs font-medium text-slate-600 uppercase items-center">
+                <div className="col-span-1">N° Cotización</div>
+                <div 
+                  className="col-span-2 flex items-center gap-1 cursor-pointer hover:text-slate-900 transition-colors"
+                  onClick={() => handleSort('fechaCreacion')}
+                >
+                  Fecha de creación
+                  {sortField === 'fechaCreacion' && (
+                    <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20" }}>
+                      {sortOrder === 'desc' ? 'expand_more' : 'expand_less'}
+                    </span>
+                  )}
+                </div>
+                <div 
+                  className="col-span-2 flex items-center gap-1 cursor-pointer hover:text-slate-900 transition-colors"
+                  onClick={() => handleSort('fechaViaje')}
+                >
+                  Fecha de viaje
+                  {sortField === 'fechaViaje' && (
+                    <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20" }}>
+                      {sortOrder === 'desc' ? 'expand_more' : 'expand_less'}
+                    </span>
+                  )}
+                </div>
+                <div className="col-span-2">Cliente</div>
+                <div className="col-span-2">Detalles</div>
+                <div className="col-span-3 text-right">Precio total</div>
+              </div>
+
+              {/* Lista de cotizaciones */}
+              <div className="space-y-4">
             {cotizaciones.map((cotizacion) => {
               const estadoBadge = getEstadoBadge(cotizacion.estado);
               
@@ -381,7 +411,71 @@ export function CotizacionesPage() {
                 </Card>
               );
             })}
-          </div>
+              </div>
+            </>
+          )}
+
+          {/* Grid View */}
+          {viewMode === 'grid' && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {cotizaciones.map((cotizacion) => {
+                const estadoBadge = getEstadoBadge(cotizacion.estado);
+                return (
+                  <Card 
+                    key={cotizacion.id} 
+                    className="cursor-pointer hover:shadow-lg transition-shadow"
+                    onClick={() => router.push(`/crm/cotizaciones/${cotizacion.id}`)}
+                  >
+                    {cotizacion.imagen && (
+                      <div className="relative h-48 w-full overflow-hidden rounded-t-lg">
+                        <img 
+                          src={cotizacion.imagen} 
+                          alt={cotizacion.destino}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    )}
+                    <CardContent className="p-6">
+                      <div className="flex items-start justify-between mb-4">
+                        <div>
+                          <div className="text-lg font-semibold text-slate-900 mb-1">{cotizacion.numeroCotizacion}</div>
+                          <Badge className={`${estadoBadge.bg} ${estadoBadge.text} border-0`}>
+                            {estadoBadge.label}
+                          </Badge>
+                        </div>
+                      </div>
+                      <div className="space-y-2 mb-4">
+                        <div>
+                          <p className="text-sm text-slate-500">Cliente</p>
+                          <p className="text-base font-medium text-slate-900">{cotizacion.nombre}</p>
+                        </div>
+                        <div>
+                          <p className="text-sm text-slate-500">Destino</p>
+                          <p className="text-base text-slate-900">{cotizacion.destino}</p>
+                        </div>
+                        <div className="flex gap-4 text-sm">
+                          <div>
+                            <p className="text-slate-500">Fecha viaje</p>
+                            <p className="text-slate-900">{cotizacion.fechaViaje}</p>
+                          </div>
+                          <div>
+                            <p className="text-slate-500">Pasajeros</p>
+                            <p className="text-slate-900">{cotizacion.pasajeros}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="pt-4 border-t border-slate-200">
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-slate-500">Precio</span>
+                          <span className="text-xl font-semibold text-slate-900">US${cotizacion.precio.toFixed(2)}</span>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          )}
         </div>
 
         {/* Modal Nueva Cotización */}
