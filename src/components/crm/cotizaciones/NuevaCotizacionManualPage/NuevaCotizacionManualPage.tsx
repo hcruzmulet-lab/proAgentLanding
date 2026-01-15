@@ -64,6 +64,7 @@ export function NuevaCotizacionManualPage() {
     // Notas
     notas: '',
     terminosCondiciones: '',
+    notaInterna: '',
   });
 
   // Cargar clientes del localStorage
@@ -612,6 +613,22 @@ export function NuevaCotizacionManualPage() {
                   value={cotizacion.terminosCondiciones}
                   onChange={(e) => setCotizacion({...cotizacion, terminosCondiciones: e.target.value})}
                 />
+              </div>
+              <div className="border-t pt-4 mt-4">
+                <Label htmlFor="notaInterna" className="flex items-center gap-2">
+                  <span className="material-symbols-outlined text-slate-500 text-base" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>lock</span>
+                  Nota Interna
+                  <span className="text-xs text-slate-500 font-normal">(Solo visible para el agente)</span>
+                </Label>
+                <Textarea
+                  id="notaInterna"
+                  placeholder="Notas internas que solo tú podrás ver. No aparecerán en la cotización para el cliente..."
+                  rows={3}
+                  value={cotizacion.notaInterna}
+                  onChange={(e) => setCotizacion({...cotizacion, notaInterna: e.target.value})}
+                  className="mt-2"
+                />
+                <p className="text-xs text-slate-500 mt-1">Esta nota no se mostrará en la vista previa ni en el PDF de la cotización.</p>
               </div>
             </CardContent>
           </Card>
