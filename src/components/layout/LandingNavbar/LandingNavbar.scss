@@ -64,7 +64,7 @@
   }
 
   &__actions {
-    gap: $spacing-md;
+    gap: $spacing-sm;
     align-items: center;
   }
 
@@ -148,6 +148,11 @@
     margin-top: auto;
     padding-top: $spacing-xl;
     border-top: 1px solid hsl(var(--border));
+  }
+
+  &__mobile-language {
+    width: 100%;
+    margin-bottom: $spacing-sm;
   }
 
   &__mobile-join,

@@ -23,6 +23,7 @@
   },
   "landing": {
     "nav": {
+      "whyProAgent": "Why ProAgent?",
       "howItWorks": "How It Works?",
       "plans": "Plans",
       "faq": "FAQ",
@@ -30,30 +31,101 @@
       "login": "Sign In"
     },
     "hero": {
-      "title": "The B2B platform for travel agencies",
-      "subtitle": "Manage bookings, clients and commissions in one place. Connect with TravelCompositor and Stripe for a complete experience.",
-      "cta": "Get Started",
-      "ctaSecondary": "Watch Demo"
+      "title": "The TravelTech platform that empowers the next generation of travel advisors",
+      "subtitle": "The only technology that integrates artificial intelligence, multiple booking engines, global agreements, CRM and academy in a single ecosystem, designed for agents to sell more and build a professional and profitable business.",
+      "cta": "Join Now",
+      "ctaSecondary": "Request Demo"
+    },
+    "demoRequest": {
+      "title": "Request Demo",
+      "subtitle": "Complete the form and we will contact you to schedule your personalized demo.",
+      "form": {
+        "name": "Full name",
+        "email": "Email",
+        "phone": "Phone",
+        "submit": "Request Demo"
+      }
+    },
+    "why": {
+      "title": "Why join ProAgent?",
+      "subtitle": "The reasons why more and more agents are building their business with us.",
+      "reasons": {
+        "professional": {
+          "icon": "workspace_premium",
+          "title": "You will live from tourism professionally",
+          "description": "ProAgent is born for those who want to live from tourism with profitable and scalable income."
+        },
+        "future": {
+          "icon": "rocket_launch",
+          "title": "We are the future",
+          "description": "We don't fit into a traditional category, we are the future. We are a TravelTech ecosystem created to train, empower and support those who already sell travel or those who are starting from 0."
+        },
+        "ai": {
+          "icon": "psychology",
+          "title": "Technology that thinks like you",
+          "description": "ProAgent integrates artificial intelligences specialized in travel, designed to help you sell better."
+        },
+        "copilot": {
+          "icon": "travel_explore",
+          "title": "You will have your own travel copilot",
+          "description": "Analyzes, proposes and builds itineraries and experiences as an expert would."
+        },
+        "engine": {
+          "icon": "search_insights",
+          "title": "Intelligent engines",
+          "description": "That interpret what you write and automatically find the best available options."
+        },
+        "origin": {
+          "icon": "language",
+          "title": "Created in the United States",
+          "description": "Designed for agents in the USA and Latin America. 100% in Spanish."
+        },
+        "allinone": {
+          "icon": "dashboard",
+          "title": "Everything in one place",
+          "description": "We are travel agents, building a platform for travel agents, we know exactly what you need... and here we include it for you. Less friction. More control. More sales."
+        },
+        "income": {
+          "icon": "trending_up",
+          "title": "Model designed to generate real income",
+          "description": "ProAgent is designed so you can turn every opportunity into a sale. Commissions in dollars, clear structure and a professional way to scale your travel business."
+        },
+        "support": {
+          "icon": "support_agent",
+          "title": "Real support, when you need it",
+          "description": "Behind ProAgent there are real people. A team that accompanies you, responds to you and helps you grow. Because scaling a travel business shouldn't feel lonely."
+        }
+      }
+    },
+    "partners": {
+      "title": "Our Partners",
+      "subtitle": "At ProAgent we focus on one thing: making you truly competitive.",
+      "description": "That's why we work with global providers, world-class technology and leading tour operators in each market. You access both the big players in the industry and specialized wholesalers in the United States and Latin America. Everything is designed so you can sell with confidence, variety and prices that compete at the highest level."
     },
     "features": {
-      "title": "Everything you need for your agency",
-      "subtitle": "Powerful tools to manage your travel business",
+      "title": "How It Works",
+      "subtitle": "Advanced technology. Simple process. Extraordinary results.",
       "bookings": {
-        "title": "Booking Management",
-        "description": "Direct integration with TravelCompositor to manage all your bookings in one place"
+        "icon": "verified_user",
+        "title": "Access the ProAgent ecosystem",
+        "description": "Once you register, we verify each profile to ensure that those who enter are truly ready to operate at a professional level. Exclusive in essence. Agile for those who qualify."
       },
       "clients": {
-        "title": "Client Database",
-        "description": "Keep all your client information organized and accessible"
+        "icon": "lock_open",
+        "title": "Unlock tools used by major OTAs",
+        "description": "Once inside, you access intelligent engines that allow you to plan custom trips, create itineraries with artificial intelligence, sell hotels, flights, packages, circuits, insurance, events, transfers and manage everything from your own CRM in a single platform. Powerful technology, designed to be intuitive."
       },
       "commissions": {
-        "title": "Commission Control",
-        "description": "Automatic tracking of your commissions and payments"
+        "icon": "speed",
+        "title": "Sell with precision and speed",
+        "description": "Quote in seconds, create premium proposals and close more sales with less effort, operating with a brand that supports you, payment facilities, constant support and access to licenses and legal structure without needing to create anything from scratch. Your productivity multiplies from day one."
       },
       "subscriptions": {
-        "title": "Flexible Plans",
-        "description": "Stripe integration for hassle-free subscription management"
-      }
+        "icon": "trending_up",
+        "title": "Grow with real support",
+        "description": "We support you with continuous training, support in Spanish from the USA, sales strategies and access to marketing plans and lead generation so your business grows sustainably. ProAgent evolves with you."
+      },
+      "conclusion": "Being part of ProAgent is a privilege. Using the platform is extremely simple."
     },
     "pricing": {
       "title": "Plans that adapt to your business",
@@ -94,28 +166,88 @@
     },
     "faq": {
       "title": "Frequently Asked Questions",
-      "subtitle": "Answers to the most common questions",
+      "subtitle": "Everything you need to know before starting. We answer your most common questions about payments, commissions, training, licenses, support and technology.",
       "q1": {
-        "question": "How does the TravelCompositor integration work?",
-        "answer": "The integration is done through IFRAME, allowing access to all TravelCompositor functionalities directly from our platform."
+        "question": "What is ProAgent?",
+        "answer": "ProAgent is a next-generation traveltech platform, created in the United States and designed especially for Hispanic travel agents in the USA and Latin America. It integrates professional engines, global providers and two artificial intelligences to help you build a profitable and scalable travel business."
       },
       "q2": {
-        "question": "Can I change plans at any time?",
-        "answer": "Yes, you can upgrade or change your plan at any time from your account settings."
+        "question": "Can I change plans later?",
+        "answer": "Yes. You can upgrade or downgrade your plan whenever you need to. Changes are applied immediately."
       },
       "q3": {
-        "question": "Do you offer support in Spanish?",
-        "answer": "Yes, we offer support in Spanish, English, and Brazilian Portuguese."
+        "question": "What does the commission split mean (70/30, 80/20, 90/10)?",
+        "answer": "It is the percentage of the commission that you receive as an agent and the percentage that corresponds to ProAgent only when you make reservations with providers. Example: in a 70/30 split, you receive 70% and ProAgent 30%."
       },
       "q4": {
-        "question": "Do I need a credit card for the free plan?",
-        "answer": "No, you can start with the free plan without entering payment information."
+        "question": "Does the plan include all search engines?",
+        "answer": "Yes. All plans include complete engines for: Hotels, Flights, Transfers, Activities, Circuits, Trains, Insurance and eSIM. Higher plans add additional categories such as cruises, Disney, cars, sport/events, routing, luxury and groups."
+      },
+      "q5": {
+        "question": "Is Artificial Intelligence really included?",
+        "answer": "Yes, but with different levels depending on the plan: ProAgent Plus and Master include 1 exclusive ProAgent AI for deep queries, creating itineraries and optimizing proposals. ProAgent Elite includes the 2 artificial intelligences, combining our exclusive AI with an additional advanced AI that returns travel offers from a single prompt. Practical example: 'Create a 5-day itinerary to Punta Cana for a family with children, with a beachfront hotel, activities and transfers.' The AI delivers a complete plan ready to book or send to the client."
+      },
+      "q6": {
+        "question": "What are premium providers and luxury providers?",
+        "answer": "Premium Providers: leading wholesalers in specialized niches and top tour operators in the USA, Caribbean, Europe and Latin America. Luxury: exclusive providers of 5* hotels, premium experiences and high-end DMCs, available in higher plans."
+      },
+      "q7": {
+        "question": "What providers does ProAgent include?",
+        "answer": "We work with: Global providers and hotel chains, Premium tour operators from the United States, Leading wholesalers in specialized niches, Operators preferred by Latino travelers in Florida and Latin America, and Strong partners in Spain and Europe. We guarantee variety, competitive prices and real access to the big players in the market."
+      },
+      "q8": {
+        "question": "Can I issue flights, hotels and packages from the same platform?",
+        "answer": "Yes. ProAgent integrates engines for hotels, flights, packages, circuits, cruises, transfers, activities, cars, events, trains and insurance. In addition, it includes Trip Planner, your premium tool to create custom trips from one place."
+      },
+      "q9": {
+        "question": "What makes ProAgent different from other traditional host agencies?",
+        "answer": "Everything. ProAgent is a next-generation platform for agents, designed for the future of travel. It integrates AI, global providers, advanced tools and the strength of the Azúcar Travel umbrella brand. We sell travel. We know how to do it."
+      },
+      "q10": {
+        "question": "When do I collect my commissions?",
+        "answer": "Commissions are paid up to 7-15 days after the provider settles with ProAgent, once the client's trip has ended."
+      },
+      "q11": {
+        "question": "What support do I receive as an advisor?",
+        "answer": "It depends on the chosen plan: Standard (support via tickets), Priority Plus (faster response and improved support + whatsapp), VIP Master (direct access, absolute priority and specialized support + whatsapp). All plans include essential training and basic support to help you sell better, even if it's your first time."
+      },
+      "q12": {
+        "question": "Do I need previous experience to use ProAgent?",
+        "answer": "No. ProAgent is designed for both new and experienced agents. AI and continuous training help you learn while you sell."
+      },
+      "q13": {
+        "question": "Can I work from any country?",
+        "answer": "Yes. ProAgent works in the USA, Latin America and anywhere you can legally sell. Many agents operate 100% remotely."
+      },
+      "q14": {
+        "question": "Do I need licenses to sell travel?",
+        "answer": "If you reside in the USA, ProAgent covers you under the Host Agency structure. If you are in Latin America, you can operate without problems with international providers. If you will sell under your own official brand, you will probably need licenses. We advise you in the process."
+      },
+      "q15": {
+        "question": "Do plan prices include taxes or additional charges?",
+        "answer": "Yes. Prices are final, with no hidden fees."
+      },
+      "q16": {
+        "question": "Is there a contract or minimum stay?",
+        "answer": "No. You can cancel whenever you want. There is no mandatory stay. ProAgent reserves the right of readmission."
+      },
+      "q17": {
+        "question": "Does ProAgent deliver clients to me?",
+        "answer": "ProAgent mainly helps you generate them. However, certified agents can access verified leads with shared commission, through the global lead generation system and the Lead Accelerator. Everything that works for ProAgent —sales, campaigns, influencers, content and real hooks— is transferred to you so you can generate your own clients with proven processes."
+      },
+      "q18": {
+        "question": "Can I operate with my own brand within ProAgent?",
+        "answer": "Yes. ProAgent allows you to operate with your own brand and commercial structure, using ProAgent's technology, providers and support as support."
+      },
+      "q19": {
+        "question": "How does being part of the Azúcar Travel ProAgent brand benefit me?",
+        "answer": "Because you integrate into a brand that sells, travels and understands what works in the real market. You access validated campaigns, sales scripts, templates, advanced advertising strategies and a complete technological platform to plan, quote, sell and follow up on a trip without leaving the system."
       }
     },
     "cta": {
-      "title": "Ready to transform your agency?",
-      "subtitle": "Join hundreds of agencies that already trust ProAgent",
-      "button": "Start Free"
+      "title": "Join now",
+      "subtitle": "Join the community of agents that is transforming the industry.",
+      "button": "Join now"
     },
     "subscriptions": {
       "chooseThisPlan": "Choose This Plan"
@@ -125,7 +257,8 @@
       "features": "Features",
       "pricing": "Pricing",
       "company": "Company",
-      "about": "About",
+      "about": "ProAgent",
+      "azucarTravel": "Azúcar Travel",
       "contact": "Contact",
       "legal": "Legal",
       "privacy": "Privacy",

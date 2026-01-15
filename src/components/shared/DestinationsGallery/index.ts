@@ -1,0 +1,2 @@
+export { DestinationsGallery } from './DestinationsGallery';
+

@@ -2,15 +2,19 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import './FeatureCard.scss';
 
 interface FeatureCardProps {
+  number?: number;
   icon: string;
   title: string;
   description: string;
 }
 
-export function FeatureCard({ icon, title, description }: FeatureCardProps) {
+export function FeatureCard({ number, icon, title, description }: FeatureCardProps) {
   return (
     <Card className="feature-card">
       <CardHeader>
+        {number && (
+          <div className="feature-card__number">{number}</div>
+        )}
         <div className="feature-card__icon-wrapper">
           <span 
             className="material-symbols-outlined feature-card__icon"

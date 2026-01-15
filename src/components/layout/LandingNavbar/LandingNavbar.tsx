@@ -7,6 +7,7 @@ import { useTranslations } from 'next-intl';
 import Icon from '@mdi/react';
 import { mdiMenu, mdiClose } from '@mdi/js';
 import { Button } from '@/components/ui/button';
+import { LanguageSelector } from '@/components/shared/LanguageSelector';
 import './LandingNavbar.scss';
 
 interface LandingNavbarProps {
@@ -61,6 +62,7 @@ export function LandingNavbar({ onLoginClick, onJoinClick }: LandingNavbarProps)
 
         {/* Desktop Actions */}
         <div className="landing-navbar__actions landing-navbar__desktop-only">
+          <LanguageSelector />
           <Button variant="ghost" onClick={onJoinClick} className="landing-navbar__join">
             {t('joinNow')}
           </Button>
@@ -96,6 +98,9 @@ export function LandingNavbar({ onLoginClick, onJoinClick }: LandingNavbarProps)
           ))}
         </div>
         <div className="landing-navbar__mobile-actions">
+          <div className="landing-navbar__mobile-language">
+            <LanguageSelector />
+          </div>
           <Button
             variant="ghost"
             onClick={() => {

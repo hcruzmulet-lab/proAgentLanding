@@ -2,33 +2,73 @@
 @use '@/styles/mixins' as *;
 
 .hero-section {
-  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  position: relative;
   padding: calc(var(--spacing-2xl) * 3) $spacing-xl;
   min-height: 600px;
   @include flex-center;
+  overflow: hidden;
+
+  &__background {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  &__background-image {
+    object-fit: cover;
+    object-position: center;
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+  }
 
   &__container {
     max-width: 1200px;
     margin: 0 auto;
-    text-align: center;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+    text-align: left;
+    padding-left: $spacing-lg;
+    padding-right: $spacing-xl;
+
+    @media (max-width: $breakpoint-md) {
+      text-align: center;
+      padding-left: $spacing-lg;
+      padding-right: $spacing-lg;
+    }
   }
 
   &__content {
     @include flex-column;
-    align-items: center;
+    align-items: flex-start;
     gap: $spacing-xl;
+    max-width: 700px;
+
+    @media (max-width: $breakpoint-md) {
+      align-items: center;
+      max-width: 100%;
+    }
   }
 
   &__title {
     font-size: 3.5rem;
     font-weight: 800;
-    color: #1b2340;
+    color: white;
     line-height: 1.2;
     margin: 0;
-    max-width: 800px;
+    text-align: left;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 
     @media (max-width: $breakpoint-md) {
       font-size: 2.5rem;
+      text-align: center;
     }
 
     @media (max-width: $breakpoint-sm) {
@@ -37,25 +77,33 @@
   }
 
   &__subtitle {
-    font-size: 1.25rem;
-    color: hsl(var(--muted-foreground));
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.95);
     line-height: 1.6;
     margin: 0;
-    max-width: 700px;
+    text-align: left;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 
     @media (max-width: $breakpoint-md) {
-      font-size: 1.125rem;
+      font-size: 1rem;
+      text-align: center;
     }
 
     @media (max-width: $breakpoint-sm) {
-      font-size: 1rem;
+      font-size: 0.95rem;
     }
   }
 
   &__actions {
-    @include flex-center;
+    display: flex;
     gap: $spacing-lg;
     margin-top: $spacing-lg;
+    justify-content: flex-start;
+
+    @media (max-width: $breakpoint-md) {
+      justify-content: center;
+      width: 100%;
+    }
 
     @media (max-width: $breakpoint-sm) {
       flex-direction: column;
@@ -71,9 +119,22 @@
     background-color: #ffa300;
     color: white;
     font-weight: 700;
+    border: none;
 
     &:hover {
       background-color: #e69200;
+    }
+  }
+
+  &__cta-secondary {
+    background-color: transparent;
+    color: white;
+    border-color: white;
+    font-weight: 600;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
     }
   }
 }

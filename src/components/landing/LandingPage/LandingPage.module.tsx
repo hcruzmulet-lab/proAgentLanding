@@ -6,10 +6,12 @@ import { useTranslations } from 'next-intl';
 import { LandingNavbar } from '@/components/layout/LandingNavbar';
 import { LandingFooter } from '@/components/layout/LandingFooter';
 import { HeroSection } from '@/components/shared/HeroSection';
+import { DestinationsGallery } from '@/components/shared/DestinationsGallery';
 import { FeatureCard } from '@/components/shared/FeatureCard';
 import { FAQItem } from '@/components/shared/FAQItem';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import Image from 'next/image';
 import './LandingPage.scss';
 
 export function LandingPageModule() {
@@ -19,21 +21,25 @@ export function LandingPageModule() {
 
   const features = [
     {
+      number: 1,
       icon: t('features.bookings.icon'),
       title: t('features.bookings.title'),
       description: t('features.bookings.description'),
     },
     {
+      number: 2,
       icon: t('features.clients.icon'),
       title: t('features.clients.title'),
       description: t('features.clients.description'),
     },
     {
+      number: 3,
       icon: t('features.commissions.icon'),
       title: t('features.commissions.title'),
       description: t('features.commissions.description'),
     },
     {
+      number: 4,
       icon: t('features.subscriptions.icon'),
       title: t('features.subscriptions.title'),
       description: t('features.subscriptions.description'),
@@ -183,9 +189,9 @@ export function LandingPageModule() {
       elite: '$199',
     },
     annual: {
-      plus: '$390',
-      master: '$990',
-      elite: '$1,990',
+      plus: '$360',
+      master: '$840',
+      elite: '$1,800',
     },
   };
 
@@ -231,9 +237,14 @@ export function LandingPageModule() {
         onSecondaryClick={handleRequestDemo}
       />
 
+      <DestinationsGallery />
+
       <section id="why" className="landing-page-module__why">
         <div className="landing-page-module__container">
           <h2 className="landing-page-module__section-title">{t('why.title')}</h2>
+          {t('why.subtitle') && (
+            <p className="landing-page-module__section-subtitle">{t('why.subtitle')}</p>
+          )}
           <div className="landing-page-module__why-grid">
             {whyReasons.map((reason, index) => (
               <div key={index} className="landing-page-module__why-card">
@@ -273,6 +284,10 @@ export function LandingPageModule() {
           <h2 className="landing-page-module__section-title">{t('partners.title')}</h2>
           <p className="landing-page-module__section-subtitle">{t('partners.subtitle')}</p>
           <p className="landing-page-module__partners-description">{t('partners.description')}</p>
+          {/* TODO: Agregar carrusel de logos de partners aquí */}
+          <div className="landing-page-module__partners-logos">
+            {/* Los logos de partners se mostrarán aquí */}
+          </div>
         </div>
       </section>
 
@@ -330,7 +345,7 @@ export function LandingPageModule() {
                 {/* Motores integrados */}
                 <tr>
                   <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--label">Motores integrados</td>
-                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--small">paquetes, circuitos, trenes, actividades, seguros , esim</td>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--small">Hoteles, vuelos, traslados, paquetes, circuitos, trenes, actividades, seguros, esim</td>
                   <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--small">Igual ProAgent Plus + sport/event+renta de autos+routing+grupos</td>
                   <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--small">Igual ProAgent Master+ Cruceros+Disney+LUJO</td>
                 </tr>
@@ -359,9 +374,9 @@ export function LandingPageModule() {
                   <td className="landing-page-module__pricing-table-cell">incluido</td>
                 </tr>
                 
-                {/* Constructor de planes */}
+                {/* Constructor de viajes */}
                 <tr>
-                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--label">Constructor de planes a medidas</td>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--label">Constructor de viajes</td>
                   <td className="landing-page-module__pricing-table-cell">incluido</td>
                   <td className="landing-page-module__pricing-table-cell">incluido</td>
                   <td className="landing-page-module__pricing-table-cell">incluido</td>
@@ -388,7 +403,7 @@ export function LandingPageModule() {
                   <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--label">Página web</td>
                   <td className="landing-page-module__pricing-table-cell">Microsite</td>
                   <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--small">Tu propia página web B2C</td>
-                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--small">+ Landing page+Generador de QR ilimitado.</td>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--small">Tu propia página web B2C + Landings pages+Generador de QR ilimitado</td>
                 </tr>
                 
                 {/* Academia */}
@@ -415,9 +430,9 @@ export function LandingPageModule() {
                   <td className="landing-page-module__pricing-table-cell">VIP</td>
                 </tr>
                 
-                {/* Cuota primer afiliación */}
+                {/* Cuota de activación */}
                 <tr>
-                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--label landing-page-module__pricing-table-cell--red">Cuota primer afiliación</td>
+                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--label landing-page-module__pricing-table-cell--red">Cuota de activación</td>
                   <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--bold">$450</td>
                   <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--bold">$450</td>
                   <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--bold">$450</td>
@@ -457,7 +472,7 @@ export function LandingPageModule() {
             {/* Footnotes */}
             <div className="landing-page-module__pricing-footnotes">
               <p>* Comisión más alta para el agente.</p>
-              <p>** El split no se activa de forma automática.</p>
+              <p>** El split no se activa de forma automática. Este plan habilita el acceso a un esquema de split mejorado. El split inicial es 70/30, y se ajusta únicamente una vez alcanzado el volumen mínimo de ventas establecido para cada nivel.</p>
             </div>
           </div>
         </div>
@@ -530,7 +545,18 @@ export function LandingPageModule() {
       </section>
 
       <section className="landing-page-module__cta">
-        <div className="landing-page-module__container">
+        <div className="landing-page-module__cta-background">
+          <Image
+            src="https://res.cloudinary.com/ddagvoaq2/image/upload/v1768505963/businessman-holding-luggage-waiting-airport-arrival-generated-by-ai_jqjv5p.jpg"
+            alt="Hombre de negocios con equipaje"
+            fill
+            className="landing-page-module__cta-background-image"
+            priority
+            unoptimized
+          />
+          <div className="landing-page-module__cta-overlay" />
+        </div>
+        <div className="landing-page-module__container landing-page-module__cta-container">
           <h2 className="landing-page-module__cta-title">{t('cta.title')}</h2>
           <p className="landing-page-module__cta-subtitle">{t('cta.subtitle')}</p>
           <Button size="lg" onClick={handleJoin} className="landing-page-module__cta-button">

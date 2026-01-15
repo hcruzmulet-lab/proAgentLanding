@@ -31,8 +31,8 @@
       "login": "Iniciar Sesión"
     },
     "hero": {
-      "title": "La plataforma para agentes de viajes más moderna del mercado",
-      "subtitle": "Desarrollada en Estados Unidos con inteligencia artificial, diseñada para agentes hispanohablantes en ese país y en Latinoamérica.",
+      "title": "La plataforma TravelTech que empodera la próxima generación de asesores de viajes",
+      "subtitle": "La única tecnología que integra inteligencia artificial, múltiples motores de reservas, acuerdos globales, CRM y academia en un solo ecosistema, diseñada para que los agentes vendan más y construyan un negocio profesional y rentable.",
       "cta": "Únete Ahora",
       "ctaSecondary": "Solicitar Demo"
     },
@@ -48,36 +48,37 @@
     },
     "why": {
       "title": "¿Por qué unirte a ProAgent?",
+      "subtitle": "Las razones por las que cada vez más agentes están construyendo su negocio con nosotros.",
       "reasons": {
         "professional": {
           "icon": "workspace_premium",
-          "title": "Vive del turismo de forma profesional",
-          "description": "Porque ProAgent nace para quienes quieren vivir del turismo de forma profesional, rentable y escalable."
+          "title": "Vivirás del turismo de forma profesional",
+          "description": "ProAgent nace para quienes quieren vivir del turismo con ingresos rentables y escalables."
         },
         "future": {
           "icon": "rocket_launch",
           "title": "Somos el futuro",
-          "description": "Porque no encajamos en una categoría tradicional, somos el futuro. Somos un ecosistema TravelTech creado para formar, potenciar y respaldar a quienes venden viajes o los que quieren empezar de 0."
+          "description": "No encajamos en una categoría tradicional, somos el futuro. Somos un ecosistema TravelTech creado para formar, potenciar y respaldar a quienes ya venden viajes o los que están empezando desde 0."
         },
         "ai": {
           "icon": "psychology",
           "title": "Tecnología que piensa como tú",
-          "description": "ProAgent integra dos inteligencias artificiales especializadas en viajes, diseñadas para ayudarte a vender mejor"
+          "description": "ProAgent integra inteligencias artificiales especializadas en viajes, diseñadas para ayudarte a vender mejor."
         },
         "copilot": {
           "icon": "travel_explore",
-          "title": "Tu Copiloto de viajes",
+          "title": "Tendrás tu propio Copiloto de viajes",
           "description": "Analiza, propone y construye itinerarios y experiencias como lo haría un experto."
         },
         "engine": {
           "icon": "search_insights",
-          "title": "Tu motor inteligente",
-          "description": "Interpreta lo que escribes y encuentra automáticamente las mejores opciones disponibles entre múltiples motores."
+          "title": "Motores inteligentes",
+          "description": "Que interpretan lo que escribes y encuentran automáticamente las mejores opciones disponibles."
         },
         "origin": {
           "icon": "language",
           "title": "Creado en Estados Unidos",
-          "description": "100 % en español. Pensado para agentes de EE. UU. y Latinoamérica."
+          "description": "Pensado para agentes de EE. UU. y Latinoamérica. 100% en español."
         },
         "allinone": {
           "icon": "dashboard",
@@ -161,7 +162,8 @@
     "partners": {
       "title": "Nuestros Partners",
       "subtitle": "En ProAgent nos enfocamos en una sola cosa: que seas realmente competitivo.",
-      "description": "Por eso trabajamos con proveedores globales, tecnología de clase mundial y turoperadores líderes en cada mercado. Accedes tanto a los grandes jugadores de la industria como a mayoristas especializados en Estados Unidos y Latinoamérica. Todo está diseñado para que vendas con confianza, variedad y precios que compiten al más alto nivel."
+      "description": "Por eso trabajamos con proveedores globales, tecnología de clase mundial y turoperadores líderes en cada mercado. Accedes tanto a los grandes jugadores de la industria como a mayoristas especializados en Estados Unidos y Latinoamérica. Todo está diseñado para que vendas con confianza, variedad y precios que compiten al más alto nivel.",
+      "logosPlaceholder": "Logos de partners aparecerán aquí"
     },
     "faq": {
       "title": "Preguntas Frecuentes",
