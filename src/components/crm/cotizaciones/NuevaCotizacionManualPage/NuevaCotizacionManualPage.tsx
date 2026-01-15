@@ -1036,11 +1036,11 @@ function CotizacionPreview({ cotizacion, servicios, coverImage }: { cotizacion: 
           <div key={servicio.id} className="border rounded-lg p-4">
             <h4 className="font-medium text-slate-900 mb-2">Servicio {index + 1}: {servicio.tipo.charAt(0).toUpperCase() + servicio.tipo.slice(1)}</h4>
             <div className="text-sm text-slate-600 space-y-1">
-              {Object.entries(servicio.datos).map(([key, value]) => (
-                key !== 'precio' && value && (
+              {Object.entries(servicio.datos)
+                .filter(([key, value]) => key !== 'precio' && value)
+                .map(([key, value]) => (
                   <p key={key}><strong>{key}:</strong> {String(value)}</p>
-                )
-              ))}
+                ))}
               <p className="text-right font-semibold text-slate-900">Precio: ${servicio.datos.precio?.toFixed(2) || '0.00'}</p>
             </div>
           </div>
