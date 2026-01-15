@@ -1,7 +1,7 @@
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
-import { CotizacionesPage } from '@/components/crm/cotizaciones/CotizacionesPage';
+import { NuevaCotizacionManualPage } from '@/components/crm/cotizaciones/NuevaCotizacionManualPage';
 
-export default async function CotizacionesRoute({
+export default async function Page({
   params,
 }: {
   params: Promise<{ locale: string }>;
@@ -10,7 +10,7 @@ export default async function CotizacionesRoute({
 
   return (
     <DashboardLayout activeModule="crm" activeSubItem="cotizaciones" title="CRM">
-      <CotizacionesPage />
+      <NuevaCotizacionManualPage />
     </DashboardLayout>
   );
 }

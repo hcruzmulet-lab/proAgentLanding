@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -24,6 +25,7 @@ interface Reserva {
   precio: number;
   comision: number;
   estado: 'finalizada' | 'pendiente' | 'cancelada';
+  imagen?: string;
 }
 
 const reservasMock: Reserva[] = [
@@ -33,7 +35,7 @@ const reservasMock: Reserva[] = [
     fechaCreacion: '30 dic 2025',
     fechaSalida: '24 ene 2026',
     nombre: 'Arieldi Marrero',
-    destino: '',
+    destino: 'Cancún, México',
     pasajeros: 2,
     ubicaciones: 2,
     autos: 0,
@@ -41,7 +43,8 @@ const reservasMock: Reserva[] = [
     noches: 2,
     precio: 651.55,
     comision: 0,
-    estado: 'finalizada'
+    estado: 'finalizada',
+    imagen: 'https://images.unsplash.com/photo-1568402102990-bc541580b59f?w=400&h=300&fit=crop'
   },
   {
     id: '2',
@@ -49,7 +52,7 @@ const reservasMock: Reserva[] = [
     fechaCreacion: '26 dic 2025',
     fechaSalida: '24 ene 2026',
     nombre: 'Arieldi Marrero',
-    destino: '',
+    destino: 'Punta Cana, RD',
     pasajeros: 2,
     ubicaciones: 2,
     autos: 1,
@@ -57,11 +60,13 @@ const reservasMock: Reserva[] = [
     noches: 2,
     precio: 298.53,
     comision: 0,
-    estado: 'finalizada'
+    estado: 'finalizada',
+    imagen: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&h=300&fit=crop'
   }
 ];
 
 export function ReservasCRMPage() {
+  const router = useRouter();
   const [filtros, setFiltros] = useState({
     buscar: 'todas',
     destino: '',
@@ -260,12 +265,25 @@ export function ReservasCRMPage() {
           <div className="space-y-4">
             {reservas.map((reserva) => (
               <Card key={reserva.id} className="overflow-hidden">
-                <CardContent className="p-6">
-                  <div className="grid grid-cols-12 gap-4 items-start">
-                    {/* Localizador */}
-                    <div className="col-span-1">
-                      <div className="text-lg font-semibold text-slate-700">{reserva.localizador}</div>
+                <div className="flex">
+                  {/* Imagen del destino */}
+                  {reserva.imagen && (
+                    <div className="flex-shrink-0">
+                      <img 
+                        src={reserva.imagen} 
+                        alt={reserva.destino}
+                        className="w-48 h-full object-cover"
+                      />
                     </div>
+                  )}
+
+                  {/* Contenido de la reserva */}
+                  <CardContent className="p-6 flex-1">
+                    <div className="grid grid-cols-12 gap-4 items-start">
+                      {/* Localizador */}
+                      <div className="col-span-1">
+                        <div className="text-lg font-semibold text-slate-700">{reserva.localizador}</div>
+                      </div>
 
                     {/* Fecha de creación */}
                     <div className="col-span-2">
@@ -350,28 +368,29 @@ export function ReservasCRMPage() {
                       </div>
                     </div>
 
-                    {/* Precio */}
-                    <div className="col-span-3 text-right">
-                      <p className="text-lg font-semibold text-slate-900">US${reserva.precio.toFixed(2)}</p>
-                      <p className="text-sm text-slate-600">Comisión: US${reserva.comision.toFixed(2)}</p>
+                      {/* Precio */}
+                      <div className="col-span-3 text-right">
+                        <p className="text-lg font-semibold text-slate-900">US${reserva.precio.toFixed(2)}</p>
+                        <p className="text-sm text-slate-600">Comisión: US${reserva.comision.toFixed(2)}</p>
+                      </div>
                     </div>
-                  </div>
 
-                  {/* Botones de acción */}
-                  <div className="flex items-center justify-between mt-6 pt-4 border-t">
-                    <Badge className="bg-green-100 text-green-700 hover:bg-green-200 whitespace-nowrap border-0">
-                      Reserva Finalizada
-                    </Badge>
-                    <div className="flex items-center gap-3">
-                      <Button className="bg-slate-700 hover:bg-slate-800 text-white">
-                        Modificar
-                      </Button>
-                      <Button variant="outline">
-                        Detalles
-                      </Button>
+                    {/* Botones de acción */}
+                    <div className="flex items-center justify-between mt-6 pt-4 border-t">
+                      <Badge className="bg-green-100 text-green-700 hover:bg-green-200 whitespace-nowrap border-0">
+                        Reserva Finalizada
+                      </Badge>
+                      <div className="flex items-center gap-3">
+                        <Button className="bg-slate-700 hover:bg-slate-800 text-white">
+                          Modificar
+                        </Button>
+                        <Button variant="outline">
+                          Detalles
+                        </Button>
+                      </div>
                     </div>
-                  </div>
-                </CardContent>
+                  </CardContent>
+                </div>
               </Card>
             ))}
           </div>
@@ -405,8 +424,8 @@ export function ReservasCRMPage() {
               <button 
                 className="flex flex-col items-center gap-4 p-6 bg-white border-2 border-slate-200 rounded-lg hover:border-slate-700 hover:shadow-md transition-all cursor-pointer"
                 onClick={() => {
-                  // TODO: Implementar navegación a reserva manual
-                  console.log('Reserva Manual');
+                  router.push('/es/crm/reservas/nueva-manual');
+                  setIsNewReservaModalOpen(false);
                 }}
               >
                 <span className="material-symbols-outlined text-slate-700 text-6xl" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48" }}>

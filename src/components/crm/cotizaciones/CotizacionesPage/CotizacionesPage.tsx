@@ -1,29 +1,433 @@
 'use client';
 
-import React from 'react';
-import './CotizacionesPage.scss';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+
+interface Cotizacion {
+  id: string;
+  numeroCotizacion: string;
+  fechaCreacion: string;
+  fechaViaje: string;
+  nombre: string;
+  destino: string;
+  pasajeros: number;
+  ubicaciones: number;
+  hoteles: number;
+  noches: number;
+  precio: number;
+  estado: 'pendiente' | 'enviada' | 'aceptada' | 'rechazada';
+  imagen?: string;
+}
+
+const cotizacionesMock: Cotizacion[] = [
+  {
+    id: '1',
+    numeroCotizacion: 'COT-001',
+    fechaCreacion: '10 ene 2026',
+    fechaViaje: '15 feb 2026',
+    nombre: 'Miguel Zabala',
+    destino: 'Cancún, México',
+    pasajeros: 2,
+    ubicaciones: 1,
+    hoteles: 1,
+    noches: 5,
+    precio: 1250.00,
+    estado: 'enviada',
+    imagen: 'https://images.unsplash.com/photo-1568402102990-bc541580b59f?w=400&h=300&fit=crop'
+  },
+  {
+    id: '2',
+    numeroCotizacion: 'COT-002',
+    fechaCreacion: '12 ene 2026',
+    fechaViaje: '20 mar 2026',
+    nombre: 'Arieldi Marrero',
+    destino: 'Punta Cana, República Dominicana',
+    pasajeros: 4,
+    ubicaciones: 1,
+    hoteles: 1,
+    noches: 7,
+    precio: 2800.00,
+    estado: 'pendiente',
+    imagen: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&h=300&fit=crop'
+  }
+];
 
 export function CotizacionesPage() {
-  return (
-    <div className="cotizaciones-page">
-      <div className="cotizaciones-page__header">
-        <h1 className="cotizaciones-page__title">Cotizaciones</h1>
-        <p className="cotizaciones-page__subtitle">
-          Gestiona todas las cotizaciones de tus clientes
-        </p>
-      </div>
+  const router = useRouter();
+  const [filtros, setFiltros] = useState({
+    buscar: 'todas',
+    destino: '',
+    numeroCotizacion: '',
+    nombre: ''
+  });
 
-      <div className="cotizaciones-page__content">
-        <div className="cotizaciones-page__empty-state">
-          <span className="material-symbols-outlined cotizaciones-page__empty-icon">
-            docs
-          </span>
-          <h2 className="cotizaciones-page__empty-title">No hay cotizaciones aún</h2>
-          <p className="cotizaciones-page__empty-description">
-            Comienza a crear cotizaciones para tus clientes
-          </p>
+  const [cotizaciones, setCotizaciones] = useState<Cotizacion[]>(cotizacionesMock);
+  const [isNewCotizacionModalOpen, setIsNewCotizacionModalOpen] = useState(false);
+  const [sortField, setSortField] = useState<'fechaCreacion' | 'fechaViaje' | null>('fechaCreacion');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+
+  const handleLimpiar = () => {
+    setFiltros({
+      buscar: 'todas',
+      destino: '',
+      numeroCotizacion: '',
+      nombre: ''
+    });
+  };
+
+  const handleBuscar = () => {
+    console.log('Buscando con filtros:', filtros);
+  };
+
+  const handleSort = (field: 'fechaCreacion' | 'fechaViaje') => {
+    if (sortField === field) {
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortField(field);
+      setSortOrder('desc');
+    }
+
+    const sorted = [...cotizaciones].sort((a, b) => {
+      const dateA = new Date(a[field]).getTime();
+      const dateB = new Date(b[field]).getTime();
+      
+      if (sortField === field && sortOrder === 'asc') {
+        return dateB - dateA;
+      } else {
+        return dateA - dateB;
+      }
+    });
+
+    setCotizaciones(sorted);
+  };
+
+  const getEstadoBadge = (estado: string) => {
+    const badges = {
+      pendiente: { bg: 'bg-yellow-100', text: 'text-yellow-700', label: 'Pendiente' },
+      enviada: { bg: 'bg-blue-100', text: 'text-blue-700', label: 'Enviada' },
+      aceptada: { bg: 'bg-green-100', text: 'text-green-700', label: 'Aceptada' },
+      rechazada: { bg: 'bg-red-100', text: 'text-red-700', label: 'Rechazada' }
+    };
+    return badges[estado as keyof typeof badges] || badges.pendiente;
+  };
+
+  return (
+    <TooltipProvider>
+      <div className="space-y-6">
+        {/* Título y botón */}
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-semibold text-slate-900">Mis cotizaciones</h1>
+          <Button 
+            className="bg-slate-700 hover:bg-slate-800 text-white"
+            onClick={() => setIsNewCotizacionModalOpen(true)}
+          >
+            <span className="material-symbols-outlined mr-2" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>add</span>
+            Nueva Cotización
+          </Button>
         </div>
+
+        {/* Cards informativos superiores */}
+        <div className="grid grid-cols-4 gap-4">
+          <div className="flex items-center justify-between bg-[#f8fafc] rounded-lg px-[19px] py-[21px]">
+            <div className="flex flex-col">
+              <p className="text-base font-normal text-[#374151]">Cotizaciones</p>
+              <p className="text-xl font-semibold text-[#374151] tracking-tight">2</p>
+            </div>
+            <span className="material-symbols-outlined text-[#cbd5e1] text-[32px]" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48" }}>description</span>
+          </div>
+          
+          <div className="flex items-center justify-between bg-[#f8fafc] rounded-lg px-[19px] py-[21px]">
+            <div className="flex flex-col">
+              <p className="text-base font-normal text-[#374151]">Destinos</p>
+              <p className="text-xl font-semibold text-[#374151] tracking-tight">2</p>
+            </div>
+            <span className="material-symbols-outlined text-[#cbd5e1] text-[32px]" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48" }}>map</span>
+          </div>
+          
+          <div className="flex items-center justify-between bg-[#f8fafc] rounded-lg px-[19px] py-[21px]">
+            <div className="flex flex-col">
+              <p className="text-base font-normal text-[#374151]">Pasajeros</p>
+              <p className="text-xl font-semibold text-[#374151] tracking-tight">6</p>
+            </div>
+            <span className="material-symbols-outlined text-[#cbd5e1] text-[32px]" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48" }}>group</span>
+          </div>
+          
+          <div className="flex items-center justify-between bg-[#f8fafc] rounded-lg px-[19px] py-[21px]">
+            <div className="flex flex-col">
+              <p className="text-base font-normal text-[#374151]">Valor Total</p>
+              <p className="text-xl font-semibold text-[#374151] tracking-tight">$4,050</p>
+            </div>
+            <span className="material-symbols-outlined text-[#cbd5e1] text-[32px]" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48" }}>payments</span>
+          </div>
+        </div>
+
+        <div className="space-y-6">
+
+          {/* Filtros */}
+          <Card>
+            <CardContent className="pt-6">
+              <div className="flex items-end gap-3">
+                <div className="flex-1">
+                  <label className="text-sm font-medium text-slate-700 mb-2 block">Buscar:</label>
+                  <Select value={filtros.buscar} onValueChange={(value) => setFiltros({...filtros, buscar: value})}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Todas" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="todas">Todas</SelectItem>
+                      <SelectItem value="pendientes">Pendientes</SelectItem>
+                      <SelectItem value="enviadas">Enviadas</SelectItem>
+                      <SelectItem value="aceptadas">Aceptadas</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="flex-1">
+                  <label className="text-sm font-medium text-slate-700 mb-2 block">Destino:</label>
+                  <Input 
+                    placeholder="Buscar por destino" 
+                    value={filtros.destino}
+                    onChange={(e) => setFiltros({...filtros, destino: e.target.value})}
+                  />
+                </div>
+
+                <div className="flex-1">
+                  <label className="text-sm font-medium text-slate-700 mb-2 block">N° Cotización:</label>
+                  <Input 
+                    placeholder="Ej: COT-001" 
+                    value={filtros.numeroCotizacion}
+                    onChange={(e) => setFiltros({...filtros, numeroCotizacion: e.target.value})}
+                  />
+                </div>
+
+                <div className="flex-1">
+                  <label className="text-sm font-medium text-slate-700 mb-2 block">Nombre:</label>
+                  <Input 
+                    placeholder="Nombre del cliente" 
+                    value={filtros.nombre}
+                    onChange={(e) => setFiltros({...filtros, nombre: e.target.value})}
+                  />
+                </div>
+
+                <Button onClick={handleBuscar} className="bg-slate-700 hover:bg-slate-800">
+                  Buscar
+                </Button>
+
+                <Button variant="outline" onClick={handleLimpiar}>
+                  Limpiar
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Header de tabla */}
+          <div className="grid grid-cols-12 gap-4 px-4 py-3 bg-slate-50 rounded-lg text-xs font-medium text-slate-600 uppercase items-center">
+            <div className="col-span-1">N° Cotización</div>
+            <div 
+              className="col-span-2 flex items-center gap-1 cursor-pointer hover:text-slate-900 transition-colors"
+              onClick={() => handleSort('fechaCreacion')}
+            >
+              Fecha de creación
+              {sortField === 'fechaCreacion' && (
+                <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20" }}>
+                  {sortOrder === 'desc' ? 'expand_more' : 'expand_less'}
+                </span>
+              )}
+            </div>
+            <div 
+              className="col-span-2 flex items-center gap-1 cursor-pointer hover:text-slate-900 transition-colors"
+              onClick={() => handleSort('fechaViaje')}
+            >
+              Fecha de viaje
+              {sortField === 'fechaViaje' && (
+                <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20" }}>
+                  {sortOrder === 'desc' ? 'expand_more' : 'expand_less'}
+                </span>
+              )}
+            </div>
+            <div className="col-span-2">Cliente</div>
+            <div className="col-span-2">Detalles</div>
+            <div className="col-span-3 text-right">Precio total</div>
+          </div>
+
+          {/* Lista de cotizaciones */}
+          <div className="space-y-4">
+            {cotizaciones.map((cotizacion) => {
+              const estadoBadge = getEstadoBadge(cotizacion.estado);
+              
+              return (
+                <Card key={cotizacion.id} className="overflow-hidden">
+                  <div className="flex">
+                    {/* Imagen del destino */}
+                    {cotizacion.imagen && (
+                      <div className="flex-shrink-0">
+                        <img 
+                          src={cotizacion.imagen} 
+                          alt={cotizacion.destino}
+                          className="w-48 h-full object-cover"
+                        />
+                      </div>
+                    )}
+
+                    {/* Contenido de la cotización */}
+                    <CardContent className="p-6 flex-1">
+                      <div className="grid grid-cols-12 gap-4 items-start">
+                        {/* N° Cotización */}
+                        <div className="col-span-1">
+                          <div className="text-lg font-semibold text-slate-700">{cotizacion.numeroCotizacion}</div>
+                        </div>
+
+                      {/* Fecha de creación */}
+                      <div className="col-span-2">
+                        <p className="text-sm text-slate-900">{cotizacion.fechaCreacion}</p>
+                      </div>
+
+                      {/* Fecha de viaje */}
+                      <div className="col-span-2">
+                        <p className="text-sm text-slate-900">{cotizacion.fechaViaje}</p>
+                      </div>
+
+                      {/* Cliente */}
+                      <div className="col-span-2">
+                        <p className="text-sm text-slate-900 font-medium">{cotizacion.nombre}</p>
+                        <p className="text-xs text-slate-500">{cotizacion.destino}</p>
+                      </div>
+
+                      {/* Detalles - Iconos */}
+                      <div className="col-span-2">
+                        <div className="flex flex-wrap gap-3">
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <div className="flex items-center gap-1 text-sm cursor-default">
+                                <span className="material-symbols-outlined text-base" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>person</span>
+                                <span>{cotizacion.pasajeros}</span>
+                              </div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Pasajeros</p>
+                            </TooltipContent>
+                          </Tooltip>
+
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <div className="flex items-center gap-1 text-sm cursor-default">
+                                <span className="material-symbols-outlined text-base" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>location_on</span>
+                                <span>{cotizacion.ubicaciones}</span>
+                              </div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Destinos</p>
+                            </TooltipContent>
+                          </Tooltip>
+
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <div className="flex items-center gap-1 text-sm cursor-default">
+                                <span className="material-symbols-outlined text-base" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>hotel</span>
+                                <span>{cotizacion.hoteles}</span>
+                              </div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Hoteles</p>
+                            </TooltipContent>
+                          </Tooltip>
+
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <div className="flex items-center gap-1 text-sm cursor-default">
+                                <span className="material-symbols-outlined text-base" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>nightlight</span>
+                                <span>{cotizacion.noches}</span>
+                              </div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Noches</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </div>
+                      </div>
+
+                        {/* Precio */}
+                        <div className="col-span-3 text-right">
+                          <p className="text-lg font-semibold text-slate-900">US${cotizacion.precio.toFixed(2)}</p>
+                        </div>
+                      </div>
+
+                      {/* Botones de acción */}
+                      <div className="flex items-center justify-between mt-6 pt-4 border-t">
+                        <Badge className={`${estadoBadge.bg} ${estadoBadge.text} hover:${estadoBadge.bg} whitespace-nowrap border-0`}>
+                          {estadoBadge.label}
+                        </Badge>
+                        <div className="flex items-center gap-3">
+                          <Button className="bg-slate-700 hover:bg-slate-800 text-white">
+                            Editar
+                          </Button>
+                          <Button 
+                            variant="outline"
+                            onClick={() => window.open('https://azucartravel.com/es/idea/41931780/-crucero-toscana-mas-vuelo', '_blank', 'noopener,noreferrer')}
+                          >
+                            Ver Cotización
+                          </Button>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </div>
+                </Card>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Modal Nueva Cotización */}
+        <Dialog open={isNewCotizacionModalOpen} onOpenChange={setIsNewCotizacionModalOpen}>
+          <DialogContent className="sm:max-w-[600px]">
+            <DialogHeader>
+              <DialogTitle className="text-2xl font-semibold text-slate-900">Nueva Cotización</DialogTitle>
+            </DialogHeader>
+            <div className="grid grid-cols-2 gap-6 py-6">
+              {/* Cotización con Motor */}
+              <button 
+                className="flex flex-col items-center gap-4 p-6 bg-white border-2 border-slate-200 rounded-lg hover:border-slate-700 hover:shadow-md transition-all cursor-pointer"
+                onClick={() => {
+                  window.open('https://azucartravel.com/?tripType=TRIP_PLANNER', '_blank', 'noopener,noreferrer');
+                  setIsNewCotizacionModalOpen(false);
+                }}
+              >
+                <span className="material-symbols-outlined text-slate-700 text-6xl" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48" }}>
+                  travel_explore
+                </span>
+                <div className="text-center">
+                  <h3 className="text-lg font-semibold text-slate-900">Cotización con Motor</h3>
+                  <p className="text-sm text-slate-500 mt-1">Buscar y cotizar con nuestro motor de búsqueda</p>
+                </div>
+              </button>
+
+              {/* Cotización Manual */}
+              <button 
+                className="flex flex-col items-center gap-4 p-6 bg-white border-2 border-slate-200 rounded-lg hover:border-slate-700 hover:shadow-md transition-all cursor-pointer"
+                onClick={() => {
+                  router.push('/es/crm/cotizaciones/nueva-manual');
+                  setIsNewCotizacionModalOpen(false);
+                }}
+              >
+                <span className="material-symbols-outlined text-slate-700 text-6xl" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48" }}>
+                  edit_note
+                </span>
+                <div className="text-center">
+                  <h3 className="text-lg font-semibold text-slate-900">Cotización Manual</h3>
+                  <p className="text-sm text-slate-500 mt-1">Crear una cotización de forma manual</p>
+                </div>
+              </button>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
-    </div>
+    </TooltipProvider>
   );
 }

@@ -1,0 +1,1 @@
+export { NuevoExpedienteManualPage } from './NuevoExpedienteManualPage';

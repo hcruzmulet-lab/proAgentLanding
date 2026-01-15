@@ -1,7 +1,7 @@
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
-import { ExpedientesPage } from '@/components/crm/expedientes/ExpedientesPage';
+import { NuevoExpedienteManualPage } from '@/components/crm/expedientes/NuevoExpedienteManualPage';
 
-export default async function ExpedientesRoute({
+export default async function NuevoExpedienteManualRoute({
   params,
 }: {
   params: Promise<{ locale: string }>;
@@ -10,7 +10,7 @@ export default async function ExpedientesRoute({
 
   return (
     <DashboardLayout activeModule="crm" activeSubItem="expedientes" title="CRM">
-      <ExpedientesPage />
+      <NuevoExpedienteManualPage />
     </DashboardLayout>
   );
 }
