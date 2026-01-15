@@ -179,7 +179,7 @@ export function PerfilPage() {
       <span
         key={i}
         className={`material-symbols-outlined ${i < rating ? 'text-yellow-400' : 'text-slate-300'}`}
-        style={{ fontVariationSettings: i < rating ? "'FILL' 1" : "'FILL' 0", 'wght': 400, 'GRAD': 0, 'opsz': 24 }}
+        style={{ fontVariationSettings: i < rating ? "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24" : "'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24" }}
       >
         star
       </span>
