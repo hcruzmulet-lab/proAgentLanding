@@ -33,14 +33,14 @@ const cotizacionesMock: Cotizacion[] = [
     fechaCreacion: '10 ene 2026',
     fechaViaje: '15 feb 2026',
     nombre: 'Miguel Zabala',
-    destino: 'Cancún, México',
+    destino: 'Toscana, Italia',
     pasajeros: 2,
     ubicaciones: 1,
     hoteles: 1,
     noches: 5,
-    precio: 1250.00,
+    precio: 476.00,
     estado: 'enviada',
-    imagen: 'https://images.unsplash.com/photo-1568402102990-bc541580b59f?w=400&h=300&fit=crop'
+    imagen: 'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=400&h=300&fit=crop'
   },
   {
     id: '2',

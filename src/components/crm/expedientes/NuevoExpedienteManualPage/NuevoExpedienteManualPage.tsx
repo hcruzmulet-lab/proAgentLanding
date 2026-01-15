@@ -81,9 +81,9 @@ export function NuevoExpedienteManualPage() {
       id: '1',
       nroCotizacion: 'COT-001',
       cliente: 'Miguel Zabala',
-      destino: 'Cancún, México',
+      destino: 'Toscana, Italia',
       fecha: '15 feb 2026',
-      monto: 1250.00,
+      monto: 476.00,
       estado: 'Enviada'
     },
     {
