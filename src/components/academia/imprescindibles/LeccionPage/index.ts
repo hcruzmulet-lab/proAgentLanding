@@ -1,0 +1,2 @@
+export { LeccionPage } from './LeccionPage';
+
