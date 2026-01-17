@@ -23,29 +23,15 @@ export function ReservasPage() {
 
     // If item has a link, make it clickable
     if (item.href) {
-      if (item.isExternal) {
-        return (
-          <a
-            key={item.id}
-            href={item.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="reservas-page__card reservas-page__card--link"
-          >
-            {cardContent}
-          </a>
-        );
-      } else {
-        return (
-          <Link
-            key={item.id}
-            href={item.href}
-            className="reservas-page__card reservas-page__card--link"
-          >
-            {cardContent}
-          </Link>
-        );
-      }
+      return (
+        <Link
+          key={item.id}
+          href={item.href}
+          className="reservas-page__card reservas-page__card--link"
+        >
+          {cardContent}
+        </Link>
+      );
     }
 
     // If no link, just render the card without link
