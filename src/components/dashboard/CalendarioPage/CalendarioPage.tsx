@@ -39,7 +39,7 @@ const defaultDepartures: CalendarEvent[] = [
 ];
 
 type ViewMode = 'mes' | 'agenda';
-type FilterType = 'todos' | 'eventos' | 'salidas';
+type FilterType = 'todos' | 'evento' | 'salida';
 
 export function CalendarioPage() {
   const [currentDate, setCurrentDate] = useState(new Date(2026, 0, 1)); // Enero 2026
@@ -144,8 +144,8 @@ export function CalendarioPage() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="todos">Todos</SelectItem>
-              <SelectItem value="eventos">Eventos</SelectItem>
-              <SelectItem value="salidas">Salidas</SelectItem>
+              <SelectItem value="evento">Eventos</SelectItem>
+              <SelectItem value="salida">Salidas</SelectItem>
             </SelectContent>
           </Select>
           <Tabs value={viewMode} onValueChange={(value) => setViewMode(value as ViewMode)}>
