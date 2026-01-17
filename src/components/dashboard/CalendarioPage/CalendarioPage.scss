@@ -245,13 +245,10 @@
 
   &__categories-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: $spacing-lg;
     width: 100%;
-
-    @media (max-width: 1200px) {
-      grid-template-columns: repeat(2, 1fr);
-    }
+    grid-auto-rows: 1fr;
 
     @media (max-width: 768px) {
       grid-template-columns: 1fr;
@@ -261,19 +258,14 @@
   &__category-card {
     @include flex-column;
     gap: $spacing-md;
-    padding: $spacing-lg;
-    background: white;
+    padding: $spacing-md;
+    background: #f1f5f9;
     border-radius: $radius-lg;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     transition: all 0.2s;
-    height: 100%;
-    min-height: 400px;
-    max-height: 600px;
-
-    &:hover {
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      transform: translateY(-2px);
-    }
+    height: calc((100vh - 280px) / 2);
+    min-height: 0;
+    box-shadow: none;
+    border: none;
   }
 
   &__category-header {
@@ -385,24 +377,51 @@
     margin: 0;
   }
 
+  &__category-item-wrapper {
+    @include flex-column;
+    gap: $spacing-xs;
+    margin-bottom: 4px;
+  }
+
   &__category-item {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: $spacing-sm;
-    background-color: #f8fafc;
-    border-radius: $radius-md;
+    @include flex-between;
+    align-items: center;
+    padding: 10px;
+    background-color: white;
+    border-radius: $radius-lg;
     font-size: 0.875rem;
     color: $text-primary;
     transition: all 0.2s;
     cursor: pointer;
-    gap: $spacing-xs;
-    text-align: left;
 
     &:hover {
-      background-color: #f1f5f9;
-      transform: translateX(2px);
+      background-color: #f8fafc;
     }
+  }
+
+  &__category-item-left {
+    @include flex-center;
+    gap: $spacing-sm;
+    flex: 1;
+    align-items: center;
+  }
+
+  &__category-item-right {
+    @include flex-center;
+    gap: $spacing-sm;
+    flex-shrink: 0;
+  }
+
+  &__agenda-item-time-highlight {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: $text-primary;
+  }
+
+  &__agenda-item-date-highlight {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: $text-primary;
   }
 
   &__category-empty {
@@ -513,10 +532,11 @@
   }
 
   &__agenda-item-main {
-    font-weight: 500;
+    font-weight: 600;
     color: $text-primary;
     font-size: 0.875rem;
     line-height: 1.4;
+    flex: 1;
   }
 
   &__agenda-item-details {
@@ -525,18 +545,26 @@
     justify-content: flex-start;
     flex-wrap: wrap;
     gap: $spacing-md;
-    margin-top: $spacing-xs;
+    padding: $spacing-sm 10px 10px 10px;
+    background-color: white;
+    border-radius: 0 0 $radius-lg $radius-lg;
   }
 
   &__agenda-item-detail {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 4px;
     font-size: 0.75rem;
     color: $text-muted;
+    line-height: 1;
 
     .material-symbols-outlined {
       font-size: 0.875rem;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
     }
 
     &--vencido {

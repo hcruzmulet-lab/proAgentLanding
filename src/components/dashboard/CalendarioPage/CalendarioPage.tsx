@@ -103,7 +103,7 @@ export function CalendarioPage() {
       }
     }
 
-    // Función para organizar items por categorías
+    // Función para organizar items por categorías (solo 4 categorías)
     const organizeByCategories = (items: AgendaItem[]): CategoryData[] => {
       const categories: CategoryData[] = [
         {
@@ -133,20 +133,6 @@ export function CalendarioPage() {
           subtitle: 'Salidas, regresos y fechas de viaje',
           icon: 'flight_takeoff',
           items: items.filter(item => item.type === 'viaje' || item.type === 'salida' || item.type === 'cliente')
-        },
-        {
-          id: 'consolidados',
-          title: 'Consolidados',
-          subtitle: 'Vista unificada de todos los recordatorios',
-          icon: 'dashboard',
-          items: items // Todos los items para vista consolidada
-        },
-        {
-          id: 'eventos',
-          title: 'Eventos',
-          subtitle: 'Eventos y actividades programadas',
-          icon: 'event',
-          items: items.filter(item => item.type === 'evento')
         }
       ];
       return categories;
@@ -670,7 +656,7 @@ export function CalendarioPage() {
               </TabsList>
             </Tabs>
 
-            {/* Contenido del tab activo - Grid de 6 categorías */}
+            {/* Contenido del tab activo - Grid de 4 categorías (2x2) */}
             <div className="calendario-page__agenda-content">
               <div className="calendario-page__categories-grid">
                 {categoriesData[activeAgendaTab].map((category) => (
@@ -692,110 +678,127 @@ export function CalendarioPage() {
                     <div className="calendario-page__category-items">
                       {category.items.length > 0 ? (
                         <ul className="calendario-page__category-list">
-                          {category.items.map((item) => (
-                            <li key={item.id} className="calendario-page__category-item">
-                              <span className={`material-symbols-outlined calendario-page__agenda-item-icon calendario-page__agenda-item-icon--${item.type}`}>
-                                {item.type === 'viaje' ? 'flight_takeoff' : 
-                                 item.type === 'pago' ? 'payment' : 
-                                 item.type === 'llamada' ? 'phone' : 
-                                 item.type === 'salida' ? 'airplane_ticket' : 
-                                 item.type === 'cumpleanos' ? 'cake' : 
-                                 item.type === 'aniversario' ? 'favorite' : 
-                                 item.type === 'tarea' ? 'task_alt' : 
-                                 item.type === 'oportunidad' ? 'trending_up' : 
-                                 item.type === 'cliente' ? 'group' : 
-                                 item.type === 'evento' ? 'event' : 
-                                 'event'}
-                              </span>
-                              <div className="calendario-page__agenda-item-content">
-                                <div className="calendario-page__agenda-item-main">{item.text}</div>
+                          {category.items.map((item) => {
+                            // Formatear fecha para semana y mes
+                            const formattedDate = item.date ? format(item.date, 'dd/MM/yyyy', { locale: es }) : null;
+                            const showDate = activeAgendaTab !== 'hoy' && formattedDate;
+                            const showTime = activeAgendaTab === 'hoy' && item.hora;
+                            
+                            return (
+                              <li key={item.id} className="calendario-page__category-item-wrapper">
+                                <div className="calendario-page__category-item">
+                                  <div className="calendario-page__category-item-left">
+                                    <span className={`material-symbols-outlined calendario-page__agenda-item-icon calendario-page__agenda-item-icon--${item.type}`}>
+                                      {item.type === 'viaje' ? 'flight_takeoff' : 
+                                       item.type === 'pago' ? 'payment' : 
+                                       item.type === 'llamada' ? 'phone' : 
+                                       item.type === 'salida' ? 'airplane_ticket' : 
+                                       item.type === 'cumpleanos' ? 'cake' : 
+                                       item.type === 'aniversario' ? 'favorite' : 
+                                       item.type === 'tarea' ? 'task_alt' : 
+                                       item.type === 'oportunidad' ? 'trending_up' : 
+                                       item.type === 'cliente' ? 'group' : 
+                                       'event'}
+                                    </span>
+                                    <span className="calendario-page__agenda-item-main">{item.text}</span>
+                                  </div>
+                                  <div className="calendario-page__category-item-right">
+                                    {/* Resaltar hora para hoy, fecha para semana y mes */}
+                                    {showTime && (
+                                      <span className="calendario-page__agenda-item-time-highlight">{item.hora}</span>
+                                    )}
+                                    {showDate && (
+                                      <span className="calendario-page__agenda-item-date-highlight">{formattedDate}</span>
+                                    )}
+                                  </div>
+                                </div>
                                 {(item.destino || item.cliente || item.numeroCotizacion || item.numeroVuelo || item.monto || item.fechaEspecial) && (
                                   <div className="calendario-page__agenda-item-details">
-                                    {item.fechaEspecial && (
-                                      <span className="calendario-page__agenda-item-detail">
-                                        <span className="material-symbols-outlined">calendar_today</span>
-                                        {item.fechaEspecial}
-                                      </span>
-                                    )}
-                                    {item.numeroCotizacion && (
-                                      <span className="calendario-page__agenda-item-detail">
-                                        <span className="material-symbols-outlined">description</span>
-                                        {item.numeroCotizacion}
-                                      </span>
-                                    )}
-                                    {item.monto && (
-                                      <span className="calendario-page__agenda-item-detail">
-                                        <span className="material-symbols-outlined">attach_money</span>
-                                        {item.monto}
-                                      </span>
-                                    )}
-                                    {item.estado && (
-                                      <span className={`calendario-page__agenda-item-detail calendario-page__agenda-item-detail--${item.estado}`}>
-                                        <span className="material-symbols-outlined">
-                                          {item.estado === 'vencido' ? 'error' : 
-                                           item.estado === 'proximo' ? 'schedule' : 
-                                           item.estado === 'completado' ? 'check_circle' : 
-                                           'pending'}
+                                      {item.fechaEspecial && (
+                                        <span className="calendario-page__agenda-item-detail">
+                                          <span className="material-symbols-outlined">calendar_today</span>
+                                          {item.fechaEspecial}
                                         </span>
-                                        {item.estado === 'vencido' ? 'Vencido' : 
-                                         item.estado === 'proximo' ? 'Próximo' : 
-                                         item.estado === 'completado' ? 'Completado' : 
-                                         'Pendiente'}
-                                      </span>
-                                    )}
-                                    {item.destino && (
-                                      <span className="calendario-page__agenda-item-detail">
-                                        <span className="material-symbols-outlined">location_on</span>
-                                        {item.destino}
-                                      </span>
-                                    )}
-                                    {item.numeroVuelo && (
-                                      <span className="calendario-page__agenda-item-detail">
-                                        <span className="material-symbols-outlined">flight</span>
-                                        {item.numeroVuelo}
-                                      </span>
-                                    )}
-                                    {item.aerolinea && (
-                                      <span className="calendario-page__agenda-item-detail">
-                                        <span className="material-symbols-outlined">airlines</span>
-                                        {item.aerolinea}
-                                      </span>
-                                    )}
-                                    {item.hora && (
-                                      <span className="calendario-page__agenda-item-detail">
-                                        <span className="material-symbols-outlined">schedule</span>
-                                        {item.hora}
-                                      </span>
-                                    )}
-                                    {item.aeropuerto && (
-                                      <span className="calendario-page__agenda-item-detail">
-                                        <span className="material-symbols-outlined">airport_shuttle</span>
-                                        {item.aeropuerto}
-                                      </span>
-                                    )}
-                                    {item.clase && (
-                                      <span className="calendario-page__agenda-item-detail">
-                                        <span className="material-symbols-outlined">confirmation_number</span>
-                                        {item.clase}
-                                      </span>
-                                    )}
-                                    {item.pasajeros && (
-                                      <span className="calendario-page__agenda-item-detail">
-                                        <span className="material-symbols-outlined">group</span>
-                                        {item.pasajeros} pasajero{item.pasajeros > 1 ? 's' : ''}
-                                      </span>
-                                    )}
-                                    {item.cliente && (
-                                      <span className="calendario-page__agenda-item-detail">
-                                        <span className="material-symbols-outlined">person</span>
-                                        {item.cliente}
-                                      </span>
+                                      )}
+                                      {item.numeroCotizacion && (
+                                        <span className="calendario-page__agenda-item-detail">
+                                          <span className="material-symbols-outlined">description</span>
+                                          {item.numeroCotizacion}
+                                        </span>
+                                      )}
+                                      {item.monto && (
+                                        <span className="calendario-page__agenda-item-detail">
+                                          <span className="material-symbols-outlined">attach_money</span>
+                                          {item.monto}
+                                        </span>
+                                      )}
+                                      {item.estado && (
+                                        <span className={`calendario-page__agenda-item-detail calendario-page__agenda-item-detail--${item.estado}`}>
+                                          <span className="material-symbols-outlined">
+                                            {item.estado === 'vencido' ? 'error' : 
+                                             item.estado === 'proximo' ? 'schedule' : 
+                                             item.estado === 'completado' ? 'check_circle' : 
+                                             'pending'}
+                                          </span>
+                                          {item.estado === 'vencido' ? 'Vencido' : 
+                                           item.estado === 'proximo' ? 'Próximo' : 
+                                           item.estado === 'completado' ? 'Completado' : 
+                                           'Pendiente'}
+                                        </span>
+                                      )}
+                                      {item.destino && (
+                                        <span className="calendario-page__agenda-item-detail">
+                                          <span className="material-symbols-outlined">location_on</span>
+                                          {item.destino}
+                                        </span>
+                                      )}
+                                      {item.numeroVuelo && (
+                                        <span className="calendario-page__agenda-item-detail">
+                                          <span className="material-symbols-outlined">flight</span>
+                                          {item.numeroVuelo}
+                                        </span>
+                                      )}
+                                      {item.aerolinea && (
+                                        <span className="calendario-page__agenda-item-detail">
+                                          <span className="material-symbols-outlined">airlines</span>
+                                          {item.aerolinea}
+                                        </span>
+                                      )}
+                                      {item.hora && activeAgendaTab !== 'hoy' && (
+                                        <span className="calendario-page__agenda-item-detail">
+                                          <span className="material-symbols-outlined">schedule</span>
+                                          {item.hora}
+                                        </span>
+                                      )}
+                                      {item.aeropuerto && (
+                                        <span className="calendario-page__agenda-item-detail">
+                                          <span className="material-symbols-outlined">airport_shuttle</span>
+                                          {item.aeropuerto}
+                                        </span>
+                                      )}
+                                      {item.clase && (
+                                        <span className="calendario-page__agenda-item-detail">
+                                          <span className="material-symbols-outlined">confirmation_number</span>
+                                          {item.clase}
+                                        </span>
+                                      )}
+                                      {item.pasajeros && (
+                                        <span className="calendario-page__agenda-item-detail">
+                                          <span className="material-symbols-outlined">group</span>
+                                          {item.pasajeros} pasajero{item.pasajeros > 1 ? 's' : ''}
+                                        </span>
+                                      )}
+                                      {item.cliente && (
+                                        <span className="calendario-page__agenda-item-detail">
+                                          <span className="material-symbols-outlined">person</span>
+                                          {item.cliente}
+                                        </span>
                                     )}
                                   </div>
                                 )}
-                              </div>
-                            </li>
-                          ))}
+                              </li>
+                            );
+                          })}
                         </ul>
                       ) : (
                         <div className="calendario-page__category-empty">
