@@ -3,7 +3,11 @@
 
 .clients-page {
   @include flex-column;
-  gap: $spacing-lg;
+  gap: $spacing-md;
+  padding: 0;
+  padding-bottom: $spacing-lg;
+  padding-left: 0;
+  padding-right: 0;
 
   &__header {
     display: flex;
@@ -18,11 +22,11 @@
   }
 
   &__title {
-    font-size: 1.5rem;
+    font-size: 1.125rem;
     font-weight: 600;
-    color: #334155;
+    color: $text-primary;
+    letter-spacing: -0.1px;
     margin: 0;
-    margin-top: -4px;
   }
 
   &__count {

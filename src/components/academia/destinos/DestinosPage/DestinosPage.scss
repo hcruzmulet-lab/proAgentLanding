@@ -1,58 +1,261 @@
-@import '@/styles/variables';
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
 
 .destinos-page {
-  padding: $spacing-md;
+  @include flex-column;
+  gap: $spacing-md;
+  padding: 0;
+  padding-bottom: $spacing-lg;
+  padding-left: 0;
+  padding-right: 0;
   width: 100%;
 
   &__header {
-    margin-bottom: $spacing-2xl;
-  }
-
-  &__title {
-    font-size: 2rem;
-    font-weight: 600;
-    color: $text-primary;
     margin-bottom: $spacing-sm;
   }
 
-  &__subtitle {
-    font-size: 1rem;
+  &__title-section {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: $spacing-sm;
+  }
+
+  &__header-row {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+  }
+
+  &__title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: $text-primary;
+    letter-spacing: -0.1px;
+    margin: 0;
+  }
+
+  &__search {
+    flex: 1;
+  }
+
+  &__search-wrapper {
+    position: relative;
+    max-width: 600px;
+  }
+
+  &__search-icon {
+    position: absolute;
+    left: $spacing-md;
+    top: 50%;
+    transform: translateY(-50%);
     color: $text-secondary;
-    line-height: 1.5;
+    font-size: 1.25rem;
+    pointer-events: none;
+  }
+
+  &__search-input {
+    padding-left: 3rem;
+    width: 100%;
+  }
+
+  &__stats-text {
+    font-size: 0.875rem;
+    color: $text-secondary;
+  }
+
+  &__expand-button {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    background: none;
+    border: none;
+    color: $text-primary;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: $spacing-xs $spacing-sm;
+    transition: color 0.2s;
+    white-space: nowrap;
+
+    &:hover {
+      color: #ffa300;
+    }
   }
 
   &__content {
-    background: white;
-    border-radius: $radius-lg;
-    padding: $spacing-2xl;
-    min-height: 400px;
+    width: 100%;
+    margin-top: 0;
+  }
+
+  &__cursos {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+  }
+
+  &__curso-card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    background-color: #f8fafc;
+    transition: box-shadow 0.2s;
+
+    &:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  &__curso-content {
+    display: flex;
+    gap: $spacing-xl;
+    padding: $spacing-xl;
+  }
+
+  &__curso-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+  }
+
+  &__curso-titulo {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: $text-primary;
+    margin: 0;
+  }
+
+  &__curso-lecciones-count {
+    font-size: 0.875rem;
+    color: $text-secondary;
+    margin-top: -$spacing-sm;
+  }
+
+  &__curso-meta {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    font-size: 0.875rem;
+    color: $text-secondary;
+  }
+
+  &__curso-duracion {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+  }
+
+  &__progreso {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    position: relative;
+  }
+
+  &__progreso-bar {
+    flex: 1;
+    height: 4px;
+    background: #e2e8f0;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  &__progreso-fill {
+    height: 100%;
+    background: #ffa300;
+    transition: width 0.3s;
+  }
+
+  &__progreso-text {
+    font-size: 0.875rem;
+    color: $text-secondary;
+    min-width: 40px;
+    text-align: right;
+  }
+
+  &__lecciones {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+    margin-top: $spacing-md;
+    padding-top: $spacing-md;
+    border-top: 1px solid #e2e8f0;
+  }
+
+  &__leccion-item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    padding: $spacing-sm;
+    border-radius: $radius-md;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+      background: #f8fafc;
+    }
+  }
+
+  &__leccion-icon {
+    display: flex;
+    align-items: center;
+    color: $text-secondary;
+    font-size: 1.25rem;
+
+    &--completada {
+      color: #10b981;
+    }
+  }
+
+  &__leccion-numero {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: $text-primary;
+    min-width: 40px;
+  }
+
+  &__leccion-titulo {
+    flex: 1;
+    font-size: 0.875rem;
+    color: $text-primary;
+  }
+
+  &__leccion-tipo {
+    font-size: 0.875rem;
+    color: $text-secondary;
+  }
+
+  &__curso-imagen {
+    position: relative;
+    width: 200px;
+    height: 120px;
+    border-radius: $radius-md;
+    overflow: hidden;
+    flex-shrink: 0;
+    order: -1;
+  }
+
+  &__expand-curso {
+    background: none;
+    border: none;
     display: flex;
     align-items: center;
     justify-content: center;
-  }
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #334155;
+    padding: $spacing-xs;
+    border-radius: $radius-sm;
+    flex-shrink: 0;
 
-  &__empty-state {
-    text-align: center;
-    max-width: 400px;
-  }
+    &:hover {
+      background: #e2e8f0;
+      color: #ffa300;
+    }
 
-  &__empty-icon {
-    font-size: 96px;
-    color: #cbd5e1;
-    margin-bottom: $spacing-lg;
-    font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48;
-  }
-
-  &__empty-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: $text-primary;
-    margin-bottom: $spacing-md;
-  }
-
-  &__empty-description {
-    font-size: 1rem;
-    color: $text-secondary;
-    line-height: 1.5;
+    .material-symbols-outlined {
+      font-size: 1.5rem;
+    }
   }
 }

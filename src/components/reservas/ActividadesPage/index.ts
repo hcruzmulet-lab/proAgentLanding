@@ -1,0 +1,1 @@
+export { ActividadesPage } from './ActividadesPage';

@@ -163,14 +163,12 @@ export function GaleriaPage() {
 
   return (
     <div className="galeria-page">
-      <div className="galeria-page__header">
-        <div>
-          <h1 className="galeria-page__title">Galería de imágenes</h1>
-          <p className="galeria-page__subtitle">
-            Gestiona todas tus imágenes y recursos visuales
-          </p>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px', width: '100%' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <h1 style={{ fontSize: '1.125rem', fontWeight: 600, color: '#0f172a', letterSpacing: '-0.1px', margin: 0, lineHeight: '1.5' }}>Galería de imágenes</h1>
         </div>
-        <Dialog open={isUploadModalOpen} onOpenChange={setIsUploadModalOpen}>
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+          <Dialog open={isUploadModalOpen} onOpenChange={setIsUploadModalOpen}>
           <DialogTrigger asChild>
             <Button className="bg-slate-700 hover:bg-slate-800">
               <span className="material-symbols-outlined mr-2" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>
@@ -264,6 +262,7 @@ export function GaleriaPage() {
             </div>
           </DialogContent>
         </Dialog>
+        </div>
       </div>
 
       <ImageSearchModal

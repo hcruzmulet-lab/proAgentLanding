@@ -152,18 +152,17 @@ export function ClientsPage() {
 
   return (
     <div className="clients-page">
-      {/* Header */}
       <div className="clients-page__header">
         <div className="clients-page__header-left">
           <h1 className="clients-page__title">Clientes</h1>
           <p className="clients-page__count">{clients.length} clientes</p>
         </div>
         <div className="clients-page__actions">
-          <Button onClick={() => setIsImportModalOpen(true)} variant="outline" className="clients-page__import-button">
+          <Button onClick={() => setIsImportModalOpen(true)} variant="outline" size="sm" className="clients-page__import-button">
             <span className="material-symbols-outlined clients-page__button-icon">upload</span>
             Importar Clientes
           </Button>
-          <Button onClick={() => setIsModalOpen(true)} className="clients-page__add-button">
+          <Button onClick={() => setIsModalOpen(true)} size="sm" className="clients-page__add-button">
             <span className="material-symbols-outlined clients-page__button-icon">add</span>
             Nuevo Cliente
           </Button>

@@ -1,11 +1,10 @@
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
+import { CalendarioPage } from '@/components/dashboard/CalendarioPage';
 
-export default function CalendarioPage() {
+export default function CalendarioPageRoute() {
   return (
     <DashboardLayout activeModule="inicio" activeSubItem="calendario" title="Inicio">
-      <h1 style={{ fontSize: '1.5rem', fontWeight: '600', color: '#334155', margin: 0 }}>
-        Calendario
-      </h1>
+      <CalendarioPage />
     </DashboardLayout>
   );
 }

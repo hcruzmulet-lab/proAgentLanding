@@ -1,18 +1,21 @@
-@import '@/styles/variables';
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
 
 .reservas-page {
-  padding: $spacing-md;
+  @include flex-column;
+  gap: $spacing-md;
+  padding: 0;
+  padding-bottom: $spacing-lg;
+  padding-left: 0;
+  padding-right: 0;
   width: 100%;
 
-  &__header {
-    margin-bottom: $spacing-2xl;
-  }
-
   &__title {
-    font-size: 2rem;
+    font-size: 1.125rem;
     font-weight: 600;
     color: $text-primary;
-    margin-bottom: $spacing-sm;
+    letter-spacing: -0.1px;
+    margin: 0 0 $spacing-md 0;
   }
 
   &__subtitle {
@@ -23,8 +26,8 @@
 
   &__grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: $spacing-lg;
+    grid-template-columns: repeat(6, 1fr);
+    gap: $spacing-md;
     margin-top: $spacing-xl;
   }
 
@@ -33,10 +36,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: $spacing-2xl;
-    background: white;
+    padding: $spacing-md;
+    background-color: #f8fafc;
     border-radius: $radius-lg;
-    border: 1px solid #e2e8f0;
+    border: none;
     transition: all 0.2s ease;
     text-decoration: none;
     color: inherit;
@@ -45,20 +48,19 @@
       cursor: pointer;
 
       &:hover {
-        border-color: #fbbf24;
-        box-shadow: 0 4px 12px rgba(251, 191, 36, 0.15);
+        background-color: #f1f5f9;
         transform: translateY(-2px);
       }
     }
   }
 
   &__card-icon {
-    font-size: 64px !important;
-    width: 64px;
-    height: 64px;
-    color: #fbbf24;
-    margin-bottom: $spacing-md;
-    font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48;
+    font-size: 32px !important;
+    width: 32px;
+    height: 32px;
+    color: #334155;
+    margin-bottom: $spacing-sm;
+    font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
     line-height: 1;
     display: inline-flex;
     align-items: center;
@@ -66,22 +68,28 @@
   }
 
   &__card-title {
-    font-size: 1.125rem;
+    font-size: 0.875rem;
     font-weight: 600;
     color: $text-primary;
     text-align: center;
   }
 
   // Responsive
+  @media (max-width: 1536px) {
+    &__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
   @media (max-width: 1024px) {
     &__grid {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 
   @media (max-width: 640px) {
     &__grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 }

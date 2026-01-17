@@ -1,22 +1,42 @@
-@import '@/styles/variables';
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
 
 .imprescindibles-page {
-  padding: $spacing-md;
+  @include flex-column;
+  gap: $spacing-md;
+  padding: 0;
+  padding-bottom: $spacing-lg;
+  padding-left: 0;
+  padding-right: 0;
   width: 100%;
 
   &__header {
-    margin-bottom: $spacing-lg;
+    margin-bottom: $spacing-sm;
+  }
+
+  &__title-section {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: $spacing-sm;
+  }
+
+  &__header-row {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
   }
 
   &__title {
-    font-size: 2rem;
+    font-size: 1.125rem;
     font-weight: 600;
     color: $text-primary;
-    margin-bottom: $spacing-md;
+    letter-spacing: -0.1px;
+    margin: 0;
   }
 
   &__search {
-    margin-bottom: $spacing-md;
+    flex: 1;
   }
 
   &__search-wrapper {
@@ -39,13 +59,6 @@
     width: 100%;
   }
 
-  &__stats {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: $spacing-md;
-  }
-
   &__stats-text {
     font-size: 0.875rem;
     color: $text-secondary;
@@ -57,25 +70,22 @@
     gap: $spacing-xs;
     background: none;
     border: none;
-    color: $text-secondary;
+    color: $text-primary;
     font-size: 0.875rem;
+    font-weight: 500;
     cursor: pointer;
-    padding: $spacing-xs;
+    padding: $spacing-xs $spacing-sm;
     transition: color 0.2s;
+    white-space: nowrap;
 
     &:hover {
-      color: $text-primary;
+      color: #ffa300;
     }
-  }
-
-  &__divider {
-    height: 1px;
-    background: #e2e8f0;
-    margin: $spacing-lg 0;
   }
 
   &__content {
     width: 100%;
+    margin-top: 0;
   }
 
   &__section-title {
@@ -95,6 +105,7 @@
     position: relative;
     overflow: hidden;
     border: 1px solid #e2e8f0;
+    background-color: #f8fafc;
     transition: box-shadow 0.2s;
 
     &:hover {
@@ -122,6 +133,12 @@
     margin: 0;
   }
 
+  &__curso-lecciones-count {
+    font-size: 0.875rem;
+    color: $text-secondary;
+    margin-top: -$spacing-sm;
+  }
+
   &__curso-meta {
     display: flex;
     align-items: center;
@@ -144,6 +161,7 @@
     display: flex;
     align-items: center;
     gap: $spacing-md;
+    position: relative;
   }
 
   &__progreso-bar {
@@ -226,27 +244,29 @@
     border-radius: $radius-md;
     overflow: hidden;
     flex-shrink: 0;
+    order: -1; // Mover a la izquierda
   }
 
   &__expand-curso {
-    position: absolute;
-    bottom: $spacing-md;
-    right: $spacing-md;
-    background: white;
-    border: 1px solid #e2e8f0;
-    border-radius: 50%;
-    width: 32px;
-    height: 32px;
+    background: none;
+    border: none;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: all 0.2s;
-    color: $text-secondary;
+    color: #334155;
+    padding: $spacing-xs;
+    border-radius: $radius-sm;
+    flex-shrink: 0;
 
     &:hover {
-      background: #f8fafc;
-      color: $text-primary;
+      background: #e2e8f0;
+      color: #ffa300;
+    }
+
+    .material-symbols-outlined {
+      font-size: 1.5rem;
     }
   }
 }

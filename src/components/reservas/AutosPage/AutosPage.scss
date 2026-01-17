@@ -1,0 +1,26 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.autos-page {
+  @include flex-column;
+  width: 100%;
+  height: calc(100vh - 48px); // 100vh menos padding del layout (8px * 2) y padding del content (16px * 2)
+  padding: 0;
+  overflow: hidden;
+  margin: -$spacing-md; // Compensar el padding del dashboard-layout__content
+
+  &__iframe-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: white;
+    overflow: hidden;
+  }
+
+  &__iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+}

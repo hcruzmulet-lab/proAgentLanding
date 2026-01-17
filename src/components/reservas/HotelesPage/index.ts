@@ -1,0 +1,1 @@
+export { HotelesPage } from './HotelesPage';

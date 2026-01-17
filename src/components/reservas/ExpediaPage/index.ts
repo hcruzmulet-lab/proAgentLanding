@@ -1,0 +1,1 @@
+export { ExpediaPage } from './ExpediaPage';

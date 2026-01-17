@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import './ReservasCRMPage.scss';
 
 interface Reserva {
   id: string;
@@ -118,18 +119,22 @@ export function ReservasCRMPage() {
 
   return (
     <TooltipProvider>
-      <div className="space-y-6">
-        {/* Título y botón */}
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold text-slate-900">Mis reservas</h1>
-          <Button 
-            className="bg-slate-700 hover:bg-slate-800 text-white"
-            onClick={() => setIsNewReservaModalOpen(true)}
-          >
-            <span className="material-symbols-outlined mr-2" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>add</span>
-            Nueva Reserva
-          </Button>
+      <div className="reservas-crm-page">
+        <div className="reservas-crm-page__header">
+          <div className="reservas-crm-page__header-left">
+            <h1 className="reservas-crm-page__title">Reservas</h1>
+          </div>
+          <div className="reservas-crm-page__actions">
+            <Button 
+              className="bg-slate-700 hover:bg-slate-800 text-white"
+              onClick={() => setIsNewReservaModalOpen(true)}
+            >
+              <span className="material-symbols-outlined mr-2" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>add</span>
+              Nueva Reserva
+            </Button>
+          </div>
         </div>
+        <div className="space-y-6">
 
         {/* Cards informativos superiores */}
         <div className="grid grid-cols-4 gap-4">
@@ -439,6 +444,7 @@ export function ReservasCRMPage() {
             </div>
           </DialogContent>
         </Dialog>
+        </div>
       </div>
     </TooltipProvider>
   );

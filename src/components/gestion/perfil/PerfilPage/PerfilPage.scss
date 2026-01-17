@@ -1,18 +1,25 @@
-@import '@/styles/variables';
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
 
 .perfil-page {
-  padding: $spacing-md;
+  @include flex-column;
+  gap: $spacing-md;
+  padding: 0;
+  padding-bottom: $spacing-lg;
+  padding-left: 0;
+  padding-right: 0;
   width: 100%;
 
   &__header {
-    margin-bottom: $spacing-2xl;
+    margin-bottom: $spacing-md;
   }
 
   &__title {
-    font-size: 2rem;
+    font-size: 1.125rem;
     font-weight: 600;
     color: $text-primary;
-    margin-bottom: 0;
+    letter-spacing: -0.1px;
+    margin: 0 0 $spacing-md 0;
   }
 
   // Vista de Perfil Público

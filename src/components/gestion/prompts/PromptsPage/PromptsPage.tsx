@@ -136,14 +136,12 @@ export function PromptsPage() {
 
   return (
     <div className="prompts-page">
-      <div className="prompts-page__header">
-        <div>
-          <h1 className="prompts-page__title">Prompts IA</h1>
-          <p className="prompts-page__subtitle">
-            Gestiona tus prompts de IA para mejorar tus consultas
-          </p>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px', width: '100%' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <h1 style={{ fontSize: '1.125rem', fontWeight: 600, color: '#0f172a', letterSpacing: '-0.1px', margin: 0, lineHeight: '1.5' }}>Prompts IA</h1>
         </div>
-        <Dialog open={isNewPromptModalOpen} onOpenChange={setIsNewPromptModalOpen}>
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+          <Dialog open={isNewPromptModalOpen} onOpenChange={setIsNewPromptModalOpen}>
           <DialogTrigger asChild>
             <Button className="bg-slate-700 hover:bg-slate-800">
               <span className="material-symbols-outlined mr-2" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>
@@ -212,6 +210,7 @@ export function PromptsPage() {
             </div>
           </DialogContent>
         </Dialog>
+        </div>
       </div>
 
       <div className="prompts-page__content">

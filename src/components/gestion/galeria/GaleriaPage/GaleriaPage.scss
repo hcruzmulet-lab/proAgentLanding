@@ -1,7 +1,13 @@
-@import '@/styles/variables';
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
 
 .galeria-page {
-  padding: $spacing-md;
+  @include flex-column;
+  gap: $spacing-md;
+  padding: 0;
+  padding-bottom: $spacing-lg;
+  padding-left: 0;
+  padding-right: 0;
   width: 100%;
 
   &__header {

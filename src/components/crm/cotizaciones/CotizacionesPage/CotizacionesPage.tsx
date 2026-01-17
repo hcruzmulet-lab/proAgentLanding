@@ -121,18 +121,23 @@ export function CotizacionesPage() {
 
   return (
     <TooltipProvider>
-      <div className="space-y-6">
-        {/* Título y botón */}
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-semibold text-slate-900">Mis cotizaciones</h1>
-          <Button 
-            className="bg-slate-700 hover:bg-slate-800 text-white"
-            onClick={() => setIsNewCotizacionModalOpen(true)}
-          >
-            <span className="material-symbols-outlined mr-2" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>add</span>
-            Nueva Cotización
-          </Button>
+      <div className="cotizaciones-page">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px', width: '100%' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <h1 style={{ fontSize: '1.125rem', fontWeight: 600, color: '#0f172a', letterSpacing: '-0.1px', margin: 0 }}>Cotizaciones</h1>
+          </div>
+          <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start', paddingTop: '0px' }}>
+            <Button 
+              className="bg-slate-700 hover:bg-slate-800 text-white"
+              onClick={() => setIsNewCotizacionModalOpen(true)}
+              style={{ marginTop: 0 }}
+            >
+              <span className="material-symbols-outlined mr-2" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>add</span>
+              Nueva Cotización
+            </Button>
+          </div>
         </div>
+        <div className="space-y-6">
 
         {/* Cards informativos superiores */}
         <div className="grid grid-cols-4 gap-4">
@@ -521,6 +526,7 @@ export function CotizacionesPage() {
             </div>
           </DialogContent>
         </Dialog>
+        </div>
       </div>
     </TooltipProvider>
   );

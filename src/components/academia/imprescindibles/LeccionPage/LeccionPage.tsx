@@ -220,6 +220,21 @@ export function LeccionPage() {
           <div className="leccion-page__descripcion">
             <p>{leccion.descripcion}</p>
           </div>
+
+          <div className="leccion-page__actions">
+            <Button 
+              className="bg-green-600 hover:bg-green-700 text-white"
+              onClick={() => {
+                // Aquí se marcaría la lección como completada
+                alert('Lección marcada como completada');
+              }}
+            >
+              <span className="material-symbols-outlined mr-2" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>
+                check_circle
+              </span>
+              Completado
+            </Button>
+          </div>
         </div>
 
         <div className="leccion-page__sidebar">

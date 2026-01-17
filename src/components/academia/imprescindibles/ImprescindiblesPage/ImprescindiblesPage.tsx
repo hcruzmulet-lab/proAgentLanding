@@ -36,7 +36,7 @@ const cursosMock: Curso[] = [
     descripcion: 'Conoce la plataforma y comienza tu viaje como asesor de viajes profesional',
     totalLecciones: 2,
     duracionTotal: 12,
-    progreso: 0,
+    progreso: 50,
     imagen: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&h=400&fit=crop',
     expandido: false,
     lecciones: [
@@ -64,7 +64,7 @@ const cursosMock: Curso[] = [
     descripcion: 'Fundamentos esenciales de la industria del turismo y cómo funciona el negocio de viajes',
     totalLecciones: 5,
     duracionTotal: 17,
-    progreso: 0,
+    progreso: 60,
     imagen: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=400&fit=crop',
     expandido: false,
     lecciones: [
@@ -116,7 +116,7 @@ const cursosMock: Curso[] = [
     descripcion: 'Aprende a navegar y utilizar las herramientas principales de la plataforma',
     totalLecciones: 4,
     duracionTotal: 15,
-    progreso: 0,
+    progreso: 25,
     imagen: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&h=400&fit=crop',
     expandido: false,
     lecciones: [
@@ -326,23 +326,25 @@ export function ImprescindiblesPage() {
   return (
     <div className="imprescindibles-page">
       <div className="imprescindibles-page__header">
-        <h1 className="imprescindibles-page__title">Imprescindibles</h1>
-        <div className="imprescindibles-page__search">
-          <div className="imprescindibles-page__search-wrapper">
-            <span className="material-symbols-outlined imprescindibles-page__search-icon" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>
-              search
-            </span>
-            <Input
-              type="text"
-              placeholder="Buscar imprescindibles"
-              value={busqueda}
-              onChange={(e) => setBusqueda(e.target.value)}
-              className="imprescindibles-page__search-input"
-            />
-          </div>
-        </div>
-        <div className="imprescindibles-page__stats">
+        <div className="imprescindibles-page__title-section">
+          <h1 className="imprescindibles-page__title">Imprescindibles</h1>
           <span className="imprescindibles-page__stats-text">{totalLecciones} lecciones</span>
+        </div>
+        <div className="imprescindibles-page__header-row">
+          <div className="imprescindibles-page__search">
+            <div className="imprescindibles-page__search-wrapper">
+              <span className="material-symbols-outlined imprescindibles-page__search-icon" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>
+                search
+              </span>
+              <Input
+                type="text"
+                placeholder="Buscar imprescindibles"
+                value={busqueda}
+                onChange={(e) => setBusqueda(e.target.value)}
+                className="imprescindibles-page__search-input"
+              />
+            </div>
+          </div>
           <button
             className="imprescindibles-page__expand-button"
             onClick={toggleExpandirTodos}
@@ -355,20 +357,26 @@ export function ImprescindiblesPage() {
         </div>
       </div>
 
-      <div className="imprescindibles-page__divider"></div>
-
       <div className="imprescindibles-page__content">
-        <h2 className="imprescindibles-page__section-title">Imprescindibles</h2>
-        
         <div className="imprescindibles-page__cursos">
           {cursosFiltrados.map((curso) => (
             <Card key={curso.id} className="imprescindibles-page__curso-card">
               <div className="imprescindibles-page__curso-content">
+                <div className="imprescindibles-page__curso-imagen">
+                  <Image
+                    src={curso.imagen}
+                    alt={curso.titulo}
+                    fill
+                    className="object-cover"
+                    unoptimized
+                  />
+                </div>
                 <div className="imprescindibles-page__curso-info">
                   <h3 className="imprescindibles-page__curso-titulo">{curso.titulo}</h3>
-                  <div className="imprescindibles-page__curso-meta">
+                  <div className="imprescindibles-page__curso-lecciones-count">
                     <span>{curso.totalLecciones} lecciones</span>
-                    <span className="imprescindibles-page__meta-dot">•</span>
+                  </div>
+                  <div className="imprescindibles-page__curso-meta">
                     <span className="imprescindibles-page__curso-duracion">
                       <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>
                         schedule
@@ -384,6 +392,14 @@ export function ImprescindiblesPage() {
                       ></div>
                     </div>
                     <span className="imprescindibles-page__progreso-text">{curso.progreso}%</span>
+                    <button
+                      className="imprescindibles-page__expand-curso"
+                      onClick={() => toggleExpandirCurso(curso.id)}
+                    >
+                      <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24" }}>
+                        {curso.expandido ? 'expand_less' : 'expand_more'}
+                      </span>
+                    </button>
                   </div>
                   {curso.expandido && (
                     <div className="imprescindibles-page__lecciones">
@@ -414,24 +430,7 @@ export function ImprescindiblesPage() {
                     </div>
                   )}
                 </div>
-                <div className="imprescindibles-page__curso-imagen">
-                  <Image
-                    src={curso.imagen}
-                    alt={curso.titulo}
-                    fill
-                    className="object-cover"
-                    unoptimized
-                  />
-                </div>
               </div>
-              <button
-                className="imprescindibles-page__expand-curso"
-                onClick={() => toggleExpandirCurso(curso.id)}
-              >
-                <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>
-                  {curso.expandido ? 'expand_less' : 'expand_more'}
-                </span>
-              </button>
             </Card>
           ))}
         </div>

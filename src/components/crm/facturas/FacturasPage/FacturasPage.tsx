@@ -181,25 +181,27 @@ export function FacturasPage() {
 
   return (
     <TooltipProvider>
-      <div className="p-6 space-y-6">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-semibold text-slate-900">Facturas</h1>
-            <p className="text-slate-600 mt-1">Gestiona todas las facturas emitidas a tus clientes</p>
+      <div className="facturas-page">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px', width: '100%' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <h1 style={{ fontSize: '1.125rem', fontWeight: 600, color: '#0f172a', letterSpacing: '-0.1px', margin: 0 }}>Facturas</h1>
           </div>
-          <Button 
-            className="bg-slate-700 hover:bg-slate-800 text-white"
-            onClick={() => setIsNewFacturaModalOpen(true)}
-          >
-            <span className="material-symbols-outlined mr-2 text-base" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>
-              add
-            </span>
-            Nueva Factura
-          </Button>
+          <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start', paddingTop: '0px' }}>
+            <Button 
+              className="bg-slate-700 hover:bg-slate-800 text-white"
+              onClick={() => setIsNewFacturaModalOpen(true)}
+              style={{ marginTop: 0 }}
+            >
+              <span className="material-symbols-outlined mr-2 text-base" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>
+                add
+              </span>
+              Nueva Factura
+            </Button>
+          </div>
         </div>
+        <div className="p-6 space-y-6">
 
-        {/* Cards informativos */}
+          {/* Cards informativos */}
         <div className="grid grid-cols-4 gap-4">
           <Card className="bg-white rounded-lg border border-slate-200 hover:shadow-md transition-shadow cursor-pointer">
             <CardContent className="p-6">
@@ -392,6 +394,7 @@ export function FacturasPage() {
               );
             })}
           </div>
+        </div>
         </div>
 
         {/* Modal Nueva Factura */}

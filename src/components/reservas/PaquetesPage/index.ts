@@ -1,0 +1,1 @@
+export { PaquetesPage } from './PaquetesPage';

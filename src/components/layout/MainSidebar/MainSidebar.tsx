@@ -1,10 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useUiStore } from '@/stores/ui/uiStore';
+import { SearchModal } from '@/components/shared/SearchModal';
+import { ChatIAModal } from '@/components/shared/ChatIAModal';
 import { 
   inicioMenuItems, 
   crmMenuItems, 
@@ -72,6 +74,9 @@ export function MainSidebar({
 }: MainSidebarProps) {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [hoveredModule, setHoveredModule] = useState<string | null>(null);
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
+  const [isChatIAModalOpen, setIsChatIAModalOpen] = useState(false);
+  const iaButtonRef = useRef<HTMLButtonElement>(null);
   const router = useRouter();
   const { toggleNotifications } = useUiStore();
 
@@ -112,7 +117,10 @@ export function MainSidebar({
       {/* Top Controls Group (Search, Notifications, Expand) */}
       {isCollapsed && (
         <div className="main-sidebar__controls">
-          <button className="main-sidebar__search">
+          <button 
+            className="main-sidebar__search"
+            onClick={() => setIsSearchModalOpen(true)}
+          >
             <span className="material-symbols-outlined">search</span>
             <span className="main-sidebar__item-tooltip">Buscar</span>
           </button>
@@ -137,13 +145,16 @@ export function MainSidebar({
 
       {/* Search (when not collapsed) */}
       {!isCollapsed && (
-        <button className="main-sidebar__search">
+        <button 
+          className="main-sidebar__search"
+          onClick={() => setIsSearchModalOpen(true)}
+        >
           <span className="material-symbols-outlined">search</span>
           <span className="main-sidebar__item-tooltip">Buscar</span>
         </button>
       )}
 
-      {/* Main Navigation */}
+      {/* Main Navigation - Iconos principales (Home, CRM, etc.) */}
       <nav className="main-sidebar__nav">
         {mainModules.map((module) => {
           const isActive = activeModule === module.id;
@@ -218,35 +229,70 @@ export function MainSidebar({
 
       {/* Secondary Navigation */}
       <nav className="main-sidebar__secondary">
-        {secondaryModules.map((module) => (
-          <Link
-            key={module.id}
-            href={module.href}
-            className={`main-sidebar__item ${!module.icon ? 'main-sidebar__item--svg' : ''}`}
-          >
-            {module.icon ? (
-              <span className="material-symbols-outlined">{module.icon}</span>
-            ) : (
-              <>
-                <Image 
-                  src={module.iconSrc!} 
-                  alt={module.label} 
-                  width={24} 
-                  height={24}
-                  className="main-sidebar__icon-normal"
-                />
-                <Image 
-                  src={module.iconSrcFilled!} 
-                  alt={module.label} 
-                  width={24} 
-                  height={24}
-                  className="main-sidebar__icon-filled"
-                />
-              </>
-            )}
-            <span className="main-sidebar__item-tooltip">{module.label}</span>
-          </Link>
-        ))}
+        {secondaryModules.map((module) => {
+          if (module.id === 'ia') {
+            return (
+              <button
+                key={module.id}
+                ref={iaButtonRef}
+                onClick={() => setIsChatIAModalOpen(true)}
+                className={`main-sidebar__item ${!module.icon ? 'main-sidebar__item--svg' : ''}`}
+              >
+                {module.icon ? (
+                  <span className="material-symbols-outlined">{module.icon}</span>
+                ) : (
+                  <>
+                    <Image 
+                      src={module.iconSrc!} 
+                      alt={module.label} 
+                      width={24} 
+                      height={24}
+                      className="main-sidebar__icon-normal"
+                    />
+                    <Image 
+                      src={module.iconSrcFilled!} 
+                      alt={module.label} 
+                      width={24} 
+                      height={24}
+                      className="main-sidebar__icon-filled"
+                    />
+                  </>
+                )}
+                <span className="main-sidebar__item-tooltip">{module.label}</span>
+              </button>
+            );
+          }
+
+          return (
+            <Link
+              key={module.id}
+              href={module.href}
+              className={`main-sidebar__item ${!module.icon ? 'main-sidebar__item--svg' : ''}`}
+            >
+              {module.icon ? (
+                <span className="material-symbols-outlined">{module.icon}</span>
+              ) : (
+                <>
+                  <Image 
+                    src={module.iconSrc!} 
+                    alt={module.label} 
+                    width={24} 
+                    height={24}
+                    className="main-sidebar__icon-normal"
+                  />
+                  <Image 
+                    src={module.iconSrcFilled!} 
+                    alt={module.label} 
+                    width={24} 
+                    height={24}
+                    className="main-sidebar__icon-filled"
+                  />
+                </>
+              )}
+              <span className="main-sidebar__item-tooltip">{module.label}</span>
+            </Link>
+          );
+        })}
 
         {/* User Avatar */}
         <div 
@@ -281,6 +327,19 @@ export function MainSidebar({
           )}
         </div>
       </nav>
+
+      {/* Search Modal */}
+      <SearchModal 
+        isOpen={isSearchModalOpen} 
+        onClose={() => setIsSearchModalOpen(false)} 
+      />
+
+      {/* Chat IA Modal */}
+      <ChatIAModal 
+        isOpen={isChatIAModalOpen} 
+        onClose={() => setIsChatIAModalOpen(false)}
+        buttonRef={iaButtonRef}
+      />
     </aside>
   );
 }

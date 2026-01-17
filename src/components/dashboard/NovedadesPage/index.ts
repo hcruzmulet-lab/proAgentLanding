@@ -1,0 +1,1 @@
+export { NovedadesPage } from './NovedadesPage';

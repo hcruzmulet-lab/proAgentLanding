@@ -1,0 +1,340 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.calendario-page {
+  @include flex-column;
+  gap: $spacing-md;
+  padding: 0;
+  padding-bottom: $spacing-lg;
+  padding-left: 0;
+  padding-right: 0;
+
+  &__title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: $text-primary;
+    letter-spacing: -0.1px;
+    margin: 0 0 $spacing-md 0;
+  }
+
+  &__header {
+    @include flex-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: $spacing-md;
+  }
+
+  &__header-left {
+    @include flex-center;
+    gap: $spacing-md;
+    flex-wrap: wrap;
+  }
+
+  &__controls {
+    @include flex-center;
+    gap: $spacing-sm;
+  }
+
+  &__month-year {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: $text-primary;
+    margin: 0;
+    min-width: 180px;
+    text-transform: capitalize;
+  }
+
+  &__header-right {
+    @include flex-center;
+    gap: $spacing-md;
+  }
+
+  &__agenda-card {
+    padding: $spacing-lg;
+    background: white;
+    border-radius: $radius-lg;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  &__calendar {
+    @include flex-column;
+    gap: 0;
+    background: white;
+    border-radius: $radius-lg;
+  }
+
+  &__weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    background-color: #e2e8f0;
+    border: 1px solid #e2e8f0;
+    border-radius: $radius-md $radius-md 0 0;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  &__weekday {
+    padding: $spacing-md $spacing-sm;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: $text-primary;
+    background-color: #f8fafc;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-sizing: border-box;
+    border-right: 1px solid #e2e8f0;
+    min-width: 0;
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+
+  &__days {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    background-color: #e2e8f0;
+    border: 1px solid #e2e8f0;
+    border-top: none;
+    border-radius: 0 0 $radius-md $radius-md;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  &__day {
+    min-height: 120px;
+    padding: $spacing-sm;
+    background-color: white;
+    @include flex-column;
+    gap: $spacing-xs;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    box-sizing: border-box;
+    border-right: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e2e8f0;
+    min-width: 0;
+
+    &:nth-child(7n) {
+      border-right: none;
+    }
+
+    &:hover {
+      background-color: #f8fafc;
+    }
+
+    &--other-month {
+      background-color: #f8fafc;
+      opacity: 0.5;
+    }
+
+    &--today {
+      background-color: #fef3c7;
+
+      .calendario-page__day-number {
+        background-color: #ffa300;
+        color: white;
+        border-radius: 50%;
+        width: 28px;
+        height: 28px;
+        @include flex-center;
+        font-weight: 600;
+      }
+    }
+  }
+
+  &__day-number {
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: $text-primary;
+    margin-bottom: $spacing-xs;
+  }
+
+  &__day-events {
+    @include flex-column;
+    gap: 2px;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  &__event-item {
+    padding: 4px 6px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    @include flex-column;
+    gap: 2px;
+    overflow: hidden;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    &--evento {
+      background-color: #dbeafe;
+      color: #1e40af;
+      border-left: 3px solid #3b82f6;
+    }
+
+    &--salida {
+      background-color: #dcfce7;
+      color: #166534;
+      border-left: 3px solid #22c55e;
+    }
+  }
+
+  &__event-time {
+    font-weight: 600;
+    font-size: 0.7rem;
+  }
+
+  &__event-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 500;
+  }
+
+  &__event-more {
+    padding: 2px 6px;
+    font-size: 0.7rem;
+    color: $text-muted;
+    font-weight: 500;
+    cursor: pointer;
+
+    &:hover {
+      color: $text-primary;
+    }
+  }
+
+  &__agenda {
+    @include flex-column;
+    gap: $spacing-md;
+  }
+
+  &__agenda-empty {
+    @include flex-column;
+    align-items: center;
+    justify-content: center;
+    padding: calc(#{$spacing-2xl} * 1.5);
+    gap: $spacing-md;
+    color: $text-muted;
+
+    .material-symbols-outlined {
+      font-size: 3rem;
+      opacity: 0.5;
+    }
+
+    p {
+      font-size: 1rem;
+      margin: 0;
+    }
+  }
+
+  &__agenda-item {
+    @include flex-center;
+    gap: $spacing-md;
+    padding: $spacing-md;
+    border-radius: $radius-md;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #f8fafc;
+      border-color: #cbd5e1;
+    }
+  }
+
+  &__agenda-date {
+    @include flex-column;
+    align-items: center;
+    justify-content: center;
+    min-width: 60px;
+    padding: $spacing-sm;
+    background-color: #f1f5f9;
+    border-radius: $radius-md;
+  }
+
+  &__agenda-day {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: $text-primary;
+    line-height: 1;
+  }
+
+  &__agenda-month {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: $text-muted;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  &__agenda-content {
+    @include flex-column;
+    gap: $spacing-xs;
+    flex: 1;
+  }
+
+  &__agenda-header {
+    @include flex-center;
+    gap: $spacing-sm;
+    align-items: center;
+  }
+
+  &__agenda-badge {
+    font-size: 0.75rem;
+    padding: 2px 8px;
+
+    &--evento {
+      background-color: #dbeafe;
+      color: #1e40af;
+    }
+
+    &--salida {
+      background-color: #dcfce7;
+      color: #166534;
+    }
+  }
+
+  &__agenda-time {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: $text-muted;
+  }
+
+  &__agenda-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: $text-primary;
+    margin: 0;
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .calendario-page {
+    padding: $spacing-md;
+
+    &__header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    &__header-right {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    &__day {
+      min-height: 80px;
+    }
+
+    &__event-item {
+      font-size: 0.65rem;
+      padding: 2px 4px;
+    }
+  }
+}

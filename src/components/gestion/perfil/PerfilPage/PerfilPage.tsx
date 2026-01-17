@@ -188,12 +188,15 @@ export function PerfilPage() {
 
   return (
     <div className="perfil-page">
-      <div className="perfil-page__header">
-        <div className="flex items-center justify-between">
-          <h1 className="perfil-page__title">Perfil público</h1>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px', width: '100%' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <h1 style={{ fontSize: '1.125rem', fontWeight: 600, color: '#0f172a', letterSpacing: '-0.1px', margin: 0, lineHeight: '1.5' }}>Perfil público</h1>
+        </div>
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
           <Button
             onClick={() => isEditing ? handleSavePerfil() : setIsEditing(true)}
             className={isEditing ? 'bg-green-600 hover:bg-green-700' : 'bg-slate-700 hover:bg-slate-800'}
+            style={{ marginTop: 0 }}
           >
             <span className="material-symbols-outlined mr-2" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>
               {isEditing ? 'save' : 'edit'}
