@@ -1,0 +1,1 @@
+export { ChatIAModal } from './ChatIAModal';
