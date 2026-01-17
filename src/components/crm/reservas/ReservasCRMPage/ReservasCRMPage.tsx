@@ -522,35 +522,35 @@ export function ReservasCRMPage() {
             <div className="grid grid-cols-2 gap-6 py-6">
               {/* Reserva con Motor */}
               <button 
-                className="flex flex-col items-center gap-4 p-6 bg-white border-2 border-slate-200 rounded-lg hover:border-slate-700 hover:shadow-md transition-all cursor-pointer"
+                className="flex flex-col items-center gap-4 p-6 bg-slate-700 border-2 border-slate-700 rounded-lg hover:bg-slate-800 hover:border-slate-800 hover:shadow-lg transition-all cursor-pointer"
                 onClick={() => {
                   window.open('https://azucartravel.com/?tripType=TRIP_PLANNER', '_blank', 'noopener,noreferrer');
                   setIsNewReservaModalOpen(false);
                 }}
               >
-                <span className="material-symbols-outlined text-slate-700 text-6xl" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48" }}>
-                  travel_explore
+                <span className="material-symbols-outlined text-white text-7xl" style={{ fontVariationSettings: "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48" }}>
+                  auto_awesome
                 </span>
                 <div className="text-center">
-                  <h3 className="text-lg font-semibold text-slate-900">Reserva con Motor</h3>
-                  <p className="text-sm text-slate-500 mt-1">Buscar y reservar con nuestro motor de búsqueda</p>
+                  <h3 className="text-lg font-semibold text-white">Reserva con Motor</h3>
+                  <p className="text-xs text-slate-400 mt-1">Buscar y reservar con nuestro motor de búsqueda</p>
                 </div>
               </button>
 
               {/* Reservas Externas */}
               <button 
-                className="flex flex-col items-center gap-4 p-6 bg-white border-2 border-slate-200 rounded-lg hover:border-slate-700 hover:shadow-md transition-all cursor-pointer"
+                className="flex flex-col items-center gap-4 p-6 bg-slate-700 border-2 border-slate-700 rounded-lg hover:bg-slate-800 hover:border-slate-800 hover:shadow-lg transition-all cursor-pointer"
                 onClick={() => {
                   router.push('/es/crm/reservas/nueva-manual');
                   setIsNewReservaModalOpen(false);
                 }}
               >
-                <span className="material-symbols-outlined text-slate-700 text-6xl" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48" }}>
-                  edit_note
+                <span className="material-symbols-outlined text-white text-7xl" style={{ fontVariationSettings: "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48" }}>
+                  upload_file
                 </span>
                 <div className="text-center">
-                  <h3 className="text-lg font-semibold text-slate-900">Reservas externas</h3>
-                  <p className="text-sm text-slate-500 mt-1">Sube tus reservas externas</p>
+                  <h3 className="text-lg font-semibold text-white">Reservas externas</h3>
+                  <p className="text-xs text-slate-400 mt-1">Sube tus reservas externas</p>
                 </div>
               </button>
             </div>
