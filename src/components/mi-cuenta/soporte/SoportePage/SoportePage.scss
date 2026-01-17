@@ -10,18 +10,50 @@
   padding-right: 0;
   width: 100%;
 
+  &__header {
+    @include flex-column;
+    gap: $spacing-xs;
+  }
+
+  &__header-content {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: $spacing-md;
+    flex-wrap: wrap;
+  }
+
   &__title {
     font-size: 1.125rem;
     font-weight: 600;
     color: $text-primary;
     letter-spacing: -0.1px;
-    margin: 0 0 $spacing-md 0;
+    margin: 0 0 $spacing-xs 0;
   }
 
   &__subtitle {
-    font-size: 1rem;
+    font-size: 0.875rem;
     color: $text-secondary;
     line-height: 1.5;
+    margin: 0;
+  }
+
+  &__new-ticket-button {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    background-color: $text-primary;
+    color: white;
+    font-weight: 500;
+    white-space: nowrap;
+
+    &:hover {
+      background-color: #1e293b;
+    }
+
+    .material-symbols-outlined {
+      font-size: 18px;
+    }
   }
 
   &__content {
@@ -29,14 +61,13 @@
     border-radius: $radius-lg;
     padding: $spacing-2xl;
     min-height: 400px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 
   &__empty-state {
     text-align: center;
     max-width: 400px;
+    margin: 0 auto;
+    padding: $spacing-2xl 0;
   }
 
   &__empty-icon {
@@ -57,5 +88,385 @@
     font-size: 1rem;
     color: $text-secondary;
     line-height: 1.5;
+    margin-bottom: $spacing-xl;
+  }
+
+  &__empty-button {
+    background-color: $text-primary;
+    color: white;
+    font-weight: 500;
+  }
+
+  &__tickets-list {
+    @include flex-column;
+    gap: $spacing-md;
+  }
+
+  &__ticket-card {
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s ease;
+
+    &:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      border-color: #cbd5e1;
+    }
+  }
+
+  &__ticket-content {
+    padding: $spacing-lg;
+    @include flex-column;
+    gap: $spacing-md;
+  }
+
+  &__ticket-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: $spacing-md;
+    flex-wrap: wrap;
+  }
+
+  &__ticket-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__ticket-number {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: $text-secondary;
+    margin-bottom: $spacing-xs;
+  }
+
+  &__ticket-asunto {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: $text-primary;
+    margin: 0;
+  }
+
+  &__ticket-badges {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    flex-shrink: 0;
+  }
+
+  &__badge {
+    padding: 4px 12px;
+    border-radius: $radius-sm;
+    font-size: 0.75rem;
+    font-weight: 500;
+    white-space: nowrap;
+
+    &--abierto {
+      background-color: #dbeafe;
+      color: #1e40af;
+    }
+
+    &--en-progreso {
+      background-color: #fef3c7;
+      color: #d97706;
+    }
+
+    &--resuelto {
+      background-color: #ecfdf5;
+      color: #059669;
+    }
+
+    &--cerrado {
+      background-color: #f3f4f6;
+      color: #6b7280;
+    }
+  }
+
+  &__priority {
+    padding: 4px 12px;
+    border-radius: $radius-sm;
+    font-size: 0.75rem;
+    font-weight: 500;
+    white-space: nowrap;
+
+    &--urgente {
+      background-color: #fee2e2;
+      color: #dc2626;
+    }
+
+    &--alta {
+      background-color: #fef2f2;
+      color: #ef4444;
+    }
+
+    &--media {
+      background-color: #fef3c7;
+      color: #d97706;
+    }
+
+    &--baja {
+      background-color: #f0f9ff;
+      color: #0284c7;
+    }
+  }
+
+  &__ticket-descripcion {
+    font-size: 0.9375rem;
+    color: $text-secondary;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  &__ticket-meta {
+    display: flex;
+    align-items: center;
+    gap: $spacing-lg;
+    flex-wrap: wrap;
+    padding-top: $spacing-md;
+    border-top: 1px solid #e2e8f0;
+  }
+
+  &__ticket-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8125rem;
+    color: $text-secondary;
+
+    .material-symbols-outlined {
+      font-size: 16px;
+    }
+  }
+
+  // Modal Styles
+  &__modal {
+    max-width: 600px;
+  }
+
+  &__modal-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: $text-primary;
+  }
+
+  &__modal-form {
+    @include flex-column;
+    gap: $spacing-lg;
+    padding: $spacing-md 0;
+  }
+
+  &__form-group {
+    @include flex-column;
+    gap: $spacing-sm;
+  }
+
+  &__form-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: $text-primary;
+  }
+
+  &__form-input,
+  &__form-select {
+    width: 100%;
+    height: 40px;
+    padding: $spacing-sm $spacing-md;
+    border: 1px solid #cbd5e1;
+    border-radius: $radius-md;
+    font-size: 0.9375rem;
+    color: $text-primary;
+    background-color: white;
+    transition: all 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    &::placeholder {
+      color: #94a3b8;
+    }
+  }
+
+  &__form-select {
+    cursor: pointer;
+  }
+
+  &__form-textarea {
+    width: 100%;
+    padding: $spacing-sm $spacing-md;
+    border: 1px solid #cbd5e1;
+    border-radius: $radius-md;
+    font-size: 0.9375rem;
+    color: $text-primary;
+    font-family: inherit;
+    resize: vertical;
+    transition: all 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    &::placeholder {
+      color: #94a3b8;
+    }
+  }
+
+  &__modal-actions {
+    display: flex;
+    gap: $spacing-md;
+    margin-top: $spacing-md;
+    padding-top: $spacing-lg;
+    border-top: 1px solid #e2e8f0;
+  }
+
+  &__modal-cancel {
+    flex: 1;
+    background-color: white;
+    color: $text-primary;
+    border: 1px solid #cbd5e1;
+    font-weight: 500;
+
+    &:hover {
+      background-color: #f8fafc;
+    }
+  }
+
+  &__modal-submit {
+    flex: 1;
+    background-color: $text-primary;
+    color: white;
+    font-weight: 500;
+
+    &:hover {
+      background-color: #1e293b;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  // File Upload Styles
+  &__file-upload {
+    @include flex-column;
+    gap: $spacing-sm;
+  }
+
+  &__file-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  &__file-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-sm;
+    padding: $spacing-md;
+    border: 2px dashed #cbd5e1;
+    border-radius: $radius-md;
+    background-color: #f8fafc;
+    color: $text-secondary;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      border-color: #94a3b8;
+      background-color: #f1f5f9;
+      color: $text-primary;
+    }
+
+    .material-symbols-outlined {
+      font-size: 20px;
+    }
+  }
+
+  &__file-hint {
+    font-size: 0.8125rem;
+    color: $text-muted;
+    margin: 0;
+  }
+
+  &__files-list {
+    @include flex-column;
+    gap: $spacing-sm;
+    margin-top: $spacing-sm;
+  }
+
+  &__file-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-md;
+    padding: $spacing-sm $spacing-md;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: $radius-md;
+  }
+
+  &__file-info {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__file-icon {
+    font-size: 20px;
+    color: $text-secondary;
+    flex-shrink: 0;
+  }
+
+  &__file-details {
+    @include flex-column;
+    gap: 2px;
+    min-width: 0;
+    flex: 1;
+  }
+
+  &__file-name {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: $text-primary;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__file-size {
+    font-size: 0.75rem;
+    color: $text-secondary;
+  }
+
+  &__file-remove {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: none;
+    color: #ef4444;
+    cursor: pointer;
+    border-radius: $radius-sm;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+
+    &:hover {
+      background-color: #fef2f2;
+      color: #dc2626;
+    }
+
+    .material-symbols-outlined {
+      font-size: 18px;
+    }
   }
 }

@@ -211,6 +211,135 @@
   &__agenda {
     @include flex-column;
     gap: $spacing-md;
+    padding: 0;
+  }
+
+  &__agenda-tabs {
+    width: 100%;
+  }
+
+  &__agenda-tabs-list {
+    display: flex;
+    gap: $spacing-xs;
+    background-color: #f1f5f9;
+    padding: 4px;
+    border-radius: $radius-md;
+  }
+
+  &__agenda-tab {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    padding: $spacing-sm $spacing-md;
+
+    .material-symbols-outlined {
+      font-size: 1.125rem;
+    }
+  }
+
+  &__agenda-content {
+    width: 100%;
+    min-height: 300px;
+    padding-top: $spacing-md;
+  }
+
+  &__agenda-item-icon {
+    font-size: 1.125rem;
+    margin-right: $spacing-sm;
+    color: $text-muted;
+    vertical-align: middle;
+
+    &--viaje {
+      color: #3b82f6;
+    }
+
+    &--pago {
+      color: #ef4444;
+    }
+
+    &--llamada {
+      color: #10b981;
+    }
+
+    &--salida {
+      color: #8b5cf6;
+    }
+
+    &--cumpleanos {
+      color: #f59e0b;
+    }
+
+    &--cliente {
+      color: #6366f1;
+    }
+
+    &--oportunidad {
+      color: #06b6d4;
+    }
+
+    &--fecha {
+      color: #64748b;
+    }
+  }
+
+  &__agenda-section-list {
+    @include flex-column;
+    gap: $spacing-sm;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  &__agenda-section-item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: $spacing-md;
+    background-color: #f8fafc;
+    border-radius: $radius-md;
+    font-size: 0.9375rem;
+    color: $text-primary;
+    transition: all 0.2s;
+    cursor: pointer;
+    gap: $spacing-sm;
+    text-align: left;
+
+    &:hover {
+      background-color: #f1f5f9;
+      transform: translateX(2px);
+    }
+  }
+
+  &__agenda-item-content {
+    @include flex-column;
+    gap: $spacing-xs;
+    flex: 1;
+  }
+
+  &__agenda-item-main {
+    font-weight: 500;
+    color: $text-primary;
+  }
+
+  &__agenda-item-details {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: $spacing-md;
+    margin-top: $spacing-xs;
+  }
+
+  &__agenda-item-detail {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.8125rem;
+    color: $text-muted;
+
+    .material-symbols-outlined {
+      font-size: 0.875rem;
+    }
   }
 
   &__agenda-empty {

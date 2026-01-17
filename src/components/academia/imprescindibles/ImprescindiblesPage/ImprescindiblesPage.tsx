@@ -362,15 +362,6 @@ export function ImprescindiblesPage() {
           {cursosFiltrados.map((curso) => (
             <Card key={curso.id} className="imprescindibles-page__curso-card">
               <div className="imprescindibles-page__curso-content">
-                <div className="imprescindibles-page__curso-imagen">
-                  <Image
-                    src={curso.imagen}
-                    alt={curso.titulo}
-                    fill
-                    className="object-cover"
-                    unoptimized
-                  />
-                </div>
                 <div className="imprescindibles-page__curso-info">
                   <h3 className="imprescindibles-page__curso-titulo">{curso.titulo}</h3>
                   <div className="imprescindibles-page__curso-lecciones-count">
@@ -429,6 +420,15 @@ export function ImprescindiblesPage() {
                       ))}
                     </div>
                   )}
+                </div>
+                <div className="imprescindibles-page__curso-imagen">
+                  <Image
+                    src={curso.imagen}
+                    alt={curso.titulo}
+                    fill
+                    className="object-cover"
+                    unoptimized
+                  />
                 </div>
               </div>
             </Card>

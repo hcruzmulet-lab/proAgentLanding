@@ -304,15 +304,6 @@ export function OperacionPage() {
           {cursosFiltrados.map((curso) => (
             <Card key={curso.id} className="operacion-page__curso-card">
               <div className="operacion-page__curso-content">
-                <div className="operacion-page__curso-imagen">
-                  <Image
-                    src={curso.imagen}
-                    alt={curso.titulo}
-                    fill
-                    className="object-cover"
-                    unoptimized
-                  />
-                </div>
                 <div className="operacion-page__curso-info">
                   <h3 className="operacion-page__curso-titulo">{curso.titulo}</h3>
                   <div className="operacion-page__curso-lecciones-count">
@@ -371,6 +362,15 @@ export function OperacionPage() {
                       ))}
                     </div>
                   )}
+                </div>
+                <div className="operacion-page__curso-imagen">
+                  <Image
+                    src={curso.imagen}
+                    alt={curso.titulo}
+                    fill
+                    className="object-cover"
+                    unoptimized
+                  />
                 </div>
               </div>
             </Card>

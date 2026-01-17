@@ -1,0 +1,1 @@
+export { VueloHotelPage } from './VueloHotelPage';

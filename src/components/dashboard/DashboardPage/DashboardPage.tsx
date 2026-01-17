@@ -56,9 +56,9 @@ export function DashboardPage({ userName = 'Arieldi' }: DashboardPageProps) {
 
   const quickActions = [
     { title: 'Nuevo Cliente', icon: 'person', onClick: () => setIsNewClientModalOpen(true) },
+    { title: 'Nuevo Expediente', icon: 'folder', onClick: () => router.push('/es/crm/expedientes/nuevo-manual') },
     { title: 'Nueva Cotización', icon: 'description', onClick: () => setIsNewCotizacionModalOpen(true) },
     { title: 'Nueva Reserva', icon: 'airplane_ticket', onClick: () => setIsNewReservaModalOpen(true) },
-    { title: 'Nuevo Expediente', icon: 'folder', onClick: () => router.push('/es/crm/expedientes/nuevo-manual') },
   ];
 
   return (

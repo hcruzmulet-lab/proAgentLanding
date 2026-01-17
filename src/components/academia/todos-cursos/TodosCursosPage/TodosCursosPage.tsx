@@ -302,15 +302,6 @@ export function TodosCursosPage() {
           {cursosFiltrados.map((curso) => (
             <Card key={curso.id} className="todos-cursos-page__curso-card">
               <div className="todos-cursos-page__curso-content">
-                <div className="todos-cursos-page__curso-imagen">
-                  <Image
-                    src={curso.imagen}
-                    alt={curso.titulo}
-                    fill
-                    className="object-cover"
-                    unoptimized
-                  />
-                </div>
                 <div className="todos-cursos-page__curso-info">
                   <div className="todos-cursos-page__curso-header">
                     <span className="todos-cursos-page__curso-categoria">{curso.categoria}</span>
@@ -350,6 +341,15 @@ export function TodosCursosPage() {
                       </span>
                     </button>
                   </div>
+                </div>
+                <div className="todos-cursos-page__curso-imagen">
+                  <Image
+                    src={curso.imagen}
+                    alt={curso.titulo}
+                    fill
+                    className="object-cover"
+                    unoptimized
+                  />
                 </div>
               </div>
             </Card>

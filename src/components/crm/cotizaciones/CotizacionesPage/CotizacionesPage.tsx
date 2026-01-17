@@ -72,7 +72,7 @@ export function CotizacionesPage() {
   const [isNewCotizacionModalOpen, setIsNewCotizacionModalOpen] = useState(false);
   const [sortField, setSortField] = useState<'fechaCreacion' | 'fechaViaje' | null>('fechaCreacion');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
-  const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
+  const [viewMode, setViewMode] = useState<'list' | 'grid'>('grid');
 
   const handleLimpiar = () => {
     setFiltros({

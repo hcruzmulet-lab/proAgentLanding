@@ -320,15 +320,6 @@ export function DestinosPage() {
           {cursosFiltrados.map((curso) => (
             <Card key={curso.id} className="destinos-page__curso-card">
               <div className="destinos-page__curso-content">
-                <div className="destinos-page__curso-imagen">
-                  <Image
-                    src={curso.imagen}
-                    alt={curso.titulo}
-                    fill
-                    className="object-cover"
-                    unoptimized
-                  />
-                </div>
                 <div className="destinos-page__curso-info">
                   <h3 className="destinos-page__curso-titulo">{curso.titulo}</h3>
                   <div className="destinos-page__curso-lecciones-count">
@@ -387,6 +378,15 @@ export function DestinosPage() {
                       ))}
                     </div>
                   )}
+                </div>
+                <div className="destinos-page__curso-imagen">
+                  <Image
+                    src={curso.imagen}
+                    alt={curso.titulo}
+                    fill
+                    className="object-cover"
+                    unoptimized
+                  />
                 </div>
               </div>
             </Card>

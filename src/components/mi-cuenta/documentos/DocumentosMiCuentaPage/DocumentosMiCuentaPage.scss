@@ -19,9 +19,10 @@
   }
 
   &__subtitle {
-    font-size: 1rem;
+    font-size: 0.875rem;
     color: $text-secondary;
     line-height: 1.5;
+    margin: 0;
   }
 
   &__content {
@@ -29,33 +30,146 @@
     border-radius: $radius-lg;
     padding: $spacing-2xl;
     min-height: 400px;
+  }
+
+  &__documents-list {
+    @include flex-column;
+    gap: $spacing-md;
+  }
+
+  &__document-card {
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s ease;
+
+    &:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      border-color: #cbd5e1;
+    }
+  }
+
+  &__document-content {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-lg;
+    padding: $spacing-lg;
+  }
+
+  &__document-icon-wrapper {
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    border-radius: $radius-md;
+    background: #f8fafc;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  &__empty-state {
-    text-align: center;
-    max-width: 400px;
+  &__document-icon {
+    font-size: 28px;
+    font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+
+    &--contrato {
+      color: #3b82f6;
+    }
+
+    &--certificado {
+      color: #10b981;
+    }
+
+    &--registro {
+      color: #8b5cf6;
+    }
   }
 
-  &__empty-icon {
-    font-size: 96px;
-    color: #cbd5e1;
-    margin-bottom: $spacing-lg;
-    font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48;
+  &__document-info {
+    flex: 1;
+    @include flex-column;
+    gap: $spacing-sm;
+    min-width: 0;
   }
 
-  &__empty-title {
-    font-size: 1.5rem;
+  &__document-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-md;
+    flex-wrap: wrap;
+  }
+
+  &__document-name {
+    font-size: 1rem;
     font-weight: 600;
     color: $text-primary;
-    margin-bottom: $spacing-md;
+    margin: 0;
   }
 
-  &__empty-description {
-    font-size: 1rem;
+  &__badge {
+    padding: 4px 12px;
+    border-radius: $radius-sm;
+    font-size: 0.75rem;
+    font-weight: 500;
+    white-space: nowrap;
+
+    &--vigente {
+      background-color: #ecfdf5;
+      color: #059669;
+    }
+
+    &--vencido {
+      background-color: #fef2f2;
+      color: #dc2626;
+    }
+
+    &--pendiente {
+      background-color: #fef3c7;
+      color: #d97706;
+    }
+  }
+
+  &__document-description {
+    font-size: 0.875rem;
     color: $text-secondary;
+    margin: 0;
     line-height: 1.5;
+  }
+
+  &__document-meta {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    flex-wrap: wrap;
+  }
+
+  &__document-date {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8125rem;
+    color: $text-secondary;
+
+    .material-symbols-outlined {
+      font-size: 16px;
+    }
+  }
+
+  &__document-actions {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    flex-shrink: 0;
+  }
+
+  &__action-button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: $spacing-sm $spacing-md;
+    font-size: 0.875rem;
+    font-weight: 500;
+
+    .material-symbols-outlined {
+      font-size: 18px;
+    }
   }
 }

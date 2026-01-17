@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useRouter, usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import './OnboardingCard.scss';
 
@@ -13,10 +14,23 @@ interface OnboardingCardProps {
 
 export function OnboardingCard({
   currentStep = 1,
-  totalSteps = 3,
+  totalSteps = 4,
   imageUrl = 'https://res.cloudinary.com/ddagvoaq2/image/upload/v1768254512/onboarding_wihgic.png',
   onContinue,
 }: OnboardingCardProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const handleContinue = () => {
+    if (onContinue) {
+      onContinue();
+    } else {
+      // Obtener el locale actual de la URL
+      const locale = pathname.split('/')[1] || 'es';
+      router.push(`/${locale}/onboarding`);
+    }
+  };
+
   return (
     <div className="onboarding-card">
       {/* Image Section */}
@@ -51,8 +65,8 @@ export function OnboardingCard({
         <p className="onboarding-card__description">
           Te guiaremos para que conozcas la plataforma, aprendas herramientas y puedas empezar a vender.
         </p>
-        <Button onClick={onContinue} className="onboarding-card__button">
-          Continuar
+        <Button onClick={handleContinue} className="onboarding-card__button">
+          Empezar
         </Button>
       </div>
     </div>

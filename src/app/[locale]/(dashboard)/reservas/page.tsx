@@ -1,10 +1,10 @@
-import { DashboardLayout } from '@/components/layout/DashboardLayout';
-import { ReservasPage } from '@/components/reservas/ReservasPage';
+import { redirect } from 'next/navigation';
 
-export default function ReservasPageRoute() {
-  return (
-    <DashboardLayout activeModule="reservas" activeSubItem="reservas" title="Reservas">
-      <ReservasPage />
-    </DashboardLayout>
-  );
+export default async function ReservasPageRoute({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  redirect(`/${locale}/reservas/vuelo-hotel`);
 }

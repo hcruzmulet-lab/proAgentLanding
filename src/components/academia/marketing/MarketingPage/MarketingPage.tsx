@@ -312,15 +312,6 @@ export function MarketingPage() {
           {cursosFiltrados.map((curso) => (
             <Card key={curso.id} className="marketing-page__curso-card">
               <div className="marketing-page__curso-content">
-                <div className="marketing-page__curso-imagen">
-                  <Image
-                    src={curso.imagen}
-                    alt={curso.titulo}
-                    fill
-                    className="object-cover"
-                    unoptimized
-                  />
-                </div>
                 <div className="marketing-page__curso-info">
                   <h3 className="marketing-page__curso-titulo">{curso.titulo}</h3>
                   <div className="marketing-page__curso-lecciones-count">
@@ -379,6 +370,15 @@ export function MarketingPage() {
                       ))}
                     </div>
                   )}
+                </div>
+                <div className="marketing-page__curso-imagen">
+                  <Image
+                    src={curso.imagen}
+                    alt={curso.titulo}
+                    fill
+                    className="object-cover"
+                    unoptimized
+                  />
                 </div>
               </div>
             </Card>

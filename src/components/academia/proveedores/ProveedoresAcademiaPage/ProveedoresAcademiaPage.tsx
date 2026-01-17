@@ -288,23 +288,6 @@ export function ProveedoresAcademiaPage() {
           {cursosFiltrados.map((curso) => (
             <Card key={curso.id} className="proveedores-academia-page__curso-card">
               <div className="proveedores-academia-page__curso-content">
-                <div className="proveedores-academia-page__curso-imagen">
-                  <Image
-                    src={curso.imagen}
-                    alt={curso.titulo}
-                    fill
-                    className="object-cover"
-                    unoptimized
-                    onError={(e) => {
-                      console.error('Error loading image:', curso.imagen);
-                      // Fallback a una imagen placeholder si falla
-                      const target = e.target as HTMLImageElement;
-                      if (target) {
-                        target.src = 'https://images.unsplash.com/photo-1436491865332-7a61a0ccd75c?w=800&h=400&fit=crop';
-                      }
-                    }}
-                  />
-                </div>
                 <div className="proveedores-academia-page__curso-info">
                   <h3 className="proveedores-academia-page__curso-titulo">{curso.titulo}</h3>
                   <div className="proveedores-academia-page__curso-lecciones-count">
@@ -363,6 +346,23 @@ export function ProveedoresAcademiaPage() {
                       ))}
                     </div>
                   )}
+                </div>
+                <div className="proveedores-academia-page__curso-imagen">
+                  <Image
+                    src={curso.imagen}
+                    alt={curso.titulo}
+                    fill
+                    className="object-cover"
+                    unoptimized
+                    onError={(e) => {
+                      console.error('Error loading image:', curso.imagen);
+                      // Fallback a una imagen placeholder si falla
+                      const target = e.target as HTMLImageElement;
+                      if (target) {
+                        target.src = 'https://images.unsplash.com/photo-1436491865332-7a61a0ccd75c?w=800&h=400&fit=crop';
+                      }
+                    }}
+                  />
                 </div>
               </div>
             </Card>

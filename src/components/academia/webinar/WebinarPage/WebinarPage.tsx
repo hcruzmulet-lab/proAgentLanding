@@ -192,15 +192,6 @@ export function WebinarPage() {
           {cursosFiltrados.map((curso) => (
             <Card key={curso.id} className="webinar-page__curso-card">
               <div className="webinar-page__curso-content">
-                <div className="webinar-page__curso-imagen">
-                  <Image
-                    src={curso.imagen}
-                    alt={curso.titulo}
-                    fill
-                    className="object-cover"
-                    unoptimized
-                  />
-                </div>
                 <div className="webinar-page__curso-info">
                   <h3 className="webinar-page__curso-titulo">{curso.titulo}</h3>
                   <div className="webinar-page__curso-lecciones-count">
@@ -259,6 +250,15 @@ export function WebinarPage() {
                       ))}
                     </div>
                   )}
+                </div>
+                <div className="webinar-page__curso-imagen">
+                  <Image
+                    src={curso.imagen}
+                    alt={curso.titulo}
+                    fill
+                    className="object-cover"
+                    unoptimized
+                  />
                 </div>
               </div>
             </Card>

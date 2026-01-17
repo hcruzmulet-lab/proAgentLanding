@@ -7,9 +7,9 @@ export const inicioMenuItems = [
 
 export const crmMenuItems = [
   { id: 'clientes', icon: 'person', label: 'Clientes', href: '/crm/clientes' },
+  { id: 'expedientes', icon: 'folder', label: 'Expedientes', href: '/crm/expedientes' },
   { id: 'cotizaciones', icon: 'docs', label: 'Cotizaciones', href: '/crm/cotizaciones' },
   { id: 'reservas', icon: 'airplane_ticket', label: 'Reservas', href: '/crm/reservas' },
-  { id: 'expedientes', icon: 'folder', label: 'Expedientes', href: '/crm/expedientes' },
   { id: 'itinerarios-ia', icon: 'wand_shine', label: 'Itinerarios IA', href: '/crm/itinerarios-ia' },
   { id: 'facturas', icon: 'receipt', label: 'Facturas', href: '/crm/facturas' },
   { id: 'pagos', icon: 'credit_card', label: 'Pagos', href: '/crm/pagos' },
@@ -17,7 +17,7 @@ export const crmMenuItems = [
 ];
 
 export const reservasMenuItems = [
-  { id: 'reservas', icon: 'airplane_ticket', label: 'Reservas', href: '/reservas' },
+  { id: 'vuelo-hotel', icon: 'globe', label: 'Vuelo + Hotel', href: '/reservas/vuelo-hotel' },
   { id: 'vuelos', icon: 'flight_takeoff', label: 'Vuelo', href: '/reservas/vuelos' },
   { id: 'hoteles', icon: 'hotel', label: 'Hotel', href: '/reservas/hoteles' },
   { id: 'traslados', icon: 'directions_bus', label: 'Traslados', href: '/reservas/traslados' },
@@ -56,7 +56,7 @@ export const academiaMenuItems = [
 ];
 
 export const miCuentaMenuItems = [
-  { id: 'perfil', icon: 'badge', label: 'Perfil del agente', href: '/mi-cuenta/perfil' },
+  { id: 'perfil', icon: 'badge', label: 'Mi Cuenta', href: '/mi-cuenta/perfil' },
   { id: 'preferencias', icon: 'tune', label: 'Preferencias plataforma', href: '/mi-cuenta/preferencias' },
   { id: 'documentos', icon: 'folder_open', label: 'Documentos del agente', href: '/mi-cuenta/documentos' },
   { id: 'estado', icon: 'ads_click', label: 'Estado de Suscripción', href: '/mi-cuenta/estado' },

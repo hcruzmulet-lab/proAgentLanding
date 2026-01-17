@@ -306,7 +306,11 @@ export function MainSidebar({
 
           {/* User Menu */}
           {showUserMenu && (
-            <div className="main-sidebar__user-menu">
+            <div 
+              className="main-sidebar__user-menu"
+              onMouseEnter={() => setShowUserMenu(true)}
+              onMouseLeave={() => setShowUserMenu(false)}
+            >
               <div className="main-sidebar__user-menu-header">
                 <span className="main-sidebar__user-name">{userName}</span>
               </div>
