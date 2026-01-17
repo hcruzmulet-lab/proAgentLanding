@@ -12,6 +12,7 @@ import { FAQItem } from '@/components/shared/FAQItem';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Image from 'next/image';
+import { partnersLogos } from './partners-logos';
 import './LandingPage.scss';
 
 export function LandingPageModule() {
@@ -284,9 +285,59 @@ export function LandingPageModule() {
           <h2 className="landing-page-module__section-title">{t('partners.title')}</h2>
           <p className="landing-page-module__section-subtitle">{t('partners.subtitle')}</p>
           <p className="landing-page-module__partners-description">{t('partners.description')}</p>
-          {/* TODO: Agregar carrusel de logos de partners aquí */}
           <div className="landing-page-module__partners-logos">
-            {/* Los logos de partners se mostrarán aquí */}
+            <div className="landing-page-module__partners-logos-track">
+              {(() => {
+                // Filtrar duplicados por nombre (case-insensitive) y por URL
+                // Si hay múltiples logos con la misma URL, mantener solo el primero
+                const uniquePartners = partnersLogos.filter((partner, index, self) => {
+                  // Primero verificar si hay otro logo con el mismo nombre
+                  const nameIndex = self.findIndex((p) => p.name.toLowerCase() === partner.name.toLowerCase());
+                  // Luego verificar si hay otro logo con la misma URL
+                  const urlIndex = self.findIndex((p) => p.logo === partner.logo);
+                  // Mantener solo si es el primero con ese nombre Y el primero con esa URL
+                  return index === nameIndex && index === urlIndex;
+                });
+                
+                return (
+                  <>
+                    {uniquePartners.map((partner, index) => (
+                      <div key={index} className="landing-page-module__partners-logo-item">
+                        <Image
+                          src={partner.logo}
+                          alt={partner.name}
+                          width={280}
+                          height={120}
+                          className={`landing-page-module__partners-logo-image ${
+                            partner.name.toLowerCase().includes('expedia') 
+                              ? 'landing-page-module__partners-logo-image--expedia' 
+                              : ''
+                          }`}
+                          unoptimized
+                        />
+                      </div>
+                    ))}
+                    {/* Duplicar logos para efecto infinito */}
+                    {uniquePartners.map((partner, index) => (
+                      <div key={`duplicate-${index}`} className="landing-page-module__partners-logo-item">
+                        <Image
+                          src={partner.logo}
+                          alt={partner.name}
+                          width={280}
+                          height={120}
+                          className={`landing-page-module__partners-logo-image ${
+                            partner.name.toLowerCase().includes('expedia') 
+                              ? 'landing-page-module__partners-logo-image--expedia' 
+                              : ''
+                          }`}
+                          unoptimized
+                        />
+                      </div>
+                    ))}
+                  </>
+                );
+              })()}
+            </div>
           </div>
         </div>
       </section>

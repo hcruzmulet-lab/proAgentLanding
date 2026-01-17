@@ -17,7 +17,7 @@ export const crmMenuItems = [
 ];
 
 export const reservasMenuItems = [
-  { id: 'vuelo-hotel', icon: 'globe', label: 'Vuelo + Hotel', href: '/reservas/vuelo-hotel' },
+  { id: 'vuelo-hotel', icon: 'globe', label: 'Reservas', href: '/reservas/vuelo-hotel' },
   { id: 'vuelos', icon: 'flight_takeoff', label: 'Vuelo', href: '/reservas/vuelos' },
   { id: 'hoteles', icon: 'hotel', label: 'Hotel', href: '/reservas/hoteles' },
   { id: 'traslados', icon: 'directions_bus', label: 'Traslados', href: '/reservas/traslados' },

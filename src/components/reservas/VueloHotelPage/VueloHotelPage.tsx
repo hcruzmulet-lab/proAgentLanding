@@ -10,7 +10,7 @@ export function VueloHotelPage() {
         <iframe
           src="https://azucartravel.com/?tripType=FLIGHT_HOTEL"
           className="vuelo-hotel-page__iframe"
-          title="Vuelo + Hotel"
+          title="Reservas"
           allow="fullscreen"
         />
       </div>
