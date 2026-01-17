@@ -1,0 +1,1 @@
+export { SegurosPage } from './SegurosPage';

@@ -1,0 +1,22 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.seguros-page {
+  @include flex-column;
+  height: 100%;
+  width: 100%;
+  margin: -$spacing-md;
+  padding: 0;
+
+  &__iframe-container {
+    width: 100%;
+    height: calc(100vh - 48px);
+    overflow: hidden;
+  }
+
+  &__iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+}

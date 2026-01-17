@@ -44,7 +44,7 @@ type FilterType = 'todos' | 'evento' | 'salida';
 interface AgendaItem {
   id: string;
   text: string;
-  type: 'viaje' | 'pago' | 'llamada' | 'salida' | 'cumpleanos' | 'cliente' | 'oportunidad' | 'fecha';
+  type: 'viaje' | 'pago' | 'llamada' | 'salida' | 'cumpleanos' | 'cliente' | 'oportunidad' | 'fecha' | 'aniversario' | 'tarea' | 'evento';
   date?: Date;
   priority?: 'alta' | 'media' | 'baja';
   destino?: string;
@@ -56,29 +56,43 @@ interface AgendaItem {
   aerolinea?: string;
   clase?: string;
   pasajeros?: number;
+  monto?: string;
+  estado?: 'pendiente' | 'vencido' | 'proximo' | 'completado';
+  fechaEspecial?: string;
 }
 
 type AgendaTab = 'hoy' | 'estaSemana' | 'esteMes';
+
+type CategoryType = 'fechas-especiales' | 'pagos-cobros' | 'acciones-tareas' | 'viajes' | 'consolidados' | 'eventos';
+
+interface CategoryData {
+  id: CategoryType;
+  title: string;
+  subtitle: string;
+  icon: string;
+  items: AgendaItem[];
+}
 
 export function CalendarioPage() {
   const [currentDate, setCurrentDate] = useState(new Date(2026, 0, 1)); // Enero 2026
   const [viewMode, setViewMode] = useState<ViewMode>('agenda');
   const [filterType, setFilterType] = useState<FilterType>('todos');
   const [activeAgendaTab, setActiveAgendaTab] = useState<AgendaTab>('hoy');
-  const [agendaItems, setAgendaItems] = useState<{
-    hoy: AgendaItem[];
-    estaSemana: AgendaItem[];
-    esteMes: AgendaItem[];
-  }>({ hoy: [], estaSemana: [], esteMes: [] });
+  const [categoriesData, setCategoriesData] = useState<{
+    hoy: CategoryData[];
+    estaSemana: CategoryData[];
+    esteMes: CategoryData[];
+  }>({ 
+    hoy: [], 
+    estaSemana: [], 
+    esteMes: [] 
+  });
 
-  // Generar items de agenda basados en datos mock
+  // Generar items de agenda organizados por categorías
   useEffect(() => {
     const today = new Date(2026, 0, 1);
     const tomorrow = addDays(today, 1);
-    const weekStart = startOfWeek(today, { weekStartsOn: 1 });
-    const weekEnd = endOfWeek(today, { weekStartsOn: 1 });
-    const monthStart = startOfMonth(today);
-    const monthEnd = endOfMonth(today);
+    const nextWeek = addDays(today, 7);
 
     // Cargar clientes desde localStorage
     let clients: any[] = [];
@@ -89,10 +103,137 @@ export function CalendarioPage() {
       }
     }
 
-    // Items para HOY - 6 eventos
+    // Función para organizar items por categorías
+    const organizeByCategories = (items: AgendaItem[]): CategoryData[] => {
+      const categories: CategoryData[] = [
+        {
+          id: 'fechas-especiales',
+          title: 'Recordatorios · Fechas especiales',
+          subtitle: 'Cumpleaños, aniversarios y fechas personales',
+          icon: 'cake',
+          items: items.filter(item => item.type === 'cumpleanos' || item.type === 'aniversario' || item.type === 'fecha')
+        },
+        {
+          id: 'pagos-cobros',
+          title: 'Recordatorios · Pagos y cobros',
+          subtitle: 'Pendientes, vencidos y próximos',
+          icon: 'payment',
+          items: items.filter(item => item.type === 'pago')
+        },
+        {
+          id: 'acciones-tareas',
+          title: 'Acciones y tareas',
+          subtitle: 'Seguimientos y acciones del agente',
+          icon: 'task_alt',
+          items: items.filter(item => item.type === 'llamada' || item.type === 'tarea' || item.type === 'oportunidad')
+        },
+        {
+          id: 'viajes',
+          title: 'Recordatorios · Viajes',
+          subtitle: 'Salidas, regresos y fechas de viaje',
+          icon: 'flight_takeoff',
+          items: items.filter(item => item.type === 'viaje' || item.type === 'salida' || item.type === 'cliente')
+        },
+        {
+          id: 'consolidados',
+          title: 'Consolidados',
+          subtitle: 'Vista unificada de todos los recordatorios',
+          icon: 'dashboard',
+          items: items // Todos los items para vista consolidada
+        },
+        {
+          id: 'eventos',
+          title: 'Eventos',
+          subtitle: 'Eventos y actividades programadas',
+          icon: 'event',
+          items: items.filter(item => item.type === 'evento')
+        }
+      ];
+      return categories;
+    };
+
+    // Items para HOY
     const hoyItems: AgendaItem[] = [
+      // Fechas especiales
       {
         id: 'h1',
+        text: 'Cumpleaños de María González',
+        type: 'cumpleanos',
+        date: today,
+        priority: 'media',
+        cliente: 'María González',
+        fechaEspecial: '01 de Enero'
+      },
+      {
+        id: 'h2',
+        text: 'Aniversario de boda - Familia López',
+        type: 'aniversario',
+        date: today,
+        priority: 'baja',
+        cliente: 'Familia López',
+        fechaEspecial: '01 de Enero'
+      },
+      // Pagos y cobros
+      {
+        id: 'h3',
+        text: 'Pago pendiente reserva #458 (vence hoy)',
+        type: 'pago',
+        date: today,
+        priority: 'alta',
+        cliente: clients[2]?.firstName && clients[2]?.lastName ? `${clients[2].firstName} ${clients[2].lastName}` : 'María González',
+        monto: '$2,450.00',
+        estado: 'vencido'
+      },
+      {
+        id: 'h4',
+        text: 'Pago recibido reserva #342 - Confirmar',
+        type: 'pago',
+        date: today,
+        priority: 'media',
+        cliente: 'Ana Martínez',
+        monto: '$1,850.00',
+        estado: 'completado'
+      },
+      {
+        id: 'h5',
+        text: 'Cobro próximo reserva #521 (vence mañana)',
+        type: 'pago',
+        date: tomorrow,
+        priority: 'alta',
+        cliente: 'Juan Pérez',
+        monto: '$3,200.00',
+        estado: 'proximo'
+      },
+      // Acciones y tareas
+      {
+        id: 'h6',
+        text: `Llamar a ${clients[1]?.firstName || 'Henrry'} – seguimiento cotización`,
+        type: 'llamada',
+        date: today,
+        priority: 'media',
+        numeroCotizacion: 'COT-2026-0123',
+        cliente: clients[1]?.firstName || 'Henrry'
+      },
+      {
+        id: 'h7',
+        text: 'Revisar propuesta comercial - Cliente Silva',
+        type: 'tarea',
+        date: today,
+        priority: 'alta',
+        cliente: 'Roberto Silva',
+        numeroCotizacion: 'COT-2026-0789'
+      },
+      {
+        id: 'h8',
+        text: 'Enviar documentación adicional - Cliente Premium',
+        type: 'tarea',
+        date: today,
+        priority: 'media',
+        cliente: 'Corporación Global Travel'
+      },
+      // Viajes
+      {
+        id: 'h9',
         text: `${clients[0]?.firstName || 'Arieldi'} ${clients[0]?.lastName || 'Marrero'} viaja mañana`,
         type: 'viaje',
         date: tomorrow,
@@ -107,23 +248,7 @@ export function CalendarioPage() {
         pasajeros: 2
       },
       {
-        id: 'h2',
-        text: 'Pago pendiente reserva #458 (vence hoy)',
-        type: 'pago',
-        date: today,
-        priority: 'alta',
-        cliente: clients[2]?.firstName && clients[2]?.lastName ? `${clients[2].firstName} ${clients[2].lastName}` : 'María González'
-      },
-      {
-        id: 'h3',
-        text: `Llamar a ${clients[1]?.firstName || 'Henrry'} – seguimiento cotización`,
-        type: 'llamada',
-        date: today,
-        priority: 'media',
-        numeroCotizacion: 'COT-2026-0123'
-      },
-      {
-        id: 'h4',
+        id: 'h10',
         text: 'Revisar confirmación de vuelo - Cliente García',
         type: 'viaje',
         date: today,
@@ -138,7 +263,7 @@ export function CalendarioPage() {
         pasajeros: 1
       },
       {
-        id: 'h5',
+        id: 'h11',
         text: 'Enviar documentos de viaje - Cliente Rodríguez',
         type: 'viaje',
         date: today,
@@ -153,19 +278,98 @@ export function CalendarioPage() {
         pasajeros: 3
       },
       {
-        id: 'h6',
-        text: 'Pago recibido reserva #342 - Confirmar',
-        type: 'pago',
+        id: 'h12',
+        text: 'Regreso de viaje - Cliente Martínez',
+        type: 'viaje',
         date: today,
         priority: 'media',
-        cliente: 'Ana Martínez'
+        cliente: 'Ana Martínez',
+        destino: 'Nueva York, USA',
+        hora: '05:45 PM',
+        aeropuerto: 'JFK - John F. Kennedy International Airport',
+        numeroVuelo: 'AA 2345',
+        aerolinea: 'American Airlines',
+        clase: 'Económica',
+        pasajeros: 1
+      },
+      // Eventos
+      {
+        id: 'h13',
+        text: 'Group Bookings Live Support',
+        type: 'evento',
+        date: today,
+        priority: 'media',
+        hora: '02:00 PM'
+      },
+      {
+        id: 'h14',
+        text: 'Flight Live Support',
+        type: 'evento',
+        date: today,
+        priority: 'media',
+        hora: '04:00 PM'
       }
     ];
 
-    // Items para ESTA SEMANA - 5 eventos
+    // Items para ESTA SEMANA
     const estaSemanaItems: AgendaItem[] = [
+      // Fechas especiales
       {
         id: 's1',
+        text: 'Cumpleaños cliente premium - Enviar felicitación',
+        type: 'cumpleanos',
+        priority: 'media',
+        cliente: 'María González',
+        fechaEspecial: '03 de Enero'
+      },
+      {
+        id: 's2',
+        text: 'Aniversario de empresa - Cliente Corporativo',
+        type: 'aniversario',
+        priority: 'baja',
+        cliente: 'Tech Solutions Inc.',
+        fechaEspecial: '05 de Enero'
+      },
+      // Pagos y cobros
+      {
+        id: 's3',
+        text: 'Pago por vencer reserva #521 (vence el viernes)',
+        type: 'pago',
+        priority: 'alta',
+        cliente: 'Juan Pérez',
+        numeroCotizacion: 'COT-2026-0521',
+        monto: '$3,200.00',
+        estado: 'proximo'
+      },
+      {
+        id: 's4',
+        text: 'Pago pendiente reserva #678',
+        type: 'pago',
+        priority: 'alta',
+        cliente: 'Roberto Silva',
+        monto: '$1,950.00',
+        estado: 'pendiente'
+      },
+      // Acciones y tareas
+      {
+        id: 's5',
+        text: 'Seguimiento cotización #789 - Cliente Silva',
+        type: 'llamada',
+        priority: 'media',
+        cliente: 'Roberto Silva',
+        numeroCotizacion: 'COT-2026-0789'
+      },
+      {
+        id: 's6',
+        text: 'Revisar renovación de contrato - Cliente VIP',
+        type: 'oportunidad',
+        priority: 'alta',
+        cliente: 'Corporación Global Travel',
+        numeroCotizacion: 'COT-2026-0890'
+      },
+      // Viajes
+      {
+        id: 's7',
         text: 'Salida grupo familiar - Familia López',
         type: 'salida',
         priority: 'alta',
@@ -179,22 +383,7 @@ export function CalendarioPage() {
         pasajeros: 4
       },
       {
-        id: 's2',
-        text: 'Pago por vencer reserva #521 (vence el viernes)',
-        type: 'pago',
-        priority: 'alta',
-        cliente: 'Juan Pérez',
-        numeroCotizacion: 'COT-2026-0521'
-      },
-      {
-        id: 's3',
-        text: 'Cumpleaños cliente premium - Enviar felicitación',
-        type: 'cumpleanos',
-        priority: 'media',
-        cliente: 'María González'
-      },
-      {
-        id: 's4',
+        id: 's8',
         text: 'Grupo familiar viaja - Confirmar detalles',
         type: 'viaje',
         priority: 'alta',
@@ -207,20 +396,58 @@ export function CalendarioPage() {
         clase: 'Business',
         pasajeros: 4
       },
+      // Eventos
       {
-        id: 's5',
-        text: 'Seguimiento cotización #789 - Cliente Silva',
-        type: 'llamada',
+        id: 's9',
+        text: 'Cruise Live Support',
+        type: 'evento',
         priority: 'media',
-        cliente: 'Roberto Silva',
-        numeroCotizacion: 'COT-2026-0789'
+        hora: '02:00 PM'
+      },
+      {
+        id: 's10',
+        text: 'DMCs Live Support',
+        type: 'evento',
+        priority: 'media',
+        hora: '04:00 PM'
       }
     ];
 
-    // Items para ESTE MES - 5 eventos
+    // Items para ESTE MES
     const esteMesItems: AgendaItem[] = [
+      // Fechas especiales
       {
         id: 'm1',
+        text: 'Cumpleaños de cliente VIP',
+        type: 'cumpleanos',
+        priority: 'media',
+        cliente: 'Corporación Global Travel',
+        fechaEspecial: '15 de Enero'
+      },
+      // Pagos y cobros
+      {
+        id: 'm2',
+        text: 'Pago mensual suscripción premium',
+        type: 'pago',
+        priority: 'media',
+        cliente: 'Tech Solutions Inc.',
+        monto: '$5,000.00',
+        estado: 'proximo',
+        fechaEspecial: '20 de Enero'
+      },
+      // Acciones y tareas
+      {
+        id: 'm3',
+        text: 'Oportunidad sin cerrar - Viaje luna de miel',
+        type: 'oportunidad',
+        priority: 'alta',
+        cliente: 'Pareja Martínez',
+        destino: 'Maldivas',
+        numeroCotizacion: 'COT-2026-0456'
+      },
+      // Viajes
+      {
+        id: 'm4',
         text: 'Cliente regresa de viaje - Arieldi Marrero',
         type: 'cliente',
         priority: 'media',
@@ -234,25 +461,7 @@ export function CalendarioPage() {
         pasajeros: 2
       },
       {
-        id: 'm2',
-        text: 'Oportunidad sin cerrar - Viaje luna de miel',
-        type: 'oportunidad',
-        priority: 'alta',
-        cliente: 'Pareja Martínez',
-        destino: 'Maldivas',
-        numeroCotizacion: 'COT-2026-0456'
-      },
-      {
-        id: 'm3',
-        text: 'Feria comercial de turismo - Participación',
-        type: 'fecha',
-        priority: 'media',
-        destino: 'Miami, FL',
-        hora: '10:00 AM',
-        aeropuerto: 'MIA - Miami International Airport'
-      },
-      {
-        id: 'm4',
+        id: 'm5',
         text: 'Viaje corporativo - Empresa Tech Solutions',
         type: 'viaje',
         priority: 'alta',
@@ -265,20 +474,22 @@ export function CalendarioPage() {
         clase: 'Business',
         pasajeros: 2
       },
+      // Eventos
       {
-        id: 'm5',
-        text: 'Revisar renovación de contrato - Cliente VIP',
-        type: 'oportunidad',
-        priority: 'alta',
-        cliente: 'Corporación Global Travel',
-        numeroCotizacion: 'COT-2026-0890'
+        id: 'm6',
+        text: 'Feria comercial de turismo - Participación',
+        type: 'evento',
+        priority: 'media',
+        destino: 'Miami, FL',
+        hora: '10:00 AM',
+        aeropuerto: 'MIA - Miami International Airport'
       }
     ];
 
-    setAgendaItems({
-      hoy: hoyItems,
-      estaSemana: estaSemanaItems,
-      esteMes: esteMesItems
+    setCategoriesData({
+      hoy: organizeByCategories(hoyItems),
+      estaSemana: organizeByCategories(estaSemanaItems),
+      esteMes: organizeByCategories(esteMesItems)
     });
   }, []);
 
@@ -459,226 +670,143 @@ export function CalendarioPage() {
               </TabsList>
             </Tabs>
 
-            {/* Contenido del tab activo */}
+            {/* Contenido del tab activo - Grid de 6 categorías */}
             <div className="calendario-page__agenda-content">
-              {activeAgendaTab === 'hoy' && (
-                <ul className="calendario-page__agenda-section-list">
-                  {agendaItems.hoy.map((item) => (
-                    <li key={item.id} className="calendario-page__agenda-section-item">
-                      <span className={`material-symbols-outlined calendario-page__agenda-item-icon calendario-page__agenda-item-icon--${item.type}`}>
-                        {item.type === 'viaje' ? 'flight_takeoff' : item.type === 'pago' ? 'payment' : 'phone'}
-                      </span>
-                      <div className="calendario-page__agenda-item-content">
-                        <div className="calendario-page__agenda-item-main">{item.text}</div>
-                        {(item.destino || item.cliente || item.numeroCotizacion || item.numeroVuelo) && (
-                          <div className="calendario-page__agenda-item-details">
-                            {item.numeroCotizacion && (
-                              <span className="calendario-page__agenda-item-detail">
-                                <span className="material-symbols-outlined">description</span>
-                                {item.numeroCotizacion}
-                              </span>
-                            )}
-                            {item.destino && (
-                              <span className="calendario-page__agenda-item-detail">
-                                <span className="material-symbols-outlined">location_on</span>
-                                {item.destino}
-                              </span>
-                            )}
-                            {item.numeroVuelo && (
-                              <span className="calendario-page__agenda-item-detail">
-                                <span className="material-symbols-outlined">flight</span>
-                                {item.numeroVuelo}
-                              </span>
-                            )}
-                            {item.aerolinea && (
-                              <span className="calendario-page__agenda-item-detail">
-                                <span className="material-symbols-outlined">airlines</span>
-                                {item.aerolinea}
-                              </span>
-                            )}
-                            {item.hora && (
-                              <span className="calendario-page__agenda-item-detail">
-                                <span className="material-symbols-outlined">schedule</span>
-                                {item.hora}
-                              </span>
-                            )}
-                            {item.aeropuerto && (
-                              <span className="calendario-page__agenda-item-detail">
-                                <span className="material-symbols-outlined">airport_shuttle</span>
-                                {item.aeropuerto}
-                              </span>
-                            )}
-                            {item.clase && (
-                              <span className="calendario-page__agenda-item-detail">
-                                <span className="material-symbols-outlined">confirmation_number</span>
-                                {item.clase}
-                              </span>
-                            )}
-                            {item.pasajeros && (
-                              <span className="calendario-page__agenda-item-detail">
-                                <span className="material-symbols-outlined">group</span>
-                                {item.pasajeros} pasajero{item.pasajeros > 1 ? 's' : ''}
-                              </span>
-                            )}
-                            {item.cliente && (
-                              <span className="calendario-page__agenda-item-detail">
-                                <span className="material-symbols-outlined">person</span>
-                                {item.cliente}
-                              </span>
-                            )}
-                          </div>
-                        )}
+              <div className="calendario-page__categories-grid">
+                {categoriesData[activeAgendaTab].map((category) => (
+                  <Card key={category.id} className="calendario-page__category-card">
+                    <div className="calendario-page__category-header">
+                      <div className="calendario-page__category-header-left">
+                        <span className={`material-symbols-outlined calendario-page__category-icon calendario-page__category-icon--${category.id}`}>
+                          {category.icon}
+                        </span>
+                        <div className="calendario-page__category-title-wrapper">
+                          <h3 className="calendario-page__category-title">{category.title}</h3>
+                          <p className="calendario-page__category-subtitle">{category.subtitle}</p>
+                        </div>
                       </div>
-                    </li>
-                  ))}
-                </ul>
-              )}
-
-              {activeAgendaTab === 'estaSemana' && (
-                <ul className="calendario-page__agenda-section-list">
-                  {agendaItems.estaSemana.map((item) => (
-                    <li key={item.id} className="calendario-page__agenda-section-item">
-                      <span className={`material-symbols-outlined calendario-page__agenda-item-icon calendario-page__agenda-item-icon--${item.type}`}>
-                        {item.type === 'salida' ? 'airplane_ticket' : item.type === 'pago' ? 'payment' : item.type === 'cumpleanos' ? 'cake' : item.type === 'viaje' ? 'flight_takeoff' : 'phone'}
-                      </span>
-                      <div className="calendario-page__agenda-item-content">
-                        <div className="calendario-page__agenda-item-main">{item.text}</div>
-                        {(item.destino || item.cliente || item.numeroCotizacion || item.numeroVuelo) && (
-                          <div className="calendario-page__agenda-item-details">
-                            {item.numeroCotizacion && (
-                              <span className="calendario-page__agenda-item-detail">
-                                <span className="material-symbols-outlined">description</span>
-                                {item.numeroCotizacion}
+                      <Badge variant="secondary" className="calendario-page__category-badge">
+                        {category.items.length}
+                      </Badge>
+                    </div>
+                    <div className="calendario-page__category-items">
+                      {category.items.length > 0 ? (
+                        <ul className="calendario-page__category-list">
+                          {category.items.map((item) => (
+                            <li key={item.id} className="calendario-page__category-item">
+                              <span className={`material-symbols-outlined calendario-page__agenda-item-icon calendario-page__agenda-item-icon--${item.type}`}>
+                                {item.type === 'viaje' ? 'flight_takeoff' : 
+                                 item.type === 'pago' ? 'payment' : 
+                                 item.type === 'llamada' ? 'phone' : 
+                                 item.type === 'salida' ? 'airplane_ticket' : 
+                                 item.type === 'cumpleanos' ? 'cake' : 
+                                 item.type === 'aniversario' ? 'favorite' : 
+                                 item.type === 'tarea' ? 'task_alt' : 
+                                 item.type === 'oportunidad' ? 'trending_up' : 
+                                 item.type === 'cliente' ? 'group' : 
+                                 item.type === 'evento' ? 'event' : 
+                                 'event'}
                               </span>
-                            )}
-                            {item.destino && (
-                              <span className="calendario-page__agenda-item-detail">
-                                <span className="material-symbols-outlined">location_on</span>
-                                {item.destino}
-                              </span>
-                            )}
-                            {item.numeroVuelo && (
-                              <span className="calendario-page__agenda-item-detail">
-                                <span className="material-symbols-outlined">flight</span>
-                                {item.numeroVuelo}
-                              </span>
-                            )}
-                            {item.aerolinea && (
-                              <span className="calendario-page__agenda-item-detail">
-                                <span className="material-symbols-outlined">airlines</span>
-                                {item.aerolinea}
-                              </span>
-                            )}
-                            {item.hora && (
-                              <span className="calendario-page__agenda-item-detail">
-                                <span className="material-symbols-outlined">schedule</span>
-                                {item.hora}
-                              </span>
-                            )}
-                            {item.aeropuerto && (
-                              <span className="calendario-page__agenda-item-detail">
-                                <span className="material-symbols-outlined">airport_shuttle</span>
-                                {item.aeropuerto}
-                              </span>
-                            )}
-                            {item.clase && (
-                              <span className="calendario-page__agenda-item-detail">
-                                <span className="material-symbols-outlined">confirmation_number</span>
-                                {item.clase}
-                              </span>
-                            )}
-                            {item.pasajeros && (
-                              <span className="calendario-page__agenda-item-detail">
-                                <span className="material-symbols-outlined">group</span>
-                                {item.pasajeros} pasajero{item.pasajeros > 1 ? 's' : ''}
-                              </span>
-                            )}
-                            {item.cliente && (
-                              <span className="calendario-page__agenda-item-detail">
-                                <span className="material-symbols-outlined">person</span>
-                                {item.cliente}
-                              </span>
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              )}
-
-              {activeAgendaTab === 'esteMes' && (
-                <ul className="calendario-page__agenda-section-list">
-                  {agendaItems.esteMes.map((item) => (
-                    <li key={item.id} className="calendario-page__agenda-section-item">
-                      <span className={`material-symbols-outlined calendario-page__agenda-item-icon calendario-page__agenda-item-icon--${item.type}`}>
-                        {item.type === 'cliente' ? 'group' : item.type === 'oportunidad' ? 'trending_up' : item.type === 'fecha' ? 'event' : item.type === 'viaje' ? 'flight_takeoff' : 'event'}
-                      </span>
-                      <div className="calendario-page__agenda-item-content">
-                        <div className="calendario-page__agenda-item-main">{item.text}</div>
-                        {(item.destino || item.cliente || item.numeroCotizacion || item.numeroVuelo) && (
-                          <div className="calendario-page__agenda-item-details">
-                            {item.numeroCotizacion && (
-                              <span className="calendario-page__agenda-item-detail">
-                                <span className="material-symbols-outlined">description</span>
-                                {item.numeroCotizacion}
-                              </span>
-                            )}
-                            {item.destino && (
-                              <span className="calendario-page__agenda-item-detail">
-                                <span className="material-symbols-outlined">location_on</span>
-                                {item.destino}
-                              </span>
-                            )}
-                            {item.numeroVuelo && (
-                              <span className="calendario-page__agenda-item-detail">
-                                <span className="material-symbols-outlined">flight</span>
-                                {item.numeroVuelo}
-                              </span>
-                            )}
-                            {item.aerolinea && (
-                              <span className="calendario-page__agenda-item-detail">
-                                <span className="material-symbols-outlined">airlines</span>
-                                {item.aerolinea}
-                              </span>
-                            )}
-                            {item.hora && (
-                              <span className="calendario-page__agenda-item-detail">
-                                <span className="material-symbols-outlined">schedule</span>
-                                {item.hora}
-                              </span>
-                            )}
-                            {item.aeropuerto && (
-                              <span className="calendario-page__agenda-item-detail">
-                                <span className="material-symbols-outlined">airport_shuttle</span>
-                                {item.aeropuerto}
-                              </span>
-                            )}
-                            {item.clase && (
-                              <span className="calendario-page__agenda-item-detail">
-                                <span className="material-symbols-outlined">confirmation_number</span>
-                                {item.clase}
-                              </span>
-                            )}
-                            {item.pasajeros && (
-                              <span className="calendario-page__agenda-item-detail">
-                                <span className="material-symbols-outlined">group</span>
-                                {item.pasajeros} pasajero{item.pasajeros > 1 ? 's' : ''}
-                              </span>
-                            )}
-                            {item.cliente && (
-                              <span className="calendario-page__agenda-item-detail">
-                                <span className="material-symbols-outlined">person</span>
-                                {item.cliente}
-                              </span>
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              )}
+                              <div className="calendario-page__agenda-item-content">
+                                <div className="calendario-page__agenda-item-main">{item.text}</div>
+                                {(item.destino || item.cliente || item.numeroCotizacion || item.numeroVuelo || item.monto || item.fechaEspecial) && (
+                                  <div className="calendario-page__agenda-item-details">
+                                    {item.fechaEspecial && (
+                                      <span className="calendario-page__agenda-item-detail">
+                                        <span className="material-symbols-outlined">calendar_today</span>
+                                        {item.fechaEspecial}
+                                      </span>
+                                    )}
+                                    {item.numeroCotizacion && (
+                                      <span className="calendario-page__agenda-item-detail">
+                                        <span className="material-symbols-outlined">description</span>
+                                        {item.numeroCotizacion}
+                                      </span>
+                                    )}
+                                    {item.monto && (
+                                      <span className="calendario-page__agenda-item-detail">
+                                        <span className="material-symbols-outlined">attach_money</span>
+                                        {item.monto}
+                                      </span>
+                                    )}
+                                    {item.estado && (
+                                      <span className={`calendario-page__agenda-item-detail calendario-page__agenda-item-detail--${item.estado}`}>
+                                        <span className="material-symbols-outlined">
+                                          {item.estado === 'vencido' ? 'error' : 
+                                           item.estado === 'proximo' ? 'schedule' : 
+                                           item.estado === 'completado' ? 'check_circle' : 
+                                           'pending'}
+                                        </span>
+                                        {item.estado === 'vencido' ? 'Vencido' : 
+                                         item.estado === 'proximo' ? 'Próximo' : 
+                                         item.estado === 'completado' ? 'Completado' : 
+                                         'Pendiente'}
+                                      </span>
+                                    )}
+                                    {item.destino && (
+                                      <span className="calendario-page__agenda-item-detail">
+                                        <span className="material-symbols-outlined">location_on</span>
+                                        {item.destino}
+                                      </span>
+                                    )}
+                                    {item.numeroVuelo && (
+                                      <span className="calendario-page__agenda-item-detail">
+                                        <span className="material-symbols-outlined">flight</span>
+                                        {item.numeroVuelo}
+                                      </span>
+                                    )}
+                                    {item.aerolinea && (
+                                      <span className="calendario-page__agenda-item-detail">
+                                        <span className="material-symbols-outlined">airlines</span>
+                                        {item.aerolinea}
+                                      </span>
+                                    )}
+                                    {item.hora && (
+                                      <span className="calendario-page__agenda-item-detail">
+                                        <span className="material-symbols-outlined">schedule</span>
+                                        {item.hora}
+                                      </span>
+                                    )}
+                                    {item.aeropuerto && (
+                                      <span className="calendario-page__agenda-item-detail">
+                                        <span className="material-symbols-outlined">airport_shuttle</span>
+                                        {item.aeropuerto}
+                                      </span>
+                                    )}
+                                    {item.clase && (
+                                      <span className="calendario-page__agenda-item-detail">
+                                        <span className="material-symbols-outlined">confirmation_number</span>
+                                        {item.clase}
+                                      </span>
+                                    )}
+                                    {item.pasajeros && (
+                                      <span className="calendario-page__agenda-item-detail">
+                                        <span className="material-symbols-outlined">group</span>
+                                        {item.pasajeros} pasajero{item.pasajeros > 1 ? 's' : ''}
+                                      </span>
+                                    )}
+                                    {item.cliente && (
+                                      <span className="calendario-page__agenda-item-detail">
+                                        <span className="material-symbols-outlined">person</span>
+                                        {item.cliente}
+                                      </span>
+                                    )}
+                                  </div>
+                                )}
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <div className="calendario-page__category-empty">
+                          <span className="material-symbols-outlined">inbox</span>
+                          <p>No hay elementos en esta categoría</p>
+                        </div>
+                      )}
+                    </div>
+                  </Card>
+                ))}
+              </div>
             </div>
           </div>
         </Card>

@@ -243,11 +243,195 @@
     padding-top: $spacing-md;
   }
 
+  &__categories-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: $spacing-lg;
+    width: 100%;
+
+    @media (max-width: 1200px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__category-card {
+    @include flex-column;
+    gap: $spacing-md;
+    padding: $spacing-lg;
+    background: white;
+    border-radius: $radius-lg;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s;
+    height: 100%;
+    min-height: 400px;
+    max-height: 600px;
+
+    &:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transform: translateY(-2px);
+    }
+  }
+
+  &__category-header {
+    @include flex-between;
+    align-items: flex-start;
+    gap: $spacing-md;
+    padding-bottom: $spacing-md;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  &__category-header-left {
+    @include flex-center;
+    gap: $spacing-sm;
+    align-items: flex-start;
+    flex: 1;
+  }
+
+  &__category-icon {
+    font-size: 1.5rem;
+    margin-top: 4px;
+    flex-shrink: 0;
+
+    &--fechas-especiales {
+      color: #f59e0b;
+    }
+
+    &--pagos-cobros {
+      color: #ef4444;
+    }
+
+    &--acciones-tareas {
+      color: #10b981;
+    }
+
+    &--viajes {
+      color: #3b82f6;
+    }
+
+    &--consolidados {
+      color: #8b5cf6;
+    }
+
+    &--eventos {
+      color: #06b6d4;
+    }
+  }
+
+  &__category-title-wrapper {
+    @include flex-column;
+    gap: 4px;
+    flex: 1;
+  }
+
+  &__category-title {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: $text-primary;
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  &__category-subtitle {
+    font-size: 0.75rem;
+    color: $text-muted;
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  &__category-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: $radius-md;
+    background-color: #f1f5f9;
+    color: $text-primary;
+    flex-shrink: 0;
+  }
+
+  &__category-items {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 4px;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+
+      &:hover {
+        background: #94a3b8;
+      }
+    }
+  }
+
+  &__category-list {
+    @include flex-column;
+    gap: $spacing-sm;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  &__category-item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: $spacing-sm;
+    background-color: #f8fafc;
+    border-radius: $radius-md;
+    font-size: 0.875rem;
+    color: $text-primary;
+    transition: all 0.2s;
+    cursor: pointer;
+    gap: $spacing-xs;
+    text-align: left;
+
+    &:hover {
+      background-color: #f1f5f9;
+      transform: translateX(2px);
+    }
+  }
+
+  &__category-empty {
+    @include flex-column;
+    align-items: center;
+    justify-content: center;
+    padding: $spacing-xl;
+    gap: $spacing-sm;
+    color: $text-muted;
+    text-align: center;
+
+    .material-symbols-outlined {
+      font-size: 2rem;
+      opacity: 0.3;
+    }
+
+    p {
+      font-size: 0.875rem;
+      margin: 0;
+    }
+  }
+
   &__agenda-item-icon {
-    font-size: 1.125rem;
-    margin-right: $spacing-sm;
+    font-size: 1rem;
+    margin-right: $spacing-xs;
     color: $text-muted;
     vertical-align: middle;
+    flex-shrink: 0;
+    margin-top: 2px;
 
     &--viaje {
       color: #3b82f6;
@@ -269,6 +453,14 @@
       color: #f59e0b;
     }
 
+    &--aniversario {
+      color: #ec4899;
+    }
+
+    &--tarea {
+      color: #10b981;
+    }
+
     &--cliente {
       color: #6366f1;
     }
@@ -279,6 +471,10 @@
 
     &--fecha {
       color: #64748b;
+    }
+
+    &--evento {
+      color: #06b6d4;
     }
   }
 
@@ -319,6 +515,8 @@
   &__agenda-item-main {
     font-weight: 500;
     color: $text-primary;
+    font-size: 0.875rem;
+    line-height: 1.4;
   }
 
   &__agenda-item-details {
@@ -334,11 +532,30 @@
     display: flex;
     align-items: center;
     gap: 4px;
-    font-size: 0.8125rem;
+    font-size: 0.75rem;
     color: $text-muted;
 
     .material-symbols-outlined {
       font-size: 0.875rem;
+    }
+
+    &--vencido {
+      color: #ef4444;
+      font-weight: 500;
+    }
+
+    &--proximo {
+      color: #f59e0b;
+      font-weight: 500;
+    }
+
+    &--completado {
+      color: #10b981;
+      font-weight: 500;
+    }
+
+    &--pendiente {
+      color: #64748b;
     }
   }
 
