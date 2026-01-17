@@ -8,7 +8,7 @@ import './ChatIAModal.scss';
 interface ChatIAModalProps {
   isOpen: boolean;
   onClose: () => void;
-  buttonRef?: React.RefObject<HTMLButtonElement>;
+  buttonRef?: React.RefObject<HTMLButtonElement | null>;
 }
 
 interface Message {
