@@ -8,6 +8,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import './CalendarioPage.scss';
 
 interface CalendarEvent {
@@ -78,6 +81,15 @@ export function CalendarioPage() {
   const [viewMode, setViewMode] = useState<ViewMode>('agenda');
   const [filterType, setFilterType] = useState<FilterType>('todos');
   const [activeAgendaTab, setActiveAgendaTab] = useState<AgendaTab>('hoy');
+  const [isCreateMenuOpen, setIsCreateMenuOpen] = useState(false);
+  const [isNewEventModalOpen, setIsNewEventModalOpen] = useState(false);
+  const [selectedEventType, setSelectedEventType] = useState<CategoryType | null>(null);
+  const [newEvent, setNewEvent] = useState<Partial<AgendaItem>>({
+    text: '',
+    type: 'tarea',
+    date: new Date(),
+    priority: 'media',
+  });
   const [categoriesData, setCategoriesData] = useState<{
     hoy: CategoryData[];
     estaSemana: CategoryData[];
@@ -550,9 +562,194 @@ export function CalendarioPage() {
 
   const weekDays = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
 
+  // Cerrar el submenu al hacer click fuera
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (isCreateMenuOpen && !target.closest('.calendario-page__create-event-wrapper')) {
+        setIsCreateMenuOpen(false);
+      }
+    };
+
+    if (isCreateMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isCreateMenuOpen]);
+
+  // Función para obtener el tipo de evento según la categoría
+  const getEventTypeFromCategory = (category: CategoryType): AgendaItem['type'] => {
+    switch (category) {
+      case 'fechas-especiales':
+        return 'cumpleanos';
+      case 'pagos-cobros':
+        return 'pago';
+      case 'acciones-tareas':
+        return 'tarea';
+      case 'viajes':
+        return 'viaje';
+      default:
+        return 'tarea';
+    }
+  };
+
+  // Función para convertir hora de formato 24h a formato 12h
+  const formatTime12h = (time24: string): string => {
+    if (!time24) return '';
+    const [hours, minutes] = time24.split(':');
+    const hour = parseInt(hours);
+    const period = hour >= 12 ? 'PM' : 'AM';
+    const hour12 = hour % 12 || 12;
+    return `${hour12}:${minutes} ${period}`;
+  };
+
+  // Función para manejar la creación del evento
+  const handleCreateEvent = () => {
+    if (!selectedEventType || !newEvent.text) return;
+
+    const eventType = getEventTypeFromCategory(selectedEventType);
+    const formattedHora = newEvent.hora ? formatTime12h(newEvent.hora) : undefined;
+    
+    const newEventItem: AgendaItem = {
+      id: `new-${Date.now()}`,
+      text: newEvent.text || '',
+      type: eventType,
+      date: newEvent.date || new Date(),
+      priority: newEvent.priority || 'media',
+      cliente: newEvent.cliente,
+      destino: newEvent.destino,
+      hora: formattedHora,
+      aeropuerto: newEvent.aeropuerto,
+      numeroVuelo: newEvent.numeroVuelo,
+      aerolinea: newEvent.aerolinea,
+      clase: newEvent.clase,
+      pasajeros: newEvent.pasajeros,
+      monto: newEvent.monto,
+      estado: newEvent.estado,
+      numeroCotizacion: newEvent.numeroCotizacion,
+      fechaEspecial: newEvent.fechaEspecial,
+    };
+
+    // Agregar el evento a la categoría correspondiente en todos los tabs
+    setCategoriesData(prev => {
+      const updated = { ...prev };
+      
+      // Agregar a todos los tabs (hoy, estaSemana, esteMes)
+      (['hoy', 'estaSemana', 'esteMes'] as AgendaTab[]).forEach(tab => {
+        const categoryIndex = updated[tab].findIndex(cat => cat.id === selectedEventType);
+        
+        if (categoryIndex !== -1) {
+          updated[tab] = [...updated[tab]];
+          updated[tab][categoryIndex] = {
+            ...updated[tab][categoryIndex],
+            items: [...updated[tab][categoryIndex].items, newEventItem]
+          };
+        }
+      });
+      
+      return updated;
+    });
+
+    // Resetear formulario y cerrar modal
+    setNewEvent({
+      text: '',
+      type: 'tarea',
+      date: new Date(),
+      priority: 'media',
+    });
+    setIsNewEventModalOpen(false);
+    setSelectedEventType(null);
+  };
+
+  // Función para cerrar el modal
+  const handleCloseModal = () => {
+    setIsNewEventModalOpen(false);
+    setSelectedEventType(null);
+    setNewEvent({
+      text: '',
+      type: 'tarea',
+      date: new Date(),
+      priority: 'media',
+    });
+  };
+
   return (
     <div className="calendario-page">
-      <h1 className="calendario-page__title">Calendario</h1>
+      <div className="calendario-page__title-wrapper">
+        <h1 className="calendario-page__title">Calendario</h1>
+        <div className="calendario-page__create-event-wrapper">
+          <Button 
+            className="calendario-page__create-event-btn"
+            onClick={() => setIsCreateMenuOpen(!isCreateMenuOpen)}
+          >
+            <span className="material-symbols-outlined">add</span>
+            Crear evento
+          </Button>
+          {isCreateMenuOpen && (
+            <div className="calendario-page__create-menu">
+              <button
+                className="calendario-page__create-menu-item"
+                onClick={() => {
+                  setSelectedEventType('fechas-especiales');
+                  setIsNewEventModalOpen(true);
+                  setIsCreateMenuOpen(false);
+                }}
+              >
+                <span className="material-symbols-outlined calendario-page__create-menu-icon">cake</span>
+                <div>
+                  <div className="calendario-page__create-menu-title">Fechas especiales</div>
+                  <div className="calendario-page__create-menu-subtitle">Cumpleaños, aniversarios</div>
+                </div>
+              </button>
+              <button
+                className="calendario-page__create-menu-item"
+                onClick={() => {
+                  setSelectedEventType('pagos-cobros');
+                  setIsNewEventModalOpen(true);
+                  setIsCreateMenuOpen(false);
+                }}
+              >
+                <span className="material-symbols-outlined calendario-page__create-menu-icon">payment</span>
+                <div>
+                  <div className="calendario-page__create-menu-title">Pagos y cobros</div>
+                  <div className="calendario-page__create-menu-subtitle">Pendientes, vencidos</div>
+                </div>
+              </button>
+              <button
+                className="calendario-page__create-menu-item"
+                onClick={() => {
+                  setSelectedEventType('acciones-tareas');
+                  setIsNewEventModalOpen(true);
+                  setIsCreateMenuOpen(false);
+                }}
+              >
+                <span className="material-symbols-outlined calendario-page__create-menu-icon">task_alt</span>
+                <div>
+                  <div className="calendario-page__create-menu-title">Acciones y tareas</div>
+                  <div className="calendario-page__create-menu-subtitle">Seguimientos, acciones</div>
+                </div>
+              </button>
+              <button
+                className="calendario-page__create-menu-item"
+                onClick={() => {
+                  setSelectedEventType('viajes');
+                  setIsNewEventModalOpen(true);
+                  setIsCreateMenuOpen(false);
+                }}
+              >
+                <span className="material-symbols-outlined calendario-page__create-menu-icon">flight_takeoff</span>
+                <div>
+                  <div className="calendario-page__create-menu-title">Viajes</div>
+                  <div className="calendario-page__create-menu-subtitle">Salidas, regresos</div>
+                </div>
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
       <div className="calendario-page__header">
         <div className="calendario-page__header-left">
           <div className="calendario-page__controls">
@@ -814,6 +1011,335 @@ export function CalendarioPage() {
           </div>
         </Card>
       )}
+
+      {/* Modal Nuevo Evento */}
+      <Dialog open={isNewEventModalOpen} onOpenChange={handleCloseModal}>
+        <DialogContent className="calendario-page__event-modal">
+          <DialogHeader>
+            <DialogTitle className="calendario-page__event-modal-title">
+              Nuevo {selectedEventType === 'fechas-especiales' ? 'Fecha Especial' :
+                     selectedEventType === 'pagos-cobros' ? 'Pago/Cobro' :
+                     selectedEventType === 'acciones-tareas' ? 'Acción/Tarea' :
+                     selectedEventType === 'viajes' ? 'Viaje' : 'Evento'}
+            </DialogTitle>
+          </DialogHeader>
+          <div className="calendario-page__event-modal-form">
+            <div className="calendario-page__form-group">
+              <Label htmlFor="text" className="calendario-page__form-label">
+                Título / Descripción
+              </Label>
+              <Input
+                id="text"
+                value={newEvent.text || ''}
+                onChange={(e) => setNewEvent({ ...newEvent, text: e.target.value })}
+                placeholder="Ingresa el título o descripción del evento"
+                className="calendario-page__form-input"
+              />
+            </div>
+
+            <div className="calendario-page__form-row">
+              <div className="calendario-page__form-group">
+                <Label htmlFor="date" className="calendario-page__form-label">
+                  Fecha
+                </Label>
+                <Input
+                  id="date"
+                  type="date"
+                  value={newEvent.date ? format(newEvent.date, 'yyyy-MM-dd') : ''}
+                  onChange={(e) => setNewEvent({ ...newEvent, date: e.target.value ? new Date(e.target.value) : new Date() })}
+                  className="calendario-page__form-input"
+                />
+              </div>
+
+              <div className="calendario-page__form-group">
+                <Label htmlFor="priority" className="calendario-page__form-label">
+                  Prioridad
+                </Label>
+                <Select 
+                  value={newEvent.priority || 'media'} 
+                  onValueChange={(value) => setNewEvent({ ...newEvent, priority: value as 'alta' | 'media' | 'baja' })}
+                >
+                  <SelectTrigger className="calendario-page__form-input">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="alta">Alta</SelectItem>
+                    <SelectItem value="media">Media</SelectItem>
+                    <SelectItem value="baja">Baja</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            {/* Campos específicos según el tipo */}
+            {selectedEventType === 'fechas-especiales' && (
+              <>
+                <div className="calendario-page__form-group">
+                  <Label htmlFor="cliente" className="calendario-page__form-label">
+                    Cliente / Persona
+                  </Label>
+                  <Input
+                    id="cliente"
+                    value={newEvent.cliente || ''}
+                    onChange={(e) => setNewEvent({ ...newEvent, cliente: e.target.value })}
+                    placeholder="Nombre del cliente o persona"
+                    className="calendario-page__form-input"
+                  />
+                </div>
+                <div className="calendario-page__form-row">
+                  <div className="calendario-page__form-group">
+                    <Label htmlFor="fechaEspecial" className="calendario-page__form-label">
+                      Fecha Especial
+                    </Label>
+                    <Input
+                      id="fechaEspecial"
+                      value={newEvent.fechaEspecial || ''}
+                      onChange={(e) => setNewEvent({ ...newEvent, fechaEspecial: e.target.value })}
+                      placeholder="Ej: 01 de Enero"
+                      className="calendario-page__form-input"
+                    />
+                  </div>
+                  <div className="calendario-page__form-group">
+                    <Label htmlFor="hora" className="calendario-page__form-label">
+                      Hora (opcional)
+                    </Label>
+                    <Input
+                      id="hora"
+                      type="time"
+                      value={newEvent.hora || ''}
+                      onChange={(e) => setNewEvent({ ...newEvent, hora: e.target.value })}
+                      className="calendario-page__form-input"
+                    />
+                  </div>
+                </div>
+              </>
+            )}
+
+            {selectedEventType === 'pagos-cobros' && (
+              <>
+                <div className="calendario-page__form-group">
+                  <Label htmlFor="cliente" className="calendario-page__form-label">
+                    Cliente
+                  </Label>
+                  <Input
+                    id="cliente"
+                    value={newEvent.cliente || ''}
+                    onChange={(e) => setNewEvent({ ...newEvent, cliente: e.target.value })}
+                    placeholder="Nombre del cliente"
+                    className="calendario-page__form-input"
+                  />
+                </div>
+                <div className="calendario-page__form-row">
+                  <div className="calendario-page__form-group">
+                    <Label htmlFor="monto" className="calendario-page__form-label">
+                      Monto
+                    </Label>
+                    <Input
+                      id="monto"
+                      value={newEvent.monto || ''}
+                      onChange={(e) => setNewEvent({ ...newEvent, monto: e.target.value })}
+                      placeholder="Ej: $2,450.00"
+                      className="calendario-page__form-input"
+                    />
+                  </div>
+                  <div className="calendario-page__form-group">
+                    <Label htmlFor="estado" className="calendario-page__form-label">
+                      Estado
+                    </Label>
+                    <Select 
+                      value={newEvent.estado || 'pendiente'} 
+                      onValueChange={(value) => setNewEvent({ ...newEvent, estado: value as 'pendiente' | 'vencido' | 'proximo' | 'completado' })}
+                    >
+                      <SelectTrigger className="calendario-page__form-input">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="pendiente">Pendiente</SelectItem>
+                        <SelectItem value="vencido">Vencido</SelectItem>
+                        <SelectItem value="proximo">Próximo</SelectItem>
+                        <SelectItem value="completado">Completado</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                <div className="calendario-page__form-group">
+                  <Label htmlFor="numeroCotizacion" className="calendario-page__form-label">
+                    N° Cotización / Reserva
+                  </Label>
+                  <Input
+                    id="numeroCotizacion"
+                    value={newEvent.numeroCotizacion || ''}
+                    onChange={(e) => setNewEvent({ ...newEvent, numeroCotizacion: e.target.value })}
+                    placeholder="Ej: COT-2026-0123"
+                    className="calendario-page__form-input"
+                  />
+                </div>
+              </>
+            )}
+
+            {selectedEventType === 'acciones-tareas' && (
+              <>
+                <div className="calendario-page__form-group">
+                  <Label htmlFor="cliente" className="calendario-page__form-label">
+                    Cliente
+                  </Label>
+                  <Input
+                    id="cliente"
+                    value={newEvent.cliente || ''}
+                    onChange={(e) => setNewEvent({ ...newEvent, cliente: e.target.value })}
+                    placeholder="Nombre del cliente"
+                    className="calendario-page__form-input"
+                  />
+                </div>
+                <div className="calendario-page__form-group">
+                  <Label htmlFor="numeroCotizacion" className="calendario-page__form-label">
+                    N° Cotización
+                  </Label>
+                  <Input
+                    id="numeroCotizacion"
+                    value={newEvent.numeroCotizacion || ''}
+                    onChange={(e) => setNewEvent({ ...newEvent, numeroCotizacion: e.target.value })}
+                    placeholder="Ej: COT-2026-0123"
+                    className="calendario-page__form-input"
+                  />
+                </div>
+                <div className="calendario-page__form-group">
+                  <Label htmlFor="hora" className="calendario-page__form-label">
+                    Hora
+                  </Label>
+                  <Input
+                    id="hora"
+                    type="time"
+                    value={newEvent.hora || ''}
+                    onChange={(e) => setNewEvent({ ...newEvent, hora: e.target.value })}
+                    className="calendario-page__form-input"
+                  />
+                </div>
+              </>
+            )}
+
+            {selectedEventType === 'viajes' && (
+              <>
+                <div className="calendario-page__form-group">
+                  <Label htmlFor="cliente" className="calendario-page__form-label">
+                    Cliente
+                  </Label>
+                  <Input
+                    id="cliente"
+                    value={newEvent.cliente || ''}
+                    onChange={(e) => setNewEvent({ ...newEvent, cliente: e.target.value })}
+                    placeholder="Nombre del cliente"
+                    className="calendario-page__form-input"
+                  />
+                </div>
+                <div className="calendario-page__form-group">
+                  <Label htmlFor="destino" className="calendario-page__form-label">
+                    Destino
+                  </Label>
+                  <Input
+                    id="destino"
+                    value={newEvent.destino || ''}
+                    onChange={(e) => setNewEvent({ ...newEvent, destino: e.target.value })}
+                    placeholder="Ej: Cancún, México"
+                    className="calendario-page__form-input"
+                  />
+                </div>
+                <div className="calendario-page__form-row">
+                  <div className="calendario-page__form-group">
+                    <Label htmlFor="hora" className="calendario-page__form-label">
+                      Hora
+                    </Label>
+                    <Input
+                      id="hora"
+                      type="time"
+                      value={newEvent.hora || ''}
+                      onChange={(e) => setNewEvent({ ...newEvent, hora: e.target.value })}
+                      className="calendario-page__form-input"
+                    />
+                  </div>
+                  <div className="calendario-page__form-group">
+                    <Label htmlFor="aeropuerto" className="calendario-page__form-label">
+                      Aeropuerto
+                    </Label>
+                    <Input
+                      id="aeropuerto"
+                      value={newEvent.aeropuerto || ''}
+                      onChange={(e) => setNewEvent({ ...newEvent, aeropuerto: e.target.value })}
+                      placeholder="Ej: MIA - Miami International Airport"
+                      className="calendario-page__form-input"
+                    />
+                  </div>
+                </div>
+                <div className="calendario-page__form-row">
+                  <div className="calendario-page__form-group">
+                    <Label htmlFor="numeroVuelo" className="calendario-page__form-label">
+                      N° Vuelo
+                    </Label>
+                    <Input
+                      id="numeroVuelo"
+                      value={newEvent.numeroVuelo || ''}
+                      onChange={(e) => setNewEvent({ ...newEvent, numeroVuelo: e.target.value })}
+                      placeholder="Ej: AA 1234"
+                      className="calendario-page__form-input"
+                    />
+                  </div>
+                  <div className="calendario-page__form-group">
+                    <Label htmlFor="aerolinea" className="calendario-page__form-label">
+                      Aerolínea
+                    </Label>
+                    <Input
+                      id="aerolinea"
+                      value={newEvent.aerolinea || ''}
+                      onChange={(e) => setNewEvent({ ...newEvent, aerolinea: e.target.value })}
+                      placeholder="Ej: American Airlines"
+                      className="calendario-page__form-input"
+                    />
+                  </div>
+                </div>
+                <div className="calendario-page__form-row">
+                  <div className="calendario-page__form-group">
+                    <Label htmlFor="clase" className="calendario-page__form-label">
+                      Clase
+                    </Label>
+                    <Input
+                      id="clase"
+                      value={newEvent.clase || ''}
+                      onChange={(e) => setNewEvent({ ...newEvent, clase: e.target.value })}
+                      placeholder="Ej: Económica"
+                      className="calendario-page__form-input"
+                    />
+                  </div>
+                  <div className="calendario-page__form-group">
+                    <Label htmlFor="pasajeros" className="calendario-page__form-label">
+                      Pasajeros
+                    </Label>
+                    <Input
+                      id="pasajeros"
+                      type="number"
+                      value={newEvent.pasajeros || ''}
+                      onChange={(e) => setNewEvent({ ...newEvent, pasajeros: parseInt(e.target.value) || undefined })}
+                      placeholder="Número de pasajeros"
+                      className="calendario-page__form-input"
+                    />
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={handleCloseModal}>
+              Cancelar
+            </Button>
+            <Button 
+              onClick={handleCreateEvent}
+              className="bg-slate-700 hover:bg-slate-800 text-white"
+              disabled={!newEvent.text}
+            >
+              Crear Evento
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
