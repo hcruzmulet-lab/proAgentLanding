@@ -67,7 +67,7 @@ export function ExpedientesPage() {
   const [expedientes, setExpedientes] = useState<Expediente[]>(expedientesMock);
   const [sortField, setSortField] = useState<'fechaCreacion' | 'fechaViaje' | null>('fechaCreacion');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
-  const [viewMode, setViewMode] = useState<'list' | 'grid'>('grid');
+  const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
 
   const handleLimpiar = () => {
     setFiltros({
@@ -228,31 +228,6 @@ export function ExpedientesPage() {
             </CardContent>
           </Card>
 
-          {/* View Toggle */}
-          <div className="flex justify-end mb-4">
-            <div className="flex gap-1 bg-slate-100 rounded-lg p-1">
-              <button
-                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                  viewMode === 'list' 
-                    ? 'bg-white text-slate-900 shadow-sm' 
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-                onClick={() => setViewMode('list')}
-              >
-                <span className="material-symbols-outlined text-lg">view_list</span>
-              </button>
-              <button
-                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                  viewMode === 'grid' 
-                    ? 'bg-white text-slate-900 shadow-sm' 
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-                onClick={() => setViewMode('grid')}
-              >
-                <span className="material-symbols-outlined text-lg">grid_view</span>
-              </button>
-            </div>
-          </div>
 
           {/* List View */}
           {viewMode === 'list' && (
@@ -400,78 +375,6 @@ export function ExpedientesPage() {
             })}
           </div>
             </>
-          )}
-
-          {/* Grid View */}
-          {viewMode === 'grid' && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {expedientes.map((expediente) => {
-                const estadoBadge = getEstadoBadge(expediente.estado);
-                return (
-                  <Card 
-                    key={expediente.id} 
-                    className="cursor-pointer hover:shadow-lg transition-shadow"
-                    onClick={() => router.push(`/crm/expedientes/${expediente.id}`)}
-                  >
-                    {expediente.imagen && (
-                      <div className="relative h-48 w-full overflow-hidden rounded-t-lg">
-                        <img 
-                          src={expediente.imagen} 
-                          alt={expediente.destino}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    )}
-                    <CardContent className="p-6">
-                      <div className="flex items-start justify-between mb-4">
-                        <div>
-                          <div className="text-lg font-semibold text-slate-900 mb-1">{expediente.numeroExpediente}</div>
-                          <Badge className={`${estadoBadge.bg} ${estadoBadge.text} border-0`}>
-                            {estadoBadge.label}
-                          </Badge>
-                        </div>
-                      </div>
-                      <div className="space-y-2 mb-4">
-                        <div>
-                          <p className="text-sm text-slate-500">Cliente</p>
-                          <p className="text-base font-medium text-slate-900">{expediente.nombre}</p>
-                        </div>
-                        <div>
-                          <p className="text-sm text-slate-500">Destino</p>
-                          <p className="text-base text-slate-900">{expediente.destino}</p>
-                        </div>
-                        <div className="flex gap-4 text-sm">
-                          <div>
-                            <p className="text-slate-500">Fecha viaje</p>
-                            <p className="text-slate-900">{expediente.fechaViaje}</p>
-                          </div>
-                          <div>
-                            <p className="text-slate-500">Pasajeros</p>
-                            <p className="text-slate-900">{expediente.pasajeros}</p>
-                          </div>
-                        </div>
-                        <div className="flex gap-4 text-sm pt-2">
-                          <div>
-                            <p className="text-slate-500">Cotizaciones</p>
-                            <p className="text-slate-900">{expediente.cotizaciones}</p>
-                          </div>
-                          <div>
-                            <p className="text-slate-500">Reservas</p>
-                            <p className="text-slate-900">{expediente.reservas}</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="pt-4 border-t border-slate-200">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-slate-500">Valor total</span>
-                          <span className="text-xl font-semibold text-slate-900">US${expediente.precio.toFixed(2)}</span>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                );
-              })}
-            </div>
           )}
         </div>
         </div>

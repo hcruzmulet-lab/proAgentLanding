@@ -79,7 +79,7 @@ export function ReservasCRMPage() {
   const [isNewReservaModalOpen, setIsNewReservaModalOpen] = useState(false);
   const [sortField, setSortField] = useState<'fechaCreacion' | 'fechaSalida' | null>('fechaCreacion');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
-  const [viewMode, setViewMode] = useState<'list' | 'grid'>('grid');
+  const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
 
   const handleLimpiar = () => {
     setFiltros({
@@ -237,31 +237,6 @@ export function ReservasCRMPage() {
             </CardContent>
           </Card>
 
-          {/* View Toggle */}
-          <div className="flex justify-end mb-4">
-            <div className="flex gap-1 bg-slate-100 rounded-lg p-1">
-              <button
-                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                  viewMode === 'list' 
-                    ? 'bg-white text-slate-900 shadow-sm' 
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-                onClick={() => setViewMode('list')}
-              >
-                <span className="material-symbols-outlined text-lg">view_list</span>
-              </button>
-              <button
-                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                  viewMode === 'grid' 
-                    ? 'bg-white text-slate-900 shadow-sm' 
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-                onClick={() => setViewMode('grid')}
-              >
-                <span className="material-symbols-outlined text-lg">grid_view</span>
-              </button>
-            </div>
-          </div>
 
           {/* List View */}
           {viewMode === 'list' && (
@@ -430,86 +405,6 @@ export function ReservasCRMPage() {
             ))}
           </div>
             </>
-          )}
-
-          {/* Grid View */}
-          {viewMode === 'grid' && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {reservas.map((reserva) => {
-                const getEstadoBadge = (estado: Reserva['estado']) => {
-                  switch (estado) {
-                    case 'finalizada':
-                      return { bg: 'bg-green-100', text: 'text-green-700', label: 'Finalizada' };
-                    case 'pendiente':
-                      return { bg: 'bg-yellow-100', text: 'text-yellow-700', label: 'Pendiente' };
-                    case 'cancelada':
-                      return { bg: 'bg-red-100', text: 'text-red-700', label: 'Cancelada' };
-                    default:
-                      return { bg: 'bg-slate-100', text: 'text-slate-700', label: estado };
-                  }
-                };
-                const estadoBadge = getEstadoBadge(reserva.estado);
-                return (
-                  <Card 
-                    key={reserva.id} 
-                    className="cursor-pointer hover:shadow-lg transition-shadow"
-                    onClick={() => router.push(`/crm/reservas/${reserva.id}`)}
-                  >
-                    {reserva.imagen && (
-                      <div className="relative h-48 w-full overflow-hidden rounded-t-lg">
-                        <img 
-                          src={reserva.imagen} 
-                          alt={reserva.destino}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    )}
-                    <CardContent className="p-6">
-                      <div className="flex items-start justify-between mb-4">
-                        <div>
-                          <div className="text-lg font-semibold text-slate-900 mb-1">{reserva.localizador}</div>
-                          <Badge className={`${estadoBadge.bg} ${estadoBadge.text} border-0`}>
-                            {estadoBadge.label}
-                          </Badge>
-                        </div>
-                      </div>
-                      <div className="space-y-2 mb-4">
-                        <div>
-                          <p className="text-sm text-slate-500">Cliente</p>
-                          <p className="text-base font-medium text-slate-900">{reserva.nombre}</p>
-                        </div>
-                        <div>
-                          <p className="text-sm text-slate-500">Destino</p>
-                          <p className="text-base text-slate-900">{reserva.destino}</p>
-                        </div>
-                        <div className="flex gap-4 text-sm">
-                          <div>
-                            <p className="text-slate-500">Fecha salida</p>
-                            <p className="text-slate-900">{reserva.fechaSalida}</p>
-                          </div>
-                          <div>
-                            <p className="text-slate-500">Pasajeros</p>
-                            <p className="text-slate-900">{reserva.pasajeros}</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="pt-4 border-t border-slate-200">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-slate-500">Precio</span>
-                          <span className="text-xl font-semibold text-slate-900">US${reserva.precio.toFixed(2)}</span>
-                        </div>
-                        {reserva.comision > 0 && (
-                          <div className="flex items-center justify-between mt-2">
-                            <span className="text-sm text-slate-500">Comisión</span>
-                            <span className="text-sm font-medium text-slate-700">US${reserva.comision.toFixed(2)}</span>
-                          </div>
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
-                );
-              })}
-            </div>
           )}
         </div>
 

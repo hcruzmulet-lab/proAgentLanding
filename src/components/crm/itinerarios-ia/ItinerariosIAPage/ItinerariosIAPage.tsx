@@ -72,7 +72,7 @@ export function ItinerariosIAPage() {
   const [isNewItinerarioModalOpen, setIsNewItinerarioModalOpen] = useState(false);
   const [sortField, setSortField] = useState<'fechaCreacion' | 'fechaViaje' | null>('fechaCreacion');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
-  const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
+  const [viewMode, setViewMode] = useState<'list' | 'grid'>('grid');
 
   const handleLimpiar = () => {
     setFiltros({
@@ -233,196 +233,8 @@ export function ItinerariosIAPage() {
             </CardContent>
           </Card>
 
-          {/* View Toggle */}
-          <div className="flex justify-end mb-4">
-            <div className="flex gap-1 bg-slate-100 rounded-lg p-1">
-              <button
-                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                  viewMode === 'list' 
-                    ? 'bg-white text-slate-900 shadow-sm' 
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-                onClick={() => setViewMode('list')}
-              >
-                <span className="material-symbols-outlined text-lg">view_list</span>
-              </button>
-              <button
-                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                  viewMode === 'grid' 
-                    ? 'bg-white text-slate-900 shadow-sm' 
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-                onClick={() => setViewMode('grid')}
-              >
-                <span className="material-symbols-outlined text-lg">grid_view</span>
-              </button>
-            </div>
-          </div>
-
-          {/* List View */}
-          {viewMode === 'list' && (
-            <>
-              {/* Header de tabla */}
-              <div className="grid grid-cols-12 gap-4 px-4 py-3 bg-slate-50 rounded-lg text-xs font-medium text-slate-600 uppercase items-center">
-                <div className="col-span-1">N° Itinerario</div>
-                <div 
-                  className="col-span-2 flex items-center gap-1 cursor-pointer hover:text-slate-900 transition-colors"
-                  onClick={() => handleSort('fechaCreacion')}
-                >
-                  Fecha de creación
-                  {sortField === 'fechaCreacion' && (
-                    <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20" }}>
-                      {sortOrder === 'desc' ? 'expand_more' : 'expand_less'}
-                    </span>
-                  )}
-                </div>
-                <div 
-                  className="col-span-2 flex items-center gap-1 cursor-pointer hover:text-slate-900 transition-colors"
-                  onClick={() => handleSort('fechaViaje')}
-                >
-                  Fecha de viaje
-                  {sortField === 'fechaViaje' && (
-                    <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20" }}>
-                      {sortOrder === 'desc' ? 'expand_more' : 'expand_less'}
-                    </span>
-                  )}
-                </div>
-                <div className="col-span-2">Cliente</div>
-                <div className="col-span-2">Detalles</div>
-                <div className="col-span-3 text-right">Precio total</div>
-              </div>
-
-              {/* Lista de itinerarios */}
-              <div className="space-y-4">
-            {itinerarios.map((itinerario) => {
-              const estadoBadge = getEstadoBadge(itinerario.estado);
-              
-              return (
-                <Card key={itinerario.id} className="overflow-hidden">
-                  <div className="flex">
-                    {/* Imagen del destino */}
-                    {itinerario.imagen && (
-                      <div className="flex-shrink-0">
-                        <img 
-                          src={itinerario.imagen} 
-                          alt={itinerario.destino}
-                          className="w-48 h-full object-cover"
-                        />
-                      </div>
-                    )}
-
-                    {/* Contenido del itinerario */}
-                    <CardContent className="p-6 flex-1">
-                      <div className="grid grid-cols-12 gap-4 items-start">
-                        {/* N° Itinerario */}
-                        <div className="col-span-1">
-                          <div className="text-lg font-semibold text-slate-700">{itinerario.numeroItinerario}</div>
-                        </div>
-
-                      {/* Fecha de creación */}
-                      <div className="col-span-2">
-                        <p className="text-sm text-slate-900">{itinerario.fechaCreacion}</p>
-                      </div>
-
-                      {/* Fecha de viaje */}
-                      <div className="col-span-2">
-                        <p className="text-sm text-slate-900">{itinerario.fechaViaje}</p>
-                      </div>
-
-                      {/* Cliente */}
-                      <div className="col-span-2">
-                        <p className="text-sm text-slate-900 font-medium">{itinerario.nombre}</p>
-                        <p className="text-xs text-slate-500">{itinerario.destino}</p>
-                      </div>
-
-                      {/* Detalles - Iconos */}
-                      <div className="col-span-2">
-                        <div className="flex flex-wrap gap-3">
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <div className="flex items-center gap-1 text-sm cursor-default">
-                                <span className="material-symbols-outlined text-base" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>person</span>
-                                <span>{itinerario.pasajeros}</span>
-                              </div>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p>Pasajeros</p>
-                            </TooltipContent>
-                          </Tooltip>
-
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <div className="flex items-center gap-1 text-sm cursor-default">
-                                <span className="material-symbols-outlined text-base" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>location_on</span>
-                                <span>{itinerario.ubicaciones}</span>
-                              </div>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p>Destinos</p>
-                            </TooltipContent>
-                          </Tooltip>
-
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <div className="flex items-center gap-1 text-sm cursor-default">
-                                <span className="material-symbols-outlined text-base" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>hotel</span>
-                                <span>{itinerario.hoteles}</span>
-                              </div>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p>Hoteles</p>
-                            </TooltipContent>
-                          </Tooltip>
-
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <div className="flex items-center gap-1 text-sm cursor-default">
-                                <span className="material-symbols-outlined text-base" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>nightlight</span>
-                                <span>{itinerario.noches}</span>
-                              </div>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p>Noches</p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </div>
-                      </div>
-
-                        {/* Precio */}
-                        <div className="col-span-3 text-right">
-                          <p className="text-lg font-semibold text-slate-900">US${itinerario.precio.toFixed(2)}</p>
-                        </div>
-                      </div>
-
-                      {/* Botones de acción */}
-                      <div className="flex items-center justify-between mt-6 pt-4 border-t">
-                        <Badge className={`${estadoBadge.bg} ${estadoBadge.text} hover:${estadoBadge.bg} whitespace-nowrap border-0`}>
-                          {estadoBadge.label}
-                        </Badge>
-                        <div className="flex items-center gap-3">
-                          <Button className="bg-slate-700 hover:bg-slate-800 text-white">
-                            Editar
-                          </Button>
-                          <Button 
-                            variant="outline"
-                            onClick={() => window.open('https://azucartravel.com/es/idea/41931780/-crucero-toscana-mas-vuelo', '_blank', 'noopener,noreferrer')}
-                          >
-                            Ver Itinerario
-                          </Button>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </div>
-                </Card>
-              );
-            })}
-              </div>
-            </>
-          )}
-
           {/* Grid View */}
-          {viewMode === 'grid' && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {itinerarios.map((itinerario) => {
                 const estadoBadge = getEstadoBadge(itinerario.estado);
                 return (
@@ -480,7 +292,6 @@ export function ItinerariosIAPage() {
                 );
               })}
             </div>
-          )}
         </div>
         </div>
 
