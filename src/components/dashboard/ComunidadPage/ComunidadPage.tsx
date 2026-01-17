@@ -81,7 +81,6 @@ export function ComunidadPage() {
                 x="0px" 
                 y="0px" 
                 viewBox="0 0 112.196 112.196" 
-                style={{ enableBackground: 'new 0 0 112.196 112.196' }} 
                 xmlSpace="preserve"
                 className="comunidad-page__facebook-icon"
               >
