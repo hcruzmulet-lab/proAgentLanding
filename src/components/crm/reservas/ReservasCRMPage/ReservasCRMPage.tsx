@@ -80,6 +80,8 @@ export function ReservasCRMPage() {
 
   const [reservas, setReservas] = useState<Reserva[]>(reservasMock);
   const [isNewReservaModalOpen, setIsNewReservaModalOpen] = useState(false);
+  const [isFacturaModalOpen, setIsFacturaModalOpen] = useState(false);
+  const [selectedReserva, setSelectedReserva] = useState<Reserva | null>(null);
   const [sortField, setSortField] = useState<'fechaCreacion' | 'fechaSalida' | null>('fechaCreacion');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
@@ -97,6 +99,12 @@ export function ReservasCRMPage() {
 
   const handleBuscar = () => {
     console.log('Buscando con filtros:', filtros);
+  };
+
+  const handleGenerarFactura = (e: React.MouseEvent, reserva: Reserva) => {
+    e.stopPropagation();
+    setSelectedReserva(reserva);
+    setIsFacturaModalOpen(true);
   };
 
   const handleSort = (field: 'fechaCreacion' | 'fechaSalida') => {
@@ -414,6 +422,14 @@ export function ReservasCRMPage() {
                         Reserva Finalizada
                       </Badge>
                       <div className="flex items-center gap-3">
+                        <Button 
+                          onClick={(e) => handleGenerarFactura(e, reserva)}
+                          className="bg-slate-700 hover:bg-slate-800 text-white"
+                          size="sm"
+                        >
+                          <span className="material-symbols-outlined mr-2 text-base">receipt_long</span>
+                          Generar Factura
+                        </Button>
                         <Button className="bg-slate-700 hover:bg-slate-800 text-white">
                           Modificar
                         </Button>
@@ -472,6 +488,80 @@ export function ReservasCRMPage() {
                 </div>
               </button>
             </div>
+          </DialogContent>
+        </Dialog>
+
+        {/* Modal Generar Factura */}
+        <Dialog open={isFacturaModalOpen} onOpenChange={setIsFacturaModalOpen}>
+          <DialogContent className="max-w-2xl">
+            <DialogHeader>
+              <DialogTitle className="text-2xl font-semibold text-slate-900">Generar Factura</DialogTitle>
+            </DialogHeader>
+            {selectedReserva && (
+              <div className="space-y-4 py-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-sm font-medium text-slate-700 block mb-2">Localizador</label>
+                    <Input value={selectedReserva.localizador} disabled />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-slate-700 block mb-2">Fecha</label>
+                    <Input value={selectedReserva.fechaCreacion} disabled />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-sm font-medium text-slate-700 block mb-2">Cliente</label>
+                  <Input value={selectedReserva.nombre} disabled />
+                </div>
+
+                <div>
+                  <label className="text-sm font-medium text-slate-700 block mb-2">Destino</label>
+                  <Input value={selectedReserva.destino} disabled />
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-sm font-medium text-slate-700 block mb-2">Pasajeros</label>
+                    <Input value={selectedReserva.pasajeros} disabled />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-slate-700 block mb-2">Noches</label>
+                    <Input value={selectedReserva.noches} disabled />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-sm font-medium text-slate-700 block mb-2">Monto Total</label>
+                    <Input value={`US$ ${selectedReserva.precio.toFixed(2)}`} disabled />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-slate-700 block mb-2">Comisión</label>
+                    <Input value={`US$ ${selectedReserva.comision.toFixed(2)}`} disabled />
+                  </div>
+                </div>
+
+                <div className="flex gap-3 pt-4">
+                  <Button 
+                    variant="outline" 
+                    onClick={() => setIsFacturaModalOpen(false)}
+                    className="flex-1"
+                  >
+                    Cancelar
+                  </Button>
+                  <Button 
+                    onClick={() => {
+                      router.push('/es/crm/facturas/nueva');
+                      setIsFacturaModalOpen(false);
+                    }}
+                    className="flex-1 bg-slate-700 hover:bg-slate-800"
+                  >
+                    Crear Factura
+                  </Button>
+                </div>
+              </div>
+            )}
           </DialogContent>
         </Dialog>
         </div>

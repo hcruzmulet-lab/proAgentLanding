@@ -73,6 +73,8 @@ export function CotizacionesPage() {
 
   const [cotizaciones, setCotizaciones] = useState<Cotizacion[]>(cotizacionesMock);
   const [isNewCotizacionModalOpen, setIsNewCotizacionModalOpen] = useState(false);
+  const [isFacturaModalOpen, setIsFacturaModalOpen] = useState(false);
+  const [selectedCotizacion, setSelectedCotizacion] = useState<Cotizacion | null>(null);
   const [sortField, setSortField] = useState<'fechaCreacion' | 'fechaViaje' | null>('fechaCreacion');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [viewMode, setViewMode] = useState<'list' | 'grid'>('grid');
@@ -90,6 +92,12 @@ export function CotizacionesPage() {
 
   const handleBuscar = () => {
     console.log('Buscando con filtros:', filtros);
+  };
+
+  const handleGenerarFactura = (e: React.MouseEvent, cotizacion: Cotizacion) => {
+    e.stopPropagation();
+    setSelectedCotizacion(cotizacion);
+    setIsFacturaModalOpen(true);
   };
 
   const handleSort = (field: 'fechaCreacion' | 'fechaViaje') => {
@@ -305,10 +313,18 @@ export function CotizacionesPage() {
                         </div>
                       </div>
                       <div className="pt-4 border-t border-slate-200">
-                        <div className="flex items-center justify-between">
+                        <div className="flex items-center justify-between mb-4">
                           <span className="text-sm text-slate-500">Precio</span>
                           <span className="text-xl font-semibold text-slate-900">US${cotizacion.precio.toFixed(2)}</span>
                         </div>
+                        <Button 
+                          onClick={(e) => handleGenerarFactura(e, cotizacion)}
+                          className="w-full bg-slate-700 hover:bg-slate-800 text-white"
+                          size="sm"
+                        >
+                          <span className="material-symbols-outlined mr-2 text-base">receipt_long</span>
+                          Generar Factura
+                        </Button>
                       </div>
                     </CardContent>
                   </Card>
@@ -358,6 +374,74 @@ export function CotizacionesPage() {
                 </div>
               </button>
             </div>
+          </DialogContent>
+        </Dialog>
+
+        {/* Modal Generar Factura */}
+        <Dialog open={isFacturaModalOpen} onOpenChange={setIsFacturaModalOpen}>
+          <DialogContent className="max-w-2xl">
+            <DialogHeader>
+              <DialogTitle className="text-2xl font-semibold text-slate-900">Generar Factura</DialogTitle>
+            </DialogHeader>
+            {selectedCotizacion && (
+              <div className="space-y-4 py-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-sm font-medium text-slate-700 block mb-2">N° Cotización</label>
+                    <Input value={selectedCotizacion.numeroCotizacion} disabled />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-slate-700 block mb-2">Fecha</label>
+                    <Input value={selectedCotizacion.fechaCreacion} disabled />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-sm font-medium text-slate-700 block mb-2">Cliente</label>
+                  <Input value={selectedCotizacion.nombre} disabled />
+                </div>
+
+                <div>
+                  <label className="text-sm font-medium text-slate-700 block mb-2">Destino</label>
+                  <Input value={selectedCotizacion.destino} disabled />
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-sm font-medium text-slate-700 block mb-2">Pasajeros</label>
+                    <Input value={selectedCotizacion.pasajeros} disabled />
+                  </div>
+                  <div>
+                    <label className="text-sm font-medium text-slate-700 block mb-2">Noches</label>
+                    <Input value={selectedCotizacion.noches} disabled />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-sm font-medium text-slate-700 block mb-2">Monto Total</label>
+                  <Input value={`US$ ${selectedCotizacion.precio.toFixed(2)}`} disabled />
+                </div>
+
+                <div className="flex gap-3 pt-4">
+                  <Button 
+                    variant="outline" 
+                    onClick={() => setIsFacturaModalOpen(false)}
+                    className="flex-1"
+                  >
+                    Cancelar
+                  </Button>
+                  <Button 
+                    onClick={() => {
+                      router.push('/es/crm/facturas/nueva');
+                      setIsFacturaModalOpen(false);
+                    }}
+                    className="flex-1 bg-slate-700 hover:bg-slate-800"
+                  >
+                    Crear Factura
+                  </Button>
+                </div>
+              </div>
+            )}
           </DialogContent>
         </Dialog>
         </div>
