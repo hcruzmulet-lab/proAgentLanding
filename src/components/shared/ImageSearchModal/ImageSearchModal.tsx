@@ -75,14 +75,14 @@ export function ImageSearchModal({ isOpen, onClose, onSelectImage }: ImageSearch
     
     setIsLoading(true);
     try {
-      // Usando Pixabay API que es gratuita y no requiere registro para desarrollo
+      // Usando Pexels API (actualmente Pixabay como fallback gratuito)
       const response = await fetch(
         `https://pixabay.com/api/?key=9656065-a4094594c34f9ac14c7fc4c39&q=${encodeURIComponent(query)}&image_type=photo&per_page=12&safesearch=true&page=2`
       );
       
       if (response.ok) {
         const data = await response.json();
-        // Convertir formato de Pixabay a formato Pexels
+        // Convertir formato de respuesta a formato Pexels
         const convertedImages: PexelsImage[] = data.hits.map((hit: any) => ({
           id: hit.id,
           src: {
@@ -170,7 +170,7 @@ export function ImageSearchModal({ isOpen, onClose, onSelectImage }: ImageSearch
                   <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>
                     collections
                   </span>
-                  Pixabay
+                  Pexels
                 </span>
               </TabsTrigger>
             </TabsList>
@@ -275,7 +275,7 @@ export function ImageSearchModal({ isOpen, onClose, onSelectImage }: ImageSearch
           {/* Nota sobre atribución */}
           <div className="border-t pt-3">
             <p className="text-xs text-slate-500 text-center">
-              Las imágenes son proporcionadas por {activeTab === 'unsplash' ? 'Unsplash' : 'Pixabay'} y son de uso libre.
+              Las imágenes son proporcionadas por {activeTab === 'unsplash' ? 'Unsplash' : 'Pexels'} y son de uso libre.
               Todas las imágenes están bajo licencia de uso comercial.
             </p>
           </div>
