@@ -118,9 +118,9 @@
   top: 0.75rem;
   width: 2rem;
   height: 2rem;
-  border: 1px solid #cbd5e1;
+  border: none;
   border-radius: 0.375rem;
-  background-color: white;
+  background-color: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -129,36 +129,40 @@
 
 .react-datepicker__navigation:hover {
   background-color: #f1f5f9;
-  border-color: #94a3b8;
 }
 
 .react-datepicker__navigation--previous {
-  left: 0.5rem;
+  left: 1rem;
 }
 
 .react-datepicker__navigation--next {
-  right: 0.5rem;
+  right: 1rem;
 }
 
 .react-datepicker__navigation-icon::before {
-  border-color: #475569;
+  border-color: #334155;
   border-width: 2px 2px 0 0;
-  width: 6px;
-  height: 6px;
-  top: 7px;
+  width: 8px;
+  height: 8px;
+  top: 6px;
 }
 
 .react-datepicker__navigation:hover .react-datepicker__navigation-icon::before {
-  border-color: #1e293b;
+  border-color: #0f172a;
 }
 
-/* Multiple months */
+/* Multiple months - side by side */
+.react-datepicker {
+  display: flex;
+  flex-direction: row;
+}
+
 .react-datepicker__month-container {
-  float: left;
+  float: none;
 }
 
-.react-datepicker--range .react-datepicker__month-container:first-child {
-  margin-right: 0.5rem;
+.react-datepicker__month-container + .react-datepicker__month-container {
+  margin-left: 1rem;
 }
 
 /* Triangle removal */
