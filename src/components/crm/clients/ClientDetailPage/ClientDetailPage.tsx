@@ -744,23 +744,23 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
             <div className="client-detail__section-content">
               <div className="client-detail__tags-container">
                 <div className="client-detail__tag-item">
-                  <Checkbox id="viajes-economicos" defaultChecked />
+                  <Checkbox id="viajes-economicos" />
                   <Label htmlFor="viajes-economicos" className="client-detail__tag-label">Viajes económicos</Label>
                 </div>
                 <div className="client-detail__tag-item">
-                  <Checkbox id="gama-media" defaultChecked />
+                  <Checkbox id="gama-media" />
                   <Label htmlFor="gama-media" className="client-detail__tag-label">Gama media</Label>
                 </div>
                 <div className="client-detail__tag-item">
-                  <Checkbox id="premium-lujo" defaultChecked />
+                  <Checkbox id="premium-lujo" />
                   <Label htmlFor="premium-lujo" className="client-detail__tag-label">Premium / lujo</Label>
                 </div>
                 <div className="client-detail__tag-item">
-                  <Checkbox id="playa-descanso" defaultChecked />
+                  <Checkbox id="playa-descanso" />
                   <Label htmlFor="playa-descanso" className="client-detail__tag-label">Playa y descanso</Label>
                 </div>
                 <div className="client-detail__tag-item">
-                  <Checkbox id="ciudades-experiencias" defaultChecked />
+                  <Checkbox id="ciudades-experiencias" />
                   <Label htmlFor="ciudades-experiencias" className="client-detail__tag-label">Ciudades y experiencias</Label>
                 </div>
               </div>
