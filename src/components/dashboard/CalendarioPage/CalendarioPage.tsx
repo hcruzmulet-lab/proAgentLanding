@@ -174,7 +174,7 @@ export function CalendarioPage() {
       // Pagos y cobros
       {
         id: 'h3',
-        text: 'Pago pendiente reserva #458 (vence hoy)',
+        text: 'Pago pendiente reserva #458 - María González (vence hoy)',
         type: 'pago',
         date: today,
         priority: 'alta',
@@ -184,7 +184,7 @@ export function CalendarioPage() {
       },
       {
         id: 'h4',
-        text: 'Pago recibido reserva #342 - Confirmar',
+        text: 'Pago recibido reserva #342 - Ana Martínez - Confirmar',
         type: 'pago',
         date: today,
         priority: 'media',
@@ -194,7 +194,7 @@ export function CalendarioPage() {
       },
       {
         id: 'h5',
-        text: 'Cobro próximo reserva #521 (vence mañana)',
+        text: 'Cobro próximo reserva #521 - Juan Pérez (vence mañana)',
         type: 'pago',
         date: tomorrow,
         priority: 'alta',
@@ -331,7 +331,7 @@ export function CalendarioPage() {
       // Pagos y cobros
       {
         id: 's3',
-        text: 'Pago por vencer reserva #521 (vence el viernes)',
+        text: 'Pago por vencer reserva #521 - Juan Pérez (vence el viernes)',
         type: 'pago',
         priority: 'alta',
         cliente: 'Juan Pérez',
@@ -341,7 +341,7 @@ export function CalendarioPage() {
       },
       {
         id: 's4',
-        text: 'Pago pendiente reserva #678',
+        text: 'Pago pendiente reserva #678 - Roberto Silva',
         type: 'pago',
         priority: 'alta',
         cliente: 'Roberto Silva',
@@ -425,7 +425,7 @@ export function CalendarioPage() {
       // Pagos y cobros
       {
         id: 'm2',
-        text: 'Pago mensual suscripción premium',
+        text: 'Pago mensual suscripción premium - Tech Solutions Inc.',
         type: 'pago',
         priority: 'media',
         cliente: 'Tech Solutions Inc.',
