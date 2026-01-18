@@ -6,7 +6,6 @@ import { useTranslations } from 'next-intl';
 import { LandingNavbar } from '@/components/layout/LandingNavbar';
 import { LandingFooter } from '@/components/layout/LandingFooter';
 import { HeroSection } from '@/components/shared/HeroSection';
-import { DestinationsGallery } from '@/components/shared/DestinationsGallery';
 import { FeatureCard } from '@/components/shared/FeatureCard';
 import { FAQItem } from '@/components/shared/FAQItem';
 import { Button } from '@/components/ui/button';
@@ -237,8 +236,6 @@ export function LandingPageModule() {
         onPrimaryClick={handleJoin}
         onSecondaryClick={handleRequestDemo}
       />
-
-      <DestinationsGallery />
 
       <section id="why" className="landing-page-module__why">
         <div className="landing-page-module__container">
