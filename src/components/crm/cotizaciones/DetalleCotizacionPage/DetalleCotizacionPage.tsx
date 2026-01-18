@@ -14,6 +14,8 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import './DetalleCotizacionPage.scss';
 
 interface Servicio {
@@ -30,6 +32,8 @@ export function DetalleCotizacionPage() {
   const router = useRouter();
   const [showShareModal, setShowShareModal] = useState(false);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+  const [isFacturaModalOpen, setIsFacturaModalOpen] = useState(false);
+  const [isPagoModalOpen, setIsPagoModalOpen] = useState(false);
 
   // Datos mock de la cotización COT-002
   const cotizacion = {
@@ -195,6 +199,14 @@ export function DetalleCotizacionPage() {
     setIsPreviewOpen(true);
   };
 
+  const handleGenerarFactura = () => {
+    setIsFacturaModalOpen(true);
+  };
+
+  const handleRegistrarPago = () => {
+    setIsPagoModalOpen(true);
+  };
+
 
   const estadoBadge = getEstadoBadge();
 
@@ -279,6 +291,22 @@ export function DetalleCotizacionPage() {
               >
                 <span className="material-symbols-outlined">download</span>
                 <span>Descargar PDF</span>
+              </Button>
+              <Button
+                variant="outline"
+                className="detalle-cotizacion-page__action-btn"
+                onClick={handleGenerarFactura}
+              >
+                <span className="material-symbols-outlined">receipt_long</span>
+                <span>Generar Factura</span>
+              </Button>
+              <Button
+                variant="outline"
+                className="detalle-cotizacion-page__action-btn"
+                onClick={handleRegistrarPago}
+              >
+                <span className="material-symbols-outlined">payments</span>
+                <span>Registrar Pago</span>
               </Button>
             </div>
           </div>
@@ -628,6 +656,159 @@ export function DetalleCotizacionPage() {
             calcularImpuestos={calcularImpuestos}
             calcularTotal={calcularTotal}
           />
+        </DialogContent>
+      </Dialog>
+
+      {/* Modal Generar Factura */}
+      <Dialog open={isFacturaModalOpen} onOpenChange={setIsFacturaModalOpen}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-semibold text-slate-900">Generar Factura</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="text-sm font-medium text-slate-700 block mb-2">N° Cotización</label>
+                <Input value={cotizacion.numero} disabled />
+              </div>
+              <div>
+                <label className="text-sm font-medium text-slate-700 block mb-2">Fecha</label>
+                <Input value={cotizacion.fechaCreacion} disabled />
+              </div>
+            </div>
+
+            <div>
+              <label className="text-sm font-medium text-slate-700 block mb-2">Cliente</label>
+              <Input value={cotizacion.cliente.nombre} disabled />
+            </div>
+
+            <div>
+              <label className="text-sm font-medium text-slate-700 block mb-2">Destino</label>
+              <Input value={cotizacion.titulo} disabled />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="text-sm font-medium text-slate-700 block mb-2">Pasajeros</label>
+                <Input value={cotizacion.detallesViaje.pasajeros} disabled />
+              </div>
+              <div>
+                <label className="text-sm font-medium text-slate-700 block mb-2">Noches</label>
+                <Input value={cotizacion.detallesViaje.duracion} disabled />
+              </div>
+            </div>
+
+            <div>
+              <label className="text-sm font-medium text-slate-700 block mb-2">Monto Total</label>
+              <Input value={`US$ ${calcularTotal().toLocaleString('en-US', { minimumFractionDigits: 2 })}`} disabled />
+            </div>
+
+            <div className="flex gap-3 pt-4">
+              <Button 
+                variant="outline" 
+                onClick={() => setIsFacturaModalOpen(false)}
+                className="flex-1"
+              >
+                Cancelar
+              </Button>
+              <Button 
+                onClick={() => {
+                  router.push('/es/crm/facturas/nueva');
+                  setIsFacturaModalOpen(false);
+                }}
+                className="flex-1 bg-slate-700 hover:bg-slate-800"
+              >
+                Crear Factura
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Modal Registrar Pago */}
+      <Dialog open={isPagoModalOpen} onOpenChange={setIsPagoModalOpen}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-semibold text-slate-900">Registrar Pago</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="text-sm font-medium text-slate-700 block mb-2">N° Cotización</label>
+                <Input value={cotizacion.numero} disabled />
+              </div>
+              <div>
+                <label className="text-sm font-medium text-slate-700 block mb-2">Fecha</label>
+                <Input value={cotizacion.fechaCreacion} disabled />
+              </div>
+            </div>
+
+            <div>
+              <label className="text-sm font-medium text-slate-700 block mb-2">Cliente</label>
+              <Input value={cotizacion.cliente.nombre} disabled />
+            </div>
+
+            <div>
+              <label className="text-sm font-medium text-slate-700 block mb-2">Concepto</label>
+              <Input value={`Pago para ${cotizacion.titulo}`} disabled />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="text-sm font-medium text-slate-700 block mb-2">Monto Total</label>
+                <Input value={`US$ ${calcularTotal().toLocaleString('en-US', { minimumFractionDigits: 2 })}`} disabled />
+              </div>
+              <div>
+                <label className="text-sm font-medium text-slate-700 block mb-2">Monto a Pagar *</label>
+                <Input 
+                  type="number" 
+                  placeholder="Ingrese monto"
+                  defaultValue={calcularTotal().toFixed(2)}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="text-sm font-medium text-slate-700 block mb-2">Método de Pago *</label>
+              <Select>
+                <SelectTrigger>
+                  <SelectValue placeholder="Seleccionar método" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="efectivo">Efectivo</SelectItem>
+                  <SelectItem value="tarjeta">Tarjeta de Crédito/Débito</SelectItem>
+                  <SelectItem value="transferencia">Transferencia Bancaria</SelectItem>
+                  <SelectItem value="zelle">Zelle</SelectItem>
+                  <SelectItem value="paypal">PayPal</SelectItem>
+                  <SelectItem value="otro">Otro</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <label className="text-sm font-medium text-slate-700 block mb-2">Notas (opcional)</label>
+              <Input placeholder="Notas adicionales sobre el pago" />
+            </div>
+
+            <div className="flex gap-3 pt-4">
+              <Button 
+                variant="outline" 
+                onClick={() => setIsPagoModalOpen(false)}
+                className="flex-1"
+              >
+                Cancelar
+              </Button>
+              <Button 
+                onClick={() => {
+                  router.push('/es/crm/pagos/nuevo');
+                  setIsPagoModalOpen(false);
+                }}
+                className="flex-1 bg-slate-700 hover:bg-slate-800"
+              >
+                Registrar Pago
+              </Button>
+            </div>
+          </div>
         </DialogContent>
       </Dialog>
     </div>
