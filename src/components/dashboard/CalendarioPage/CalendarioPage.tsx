@@ -1152,22 +1152,52 @@ export function CalendarioPage() {
                   <Label htmlFor="archivos" className="calendario-page__form-label">
                     Archivos adjuntos (opcional)
                   </Label>
-                  <Input
-                    id="archivos"
-                    type="file"
-                    multiple
-                    onChange={(e) => {
-                      const files = e.target.files ? Array.from(e.target.files) : [];
-                      setNewEvent({ ...newEvent, archivos: files });
-                    }}
-                    className="calendario-page__form-input"
-                  />
+                  <div className="calendario-page__upload-area">
+                    <label htmlFor="archivos-especiales" className="calendario-page__upload-label">
+                      <div className="calendario-page__upload-icon">
+                        <span className="material-symbols-outlined">cloud_upload</span>
+                      </div>
+                      <div className="calendario-page__upload-text">
+                        <span className="calendario-page__upload-main">Haz clic para subir archivos</span>
+                        <span className="calendario-page__upload-hint">o arrastra y suelta aquí</span>
+                        <span className="calendario-page__upload-formats">PDF, DOC, DOCX, JPG, PNG (máx. 10MB)</span>
+                      </div>
+                      <Input
+                        id="archivos-especiales"
+                        type="file"
+                        multiple
+                        accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                        onChange={(e) => {
+                          const files = e.target.files ? Array.from(e.target.files) : [];
+                          setNewEvent({ ...newEvent, archivos: [...(newEvent.archivos || []), ...files] });
+                        }}
+                        className="calendario-page__upload-input"
+                      />
+                    </label>
+                  </div>
                   {newEvent.archivos && newEvent.archivos.length > 0 && (
                     <div className="calendario-page__archivos-lista">
                       {newEvent.archivos.map((archivo, index) => (
                         <div key={index} className="calendario-page__archivo-item">
-                          <span className="material-symbols-outlined">attach_file</span>
-                          <span>{archivo.name}</span>
+                          <div className="calendario-page__archivo-info">
+                            <span className="material-symbols-outlined">description</span>
+                            <div className="calendario-page__archivo-details">
+                              <span className="calendario-page__archivo-name">{archivo.name}</span>
+                              <span className="calendario-page__archivo-size">
+                                {(archivo.size / 1024).toFixed(2)} KB
+                              </span>
+                            </div>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const newArchivos = newEvent.archivos?.filter((_, i) => i !== index);
+                              setNewEvent({ ...newEvent, archivos: newArchivos });
+                            }}
+                            className="calendario-page__archivo-delete"
+                          >
+                            <span className="material-symbols-outlined">close</span>
+                          </button>
                         </div>
                       ))}
                     </div>
@@ -1361,22 +1391,52 @@ export function CalendarioPage() {
                   <Label htmlFor="archivos" className="calendario-page__form-label">
                     Archivos adjuntos (opcional)
                   </Label>
-                  <Input
-                    id="archivos"
-                    type="file"
-                    multiple
-                    onChange={(e) => {
-                      const files = e.target.files ? Array.from(e.target.files) : [];
-                      setNewEvent({ ...newEvent, archivos: files });
-                    }}
-                    className="calendario-page__form-input"
-                  />
+                  <div className="calendario-page__upload-area">
+                    <label htmlFor="archivos-acciones" className="calendario-page__upload-label">
+                      <div className="calendario-page__upload-icon">
+                        <span className="material-symbols-outlined">cloud_upload</span>
+                      </div>
+                      <div className="calendario-page__upload-text">
+                        <span className="calendario-page__upload-main">Haz clic para subir archivos</span>
+                        <span className="calendario-page__upload-hint">o arrastra y suelta aquí</span>
+                        <span className="calendario-page__upload-formats">PDF, DOC, DOCX, JPG, PNG (máx. 10MB)</span>
+                      </div>
+                      <Input
+                        id="archivos-acciones"
+                        type="file"
+                        multiple
+                        accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                        onChange={(e) => {
+                          const files = e.target.files ? Array.from(e.target.files) : [];
+                          setNewEvent({ ...newEvent, archivos: [...(newEvent.archivos || []), ...files] });
+                        }}
+                        className="calendario-page__upload-input"
+                      />
+                    </label>
+                  </div>
                   {newEvent.archivos && newEvent.archivos.length > 0 && (
                     <div className="calendario-page__archivos-lista">
                       {newEvent.archivos.map((archivo, index) => (
                         <div key={index} className="calendario-page__archivo-item">
-                          <span className="material-symbols-outlined">attach_file</span>
-                          <span>{archivo.name}</span>
+                          <div className="calendario-page__archivo-info">
+                            <span className="material-symbols-outlined">description</span>
+                            <div className="calendario-page__archivo-details">
+                              <span className="calendario-page__archivo-name">{archivo.name}</span>
+                              <span className="calendario-page__archivo-size">
+                                {(archivo.size / 1024).toFixed(2)} KB
+                              </span>
+                            </div>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const newArchivos = newEvent.archivos?.filter((_, i) => i !== index);
+                              setNewEvent({ ...newEvent, archivos: newArchivos });
+                            }}
+                            className="calendario-page__archivo-delete"
+                          >
+                            <span className="material-symbols-outlined">close</span>
+                          </button>
                         </div>
                       ))}
                     </div>
