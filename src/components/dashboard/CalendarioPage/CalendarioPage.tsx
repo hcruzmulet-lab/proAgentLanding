@@ -1940,34 +1940,6 @@ export function CalendarioPage() {
                   </div>
                 </div>
 
-                <div className="calendario-page__form-row">
-                  <div className="calendario-page__form-group">
-                    <Label htmlFor="clase" className="calendario-page__form-label">
-                      Clase
-                    </Label>
-                    <Input
-                      id="clase"
-                      value={newEvent.clase || ''}
-                      onChange={(e) => setNewEvent({ ...newEvent, clase: e.target.value })}
-                      placeholder="Ej: Económica"
-                      className="calendario-page__form-input"
-                    />
-                  </div>
-                  <div className="calendario-page__form-group">
-                    <Label htmlFor="pasajeros" className="calendario-page__form-label">
-                      Pasajeros
-                    </Label>
-                    <Input
-                      id="pasajeros"
-                      type="number"
-                      value={newEvent.pasajeros || ''}
-                      onChange={(e) => setNewEvent({ ...newEvent, pasajeros: parseInt(e.target.value) || undefined })}
-                      placeholder="Número de pasajeros"
-                      className="calendario-page__form-input"
-                    />
-                  </div>
-                </div>
-
                 <div className="calendario-page__form-group">
                   <Label htmlFor="descripcion" className="calendario-page__form-label">
                     Descripción (opcional)
