@@ -118,8 +118,15 @@ export function MaterialesPage() {
   const [nombreArchivo, setNombreArchivo] = useState('');
   const [categoriaArchivo, setCategoriaArchivo] = useState<'documentos' | 'plantillas' | 'formatos'>('documentos');
   const [viewMode, setViewMode] = useState<'list' | 'grid'>('grid');
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const materialesFiltrados = materiales.filter(m => m.categoria === categoriaActiva);
+  const materialesFiltrados = materiales
+    .filter(m => m.categoria === categoriaActiva)
+    .filter(m => 
+      searchTerm === '' || 
+      m.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      m.tipo.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -167,6 +174,29 @@ export function MaterialesPage() {
           <h1 style={{ fontSize: '1.125rem', fontWeight: 600, color: '#0f172a', letterSpacing: '-0.1px', margin: 0, lineHeight: '1.5' }}>Materiales del agente</h1>
         </div>
         <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+          <div style={{ position: 'relative', width: '320px' }}>
+            <Input
+              type="text"
+              placeholder="Buscar materiales..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10"
+            />
+            <span 
+              className="material-symbols-outlined" 
+              style={{ 
+                position: 'absolute', 
+                left: '12px', 
+                top: '50%', 
+                transform: 'translateY(-50%)', 
+                fontSize: '20px',
+                color: '#64748b',
+                pointerEvents: 'none'
+              }}
+            >
+              search
+            </span>
+          </div>
           <Dialog open={isUploadModalOpen} onOpenChange={setIsUploadModalOpen}>
           <DialogTrigger asChild>
             <Button className="bg-slate-700 hover:bg-slate-800">

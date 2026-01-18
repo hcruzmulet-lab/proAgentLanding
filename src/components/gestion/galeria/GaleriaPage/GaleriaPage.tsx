@@ -118,8 +118,14 @@ export function GaleriaPage() {
   const [categoriaImagen, setCategoriaImagen] = useState<'promociones' | 'ofertas' | 'destinos' | 'comunicados' | 'clientes'>('promociones');
   const [uploadMethod, setUploadMethod] = useState<'file' | 'search'>('file');
   const [viewMode, setViewMode] = useState<'list' | 'grid'>('grid');
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const imagenesFiltradas = imagenes.filter(img => img.categoria === categoriaActiva);
+  const imagenesFiltradas = imagenes
+    .filter(img => img.categoria === categoriaActiva)
+    .filter(img => 
+      searchTerm === '' || 
+      (img.nombre && img.nombre.toLowerCase().includes(searchTerm.toLowerCase()))
+    );
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -168,6 +174,29 @@ export function GaleriaPage() {
           <h1 style={{ fontSize: '1.125rem', fontWeight: 600, color: '#0f172a', letterSpacing: '-0.1px', margin: 0, lineHeight: '1.5' }}>Galería de imágenes</h1>
         </div>
         <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+          <div style={{ position: 'relative', width: '320px' }}>
+            <Input
+              type="text"
+              placeholder="Buscar imágenes..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10"
+            />
+            <span 
+              className="material-symbols-outlined" 
+              style={{ 
+                position: 'absolute', 
+                left: '12px', 
+                top: '50%', 
+                transform: 'translateY(-50%)', 
+                fontSize: '20px',
+                color: '#64748b',
+                pointerEvents: 'none'
+              }}
+            >
+              search
+            </span>
+          </div>
           <Dialog open={isUploadModalOpen} onOpenChange={setIsUploadModalOpen}>
           <DialogTrigger asChild>
             <Button className="bg-slate-700 hover:bg-slate-800">

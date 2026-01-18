@@ -101,8 +101,15 @@ export function PromptsPage() {
     contenido: '',
   });
   const [viewMode, setViewMode] = useState<'list' | 'grid'>('grid');
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const promptsFiltrados = prompts.filter(p => p.categoria === categoriaActiva);
+  const promptsFiltrados = prompts
+    .filter(p => p.categoria === categoriaActiva)
+    .filter(p => 
+      searchTerm === '' || 
+      p.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      p.contenido.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
   const handleCreatePrompt = () => {
     if (!nuevoPrompt.titulo.trim() || !nuevoPrompt.contenido.trim()) return;
@@ -141,6 +148,29 @@ export function PromptsPage() {
           <h1 style={{ fontSize: '1.125rem', fontWeight: 600, color: '#0f172a', letterSpacing: '-0.1px', margin: 0, lineHeight: '1.5' }}>Prompts IA</h1>
         </div>
         <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+          <div style={{ position: 'relative', width: '320px' }}>
+            <Input
+              type="text"
+              placeholder="Buscar prompts..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10"
+            />
+            <span 
+              className="material-symbols-outlined" 
+              style={{ 
+                position: 'absolute', 
+                left: '12px', 
+                top: '50%', 
+                transform: 'translateY(-50%)', 
+                fontSize: '20px',
+                color: '#64748b',
+                pointerEvents: 'none'
+              }}
+            >
+              search
+            </span>
+          </div>
           <Dialog open={isNewPromptModalOpen} onOpenChange={setIsNewPromptModalOpen}>
           <DialogTrigger asChild>
             <Button className="bg-slate-700 hover:bg-slate-800">
