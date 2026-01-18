@@ -827,24 +827,143 @@
     }
   }
 
+  &__upload-area {
+    border: 2px dashed #cbd5e1;
+    border-radius: 8px;
+    transition: all 0.2s;
+    
+    &:hover {
+      border-color: #94a3b8;
+      background-color: #f8fafc;
+    }
+  }
+
+  &__upload-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: $spacing-lg;
+    cursor: pointer;
+    gap: $spacing-sm;
+  }
+
+  &__upload-input {
+    display: none !important;
+  }
+
+  &__upload-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: #f1f5f9;
+    
+    .material-symbols-outlined {
+      font-size: 32px;
+      color: #64748b;
+    }
+  }
+
+  &__upload-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  &__upload-main {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: $text-primary;
+  }
+
+  &__upload-hint {
+    font-size: 0.75rem;
+    color: $text-secondary;
+  }
+
+  &__upload-formats {
+    font-size: 0.6875rem;
+    color: $text-tertiary;
+    margin-top: 4px;
+  }
+
   &__archivos-lista {
     @include flex-column;
     gap: $spacing-xs;
     margin-top: $spacing-sm;
-    padding: $spacing-sm;
-    background: $bg-subtle;
-    border-radius: 6px;
   }
 
   &__archivo-item {
-    @include flex-center;
-    gap: $spacing-xs;
-    font-size: 0.875rem;
-    color: $text-secondary;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-sm;
+    background: $bg-subtle;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    transition: all 0.2s;
+
+    &:hover {
+      background-color: #f8fafc;
+      border-color: #cbd5e1;
+    }
+  }
+
+  &__archivo-info {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    flex: 1;
 
     .material-symbols-outlined {
-      font-size: 1rem;
-      color: #ffa300;
+      font-size: 1.5rem;
+      color: #64748b;
+    }
+  }
+
+  &__archivo-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__archivo-name {
+    font-size: 0.875rem;
+    color: $text-primary;
+    font-weight: 500;
+  }
+
+  &__archivo-size {
+    font-size: 0.75rem;
+    color: $text-secondary;
+  }
+
+  &__archivo-delete {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background-color: transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    .material-symbols-outlined {
+      font-size: 1.25rem;
+      color: #94a3b8;
+    }
+
+    &:hover {
+      background-color: #fee2e2;
+
+      .material-symbols-outlined {
+        color: #dc2626;
+      }
     }
   }
 
