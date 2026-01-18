@@ -29,6 +29,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { DatePicker } from '@/components/ui/date-picker';
 import './ClientDetailPage.scss';
 
 interface ClientDetailPageProps {
@@ -1166,7 +1167,11 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
               {/* Expiry Date */}
               <div className="client-detail__form-field">
                 <Label className="client-detail__form-label">{t('loyaltyPrograms.modal.expiryDate')}</Label>
-                <DatePicker placeholder={t('loyaltyPrograms.modal.expiryDatePlaceholder')} />
+                <DatePicker 
+                  date={undefined}
+                  onSelect={() => {}}
+                  placeholder={t('loyaltyPrograms.modal.expiryDatePlaceholder')} 
+                />
               </div>
             </div>
 
@@ -1282,7 +1287,11 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
                   {/* Date of Birth */}
                   <div className="client-detail__form-field">
                     <Label className="client-detail__form-label">{t('associatedTravelers.modal.dateOfBirth')}</Label>
-                    <DatePicker placeholder={t('associatedTravelers.modal.dateOfBirthPlaceholder')} />
+                    <DatePicker 
+                      date={undefined}
+                      onSelect={() => {}}
+                      placeholder={t('associatedTravelers.modal.dateOfBirthPlaceholder')} 
+                    />
                   </div>
                 </>
               )}
