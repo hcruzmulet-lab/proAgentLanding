@@ -26,13 +26,13 @@ const destinos = [
   {
     id: 'europa',
     nombre: 'DMC Europa',
-    imageUrl: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.pexels.com/photos/338515/pexels-photo-338515.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
     descripcion: 'Operadores especializados en Europa. Circuitos, viajes a medida, experiencias culturales y rutas personalizadas en múltiples países.',
   },
   {
     id: 'republica-dominicana',
     nombre: 'DMC República Dominicana',
-    imageUrl: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&h=600&fit=crop',
+    imageUrl: 'https://images.pexels.com/photos/457882/pexels-photo-457882.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
     descripcion: 'Especialistas en el Caribe dominicano. Grupos, incentivos, experiencias locales y servicios completos en Punta Cana y todo el país.',
   },
   {
