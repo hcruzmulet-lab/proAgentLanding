@@ -846,47 +846,29 @@ export function CalendarioPage() {
         <Label className="calendario-page__form-label">{label}</Label>
         <div className="calendario-page__hora-selector">
           <div className="calendario-page__hora-input">
-            <Select
+            <select
               value={hora.horas}
-              onValueChange={(value) => onChange({ ...hora, horas: value })}
+              onChange={(e) => onChange({ ...hora, horas: e.target.value })}
+              className="calendario-page__hora-field-native"
             >
-              <SelectTrigger className="calendario-page__hora-field" hideIcon>
-                <SelectValue placeholder="HH" />
-              </SelectTrigger>
-              <SelectContent className="calendario-page__hora-dropdown">
-                {horasOpciones.map((h) => (
-                  <SelectItem 
-                    key={h} 
-                    value={h} 
-                    hideCheck
-                    className="calendario-page__hora-option"
-                  >
-                    {h}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+              {horasOpciones.map((h) => (
+                <option key={h} value={h}>
+                  {h}
+                </option>
+              ))}
+            </select>
             <span className="calendario-page__hora-separator">:</span>
-            <Select
+            <select
               value={hora.minutos}
-              onValueChange={(value) => onChange({ ...hora, minutos: value })}
+              onChange={(e) => onChange({ ...hora, minutos: e.target.value })}
+              className="calendario-page__hora-field-native"
             >
-              <SelectTrigger className="calendario-page__hora-field" hideIcon>
-                <SelectValue placeholder="MM" />
-              </SelectTrigger>
-              <SelectContent className="calendario-page__hora-dropdown">
-                {minutosOpciones.map((m) => (
-                  <SelectItem 
-                    key={m} 
-                    value={m} 
-                    hideCheck
-                    className="calendario-page__hora-option"
-                  >
-                    {m}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+              {minutosOpciones.map((m) => (
+                <option key={m} value={m}>
+                  {m}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="calendario-page__hora-period">
             <button
