@@ -767,10 +767,6 @@ function CotizacionPreview({
         </div>
       )}
 
-      {/* Footer */}
-      <div className="border-t pt-4 mt-6 text-center text-xs text-slate-500">
-        <p>Gracias por confiar en Proagent by Azúcar Travel</p>
-      </div>
     </div>
   );
 }
