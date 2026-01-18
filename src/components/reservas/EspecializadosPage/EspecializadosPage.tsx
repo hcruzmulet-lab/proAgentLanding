@@ -68,7 +68,7 @@ const destinos = [
   {
     id: 'ecuador',
     nombre: 'DMC Ecuador',
-    imageUrl: 'https://cdn.pixabay.com/photo/2019/10/26/19/38/volcano-4579704_1280.jpg',
+    imageUrl: 'https://cdn.pixabay.com/photo/2021/06/04/14/40/cotopaxi-6310239_1280.jpg',
     descripcion: 'Especialistas en Ecuador. Galápagos, Amazonía, Andes y experiencias únicas operadas con profundo conocimiento local.',
   },
 ];
