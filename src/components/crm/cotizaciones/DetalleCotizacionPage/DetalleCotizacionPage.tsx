@@ -179,6 +179,13 @@ export function DetalleCotizacionPage() {
     window.location.href = mailtoLink;
   };
 
+  const handleCompartirSMS = () => {
+    const enlacePublico = `${window.location.origin}/es/cotizacion/${cotizacion.numero}`;
+    const mensaje = `Hola ${cotizacion.cliente.nombre}, te comparto la cotización ${cotizacion.numero} para tu viaje a ${cotizacion.titulo}: ${enlacePublico}`;
+    const smsLink = `sms:${cotizacion.cliente.telefono}?body=${encodeURIComponent(mensaje)}`;
+    window.location.href = smsLink;
+  };
+
   const handleSolicitarFirma = () => {
     console.log('Solicitar firma electrónica');
     // Aquí iría la lógica para enviar solicitud de firma
@@ -569,6 +576,22 @@ export function DetalleCotizacionPage() {
                 <div className="detalle-cotizacion-page__share-text">
                   <h4>Email</h4>
                   <p>Enviar por correo electrónico</p>
+                </div>
+              </button>
+
+              <button 
+                className="detalle-cotizacion-page__share-option"
+                onClick={() => {
+                  handleCompartirSMS();
+                  setShowShareModal(false);
+                }}
+              >
+                <div className="detalle-cotizacion-page__share-icon detalle-cotizacion-page__share-icon--sms">
+                  <span className="material-symbols-outlined">sms</span>
+                </div>
+                <div className="detalle-cotizacion-page__share-text">
+                  <h4>SMS</h4>
+                  <p>Enviar mensaje de texto</p>
                 </div>
               </button>
 
