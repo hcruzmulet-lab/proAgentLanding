@@ -1,4 +1,10 @@
 {
   "buildCommand": "npm run build",
-  "framework": "nextjs"
+  "framework": "nextjs",
+  "rewrites": [
+    {
+      "source": "/cotizacion/:numero",
+      "destination": "/cotizacion/:numero"
+    }
+  ]
 }
