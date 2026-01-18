@@ -112,6 +112,8 @@ export function CalendarioPage() {
   const [mostrarSugerenciasPagoFactura, setMostrarSugerenciasPagoFactura] = useState(false);
   const [buscarCRM, setBuscarCRM] = useState('');
   const [mostrarSugerenciasCRM, setMostrarSugerenciasCRM] = useState(false);
+  const [buscarAeropuerto, setBuscarAeropuerto] = useState('');
+  const [mostrarSugerenciasAeropuerto, setMostrarSugerenciasAeropuerto] = useState(false);
   const [newEvent, setNewEvent] = useState<Partial<AgendaItem>>({
     text: '',
     type: 'tarea',
@@ -244,6 +246,64 @@ export function CalendarioPage() {
     });
     setBuscarCRM(`${item.tipo} ${item.numero} - ${item.titulo}`);
     setMostrarSugerenciasCRM(false);
+  };
+
+  // Lista de aeropuertos internacionales
+  const aeropuertosMock = [
+    { codigo: 'AMS', nombre: 'Amsterdam Airport Schiphol', pais: 'Países Bajos' },
+    { codigo: 'ATL', nombre: 'Hartsfield-Jackson Atlanta International Airport', pais: 'EE.UU.' },
+    { codigo: 'BCN', nombre: 'Barcelona-El Prat Airport', pais: 'España' },
+    { codigo: 'BKK', nombre: 'Suvarnabhumi Airport', pais: 'Tailandia' },
+    { codigo: 'BOG', nombre: 'El Dorado International Airport', pais: 'Colombia' },
+    { codigo: 'CDG', nombre: 'Charles de Gaulle Airport', pais: 'Francia' },
+    { codigo: 'CUN', nombre: 'Cancún International Airport', pais: 'México' },
+    { codigo: 'DFW', nombre: 'Dallas/Fort Worth International Airport', pais: 'EE.UU.' },
+    { codigo: 'DXB', nombre: 'Dubai International Airport', pais: 'EAU' },
+    { codigo: 'EZE', nombre: 'Ministro Pistarini International Airport', pais: 'Argentina' },
+    { codigo: 'FCO', nombre: 'Leonardo da Vinci-Fiumicino Airport', pais: 'Italia' },
+    { codigo: 'FRA', nombre: 'Frankfurt Airport', pais: 'Alemania' },
+    { codigo: 'GRU', nombre: 'São Paulo/Guarulhos International Airport', pais: 'Brasil' },
+    { codigo: 'HKG', nombre: 'Hong Kong International Airport', pais: 'China' },
+    { codigo: 'ICN', nombre: 'Incheon International Airport', pais: 'Corea del Sur' },
+    { codigo: 'JFK', nombre: 'John F. Kennedy International Airport', pais: 'EE.UU.' },
+    { codigo: 'LAX', nombre: 'Los Angeles International Airport', pais: 'EE.UU.' },
+    { codigo: 'LGA', nombre: 'LaGuardia Airport', pais: 'EE.UU.' },
+    { codigo: 'LHR', nombre: 'London Heathrow Airport', pais: 'Reino Unido' },
+    { codigo: 'LIM', nombre: 'Jorge Chávez International Airport', pais: 'Perú' },
+    { codigo: 'MAD', nombre: 'Adolfo Suárez Madrid-Barajas Airport', pais: 'España' },
+    { codigo: 'MEX', nombre: 'Mexico City International Airport', pais: 'México' },
+    { codigo: 'MIA', nombre: 'Miami International Airport', pais: 'EE.UU.' },
+    { codigo: 'NRT', nombre: 'Narita International Airport', pais: 'Japón' },
+    { codigo: 'ORD', nombre: "O'Hare International Airport", pais: 'EE.UU.' },
+    { codigo: 'PTY', nombre: 'Tocumen International Airport', pais: 'Panamá' },
+    { codigo: 'PUJ', nombre: 'Punta Cana International Airport', pais: 'República Dominicana' },
+    { codigo: 'SIN', nombre: 'Singapore Changi Airport', pais: 'Singapur' },
+    { codigo: 'STI', nombre: 'Cibao International Airport', pais: 'República Dominicana' },
+    { codigo: 'SYD', nombre: 'Sydney Kingsford Smith Airport', pais: 'Australia' },
+  ];
+
+  // Filtrar aeropuertos para búsqueda
+  const getAeropuertosFiltrados = () => {
+    if (buscarAeropuerto.length < 2) return [];
+    
+    return aeropuertosMock.filter(aeropuerto => {
+      const searchLower = buscarAeropuerto.toLowerCase();
+      return (
+        aeropuerto.codigo.toLowerCase().includes(searchLower) ||
+        aeropuerto.nombre.toLowerCase().includes(searchLower) ||
+        aeropuerto.pais.toLowerCase().includes(searchLower)
+      );
+    });
+  };
+
+  // Seleccionar un aeropuerto
+  const handleSeleccionarAeropuerto = (aeropuerto: any) => {
+    setNewEvent({
+      ...newEvent,
+      aeropuerto: aeropuerto.codigo,
+    });
+    setBuscarAeropuerto(`${aeropuerto.codigo} - ${aeropuerto.nombre} (${aeropuerto.pais})`);
+    setMostrarSugerenciasAeropuerto(false);
   };
 
   // Generar items de agenda organizados por categorías
@@ -1346,8 +1406,8 @@ export function CalendarioPage() {
               </>
             )}
 
-            {/* Prioridad solo para tipos que no son fechas-especiales ni pagos-cobros */}
-            {selectedEventType !== 'fechas-especiales' && selectedEventType !== 'pagos-cobros' && (
+            {/* Prioridad solo para acciones-tareas */}
+            {selectedEventType === 'acciones-tareas' && (
               <div className="calendario-page__form-group">
                 <Label htmlFor="priority" className="calendario-page__form-label">
                   Prioridad
@@ -1806,46 +1866,51 @@ export function CalendarioPage() {
                   <Label htmlFor="aeropuerto" className="calendario-page__form-label">
                     Aeropuerto
                   </Label>
-                  <Select 
-                    value={newEvent.aeropuerto || ''} 
-                    onValueChange={(value) => setNewEvent({ ...newEvent, aeropuerto: value })}
-                  >
-                    <SelectTrigger className="calendario-page__form-input">
-                      <SelectValue placeholder="Seleccionar aeropuerto" />
-                    </SelectTrigger>
-                    <SelectContent className="max-h-[300px]">
-                      <SelectItem value="AMS - Amsterdam Airport Schiphol (Países Bajos)">AMS - Amsterdam Airport Schiphol (Países Bajos)</SelectItem>
-                      <SelectItem value="ATL - Hartsfield-Jackson Atlanta International Airport (EE.UU.)">ATL - Hartsfield-Jackson Atlanta International Airport (EE.UU.)</SelectItem>
-                      <SelectItem value="BCN - Barcelona-El Prat Airport (España)">BCN - Barcelona-El Prat Airport (España)</SelectItem>
-                      <SelectItem value="BKK - Suvarnabhumi Airport (Tailandia)">BKK - Suvarnabhumi Airport (Tailandia)</SelectItem>
-                      <SelectItem value="BOG - El Dorado International Airport (Colombia)">BOG - El Dorado International Airport (Colombia)</SelectItem>
-                      <SelectItem value="CDG - Charles de Gaulle Airport (Francia)">CDG - Charles de Gaulle Airport (Francia)</SelectItem>
-                      <SelectItem value="CUN - Cancún International Airport (México)">CUN - Cancún International Airport (México)</SelectItem>
-                      <SelectItem value="DFW - Dallas/Fort Worth International Airport (EE.UU.)">DFW - Dallas/Fort Worth International Airport (EE.UU.)</SelectItem>
-                      <SelectItem value="DXB - Dubai International Airport (EAU)">DXB - Dubai International Airport (EAU)</SelectItem>
-                      <SelectItem value="EZE - Ministro Pistarini International Airport (Argentina)">EZE - Ministro Pistarini International Airport (Argentina)</SelectItem>
-                      <SelectItem value="FCO - Leonardo da Vinci-Fiumicino Airport (Italia)">FCO - Leonardo da Vinci-Fiumicino Airport (Italia)</SelectItem>
-                      <SelectItem value="FRA - Frankfurt Airport (Alemania)">FRA - Frankfurt Airport (Alemania)</SelectItem>
-                      <SelectItem value="GRU - São Paulo/Guarulhos International Airport (Brasil)">GRU - São Paulo/Guarulhos International Airport (Brasil)</SelectItem>
-                      <SelectItem value="HKG - Hong Kong International Airport (China)">HKG - Hong Kong International Airport (China)</SelectItem>
-                      <SelectItem value="ICN - Incheon International Airport (Corea del Sur)">ICN - Incheon International Airport (Corea del Sur)</SelectItem>
-                      <SelectItem value="JFK - John F. Kennedy International Airport (EE.UU.)">JFK - John F. Kennedy International Airport (EE.UU.)</SelectItem>
-                      <SelectItem value="LAX - Los Angeles International Airport (EE.UU.)">LAX - Los Angeles International Airport (EE.UU.)</SelectItem>
-                      <SelectItem value="LGA - LaGuardia Airport (EE.UU.)">LGA - LaGuardia Airport (EE.UU.)</SelectItem>
-                      <SelectItem value="LHR - London Heathrow Airport (Reino Unido)">LHR - London Heathrow Airport (Reino Unido)</SelectItem>
-                      <SelectItem value="LIM - Jorge Chávez International Airport (Perú)">LIM - Jorge Chávez International Airport (Perú)</SelectItem>
-                      <SelectItem value="MAD - Adolfo Suárez Madrid-Barajas Airport (España)">MAD - Adolfo Suárez Madrid-Barajas Airport (España)</SelectItem>
-                      <SelectItem value="MEX - Mexico City International Airport (México)">MEX - Mexico City International Airport (México)</SelectItem>
-                      <SelectItem value="MIA - Miami International Airport (EE.UU.)">MIA - Miami International Airport (EE.UU.)</SelectItem>
-                      <SelectItem value="NRT - Narita International Airport (Japón)">NRT - Narita International Airport (Japón)</SelectItem>
-                      <SelectItem value="ORD - O'Hare International Airport (EE.UU.)">ORD - O'Hare International Airport (EE.UU.)</SelectItem>
-                      <SelectItem value="PTY - Tocumen International Airport (Panamá)">PTY - Tocumen International Airport (Panamá)</SelectItem>
-                      <SelectItem value="PUJ - Punta Cana International Airport (República Dominicana)">PUJ - Punta Cana International Airport (República Dominicana)</SelectItem>
-                      <SelectItem value="SIN - Singapore Changi Airport (Singapur)">SIN - Singapore Changi Airport (Singapur)</SelectItem>
-                      <SelectItem value="STI - Cibao International Airport (República Dominicana)">STI - Cibao International Airport (República Dominicana)</SelectItem>
-                      <SelectItem value="SYD - Sydney Kingsford Smith Airport (Australia)">SYD - Sydney Kingsford Smith Airport (Australia)</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <div className="relative">
+                    <Input
+                      id="aeropuerto"
+                      value={buscarAeropuerto}
+                      onChange={(e) => {
+                        setBuscarAeropuerto(e.target.value);
+                        setMostrarSugerenciasAeropuerto(e.target.value.length >= 2);
+                      }}
+                      onFocus={() => buscarAeropuerto.length >= 2 && setMostrarSugerenciasAeropuerto(true)}
+                      placeholder="Buscar por código, nombre o país"
+                      className="calendario-page__form-input"
+                    />
+                    {buscarAeropuerto && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setBuscarAeropuerto('');
+                          setMostrarSugerenciasAeropuerto(false);
+                          setNewEvent({ ...newEvent, aeropuerto: '' });
+                        }}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center w-6 h-6 text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
+                      >
+                        <span className="material-symbols-outlined text-[14px]">close</span>
+                      </button>
+                    )}
+                    {mostrarSugerenciasAeropuerto && getAeropuertosFiltrados().length > 0 && (
+                      <div className="absolute z-50 w-full mt-1 bg-white border border-slate-200 rounded-md shadow-lg max-h-60 overflow-y-auto">
+                        {getAeropuertosFiltrados().map((aeropuerto) => (
+                          <div
+                            key={aeropuerto.codigo}
+                            onClick={() => handleSeleccionarAeropuerto(aeropuerto)}
+                            className="px-4 py-3 cursor-pointer hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-0"
+                          >
+                            <div className="flex justify-between items-center font-medium text-slate-900">
+                              <span>{aeropuerto.codigo}</span>
+                              <span className="text-xs text-slate-500">{aeropuerto.pais}</span>
+                            </div>
+                            <div className="text-sm text-slate-500 mt-1">
+                              {aeropuerto.nombre}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 <div className="calendario-page__form-row">
