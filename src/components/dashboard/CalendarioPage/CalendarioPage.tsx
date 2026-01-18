@@ -1044,6 +1044,35 @@ export function CalendarioPage() {
               />
             </div>
 
+            {/* Fecha y Hora - Para todos los tipos de eventos */}
+            <div className="calendario-page__form-row">
+              <div className="calendario-page__form-group">
+                <Label htmlFor="date" className="calendario-page__form-label">
+                  Fecha
+                </Label>
+                <Input
+                  id="date"
+                  type="date"
+                  value={newEvent.date ? format(newEvent.date, 'yyyy-MM-dd') : ''}
+                  onChange={(e) => setNewEvent({ ...newEvent, date: e.target.value ? new Date(e.target.value) : new Date() })}
+                  className="calendario-page__form-input"
+                />
+              </div>
+
+              <div className="calendario-page__form-group">
+                <Label htmlFor="hora" className="calendario-page__form-label">
+                  Hora (opcional)
+                </Label>
+                <Input
+                  id="hora"
+                  type="time"
+                  value={newEvent.hora || ''}
+                  onChange={(e) => setNewEvent({ ...newEvent, hora: e.target.value })}
+                  className="calendario-page__form-input"
+                />
+              </div>
+            </div>
+
             {/* Campos específicos según el tipo */}
             {selectedEventType === 'fechas-especiales' && (
               <>
@@ -1079,34 +1108,6 @@ export function CalendarioPage() {
                     placeholder="Nombre del cliente o persona"
                     className="calendario-page__form-input"
                   />
-                </div>
-
-                <div className="calendario-page__form-row">
-                  <div className="calendario-page__form-group">
-                    <Label htmlFor="date" className="calendario-page__form-label">
-                      Fecha
-                    </Label>
-                    <Input
-                      id="date"
-                      type="date"
-                      value={newEvent.date ? format(newEvent.date, 'yyyy-MM-dd') : ''}
-                      onChange={(e) => setNewEvent({ ...newEvent, date: e.target.value ? new Date(e.target.value) : new Date() })}
-                      className="calendario-page__form-input"
-                    />
-                  </div>
-
-                  <div className="calendario-page__form-group">
-                    <Label htmlFor="hora" className="calendario-page__form-label">
-                      Hora (opcional)
-                    </Label>
-                    <Input
-                      id="hora"
-                      type="time"
-                      value={newEvent.hora || ''}
-                      onChange={(e) => setNewEvent({ ...newEvent, hora: e.target.value })}
-                      className="calendario-page__form-input"
-                    />
-                  </div>
                 </div>
 
                 <div className="calendario-page__form-group">
@@ -1151,43 +1152,26 @@ export function CalendarioPage() {
               </>
             )}
 
-            {/* Resto de tipos mantienen el comportamiento original */}
+            {/* Prioridad solo para tipos que no son fechas-especiales ni pagos-cobros */}
             {selectedEventType !== 'fechas-especiales' && selectedEventType !== 'pagos-cobros' && (
-              <>
-                <div className="calendario-page__form-row">
-                  <div className="calendario-page__form-group">
-                    <Label htmlFor="date" className="calendario-page__form-label">
-                      Fecha
-                    </Label>
-                    <Input
-                      id="date"
-                      type="date"
-                      value={newEvent.date ? format(newEvent.date, 'yyyy-MM-dd') : ''}
-                      onChange={(e) => setNewEvent({ ...newEvent, date: e.target.value ? new Date(e.target.value) : new Date() })}
-                      className="calendario-page__form-input"
-                    />
-                  </div>
-
-                  <div className="calendario-page__form-group">
-                    <Label htmlFor="priority" className="calendario-page__form-label">
-                      Prioridad
-                    </Label>
-                    <Select 
-                      value={newEvent.priority || 'media'} 
-                      onValueChange={(value) => setNewEvent({ ...newEvent, priority: value as 'alta' | 'media' | 'baja' })}
-                    >
-                      <SelectTrigger className="calendario-page__form-input">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="alta">Alta</SelectItem>
-                        <SelectItem value="media">Media</SelectItem>
-                        <SelectItem value="baja">Baja</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-              </>
+              <div className="calendario-page__form-group">
+                <Label htmlFor="priority" className="calendario-page__form-label">
+                  Prioridad
+                </Label>
+                <Select 
+                  value={newEvent.priority || 'media'} 
+                  onValueChange={(value) => setNewEvent({ ...newEvent, priority: value as 'alta' | 'media' | 'baja' })}
+                >
+                  <SelectTrigger className="calendario-page__form-input">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="alta">Alta</SelectItem>
+                    <SelectItem value="media">Media</SelectItem>
+                    <SelectItem value="baja">Baja</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             )}
 
             {selectedEventType === 'pagos-cobros' && (
@@ -1252,19 +1236,6 @@ export function CalendarioPage() {
                   <p className="calendario-page__form-helper">
                     Selecciona el cliente asociado al pago o cobro
                   </p>
-                </div>
-
-                <div className="calendario-page__form-group">
-                  <Label htmlFor="date" className="calendario-page__form-label">
-                    Fecha
-                  </Label>
-                  <Input
-                    id="date"
-                    type="date"
-                    value={newEvent.date ? format(newEvent.date, 'yyyy-MM-dd') : ''}
-                    onChange={(e) => setNewEvent({ ...newEvent, date: e.target.value ? new Date(e.target.value) : new Date() })}
-                    className="calendario-page__form-input"
-                  />
                 </div>
 
                 <div className="calendario-page__form-group">
