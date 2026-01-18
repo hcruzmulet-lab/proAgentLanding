@@ -1356,6 +1356,100 @@ export function CalendarioPage() {
               />
             </div>
 
+            {/* Fecha y Hora - Común para todos los tipos */}
+            <div className="calendario-page__form-group">
+              <Label htmlFor="date" className="calendario-page__form-label">
+                Fecha
+              </Label>
+              <DatePicker
+                date={newEvent.date}
+                dateRange={newEvent.endDate ? { from: newEvent.date, to: newEvent.endDate } : undefined}
+                onSelect={(date) => setNewEvent({ ...newEvent, date: date || new Date(), endDate: undefined, horaFin: undefined })}
+                onSelectRange={(range) => setNewEvent({ 
+                  ...newEvent, 
+                  date: range?.from || new Date(), 
+                  endDate: range?.to 
+                })}
+                placeholder="Seleccionar fecha"
+                mode="single"
+              />
+            </div>
+
+            {/* Hora - Solo para fecha única */}
+            {!newEvent.endDate && (
+              <HoraSelector
+                hora={horaInicio}
+                onChange={(h) => {
+                  setHoraInicio(h);
+                  setNewEvent({ ...newEvent, hora: convertTo24h(h.horas, h.minutos, h.periodo) });
+                }}
+                label="Hora (opcional)"
+              />
+            )}
+
+            {/* Hora Inicio y Fin - Solo para rango de fechas */}
+            {newEvent.endDate && (
+              <>
+                <HoraSelector
+                  hora={horaInicio}
+                  onChange={(h) => {
+                    setHoraInicio(h);
+                    setNewEvent({ ...newEvent, hora: convertTo24h(h.horas, h.minutos, h.periodo) });
+                  }}
+                  label="Hora de Inicio (opcional)"
+                />
+                <HoraSelector
+                  hora={horaFin}
+                  onChange={(h) => {
+                    setHoraFin(h);
+                    setNewEvent({ ...newEvent, horaFin: convertTo24h(h.horas, h.minutos, h.periodo) });
+                  }}
+                  label="Hora de Fin (opcional)"
+                />
+              </>
+            )}
+
+            {/* Recordatorio */}
+            <div className="calendario-page__form-group">
+              <Label className="calendario-page__form-label">
+                Recordatorio
+              </Label>
+              <div className="calendario-page__recordatorio-options">
+                <button
+                  type="button"
+                  onClick={() => setNewEvent({ ...newEvent, recordatorio: 'ninguno' })}
+                  className={`calendario-page__recordatorio-option ${newEvent.recordatorio === 'ninguno' || !newEvent.recordatorio ? 'active' : ''}`}
+                >
+                  <span className="material-symbols-outlined">notifications_off</span>
+                  Sin recordatorio
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setNewEvent({ ...newEvent, recordatorio: '15min' })}
+                  className={`calendario-page__recordatorio-option ${newEvent.recordatorio === '15min' ? 'active' : ''}`}
+                >
+                  <span className="material-symbols-outlined">schedule</span>
+                  15 minutos antes
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setNewEvent({ ...newEvent, recordatorio: '1hora' })}
+                  className={`calendario-page__recordatorio-option ${newEvent.recordatorio === '1hora' ? 'active' : ''}`}
+                >
+                  <span className="material-symbols-outlined">schedule</span>
+                  1 hora antes
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setNewEvent({ ...newEvent, recordatorio: '1dia' })}
+                  className={`calendario-page__recordatorio-option ${newEvent.recordatorio === '1dia' ? 'active' : ''}`}
+                >
+                  <span className="material-symbols-outlined">event</span>
+                  1 día antes
+                </button>
+              </div>
+            </div>
+
             {/* Campos específicos según el tipo */}
             {selectedEventType === 'fechas-especiales' && (
               <>
@@ -1500,100 +1594,6 @@ export function CalendarioPage() {
                       ))}
                     </div>
                   )}
-                </div>
-
-                {/* Fecha y Hora */}
-                <div className="calendario-page__form-group">
-                  <Label htmlFor="date" className="calendario-page__form-label">
-                    Fecha
-                  </Label>
-                  <DatePicker
-                    date={newEvent.date}
-                    dateRange={newEvent.endDate ? { from: newEvent.date, to: newEvent.endDate } : undefined}
-                    onSelect={(date) => setNewEvent({ ...newEvent, date: date || new Date(), endDate: undefined, horaFin: undefined })}
-                    onSelectRange={(range) => setNewEvent({ 
-                      ...newEvent, 
-                      date: range?.from || new Date(), 
-                      endDate: range?.to 
-                    })}
-                    placeholder="Seleccionar fecha"
-                    mode="single"
-                  />
-                </div>
-
-                {/* Hora - Solo para fecha única */}
-                {!newEvent.endDate && (
-                  <HoraSelector
-                    hora={horaInicio}
-                    onChange={(h) => {
-                      setHoraInicio(h);
-                      setNewEvent({ ...newEvent, hora: convertTo24h(h.horas, h.minutos, h.periodo) });
-                    }}
-                    label="Hora (opcional)"
-                  />
-                )}
-
-                {/* Hora Inicio y Fin - Solo para rango de fechas */}
-                {newEvent.endDate && (
-                  <>
-                    <HoraSelector
-                      hora={horaInicio}
-                      onChange={(h) => {
-                        setHoraInicio(h);
-                        setNewEvent({ ...newEvent, hora: convertTo24h(h.horas, h.minutos, h.periodo) });
-                      }}
-                      label="Hora de Inicio (opcional)"
-                    />
-                    <HoraSelector
-                      hora={horaFin}
-                      onChange={(h) => {
-                        setHoraFin(h);
-                        setNewEvent({ ...newEvent, horaFin: convertTo24h(h.horas, h.minutos, h.periodo) });
-                      }}
-                      label="Hora de Fin (opcional)"
-                    />
-                  </>
-                )}
-
-                {/* Recordatorio */}
-                <div className="calendario-page__form-group">
-                  <Label className="calendario-page__form-label">
-                    Recordatorio
-                  </Label>
-                  <div className="calendario-page__recordatorio-options">
-                    <button
-                      type="button"
-                      onClick={() => setNewEvent({ ...newEvent, recordatorio: 'ninguno' })}
-                      className={`calendario-page__recordatorio-option ${newEvent.recordatorio === 'ninguno' || !newEvent.recordatorio ? 'active' : ''}`}
-                    >
-                      <span className="material-symbols-outlined">notifications_off</span>
-                      Sin recordatorio
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setNewEvent({ ...newEvent, recordatorio: '15min' })}
-                      className={`calendario-page__recordatorio-option ${newEvent.recordatorio === '15min' ? 'active' : ''}`}
-                    >
-                      <span className="material-symbols-outlined">schedule</span>
-                      15 minutos antes
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setNewEvent({ ...newEvent, recordatorio: '1hora' })}
-                      className={`calendario-page__recordatorio-option ${newEvent.recordatorio === '1hora' ? 'active' : ''}`}
-                    >
-                      <span className="material-symbols-outlined">schedule</span>
-                      1 hora antes
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setNewEvent({ ...newEvent, recordatorio: '1dia' })}
-                      className={`calendario-page__recordatorio-option ${newEvent.recordatorio === '1dia' ? 'active' : ''}`}
-                    >
-                      <span className="material-symbols-outlined">event</span>
-                      1 día antes
-                    </button>
-                  </div>
                 </div>
               </>
             )}
@@ -1754,100 +1754,6 @@ export function CalendarioPage() {
                     className="calendario-page__form-input calendario-page__form-textarea"
                     rows={3}
                   />
-                </div>
-
-                {/* Fecha y Hora */}
-                <div className="calendario-page__form-group">
-                  <Label htmlFor="date-pago" className="calendario-page__form-label">
-                    Fecha
-                  </Label>
-                  <DatePicker
-                    date={newEvent.date}
-                    dateRange={newEvent.endDate ? { from: newEvent.date, to: newEvent.endDate } : undefined}
-                    onSelect={(date) => setNewEvent({ ...newEvent, date: date || new Date(), endDate: undefined, horaFin: undefined })}
-                    onSelectRange={(range) => setNewEvent({ 
-                      ...newEvent, 
-                      date: range?.from || new Date(), 
-                      endDate: range?.to 
-                    })}
-                    placeholder="Seleccionar fecha"
-                    mode="single"
-                  />
-                </div>
-
-                {/* Hora - Solo para fecha única */}
-                {!newEvent.endDate && (
-                  <HoraSelector
-                    hora={horaInicio}
-                    onChange={(h) => {
-                      setHoraInicio(h);
-                      setNewEvent({ ...newEvent, hora: convertTo24h(h.horas, h.minutos, h.periodo) });
-                    }}
-                    label="Hora (opcional)"
-                  />
-                )}
-
-                {/* Hora Inicio y Fin - Solo para rango de fechas */}
-                {newEvent.endDate && (
-                  <>
-                    <HoraSelector
-                      hora={horaInicio}
-                      onChange={(h) => {
-                        setHoraInicio(h);
-                        setNewEvent({ ...newEvent, hora: convertTo24h(h.horas, h.minutos, h.periodo) });
-                      }}
-                      label="Hora de Inicio (opcional)"
-                    />
-                    <HoraSelector
-                      hora={horaFin}
-                      onChange={(h) => {
-                        setHoraFin(h);
-                        setNewEvent({ ...newEvent, horaFin: convertTo24h(h.horas, h.minutos, h.periodo) });
-                      }}
-                      label="Hora de Fin (opcional)"
-                    />
-                  </>
-                )}
-
-                {/* Recordatorio */}
-                <div className="calendario-page__form-group">
-                  <Label className="calendario-page__form-label">
-                    Recordatorio
-                  </Label>
-                  <div className="calendario-page__recordatorio-options">
-                    <button
-                      type="button"
-                      onClick={() => setNewEvent({ ...newEvent, recordatorio: 'ninguno' })}
-                      className={`calendario-page__recordatorio-option ${newEvent.recordatorio === 'ninguno' || !newEvent.recordatorio ? 'active' : ''}`}
-                    >
-                      <span className="material-symbols-outlined">notifications_off</span>
-                      Sin recordatorio
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setNewEvent({ ...newEvent, recordatorio: '15min' })}
-                      className={`calendario-page__recordatorio-option ${newEvent.recordatorio === '15min' ? 'active' : ''}`}
-                    >
-                      <span className="material-symbols-outlined">schedule</span>
-                      15 minutos antes
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setNewEvent({ ...newEvent, recordatorio: '1hora' })}
-                      className={`calendario-page__recordatorio-option ${newEvent.recordatorio === '1hora' ? 'active' : ''}`}
-                    >
-                      <span className="material-symbols-outlined">schedule</span>
-                      1 hora antes
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setNewEvent({ ...newEvent, recordatorio: '1dia' })}
-                      className={`calendario-page__recordatorio-option ${newEvent.recordatorio === '1dia' ? 'active' : ''}`}
-                    >
-                      <span className="material-symbols-outlined">event</span>
-                      1 día antes
-                    </button>
-                  </div>
                 </div>
               </>
             )}
@@ -2027,100 +1933,6 @@ export function CalendarioPage() {
                       ))}
                     </div>
                   )}
-                </div>
-
-                {/* Fecha y Hora */}
-                <div className="calendario-page__form-group">
-                  <Label htmlFor="date-accion" className="calendario-page__form-label">
-                    Fecha
-                  </Label>
-                  <DatePicker
-                    date={newEvent.date}
-                    dateRange={newEvent.endDate ? { from: newEvent.date, to: newEvent.endDate } : undefined}
-                    onSelect={(date) => setNewEvent({ ...newEvent, date: date || new Date(), endDate: undefined, horaFin: undefined })}
-                    onSelectRange={(range) => setNewEvent({ 
-                      ...newEvent, 
-                      date: range?.from || new Date(), 
-                      endDate: range?.to 
-                    })}
-                    placeholder="Seleccionar fecha"
-                    mode="single"
-                  />
-                </div>
-
-                {/* Hora - Solo para fecha única */}
-                {!newEvent.endDate && (
-                  <HoraSelector
-                    hora={horaInicio}
-                    onChange={(h) => {
-                      setHoraInicio(h);
-                      setNewEvent({ ...newEvent, hora: convertTo24h(h.horas, h.minutos, h.periodo) });
-                    }}
-                    label="Hora (opcional)"
-                  />
-                )}
-
-                {/* Hora Inicio y Fin - Solo para rango de fechas */}
-                {newEvent.endDate && (
-                  <>
-                    <HoraSelector
-                      hora={horaInicio}
-                      onChange={(h) => {
-                        setHoraInicio(h);
-                        setNewEvent({ ...newEvent, hora: convertTo24h(h.horas, h.minutos, h.periodo) });
-                      }}
-                      label="Hora de Inicio (opcional)"
-                    />
-                    <HoraSelector
-                      hora={horaFin}
-                      onChange={(h) => {
-                        setHoraFin(h);
-                        setNewEvent({ ...newEvent, horaFin: convertTo24h(h.horas, h.minutos, h.periodo) });
-                      }}
-                      label="Hora de Fin (opcional)"
-                    />
-                  </>
-                )}
-
-                {/* Recordatorio */}
-                <div className="calendario-page__form-group">
-                  <Label className="calendario-page__form-label">
-                    Recordatorio
-                  </Label>
-                  <div className="calendario-page__recordatorio-options">
-                    <button
-                      type="button"
-                      onClick={() => setNewEvent({ ...newEvent, recordatorio: 'ninguno' })}
-                      className={`calendario-page__recordatorio-option ${newEvent.recordatorio === 'ninguno' || !newEvent.recordatorio ? 'active' : ''}`}
-                    >
-                      <span className="material-symbols-outlined">notifications_off</span>
-                      Sin recordatorio
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setNewEvent({ ...newEvent, recordatorio: '15min' })}
-                      className={`calendario-page__recordatorio-option ${newEvent.recordatorio === '15min' ? 'active' : ''}`}
-                    >
-                      <span className="material-symbols-outlined">schedule</span>
-                      15 minutos antes
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setNewEvent({ ...newEvent, recordatorio: '1hora' })}
-                      className={`calendario-page__recordatorio-option ${newEvent.recordatorio === '1hora' ? 'active' : ''}`}
-                    >
-                      <span className="material-symbols-outlined">schedule</span>
-                      1 hora antes
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setNewEvent({ ...newEvent, recordatorio: '1dia' })}
-                      className={`calendario-page__recordatorio-option ${newEvent.recordatorio === '1dia' ? 'active' : ''}`}
-                    >
-                      <span className="material-symbols-outlined">event</span>
-                      1 día antes
-                    </button>
-                  </div>
                 </div>
               </>
             )}
@@ -2332,100 +2144,6 @@ export function CalendarioPage() {
                     className="calendario-page__form-input calendario-page__form-textarea"
                     rows={3}
                   />
-                </div>
-
-                {/* Fecha y Hora */}
-                <div className="calendario-page__form-group">
-                  <Label htmlFor="date-viaje" className="calendario-page__form-label">
-                    Fecha
-                  </Label>
-                  <DatePicker
-                    date={newEvent.date}
-                    dateRange={newEvent.endDate ? { from: newEvent.date, to: newEvent.endDate } : undefined}
-                    onSelect={(date) => setNewEvent({ ...newEvent, date: date || new Date(), endDate: undefined, horaFin: undefined })}
-                    onSelectRange={(range) => setNewEvent({ 
-                      ...newEvent, 
-                      date: range?.from || new Date(), 
-                      endDate: range?.to 
-                    })}
-                    placeholder="Seleccionar fecha"
-                    mode="single"
-                  />
-                </div>
-
-                {/* Hora - Solo para fecha única */}
-                {!newEvent.endDate && (
-                  <HoraSelector
-                    hora={horaInicio}
-                    onChange={(h) => {
-                      setHoraInicio(h);
-                      setNewEvent({ ...newEvent, hora: convertTo24h(h.horas, h.minutos, h.periodo) });
-                    }}
-                    label="Hora (opcional)"
-                  />
-                )}
-
-                {/* Hora Inicio y Fin - Solo para rango de fechas */}
-                {newEvent.endDate && (
-                  <>
-                    <HoraSelector
-                      hora={horaInicio}
-                      onChange={(h) => {
-                        setHoraInicio(h);
-                        setNewEvent({ ...newEvent, hora: convertTo24h(h.horas, h.minutos, h.periodo) });
-                      }}
-                      label="Hora de Inicio (opcional)"
-                    />
-                    <HoraSelector
-                      hora={horaFin}
-                      onChange={(h) => {
-                        setHoraFin(h);
-                        setNewEvent({ ...newEvent, horaFin: convertTo24h(h.horas, h.minutos, h.periodo) });
-                      }}
-                      label="Hora de Fin (opcional)"
-                    />
-                  </>
-                )}
-
-                {/* Recordatorio */}
-                <div className="calendario-page__form-group">
-                  <Label className="calendario-page__form-label">
-                    Recordatorio
-                  </Label>
-                  <div className="calendario-page__recordatorio-options">
-                    <button
-                      type="button"
-                      onClick={() => setNewEvent({ ...newEvent, recordatorio: 'ninguno' })}
-                      className={`calendario-page__recordatorio-option ${newEvent.recordatorio === 'ninguno' || !newEvent.recordatorio ? 'active' : ''}`}
-                    >
-                      <span className="material-symbols-outlined">notifications_off</span>
-                      Sin recordatorio
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setNewEvent({ ...newEvent, recordatorio: '15min' })}
-                      className={`calendario-page__recordatorio-option ${newEvent.recordatorio === '15min' ? 'active' : ''}`}
-                    >
-                      <span className="material-symbols-outlined">schedule</span>
-                      15 minutos antes
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setNewEvent({ ...newEvent, recordatorio: '1hora' })}
-                      className={`calendario-page__recordatorio-option ${newEvent.recordatorio === '1hora' ? 'active' : ''}`}
-                    >
-                      <span className="material-symbols-outlined">schedule</span>
-                      1 hora antes
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setNewEvent({ ...newEvent, recordatorio: '1dia' })}
-                      className={`calendario-page__recordatorio-option ${newEvent.recordatorio === '1dia' ? 'active' : ''}`}
-                    >
-                      <span className="material-symbols-outlined">event</span>
-                      1 día antes
-                    </button>
-                  </div>
                 </div>
               </>
             )}
