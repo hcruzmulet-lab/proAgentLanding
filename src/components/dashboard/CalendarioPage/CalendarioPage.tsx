@@ -1033,13 +1033,13 @@ export function CalendarioPage() {
           <div className="calendario-page__event-modal-form">
             <div className="calendario-page__form-group">
               <Label htmlFor="text" className="calendario-page__form-label">
-                {selectedEventType === 'fechas-especiales' ? 'Título' : 'Título / Descripción'}
+                Título
               </Label>
               <Input
                 id="text"
                 value={newEvent.text || ''}
                 onChange={(e) => setNewEvent({ ...newEvent, text: e.target.value })}
-                placeholder={selectedEventType === 'fechas-especiales' ? 'Ingresa el título del evento' : 'Ingresa el título o descripción del evento'}
+                placeholder="Ingresa el título del evento"
                 className="calendario-page__form-input"
               />
             </div>
