@@ -40,14 +40,21 @@ export function DatePicker({
     dateRange?.from || date || null
   );
   const [endDate, setEndDate] = React.useState<Date | null>(dateRange?.to || null);
+  const isUserInteracting = React.useRef(false);
 
   React.useEffect(() => {
+    // Solo sincronizar si el usuario no está interactuando manualmente
+    if (isUserInteracting.current) {
+      isUserInteracting.current = false;
+      return;
+    }
+    
     // Sincronizar con las props externas
     if (dateRange?.from || dateRange?.to) {
       setSelectedMode('range');
       setStartDate(dateRange.from || null);
       setEndDate(dateRange.to || null);
-    } else if (date) {
+    } else if (date && !dateRange) {
       setSelectedMode('single');
       setStartDate(date);
       setEndDate(null);
@@ -55,6 +62,7 @@ export function DatePicker({
   }, [date, dateRange]);
 
   const handleSingleDateChange = (date: Date | null) => {
+    isUserInteracting.current = true;
     setStartDate(date);
     setEndDate(null);
     if (onSelect) {
@@ -65,6 +73,7 @@ export function DatePicker({
 
   const handleRangeDateChange = (dates: [Date | null, Date | null]) => {
     const [start, end] = dates;
+    isUserInteracting.current = true;
     setStartDate(start);
     setEndDate(end);
     if (onSelectRange) {
@@ -117,16 +126,12 @@ export function DatePicker({
                 type="button"
                 size="sm"
                 variant={selectedMode === 'single' ? 'default' : 'outline'}
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  isUserInteracting.current = true;
                   setSelectedMode('single');
                   setEndDate(null);
-                  // Notificar al padre que se cambió a modo single
-                  if (onSelect && startDate) {
-                    onSelect(startDate);
-                  }
-                  if (onSelectRange) {
-                    onSelectRange(null);
-                  }
                 }}
                 className={cn(
                   'text-xs',
@@ -139,12 +144,11 @@ export function DatePicker({
                 type="button"
                 size="sm"
                 variant={selectedMode === 'range' ? 'default' : 'outline'}
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  isUserInteracting.current = true;
                   setSelectedMode('range');
-                  // Notificar al padre que se cambió a modo range
-                  if (onSelect) {
-                    onSelect(null);
-                  }
                 }}
                 className={cn(
                   'text-xs',
