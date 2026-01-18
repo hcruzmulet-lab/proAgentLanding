@@ -155,8 +155,28 @@ export function DetalleCotizacionPage() {
 
   const handleCompartir = () => {
     setShowShareModal(true);
-    // Simular copia al portapapeles
-    navigator.clipboard.writeText(`${window.location.origin}/cotizacion/${cotizacion.numero}`);
+  };
+
+  const handleCopiarEnlace = () => {
+    const enlacePublico = `${window.location.origin}/cotizacion/${cotizacion.numero}`;
+    navigator.clipboard.writeText(enlacePublico);
+    // Mostrar feedback temporal
+    alert('¡Enlace copiado al portapapeles!');
+  };
+
+  const handleCompartirWhatsApp = () => {
+    const enlacePublico = `${window.location.origin}/cotizacion/${cotizacion.numero}`;
+    const mensaje = `Hola ${cotizacion.cliente.nombre}, te comparto la cotización ${cotizacion.numero} para tu viaje a ${cotizacion.titulo}: ${enlacePublico}`;
+    const urlWhatsApp = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
+    window.open(urlWhatsApp, '_blank');
+  };
+
+  const handleCompartirEmail = () => {
+    const enlacePublico = `${window.location.origin}/cotizacion/${cotizacion.numero}`;
+    const asunto = `Cotización ${cotizacion.numero} - ${cotizacion.titulo}`;
+    const cuerpo = `Hola ${cotizacion.cliente.nombre},\n\nTe comparto la cotización para tu viaje:\n\nCotización: ${cotizacion.numero}\nDestino: ${cotizacion.titulo}\nFecha de viaje: ${cotizacion.fechaViaje} - ${cotizacion.fechaVuelta}\n\nPuedes ver los detalles completos aquí:\n${enlacePublico}\n\nSaludos,\nEquipo Proagent`;
+    const mailtoLink = `mailto:${cotizacion.cliente.email}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
+    window.location.href = mailtoLink;
   };
 
   const handleSolicitarFirma = () => {
@@ -499,16 +519,72 @@ export function DetalleCotizacionPage() {
         </div>
       </div>
 
-      {/* Modal de Compartir (simple feedback) */}
+      {/* Modal de Compartir */}
       {showShareModal && (
         <div className="detalle-cotizacion-page__modal" onClick={() => setShowShareModal(false)}>
-          <div className="detalle-cotizacion-page__modal-content" onClick={(e) => e.stopPropagation()}>
-            <div className="detalle-cotizacion-page__modal-icon">
-              <span className="material-symbols-outlined">check_circle</span>
+          <div className="detalle-cotizacion-page__modal-share" onClick={(e) => e.stopPropagation()}>
+            <div className="detalle-cotizacion-page__modal-header">
+              <h3>Compartir Cotización</h3>
+              <button 
+                className="detalle-cotizacion-page__modal-close"
+                onClick={() => setShowShareModal(false)}
+              >
+                <span className="material-symbols-outlined">close</span>
+              </button>
             </div>
-            <h3>¡Enlace copiado!</h3>
-            <p>El enlace de la cotización ha sido copiado al portapapeles.</p>
-            <Button onClick={() => setShowShareModal(false)}>Cerrar</Button>
+            <p className="detalle-cotizacion-page__modal-subtitle">
+              Elige cómo deseas compartir esta cotización con tu cliente
+            </p>
+            
+            <div className="detalle-cotizacion-page__share-options">
+              <button 
+                className="detalle-cotizacion-page__share-option"
+                onClick={() => {
+                  handleCompartirWhatsApp();
+                  setShowShareModal(false);
+                }}
+              >
+                <div className="detalle-cotizacion-page__share-icon detalle-cotizacion-page__share-icon--whatsapp">
+                  <span className="material-symbols-outlined">chat</span>
+                </div>
+                <div className="detalle-cotizacion-page__share-text">
+                  <h4>WhatsApp</h4>
+                  <p>Enviar por WhatsApp</p>
+                </div>
+              </button>
+
+              <button 
+                className="detalle-cotizacion-page__share-option"
+                onClick={() => {
+                  handleCompartirEmail();
+                  setShowShareModal(false);
+                }}
+              >
+                <div className="detalle-cotizacion-page__share-icon detalle-cotizacion-page__share-icon--email">
+                  <span className="material-symbols-outlined">mail</span>
+                </div>
+                <div className="detalle-cotizacion-page__share-text">
+                  <h4>Email</h4>
+                  <p>Enviar por correo electrónico</p>
+                </div>
+              </button>
+
+              <button 
+                className="detalle-cotizacion-page__share-option"
+                onClick={() => {
+                  handleCopiarEnlace();
+                  setShowShareModal(false);
+                }}
+              >
+                <div className="detalle-cotizacion-page__share-icon detalle-cotizacion-page__share-icon--link">
+                  <span className="material-symbols-outlined">link</span>
+                </div>
+                <div className="detalle-cotizacion-page__share-text">
+                  <h4>Copiar Enlace</h4>
+                  <p>Copiar enlace público</p>
+                </div>
+              </button>
+            </div>
           </div>
         </div>
       )}

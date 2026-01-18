@@ -1,0 +1,1 @@
+export { CotizacionPublicaPage } from './CotizacionPublicaPage';
