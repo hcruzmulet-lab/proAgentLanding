@@ -83,6 +83,7 @@ interface AgendaItem {
   crmTipo?: 'cotizacion' | 'expediente' | 'reserva' | 'itinerario';
   crmId?: string;
   crmNumero?: string;
+  recordatorio?: '15min' | '1hora' | '1dia' | 'ninguno';
 }
 
 type AgendaTab = 'hoy' | 'estaSemana' | 'esteMes';
@@ -818,16 +819,19 @@ export function CalendarioPage() {
 
     const eventType = getEventTypeFromCategory(selectedEventType);
     const formattedHora = newEvent.hora ? formatTime12h(newEvent.hora) : undefined;
+    const formattedHoraFin = newEvent.horaFin ? formatTime12h(newEvent.horaFin) : undefined;
     
     const newEventItem: AgendaItem = {
       id: `new-${Date.now()}`,
       text: newEvent.text || '',
       type: eventType,
       date: newEvent.date || new Date(),
+      endDate: newEvent.endDate,
       priority: newEvent.priority || 'media',
       cliente: newEvent.cliente,
       destino: newEvent.destino,
       hora: formattedHora,
+      horaFin: formattedHoraFin,
       aeropuerto: newEvent.aeropuerto,
       numeroVuelo: newEvent.numeroVuelo,
       aerolinea: newEvent.aerolinea,
@@ -837,6 +841,16 @@ export function CalendarioPage() {
       estado: newEvent.estado,
       numeroCotizacion: newEvent.numeroCotizacion,
       fechaEspecial: newEvent.fechaEspecial,
+      categoriaEspecial: newEvent.categoriaEspecial,
+      descripcion: newEvent.descripcion,
+      archivos: newEvent.archivos,
+      recordatorio: newEvent.recordatorio,
+      pagoFacturaId: newEvent.pagoFacturaId,
+      pagoFacturaTipo: newEvent.pagoFacturaTipo,
+      pagoFacturaNumero: newEvent.pagoFacturaNumero,
+      crmTipo: newEvent.crmTipo,
+      crmId: newEvent.crmId,
+      crmNumero: newEvent.crmNumero,
     };
 
     // Agregar el evento a la categoría correspondiente en todos los tabs
@@ -866,6 +880,14 @@ export function CalendarioPage() {
       date: new Date(),
       priority: 'media',
     });
+    setBuscarCliente('');
+    setMostrarSugerenciasCliente(false);
+    setBuscarCRM('');
+    setMostrarSugerenciasCRM(false);
+    setBuscarAeropuerto('');
+    setMostrarSugerenciasAeropuerto(false);
+    setBuscarPagoFactura('');
+    setMostrarSugerenciasPagoFactura(false);
     setIsNewEventModalOpen(false);
     setSelectedEventType(null);
   };
@@ -880,6 +902,14 @@ export function CalendarioPage() {
       date: new Date(),
       priority: 'media',
     });
+    setBuscarCliente('');
+    setMostrarSugerenciasCliente(false);
+    setBuscarCRM('');
+    setMostrarSugerenciasCRM(false);
+    setBuscarAeropuerto('');
+    setMostrarSugerenciasAeropuerto(false);
+    setBuscarPagoFactura('');
+    setMostrarSugerenciasPagoFactura(false);
   };
 
   return (
@@ -1251,11 +1281,84 @@ export function CalendarioPage() {
                 </Label>
                 <DatePicker
                   date={newEvent.date}
-                  onSelect={(date) => setNewEvent({ ...newEvent, date: date || new Date() })}
+                  dateRange={newEvent.endDate ? { from: newEvent.date, to: newEvent.endDate } : undefined}
+                  onSelect={(date) => setNewEvent({ ...newEvent, date: date || new Date(), endDate: undefined, horaFin: undefined })}
+                  onSelectRange={(range) => setNewEvent({ 
+                    ...newEvent, 
+                    date: range?.from || new Date(), 
+                    endDate: range?.to 
+                  })}
                   placeholder="Seleccionar fecha"
                   mode="single"
                 />
               </div>
+            </div>
+
+            {/* Hora - Solo para fecha única */}
+            {!newEvent.endDate && (
+              <div className="calendario-page__form-group">
+                <Label htmlFor="hora" className="calendario-page__form-label">
+                  Hora (opcional)
+                </Label>
+                <Input
+                  id="hora"
+                  type="time"
+                  value={newEvent.hora || ''}
+                  onChange={(e) => setNewEvent({ ...newEvent, hora: e.target.value })}
+                  className="calendario-page__form-input"
+                />
+              </div>
+            )}
+
+            {/* Hora Inicio y Fin - Solo para rango de fechas */}
+            {newEvent.endDate && (
+              <div className="calendario-page__form-row">
+                <div className="calendario-page__form-group">
+                  <Label htmlFor="hora" className="calendario-page__form-label">
+                    Hora de Inicio (opcional)
+                  </Label>
+                  <Input
+                    id="hora"
+                    type="time"
+                    value={newEvent.hora || ''}
+                    onChange={(e) => setNewEvent({ ...newEvent, hora: e.target.value })}
+                    className="calendario-page__form-input"
+                  />
+                </div>
+                <div className="calendario-page__form-group">
+                  <Label htmlFor="horaFin" className="calendario-page__form-label">
+                    Hora de Fin (opcional)
+                  </Label>
+                  <Input
+                    id="horaFin"
+                    type="time"
+                    value={newEvent.horaFin || ''}
+                    onChange={(e) => setNewEvent({ ...newEvent, horaFin: e.target.value })}
+                    className="calendario-page__form-input"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Recordatorio */}
+            <div className="calendario-page__form-group">
+              <Label htmlFor="recordatorio" className="calendario-page__form-label">
+                Recordatorio
+              </Label>
+              <Select 
+                value={newEvent.recordatorio || 'ninguno'} 
+                onValueChange={(value) => setNewEvent({ ...newEvent, recordatorio: value as '15min' | '1hora' | '1dia' | 'ninguno' })}
+              >
+                <SelectTrigger className="calendario-page__form-input">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="ninguno">Sin recordatorio</SelectItem>
+                  <SelectItem value="15min">15 minutos antes</SelectItem>
+                  <SelectItem value="1hora">1 hora antes</SelectItem>
+                  <SelectItem value="1dia">1 día antes</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             {/* Campos específicos según el tipo */}
