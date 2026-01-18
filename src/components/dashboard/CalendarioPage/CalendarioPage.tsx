@@ -110,6 +110,8 @@ export function CalendarioPage() {
   const [mostrarSugerenciasCliente, setMostrarSugerenciasCliente] = useState(false);
   const [buscarPagoFactura, setBuscarPagoFactura] = useState('');
   const [mostrarSugerenciasPagoFactura, setMostrarSugerenciasPagoFactura] = useState(false);
+  const [buscarCRM, setBuscarCRM] = useState('');
+  const [mostrarSugerenciasCRM, setMostrarSugerenciasCRM] = useState(false);
   const [newEvent, setNewEvent] = useState<Partial<AgendaItem>>({
     text: '',
     type: 'tarea',
@@ -172,6 +174,18 @@ export function CalendarioPage() {
     { id: 'f3', tipo: 'factura' as 'factura', numero: 'FAC-003', monto: 1250.00, cliente: 'Gretell Rojas', concepto: 'Factura servicios' },
   ];
 
+  const crmMock = [
+    { id: 'c1', tipo: 'Cotización', numero: 'COT-2026-001', titulo: 'Punta Cana - Todo incluido' },
+    { id: 'c2', tipo: 'Cotización', numero: 'COT-2026-002', titulo: 'Tour Europa 15 días' },
+    { id: 'c3', tipo: 'Cotización', numero: 'COT-2026-003', titulo: 'Crucero Caribe' },
+    { id: 'e1', tipo: 'Expediente', numero: 'EXP-001', titulo: 'Familia López - Vacaciones' },
+    { id: 'e2', tipo: 'Expediente', numero: 'EXP-002', titulo: 'Tech Solutions - Grupo Corporativo' },
+    { id: 'r1', tipo: 'Reserva', numero: 'RES-001', titulo: 'Hotel Barceló Bávaro' },
+    { id: 'r2', tipo: 'Reserva', numero: 'RES-002', titulo: 'Vuelo AA 1234 Miami-Madrid' },
+    { id: 'i1', tipo: 'Itinerario', numero: 'ITI-001', titulo: 'Tour Europa 15 días completo' },
+    { id: 'i2', tipo: 'Itinerario', numero: 'ITI-002', titulo: 'Caribe Total - 10 días' },
+  ];
+
   // Filtrar pagos y facturas para búsqueda
   const getPagosFacturasFiltrados = () => {
     if (buscarPagoFactura.length < 2) return [];
@@ -197,6 +211,39 @@ export function CalendarioPage() {
     });
     setBuscarPagoFactura(`${item.tipo === 'pago' ? 'Pago' : 'Factura'} ${item.numero} - ${item.cliente}`);
     setMostrarSugerenciasPagoFactura(false);
+  };
+
+  // Filtrar CRM para búsqueda
+  const getCRMFiltrados = () => {
+    if (buscarCRM.length < 2) return [];
+    
+    return crmMock.filter(item => {
+      const searchLower = buscarCRM.toLowerCase();
+      return (
+        item.numero.toLowerCase().includes(searchLower) ||
+        item.titulo.toLowerCase().includes(searchLower) ||
+        item.tipo.toLowerCase().includes(searchLower)
+      );
+    });
+  };
+
+  // Seleccionar un elemento del CRM
+  const handleSeleccionarCRM = (item: any) => {
+    const tipoMap: { [key: string]: 'cotizacion' | 'expediente' | 'reserva' | 'itinerario' } = {
+      'Cotización': 'cotizacion',
+      'Expediente': 'expediente',
+      'Reserva': 'reserva',
+      'Itinerario': 'itinerario',
+    };
+    
+    setNewEvent({
+      ...newEvent,
+      crmId: item.id,
+      crmTipo: tipoMap[item.tipo],
+      crmNumero: item.numero,
+    });
+    setBuscarCRM(`${item.tipo} ${item.numero} - ${item.titulo}`);
+    setMostrarSugerenciasCRM(false);
   };
 
   // Generar items de agenda organizados por categorías
@@ -1461,6 +1508,111 @@ export function CalendarioPage() {
 
             {selectedEventType === 'acciones-tareas' && (
               <>
+                <div className="calendario-page__form-group">
+                  <Label htmlFor="cliente" className="calendario-page__form-label">
+                    Cliente
+                  </Label>
+                  <div className="relative">
+                    <Input
+                      id="cliente"
+                      value={buscarCliente}
+                      onChange={(e) => {
+                        setBuscarCliente(e.target.value);
+                        setMostrarSugerenciasCliente(e.target.value.length >= 2);
+                      }}
+                      onFocus={() => buscarCliente.length >= 2 && setMostrarSugerenciasCliente(true)}
+                      placeholder="Buscar cliente por nombre o email"
+                      className="calendario-page__form-input"
+                    />
+                    {buscarCliente && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setBuscarCliente('');
+                          setMostrarSugerenciasCliente(false);
+                          setNewEvent({ ...newEvent, cliente: '', clienteId: undefined });
+                        }}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center w-6 h-6 text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
+                      >
+                        <span className="material-symbols-outlined text-[14px]">close</span>
+                      </button>
+                    )}
+                    {mostrarSugerenciasCliente && getClientesFiltrados().length > 0 && (
+                      <div className="absolute z-50 w-full mt-1 bg-white border border-slate-200 rounded-md shadow-lg max-h-60 overflow-y-auto">
+                        {getClientesFiltrados().map((cliente) => (
+                          <div
+                            key={cliente.id}
+                            onClick={() => handleSeleccionarCliente(cliente)}
+                            className="px-4 py-3 cursor-pointer hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-0"
+                          >
+                            <div className="font-medium text-slate-900">
+                              {cliente.firstName} {cliente.lastName}
+                            </div>
+                            {cliente.email && (
+                              <div className="text-sm text-slate-500 mt-1">
+                                {cliente.email}
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="calendario-page__form-group">
+                  <Label htmlFor="crm" className="calendario-page__form-label">
+                    Asociar a CRM
+                  </Label>
+                  <div className="relative">
+                    <Input
+                      id="crm"
+                      value={buscarCRM}
+                      onChange={(e) => {
+                        setBuscarCRM(e.target.value);
+                        setMostrarSugerenciasCRM(e.target.value.length >= 2);
+                      }}
+                      onFocus={() => buscarCRM.length >= 2 && setMostrarSugerenciasCRM(true)}
+                      placeholder="Buscar cotización, expediente, reserva o itinerario"
+                      className="calendario-page__form-input"
+                    />
+                    {buscarCRM && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setBuscarCRM('');
+                          setMostrarSugerenciasCRM(false);
+                          setNewEvent({ ...newEvent, crmId: undefined, crmTipo: undefined, crmNumero: undefined });
+                        }}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center w-6 h-6 text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
+                      >
+                        <span className="material-symbols-outlined text-[14px]">close</span>
+                      </button>
+                    )}
+                    {mostrarSugerenciasCRM && getCRMFiltrados().length > 0 && (
+                      <div className="absolute z-50 w-full mt-1 bg-white border border-slate-200 rounded-md shadow-lg max-h-60 overflow-y-auto">
+                        {getCRMFiltrados().map((item) => (
+                          <div
+                            key={`${item.tipo}-${item.id}`}
+                            onClick={() => handleSeleccionarCRM(item)}
+                            className="px-4 py-3 cursor-pointer hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-0"
+                          >
+                            <div className="flex justify-between items-center font-medium text-slate-900">
+                              <span>{item.tipo} {item.numero}</span>
+                            </div>
+                            <div className="text-sm text-slate-500 mt-1">
+                              {item.titulo}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  <p className="calendario-page__form-helper">
+                    Opcional: Vincula esta tarea con un documento del CRM
+                  </p>
+                </div>
+
                 <div className="calendario-page__form-group">
                   <Label htmlFor="descripcion" className="calendario-page__form-label">
                     Descripción
