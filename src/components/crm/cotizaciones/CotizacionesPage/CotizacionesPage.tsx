@@ -335,7 +335,7 @@ export function CotizacionesPage() {
                           </Button>
                           <Button 
                             onClick={(e) => handleRegistrarPago(e, cotizacion)}
-                            className="flex-1 bg-green-600 hover:bg-green-700 text-white"
+                            className="flex-1 bg-slate-700 hover:bg-slate-800 text-white"
                             size="sm"
                           >
                             <span className="material-symbols-outlined mr-2 text-base">payments</span>
@@ -541,7 +541,7 @@ export function CotizacionesPage() {
                       router.push('/es/crm/pagos/nuevo');
                       setIsPagoModalOpen(false);
                     }}
-                    className="flex-1 bg-green-600 hover:bg-green-700"
+                    className="flex-1 bg-slate-700 hover:bg-slate-800"
                   >
                     Registrar Pago
                   </Button>
