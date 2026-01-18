@@ -121,6 +121,10 @@ export function CalendarioPage() {
     date: new Date(),
     priority: 'media',
   });
+  
+  // Estados para el selector de hora
+  const [horaInicio, setHoraInicio] = useState({ horas: '12', minutos: '00', periodo: 'AM' });
+  const [horaFin, setHoraFin] = useState({ horas: '01', minutos: '00', periodo: 'PM' });
   const [categoriesData, setCategoriesData] = useState<{
     hoy: CategoryData[];
     estaSemana: CategoryData[];
@@ -813,6 +817,81 @@ export function CalendarioPage() {
     return `${hour12}:${minutes} ${period}`;
   };
 
+  // Función para convertir hora de formato 12h a formato 24h
+  const convertTo24h = (horas: string, minutos: string, periodo: string): string => {
+    let hour = parseInt(horas);
+    if (periodo === 'PM' && hour !== 12) {
+      hour += 12;
+    } else if (periodo === 'AM' && hour === 12) {
+      hour = 0;
+    }
+    return `${hour.toString().padStart(2, '0')}:${minutos}`;
+  };
+
+  // Componente selector de hora
+  const HoraSelector = ({ 
+    hora, 
+    onChange, 
+    label 
+  }: { 
+    hora: { horas: string; minutos: string; periodo: string }; 
+    onChange: (hora: { horas: string; minutos: string; periodo: string }) => void;
+    label: string;
+  }) => {
+    return (
+      <div className="calendario-page__form-group">
+        <Label className="calendario-page__form-label">{label}</Label>
+        <div className="calendario-page__hora-selector">
+          <div className="calendario-page__hora-input">
+            <Input
+              type="number"
+              min="1"
+              max="12"
+              value={hora.horas}
+              onChange={(e) => {
+                let val = parseInt(e.target.value) || 1;
+                if (val > 12) val = 12;
+                if (val < 1) val = 1;
+                onChange({ ...hora, horas: val.toString().padStart(2, '0') });
+              }}
+              className="calendario-page__hora-field"
+            />
+            <span className="calendario-page__hora-separator">:</span>
+            <Input
+              type="number"
+              min="0"
+              max="59"
+              value={hora.minutos}
+              onChange={(e) => {
+                let val = parseInt(e.target.value) || 0;
+                if (val > 59) val = 59;
+                if (val < 0) val = 0;
+                onChange({ ...hora, minutos: val.toString().padStart(2, '0') });
+              }}
+              className="calendario-page__hora-field"
+            />
+          </div>
+          <div className="calendario-page__hora-period">
+            <button
+              type="button"
+              onClick={() => onChange({ ...hora, periodo: 'AM' })}
+              className={`calendario-page__hora-period-btn ${hora.periodo === 'AM' ? 'active' : ''}`}
+            >
+              AM
+            </button>
+            <button
+              type="button"
+              onClick={() => onChange({ ...hora, periodo: 'PM' })}
+              className={`calendario-page__hora-period-btn ${hora.periodo === 'PM' ? 'active' : ''}`}
+            >
+              PM
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   // Función para manejar la creación del evento
   const handleCreateEvent = () => {
     if (!selectedEventType || !newEvent.text) return;
@@ -880,6 +959,8 @@ export function CalendarioPage() {
       date: new Date(),
       priority: 'media',
     });
+    setHoraInicio({ horas: '12', minutos: '00', periodo: 'AM' });
+    setHoraFin({ horas: '01', minutos: '00', periodo: 'PM' });
     setBuscarCliente('');
     setMostrarSugerenciasCliente(false);
     setBuscarCRM('');
@@ -902,6 +983,8 @@ export function CalendarioPage() {
       date: new Date(),
       priority: 'media',
     });
+    setHoraInicio({ horas: '12', minutos: '00', periodo: 'AM' });
+    setHoraFin({ horas: '01', minutos: '00', periodo: 'PM' });
     setBuscarCliente('');
     setMostrarSugerenciasCliente(false);
     setBuscarCRM('');
@@ -1440,48 +1523,36 @@ export function CalendarioPage() {
 
                 {/* Hora - Solo para fecha única */}
                 {!newEvent.endDate && (
-                  <div className="calendario-page__form-group">
-                    <Label htmlFor="hora" className="calendario-page__form-label">
-                      Hora (opcional)
-                    </Label>
-                    <Input
-                      id="hora"
-                      type="time"
-                      value={newEvent.hora || ''}
-                      onChange={(e) => setNewEvent({ ...newEvent, hora: e.target.value })}
-                      className="calendario-page__form-input"
-                    />
-                  </div>
+                  <HoraSelector
+                    hora={horaInicio}
+                    onChange={(h) => {
+                      setHoraInicio(h);
+                      setNewEvent({ ...newEvent, hora: convertTo24h(h.horas, h.minutos, h.periodo) });
+                    }}
+                    label="Hora (opcional)"
+                  />
                 )}
 
                 {/* Hora Inicio y Fin - Solo para rango de fechas */}
                 {newEvent.endDate && (
-                  <div className="calendario-page__form-row">
-                    <div className="calendario-page__form-group">
-                      <Label htmlFor="hora" className="calendario-page__form-label">
-                        Hora de Inicio (opcional)
-                      </Label>
-                      <Input
-                        id="hora"
-                        type="time"
-                        value={newEvent.hora || ''}
-                        onChange={(e) => setNewEvent({ ...newEvent, hora: e.target.value })}
-                        className="calendario-page__form-input"
-                      />
-                    </div>
-                    <div className="calendario-page__form-group">
-                      <Label htmlFor="horaFin" className="calendario-page__form-label">
-                        Hora de Fin (opcional)
-                      </Label>
-                      <Input
-                        id="horaFin"
-                        type="time"
-                        value={newEvent.horaFin || ''}
-                        onChange={(e) => setNewEvent({ ...newEvent, horaFin: e.target.value })}
-                        className="calendario-page__form-input"
-                      />
-                    </div>
-                  </div>
+                  <>
+                    <HoraSelector
+                      hora={horaInicio}
+                      onChange={(h) => {
+                        setHoraInicio(h);
+                        setNewEvent({ ...newEvent, hora: convertTo24h(h.horas, h.minutos, h.periodo) });
+                      }}
+                      label="Hora de Inicio (opcional)"
+                    />
+                    <HoraSelector
+                      hora={horaFin}
+                      onChange={(h) => {
+                        setHoraFin(h);
+                        setNewEvent({ ...newEvent, horaFin: convertTo24h(h.horas, h.minutos, h.periodo) });
+                      }}
+                      label="Hora de Fin (opcional)"
+                    />
+                  </>
                 )}
 
                 {/* Recordatorio */}
@@ -1706,48 +1777,36 @@ export function CalendarioPage() {
 
                 {/* Hora - Solo para fecha única */}
                 {!newEvent.endDate && (
-                  <div className="calendario-page__form-group">
-                    <Label htmlFor="hora-pago" className="calendario-page__form-label">
-                      Hora (opcional)
-                    </Label>
-                    <Input
-                      id="hora-pago"
-                      type="time"
-                      value={newEvent.hora || ''}
-                      onChange={(e) => setNewEvent({ ...newEvent, hora: e.target.value })}
-                      className="calendario-page__form-input"
-                    />
-                  </div>
+                  <HoraSelector
+                    hora={horaInicio}
+                    onChange={(h) => {
+                      setHoraInicio(h);
+                      setNewEvent({ ...newEvent, hora: convertTo24h(h.horas, h.minutos, h.periodo) });
+                    }}
+                    label="Hora (opcional)"
+                  />
                 )}
 
                 {/* Hora Inicio y Fin - Solo para rango de fechas */}
                 {newEvent.endDate && (
-                  <div className="calendario-page__form-row">
-                    <div className="calendario-page__form-group">
-                      <Label htmlFor="hora-pago" className="calendario-page__form-label">
-                        Hora de Inicio (opcional)
-                      </Label>
-                      <Input
-                        id="hora-pago"
-                        type="time"
-                        value={newEvent.hora || ''}
-                        onChange={(e) => setNewEvent({ ...newEvent, hora: e.target.value })}
-                        className="calendario-page__form-input"
-                      />
-                    </div>
-                    <div className="calendario-page__form-group">
-                      <Label htmlFor="horaFin-pago" className="calendario-page__form-label">
-                        Hora de Fin (opcional)
-                      </Label>
-                      <Input
-                        id="horaFin-pago"
-                        type="time"
-                        value={newEvent.horaFin || ''}
-                        onChange={(e) => setNewEvent({ ...newEvent, horaFin: e.target.value })}
-                        className="calendario-page__form-input"
-                      />
-                    </div>
-                  </div>
+                  <>
+                    <HoraSelector
+                      hora={horaInicio}
+                      onChange={(h) => {
+                        setHoraInicio(h);
+                        setNewEvent({ ...newEvent, hora: convertTo24h(h.horas, h.minutos, h.periodo) });
+                      }}
+                      label="Hora de Inicio (opcional)"
+                    />
+                    <HoraSelector
+                      hora={horaFin}
+                      onChange={(h) => {
+                        setHoraFin(h);
+                        setNewEvent({ ...newEvent, horaFin: convertTo24h(h.horas, h.minutos, h.periodo) });
+                      }}
+                      label="Hora de Fin (opcional)"
+                    />
+                  </>
                 )}
 
                 {/* Recordatorio */}
@@ -1991,48 +2050,36 @@ export function CalendarioPage() {
 
                 {/* Hora - Solo para fecha única */}
                 {!newEvent.endDate && (
-                  <div className="calendario-page__form-group">
-                    <Label htmlFor="hora-accion" className="calendario-page__form-label">
-                      Hora (opcional)
-                    </Label>
-                    <Input
-                      id="hora-accion"
-                      type="time"
-                      value={newEvent.hora || ''}
-                      onChange={(e) => setNewEvent({ ...newEvent, hora: e.target.value })}
-                      className="calendario-page__form-input"
-                    />
-                  </div>
+                  <HoraSelector
+                    hora={horaInicio}
+                    onChange={(h) => {
+                      setHoraInicio(h);
+                      setNewEvent({ ...newEvent, hora: convertTo24h(h.horas, h.minutos, h.periodo) });
+                    }}
+                    label="Hora (opcional)"
+                  />
                 )}
 
                 {/* Hora Inicio y Fin - Solo para rango de fechas */}
                 {newEvent.endDate && (
-                  <div className="calendario-page__form-row">
-                    <div className="calendario-page__form-group">
-                      <Label htmlFor="hora-accion" className="calendario-page__form-label">
-                        Hora de Inicio (opcional)
-                      </Label>
-                      <Input
-                        id="hora-accion"
-                        type="time"
-                        value={newEvent.hora || ''}
-                        onChange={(e) => setNewEvent({ ...newEvent, hora: e.target.value })}
-                        className="calendario-page__form-input"
-                      />
-                    </div>
-                    <div className="calendario-page__form-group">
-                      <Label htmlFor="horaFin-accion" className="calendario-page__form-label">
-                        Hora de Fin (opcional)
-                      </Label>
-                      <Input
-                        id="horaFin-accion"
-                        type="time"
-                        value={newEvent.horaFin || ''}
-                        onChange={(e) => setNewEvent({ ...newEvent, horaFin: e.target.value })}
-                        className="calendario-page__form-input"
-                      />
-                    </div>
-                  </div>
+                  <>
+                    <HoraSelector
+                      hora={horaInicio}
+                      onChange={(h) => {
+                        setHoraInicio(h);
+                        setNewEvent({ ...newEvent, hora: convertTo24h(h.horas, h.minutos, h.periodo) });
+                      }}
+                      label="Hora de Inicio (opcional)"
+                    />
+                    <HoraSelector
+                      hora={horaFin}
+                      onChange={(h) => {
+                        setHoraFin(h);
+                        setNewEvent({ ...newEvent, horaFin: convertTo24h(h.horas, h.minutos, h.periodo) });
+                      }}
+                      label="Hora de Fin (opcional)"
+                    />
+                  </>
                 )}
 
                 {/* Recordatorio */}
@@ -2308,48 +2355,36 @@ export function CalendarioPage() {
 
                 {/* Hora - Solo para fecha única */}
                 {!newEvent.endDate && (
-                  <div className="calendario-page__form-group">
-                    <Label htmlFor="hora-viaje" className="calendario-page__form-label">
-                      Hora (opcional)
-                    </Label>
-                    <Input
-                      id="hora-viaje"
-                      type="time"
-                      value={newEvent.hora || ''}
-                      onChange={(e) => setNewEvent({ ...newEvent, hora: e.target.value })}
-                      className="calendario-page__form-input"
-                    />
-                  </div>
+                  <HoraSelector
+                    hora={horaInicio}
+                    onChange={(h) => {
+                      setHoraInicio(h);
+                      setNewEvent({ ...newEvent, hora: convertTo24h(h.horas, h.minutos, h.periodo) });
+                    }}
+                    label="Hora (opcional)"
+                  />
                 )}
 
                 {/* Hora Inicio y Fin - Solo para rango de fechas */}
                 {newEvent.endDate && (
-                  <div className="calendario-page__form-row">
-                    <div className="calendario-page__form-group">
-                      <Label htmlFor="hora-viaje" className="calendario-page__form-label">
-                        Hora de Inicio (opcional)
-                      </Label>
-                      <Input
-                        id="hora-viaje"
-                        type="time"
-                        value={newEvent.hora || ''}
-                        onChange={(e) => setNewEvent({ ...newEvent, hora: e.target.value })}
-                        className="calendario-page__form-input"
-                      />
-                    </div>
-                    <div className="calendario-page__form-group">
-                      <Label htmlFor="horaFin-viaje" className="calendario-page__form-label">
-                        Hora de Fin (opcional)
-                      </Label>
-                      <Input
-                        id="horaFin-viaje"
-                        type="time"
-                        value={newEvent.horaFin || ''}
-                        onChange={(e) => setNewEvent({ ...newEvent, horaFin: e.target.value })}
-                        className="calendario-page__form-input"
-                      />
-                    </div>
-                  </div>
+                  <>
+                    <HoraSelector
+                      hora={horaInicio}
+                      onChange={(h) => {
+                        setHoraInicio(h);
+                        setNewEvent({ ...newEvent, hora: convertTo24h(h.horas, h.minutos, h.periodo) });
+                      }}
+                      label="Hora de Inicio (opcional)"
+                    />
+                    <HoraSelector
+                      hora={horaFin}
+                      onChange={(h) => {
+                        setHoraFin(h);
+                        setNewEvent({ ...newEvent, horaFin: convertTo24h(h.horas, h.minutos, h.periodo) });
+                      }}
+                      label="Hora de Fin (opcional)"
+                    />
+                  </>
                 )}
 
                 {/* Recordatorio */}

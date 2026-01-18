@@ -775,6 +775,9 @@
 
   &__event-modal {
     max-width: 600px;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
   }
 
   &__event-modal-title {
@@ -787,6 +790,9 @@
     @include flex-column;
     gap: $spacing-md;
     padding: $spacing-md 0;
+    max-height: 60vh;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   &__form-group {
@@ -972,6 +978,69 @@
     color: $text-muted;
     margin-top: 0.25rem;
     margin-bottom: 0;
+  }
+
+  &__hora-selector {
+    display: flex;
+    gap: $spacing-sm;
+    align-items: center;
+  }
+
+  &__hora-input {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &__hora-field {
+    width: 60px;
+    text-align: center;
+    padding: 8px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #1e293b;
+    
+    &:focus {
+      outline: none;
+      border-color: #334155;
+      box-shadow: 0 0 0 3px rgba(51, 65, 85, 0.1);
+    }
+  }
+
+  &__hora-separator {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #64748b;
+  }
+
+  &__hora-period {
+    display: flex;
+    gap: 4px;
+  }
+
+  &__hora-period-btn {
+    padding: 6px 12px;
+    background: white;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #64748b;
+
+    &:hover {
+      border-color: #cbd5e1;
+      background-color: #f8fafc;
+    }
+
+    &.active {
+      border-color: #334155;
+      background-color: #334155;
+      color: white;
+    }
   }
 
   &__recordatorio-options {
