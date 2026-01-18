@@ -844,10 +844,26 @@
       font-weight: 500;
     }
     
+    // Chevron más pequeño
+    svg {
+      width: 12px;
+      height: 12px;
+    }
+    
     &:focus-visible {
       outline: none;
       border-color: #334155;
       box-shadow: 0 0 0 2px rgba(51, 65, 85, 0.1);
+    }
+  }
+
+  // Quitar el check de las opciones seleccionadas en selectores de hora
+  &__hora-selector {
+    [role="option"] {
+      // Ocultar el indicador de selección (check)
+      span:first-child {
+        display: none;
+      }
     }
   }
 
