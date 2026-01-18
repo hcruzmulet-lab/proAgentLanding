@@ -135,18 +135,29 @@ export function DatePicker({
               </Button>
             </div>
             <div className="p-3">
-              <ReactDatePicker
-                selected={startDate}
-                onChange={handleDateChange}
-                startDate={startDate}
-                endDate={endDate}
-                selectsRange={selectedMode === 'range'}
-                inline
-                locale="es"
-                monthsShown={selectedMode === 'range' ? 2 : 1}
-                dateFormat="dd/MM/yyyy"
-                calendarClassName="custom-datepicker"
-              />
+              {selectedMode === 'single' ? (
+                <ReactDatePicker
+                  selected={startDate}
+                  onChange={handleDateChange}
+                  inline
+                  locale="es"
+                  dateFormat="dd/MM/yyyy"
+                  calendarClassName="custom-datepicker"
+                />
+              ) : (
+                <ReactDatePicker
+                  selected={startDate}
+                  onChange={handleDateChange}
+                  startDate={startDate}
+                  endDate={endDate}
+                  selectsRange
+                  inline
+                  locale="es"
+                  monthsShown={2}
+                  dateFormat="dd/MM/yyyy"
+                  calendarClassName="custom-datepicker"
+                />
+              )}
             </div>
           </div>
         </>
