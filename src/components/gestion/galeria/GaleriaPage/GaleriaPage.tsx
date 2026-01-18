@@ -144,6 +144,8 @@ export function GaleriaPage() {
   const [uploadMethod, setUploadMethod] = useState<'file' | 'search'>('file');
   const [viewMode, setViewMode] = useState<'list' | 'grid'>('grid');
   const [searchTerm, setSearchTerm] = useState('');
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxImage, setLightboxImage] = useState<Imagen | null>(null);
 
   const imagenesFiltradas = imagenes
     .filter(img => img.categoria === categoriaActiva)
@@ -190,6 +192,16 @@ export function GaleriaPage() {
 
   const handleDelete = (id: string) => {
     setImagenes(imagenes.filter(img => img.id !== id));
+  };
+
+  const handleOpenLightbox = (imagen: Imagen) => {
+    setLightboxImage(imagen);
+    setLightboxOpen(true);
+  };
+
+  const handleCloseLightbox = () => {
+    setLightboxOpen(false);
+    setLightboxImage(null);
   };
 
   return (
@@ -408,7 +420,7 @@ export function GaleriaPage() {
                               <Button
                                 variant="ghost"
                                 size="sm"
-                                onClick={() => window.open(imagen.url, '_blank')}
+                                onClick={() => handleOpenLightbox(imagen)}
                                 className="text-white hover:bg-white/20"
                               >
                                 <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>
@@ -474,7 +486,7 @@ export function GaleriaPage() {
                                   <Button
                                     variant="outline"
                                     size="sm"
-                                    onClick={() => window.open(imagen.url, '_blank')}
+                                    onClick={() => handleOpenLightbox(imagen)}
                                   >
                                     <span className="material-symbols-outlined mr-1" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>
                                       visibility
@@ -505,6 +517,70 @@ export function GaleriaPage() {
           ))}
         </Tabs>
       </div>
+
+      {/* Lightbox Modal */}
+      <Dialog open={lightboxOpen} onOpenChange={setLightboxOpen}>
+        <DialogContent className="max-w-5xl w-[90vw] h-[90vh] p-0">
+          <div className="relative w-full h-full flex flex-col bg-slate-900">
+            {/* Header */}
+            <div className="flex items-center justify-between p-4 bg-slate-800/90 backdrop-blur">
+              <div className="flex-1">
+                <h3 className="text-lg font-semibold text-white">
+                  {lightboxImage?.nombre || 'Imagen'}
+                </h3>
+                <p className="text-sm text-slate-300 mt-1">
+                  {lightboxImage?.fechaSubida}
+                </p>
+              </div>
+              <button
+                onClick={handleCloseLightbox}
+                className="text-white hover:bg-white/10 rounded-lg p-2 transition-colors"
+              >
+                <span className="material-symbols-outlined">close</span>
+              </button>
+            </div>
+
+            {/* Image Container */}
+            <div className="flex-1 relative overflow-hidden flex items-center justify-center p-4">
+              {lightboxImage && (
+                <div className="relative w-full h-full">
+                  <Image
+                    src={lightboxImage.url}
+                    alt={lightboxImage.nombre || 'Imagen'}
+                    fill
+                    className="object-contain"
+                    unoptimized
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Footer Actions */}
+            <div className="flex items-center justify-end gap-2 p-4 bg-slate-800/90 backdrop-blur">
+              <Button
+                onClick={() => lightboxImage && window.open(lightboxImage.url, '_blank')}
+                variant="outline"
+                className="bg-white/10 border-white/20 text-white hover:bg-white/20"
+              >
+                <span className="material-symbols-outlined mr-2" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>
+                  open_in_new
+                </span>
+                Abrir en nueva pestaña
+              </Button>
+              <Button
+                onClick={() => lightboxImage && handleDelete(lightboxImage.id)}
+                variant="outline"
+                className="bg-red-500/10 border-red-500/20 text-red-400 hover:bg-red-500/20"
+              >
+                <span className="material-symbols-outlined mr-2" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>
+                  delete
+                </span>
+                Eliminar
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
