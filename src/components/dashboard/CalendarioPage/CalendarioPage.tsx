@@ -853,13 +853,13 @@ export function CalendarioPage() {
               <SelectTrigger className="calendario-page__hora-field" hideIcon>
                 <SelectValue placeholder="HH" />
               </SelectTrigger>
-              <SelectContent className="z-50 bg-white">
+              <SelectContent className="calendario-page__hora-dropdown">
                 {horasOpciones.map((h) => (
                   <SelectItem 
                     key={h} 
                     value={h} 
                     hideCheck
-                    style={{ color: '#000', padding: '8px', textAlign: 'center' }}
+                    className="calendario-page__hora-option"
                   >
                     {h}
                   </SelectItem>
@@ -874,13 +874,13 @@ export function CalendarioPage() {
               <SelectTrigger className="calendario-page__hora-field" hideIcon>
                 <SelectValue placeholder="MM" />
               </SelectTrigger>
-              <SelectContent className="z-50 bg-white">
+              <SelectContent className="calendario-page__hora-dropdown">
                 {minutosOpciones.map((m) => (
                   <SelectItem 
                     key={m} 
                     value={m} 
                     hideCheck
-                    style={{ color: '#000', padding: '8px', textAlign: 'center' }}
+                    className="calendario-page__hora-option"
                   >
                     {m}
                   </SelectItem>
