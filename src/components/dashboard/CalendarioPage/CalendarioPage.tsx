@@ -1054,23 +1054,13 @@ export function CalendarioPage() {
             <div className="calendario-page__form-row">
               <div className="calendario-page__form-group">
                 <Label htmlFor="date" className="calendario-page__form-label">
-                  Fecha inicio
+                  Fecha
                 </Label>
                 <DatePicker
                   date={newEvent.date}
                   onSelect={(date) => setNewEvent({ ...newEvent, date: date || new Date() })}
-                  placeholder="Seleccionar fecha inicio"
-                />
-              </div>
-
-              <div className="calendario-page__form-group">
-                <Label htmlFor="endDate" className="calendario-page__form-label">
-                  Fecha fin (opcional)
-                </Label>
-                <DatePicker
-                  date={newEvent.endDate}
-                  onSelect={(date) => setNewEvent({ ...newEvent, endDate: date })}
-                  placeholder="Seleccionar fecha fin"
+                  placeholder="Seleccionar fecha"
+                  mode="single"
                 />
               </div>
             </div>

@@ -945,12 +945,15 @@ function ServicioCard({ servicio, onUpdate, onDelete }: { servicio: Servicio; on
             <Input placeholder="Puertos de escala" value={servicio.datos.itinerario} onChange={(e) => onUpdate({...servicio.datos, itinerario: e.target.value})} />
           </div>
           <div>
-            <Label>Fecha Inicio</Label>
-            <DatePicker date={servicio.datos.fechaInicio ? new Date(servicio.datos.fechaInicio) : undefined} onSelect={(date) => onUpdate({...servicio.datos, fechaInicio: date ? date.toISOString().split('T')[0] : ''})} placeholder="Fecha inicio" />
-          </div>
-          <div>
-            <Label>Fecha Fin</Label>
-            <DatePicker date={servicio.datos.fechaFin ? new Date(servicio.datos.fechaFin) : undefined} onSelect={(date) => onUpdate({...servicio.datos, fechaFin: date ? date.toISOString().split('T')[0] : ''})} placeholder="Fecha fin" />
+            <Label>Fechas</Label>
+            <DatePicker 
+              date={servicio.datos.fechaInicio ? new Date(servicio.datos.fechaInicio) : undefined}
+              dateRange={servicio.datos.fechaInicio && servicio.datos.fechaFin ? { from: new Date(servicio.datos.fechaInicio), to: new Date(servicio.datos.fechaFin) } : undefined}
+              onSelect={(date) => onUpdate({...servicio.datos, fechaInicio: date ? date.toISOString().split('T')[0] : '', fechaFin: ''})}
+              onSelectRange={(range) => onUpdate({...servicio.datos, fechaInicio: range?.from ? range.from.toISOString().split('T')[0] : '', fechaFin: range?.to ? range.to.toISOString().split('T')[0] : ''})}
+              placeholder="Seleccionar fecha o rango"
+              mode="range"
+            />
           </div>
           <div>
             <Label>Tipo de Cabina</Label>
@@ -974,12 +977,15 @@ function ServicioCard({ servicio, onUpdate, onDelete }: { servicio: Servicio; on
             <Input placeholder="Ciudad, País" value={servicio.datos.destino} onChange={(e) => onUpdate({...servicio.datos, destino: e.target.value})} />
           </div>
           <div>
-            <Label>Fecha Inicio</Label>
-            <DatePicker date={servicio.datos.fechaInicio ? new Date(servicio.datos.fechaInicio) : undefined} onSelect={(date) => onUpdate({...servicio.datos, fechaInicio: date ? date.toISOString().split('T')[0] : ''})} placeholder="Fecha inicio" />
-          </div>
-          <div>
-            <Label>Fecha Fin</Label>
-            <DatePicker date={servicio.datos.fechaFin ? new Date(servicio.datos.fechaFin) : undefined} onSelect={(date) => onUpdate({...servicio.datos, fechaFin: date ? date.toISOString().split('T')[0] : ''})} placeholder="Fecha fin" />
+            <Label>Fechas</Label>
+            <DatePicker 
+              date={servicio.datos.fechaInicio ? new Date(servicio.datos.fechaInicio) : undefined}
+              dateRange={servicio.datos.fechaInicio && servicio.datos.fechaFin ? { from: new Date(servicio.datos.fechaInicio), to: new Date(servicio.datos.fechaFin) } : undefined}
+              onSelect={(date) => onUpdate({...servicio.datos, fechaInicio: date ? date.toISOString().split('T')[0] : '', fechaFin: ''})}
+              onSelectRange={(range) => onUpdate({...servicio.datos, fechaInicio: range?.from ? range.from.toISOString().split('T')[0] : '', fechaFin: range?.to ? range.to.toISOString().split('T')[0] : ''})}
+              placeholder="Seleccionar fecha o rango"
+              mode="range"
+            />
           </div>
           <div>
             <Label>Noches</Label>
