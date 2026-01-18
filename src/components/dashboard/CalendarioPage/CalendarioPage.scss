@@ -973,32 +973,6 @@
     margin-top: 0.25rem;
     margin-bottom: 0;
   }
-}
-
-// Responsive
-@media (max-width: 768px) {
-  .calendario-page {
-    padding: $spacing-md;
-
-    &__header {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    &__header-right {
-      width: 100%;
-      justify-content: space-between;
-    }
-
-    &__day {
-      min-height: 80px;
-    }
-
-    &__event-item {
-      font-size: 0.65rem;
-      padding: 2px 4px;
-    }
-  }
 
   &__recordatorio-options {
     display: grid;
@@ -1045,6 +1019,32 @@
       .material-symbols-outlined {
         color: white;
       }
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .calendario-page {
+    padding: $spacing-md;
+
+    &__header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    &__header-right {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    &__day {
+      min-height: 80px;
+    }
+
+    &__event-item {
+      font-size: 0.65rem;
+      padding: 2px 4px;
     }
   }
 }
