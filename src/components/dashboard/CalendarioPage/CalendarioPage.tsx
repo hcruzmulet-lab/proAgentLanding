@@ -1261,28 +1261,26 @@ export function CalendarioPage() {
                   <Label htmlFor="cliente" className="calendario-page__form-label">
                     Cliente
                   </Label>
-                  <Select 
-                    value={newEvent.clienteId || ''} 
+                  <Combobox
+                    options={defaultClientes.map((cliente) => ({
+                      value: cliente.id,
+                      label: cliente.nombre,
+                      sublabel: cliente.email,
+                    }))}
+                    value={newEvent.clienteId || ''}
                     onValueChange={(value) => {
-                      const selected = value.split('|');
+                      const cliente = defaultClientes.find(c => c.id === value);
                       setNewEvent({ 
                         ...newEvent, 
-                        clienteId: selected[0],
-                        cliente: selected[1]
+                        clienteId: value,
+                        cliente: cliente?.nombre || ''
                       });
                     }}
-                  >
-                    <SelectTrigger className="calendario-page__form-input">
-                      <SelectValue placeholder="Buscar cliente" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="1|María González">María González</SelectItem>
-                      <SelectItem value="2|Juan Pérez">Juan Pérez</SelectItem>
-                      <SelectItem value="3|Ana Martínez">Ana Martínez</SelectItem>
-                      <SelectItem value="4|Roberto Silva">Roberto Silva</SelectItem>
-                      <SelectItem value="5|Tech Solutions Inc.">Tech Solutions Inc.</SelectItem>
-                    </SelectContent>
-                  </Select>
+                    placeholder="Buscar cliente"
+                    searchPlaceholder="Buscar por nombre o email..."
+                    emptyText="No se encontró ningún cliente"
+                    className="calendario-page__form-input"
+                  />
                   <p className="calendario-page__form-helper">
                     Selecciona el cliente asociado al pago o cobro
                   </p>
@@ -1310,28 +1308,26 @@ export function CalendarioPage() {
                   <Label htmlFor="cliente" className="calendario-page__form-label">
                     Cliente
                   </Label>
-                  <Select 
-                    value={newEvent.clienteId || ''} 
+                  <Combobox
+                    options={defaultClientes.map((cliente) => ({
+                      value: cliente.id,
+                      label: cliente.nombre,
+                      sublabel: cliente.email,
+                    }))}
+                    value={newEvent.clienteId || ''}
                     onValueChange={(value) => {
-                      const selected = value.split('|');
+                      const cliente = defaultClientes.find(c => c.id === value);
                       setNewEvent({ 
                         ...newEvent, 
-                        clienteId: selected[0],
-                        cliente: selected[1]
+                        clienteId: value,
+                        cliente: cliente?.nombre || ''
                       });
                     }}
-                  >
-                    <SelectTrigger className="calendario-page__form-input">
-                      <SelectValue placeholder="Buscar cliente" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="1|María González">María González</SelectItem>
-                      <SelectItem value="2|Juan Pérez">Juan Pérez</SelectItem>
-                      <SelectItem value="3|Ana Martínez">Ana Martínez</SelectItem>
-                      <SelectItem value="4|Roberto Silva">Roberto Silva</SelectItem>
-                      <SelectItem value="5|Tech Solutions Inc.">Tech Solutions Inc.</SelectItem>
-                    </SelectContent>
-                  </Select>
+                    placeholder="Buscar cliente"
+                    searchPlaceholder="Buscar por nombre o email..."
+                    emptyText="No se encontró ningún cliente"
+                    className="calendario-page__form-input"
+                  />
                 </div>
 
                 <div className="calendario-page__form-group">
@@ -1447,11 +1443,24 @@ export function CalendarioPage() {
                   <Label htmlFor="cliente" className="calendario-page__form-label">
                     Cliente
                   </Label>
-                  <Input
-                    id="cliente"
-                    value={newEvent.cliente || ''}
-                    onChange={(e) => setNewEvent({ ...newEvent, cliente: e.target.value })}
-                    placeholder="Nombre del cliente"
+                  <Combobox
+                    options={defaultClientes.map((cliente) => ({
+                      value: cliente.id,
+                      label: cliente.nombre,
+                      sublabel: cliente.email,
+                    }))}
+                    value={newEvent.clienteId || ''}
+                    onValueChange={(value) => {
+                      const cliente = defaultClientes.find(c => c.id === value);
+                      setNewEvent({ 
+                        ...newEvent, 
+                        clienteId: value,
+                        cliente: cliente?.nombre || ''
+                      });
+                    }}
+                    placeholder="Buscar cliente"
+                    searchPlaceholder="Buscar por nombre o email..."
+                    emptyText="No se encontró ningún cliente"
                     className="calendario-page__form-input"
                   />
                 </div>
