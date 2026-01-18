@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -11,6 +11,14 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { DatePicker } from '@/components/ui/date-picker';
+
+interface Cliente {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email?: string;
+  phone?: string;
+}
 
 interface Factura {
   id: string;
@@ -78,6 +86,9 @@ export function FacturasPage() {
   const [isNewFacturaModalOpen, setIsNewFacturaModalOpen] = useState(false);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const [selectedFactura, setSelectedFactura] = useState<Factura | null>(null);
+  const [clientes, setClientes] = useState<Cliente[]>([]);
+  const [buscarCliente, setBuscarCliente] = useState('');
+  const [mostrarSugerenciasCliente, setMostrarSugerenciasCliente] = useState(false);
   const [newFactura, setNewFactura] = useState({
     cliente: '',
     numeroReserva: '',
@@ -88,6 +99,39 @@ export function FacturasPage() {
     fechaVencimiento: '',
     estado: 'pendiente' as 'pagada' | 'pendiente' | 'vencida' | 'cancelada'
   });
+
+  // Cargar clientes desde localStorage
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('crm_clients');
+      if (stored) {
+        const clientesData = JSON.parse(stored);
+        setClientes(clientesData);
+      }
+    }
+  }, []);
+
+  // Filtrar clientes para búsqueda
+  const getClientesFiltrados = () => {
+    if (buscarCliente.length < 2) return [];
+    return clientes.filter(cliente => {
+      const nombreCompleto = `${cliente.firstName} ${cliente.lastName}`.toLowerCase();
+      const email = (cliente.email || '').toLowerCase();
+      return nombreCompleto.includes(buscarCliente.toLowerCase()) || 
+             email.includes(buscarCliente.toLowerCase());
+    });
+  };
+
+  // Seleccionar un cliente
+  const handleSeleccionarCliente = (cliente: Cliente) => {
+    const nombreCompleto = `${cliente.firstName} ${cliente.lastName}`;
+    setNewFactura({
+      ...newFactura,
+      cliente: nombreCompleto,
+    });
+    setBuscarCliente(nombreCompleto);
+    setMostrarSugerenciasCliente(false);
+  };
 
   const handleSort = (field: 'fechaEmision' | 'fechaVencimiento') => {
     if (sortField === field) {
@@ -408,12 +452,39 @@ export function FacturasPage() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="cliente">Cliente</Label>
-                  <Input
-                    id="cliente"
-                    value={newFactura.cliente}
-                    onChange={(e) => setNewFactura({...newFactura, cliente: e.target.value})}
-                    placeholder="Nombre del cliente"
-                  />
+                  <div className="relative">
+                    <Input
+                      id="cliente"
+                      value={buscarCliente}
+                      onChange={(e) => {
+                        setBuscarCliente(e.target.value);
+                        setMostrarSugerenciasCliente(e.target.value.length >= 2);
+                        setNewFactura({...newFactura, cliente: e.target.value});
+                      }}
+                      onFocus={() => buscarCliente.length >= 2 && setMostrarSugerenciasCliente(true)}
+                      placeholder="Buscar cliente por nombre o email"
+                    />
+                    {mostrarSugerenciasCliente && getClientesFiltrados().length > 0 && (
+                      <div className="absolute z-50 w-full mt-1 bg-white border border-slate-200 rounded-md shadow-lg max-h-60 overflow-y-auto">
+                        {getClientesFiltrados().map((cliente) => (
+                          <div
+                            key={cliente.id}
+                            onClick={() => handleSeleccionarCliente(cliente)}
+                            className="px-4 py-3 cursor-pointer hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-0"
+                          >
+                            <div className="font-medium text-slate-900">
+                              {cliente.firstName} {cliente.lastName}
+                            </div>
+                            {cliente.email && (
+                              <div className="text-sm text-slate-500 mt-1">
+                                {cliente.email}
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <div>
                   <Label htmlFor="numeroReserva">N° Reserva</Label>
