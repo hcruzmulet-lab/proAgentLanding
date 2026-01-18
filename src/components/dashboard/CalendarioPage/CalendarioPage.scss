@@ -842,13 +842,7 @@
       justify-content: center;
       font-size: 0.875rem;
       font-weight: 500;
-      
-      // Chevron más pequeño con mayor especificidad
-      svg {
-        width: 12px !important;
-        height: 12px !important;
-        margin-left: 4px;
-      }
+      padding-right: $spacing-sm; // Ajustar padding sin chevron
     }
     
     &:focus-visible {

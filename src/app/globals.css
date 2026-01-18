@@ -150,8 +150,8 @@ body {
   display: none !important;
 }
 
-/* Chevron más pequeño en selectores de hora */
-.calendario-page__hora-field [data-radix-select-trigger] svg {
-  width: 12px !important;
-  height: 12px !important;
+/* Quitar el chevron de los selectores de hora */
+.calendario-page__hora-field [data-radix-select-trigger] svg,
+.calendario-page__hora-field button svg {
+  display: none !important;
 }
