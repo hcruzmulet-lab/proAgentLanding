@@ -115,7 +115,7 @@
 
 /* Navigation buttons */
 .react-datepicker__navigation {
-  top: 0.75rem;
+  top: 0.5rem;
   width: 2rem;
   height: 2rem;
   border: none;
@@ -144,7 +144,7 @@
   border-width: 2px 2px 0 0;
   width: 8px;
   height: 8px;
-  top: 6px;
+  top: 8px;
 }
 
 .react-datepicker__navigation:hover .react-datepicker__navigation-icon::before {
