@@ -108,6 +108,8 @@ export function CalendarioPage() {
   const [clientes, setClientes] = useState<Cliente[]>([]);
   const [buscarCliente, setBuscarCliente] = useState('');
   const [mostrarSugerenciasCliente, setMostrarSugerenciasCliente] = useState(false);
+  const [buscarPagoFactura, setBuscarPagoFactura] = useState('');
+  const [mostrarSugerenciasPagoFactura, setMostrarSugerenciasPagoFactura] = useState(false);
   const [newEvent, setNewEvent] = useState<Partial<AgendaItem>>({
     text: '',
     type: 'tarea',
@@ -155,6 +157,46 @@ export function CalendarioPage() {
     });
     setBuscarCliente(`${cliente.firstName} ${cliente.lastName}`);
     setMostrarSugerenciasCliente(false);
+  };
+
+  // Mock de pagos y facturas
+  const pagosMock = [
+    { id: 'p1', tipo: 'pago' as 'pago', numero: 'PAG-001', monto: 2450.00, cliente: 'Arieldi Marrero', concepto: 'Pago reserva Punta Cana' },
+    { id: 'p2', tipo: 'pago' as 'pago', numero: 'PAG-002', monto: 1850.00, cliente: 'Miguel Zabala', concepto: 'Pago parcial tours' },
+    { id: 'p3', tipo: 'pago' as 'pago', numero: 'PAG-003', monto: 3200.00, cliente: 'Henrry Mulet', concepto: 'Pago vuelos internacional' },
+  ];
+
+  const facturasMock = [
+    { id: 'f1', tipo: 'factura' as 'factura', numero: 'FAC-001', monto: 3200.00, cliente: 'Arieldi Marrero', concepto: 'Factura reserva auto' },
+    { id: 'f2', tipo: 'factura' as 'factura', numero: 'FAC-002', monto: 5000.00, cliente: 'Miguel Zabala', concepto: 'Factura paquete Europa' },
+    { id: 'f3', tipo: 'factura' as 'factura', numero: 'FAC-003', monto: 1250.00, cliente: 'Gretell Rojas', concepto: 'Factura servicios' },
+  ];
+
+  // Filtrar pagos y facturas para búsqueda
+  const getPagosFacturasFiltrados = () => {
+    if (buscarPagoFactura.length < 2) return [];
+    
+    const todos = [...pagosMock, ...facturasMock];
+    return todos.filter(item => {
+      const searchLower = buscarPagoFactura.toLowerCase();
+      return (
+        item.numero.toLowerCase().includes(searchLower) ||
+        item.cliente.toLowerCase().includes(searchLower) ||
+        item.concepto.toLowerCase().includes(searchLower)
+      );
+    });
+  };
+
+  // Seleccionar un pago o factura
+  const handleSeleccionarPagoFactura = (item: any) => {
+    setNewEvent({
+      ...newEvent,
+      pagoFacturaId: item.id,
+      pagoFacturaTipo: item.tipo,
+      pagoFacturaNumero: item.numero,
+    });
+    setBuscarPagoFactura(`${item.tipo === 'pago' ? 'Pago' : 'Factura'} ${item.numero} - ${item.cliente}`);
+    setMostrarSugerenciasPagoFactura(false);
   };
 
   // Generar items de agenda organizados por categorías
@@ -1272,28 +1314,49 @@ export function CalendarioPage() {
                   <Label htmlFor="pagoFactura" className="calendario-page__form-label">
                     Pago o Factura
                   </Label>
-                  <Select 
-                    value={newEvent.pagoFacturaId || ''} 
-                    onValueChange={(value) => {
-                      const selected = value.split('|');
-                      setNewEvent({ 
-                        ...newEvent, 
-                        pagoFacturaId: selected[0],
-                        pagoFacturaTipo: selected[1] as 'pago' | 'factura',
-                        pagoFacturaNumero: selected[2]
-                      });
-                    }}
-                  >
-                    <SelectTrigger className="calendario-page__form-input">
-                      <SelectValue placeholder="Buscar pago o factura existente" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="p1|pago|PAG-001">Pago PAG-001 - $2,450.00</SelectItem>
-                      <SelectItem value="p2|pago|PAG-002">Pago PAG-002 - $1,850.00</SelectItem>
-                      <SelectItem value="f1|factura|FAC-001">Factura FAC-001 - $3,200.00</SelectItem>
-                      <SelectItem value="f2|factura|FAC-002">Factura FAC-002 - $5,000.00</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <div className="relative">
+                    <Input
+                      id="pagoFactura"
+                      value={buscarPagoFactura}
+                      onChange={(e) => {
+                        setBuscarPagoFactura(e.target.value);
+                        setMostrarSugerenciasPagoFactura(e.target.value.length >= 2);
+                      }}
+                      onFocus={() => buscarPagoFactura.length >= 2 && setMostrarSugerenciasPagoFactura(true)}
+                      placeholder="Buscar por número, cliente o concepto"
+                      className="calendario-page__form-input"
+                    />
+                    {mostrarSugerenciasPagoFactura && getPagosFacturasFiltrados().length > 0 && (
+                      <div className="absolute z-50 w-full mt-1 bg-white border border-slate-200 rounded-md shadow-lg max-h-60 overflow-y-auto">
+                        {getPagosFacturasFiltrados().map((item) => (
+                          <div
+                            key={item.id}
+                            onClick={() => handleSeleccionarPagoFactura(item)}
+                            className="px-4 py-3 cursor-pointer hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-0"
+                          >
+                            <div className="flex items-center justify-between">
+                              <div className="flex-1">
+                                <div className="font-medium text-slate-900">
+                                  {item.tipo === 'pago' ? 'Pago' : 'Factura'} {item.numero}
+                                </div>
+                                <div className="text-sm text-slate-600 mt-1">
+                                  {item.cliente}
+                                </div>
+                                <div className="text-xs text-slate-500 mt-1">
+                                  {item.concepto}
+                                </div>
+                              </div>
+                              <div className="text-right ml-4">
+                                <div className="font-semibold text-slate-900">
+                                  ${item.monto.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                   <p className="calendario-page__form-helper">
                     Selecciona un pago o factura existente para asociar al evento
                   </p>
