@@ -150,8 +150,16 @@ body {
   display: none !important;
 }
 
-/* Quitar el chevron de los selectores de hora */
+/* Quitar el chevron de los selectores de hora - múltiples selectores */
+.calendario-page__hora-field svg,
 .calendario-page__hora-field [data-radix-select-trigger] svg,
-.calendario-page__hora-field button svg {
+.calendario-page__hora-field button svg,
+.calendario-page__hora-field > button > svg,
+button.calendario-page__hora-field svg,
+[class*="hora-field"] svg {
   display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
 }

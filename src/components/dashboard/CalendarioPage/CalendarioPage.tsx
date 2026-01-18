@@ -850,12 +850,12 @@ export function CalendarioPage() {
               value={hora.horas}
               onValueChange={(value) => onChange({ ...hora, horas: value })}
             >
-              <SelectTrigger className="calendario-page__hora-field">
+              <SelectTrigger className="calendario-page__hora-field [&>svg]:hidden">
                 <SelectValue placeholder="HH" />
               </SelectTrigger>
               <SelectContent>
                 {horasOpciones.map((h) => (
-                  <SelectItem key={h} value={h}>
+                  <SelectItem key={h} value={h} className="[&>span:first-child]:hidden">
                     {h}
                   </SelectItem>
                 ))}
@@ -866,12 +866,12 @@ export function CalendarioPage() {
               value={hora.minutos}
               onValueChange={(value) => onChange({ ...hora, minutos: value })}
             >
-              <SelectTrigger className="calendario-page__hora-field">
+              <SelectTrigger className="calendario-page__hora-field [&>svg]:hidden">
                 <SelectValue placeholder="MM" />
               </SelectTrigger>
               <SelectContent>
                 {minutosOpciones.map((m) => (
-                  <SelectItem key={m} value={m}>
+                  <SelectItem key={m} value={m} className="[&>span:first-child]:hidden">
                     {m}
                   </SelectItem>
                 ))}
