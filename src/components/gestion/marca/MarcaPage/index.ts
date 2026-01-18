@@ -1,0 +1,1 @@
+export { MarcaPage } from './MarcaPage';

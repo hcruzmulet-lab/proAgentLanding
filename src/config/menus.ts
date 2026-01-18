@@ -43,6 +43,7 @@ export const gestionMenuItems = [
   { id: 'materiales', icon: 'folder_copy', label: 'Materiales del agente', href: '/gestion/materiales' },
   { id: 'galeria', icon: 'imagesmode', label: 'Galería de imágenes', href: '/gestion/galeria' },
   { id: 'prompts', icon: 'chat', label: 'Prompts IA', href: '/gestion/prompts' },
+  { id: 'marca', icon: 'branding_watermark', label: 'Marca', href: '/gestion/marca' },
 ];
 
 export const academiaMenuItems = [
