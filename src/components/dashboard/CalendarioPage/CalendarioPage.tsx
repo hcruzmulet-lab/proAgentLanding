@@ -1152,7 +1152,7 @@ export function CalendarioPage() {
             )}
 
             {/* Resto de tipos mantienen el comportamiento original */}
-            {selectedEventType !== 'fechas-especiales' && (
+            {selectedEventType !== 'fechas-especiales' && selectedEventType !== 'pagos-cobros' && (
               <>
                 <div className="calendario-page__form-row">
                   <div className="calendario-page__form-group">
