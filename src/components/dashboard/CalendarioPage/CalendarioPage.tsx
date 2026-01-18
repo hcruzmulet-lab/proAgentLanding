@@ -1065,33 +1065,6 @@ export function CalendarioPage() {
               </div>
             </div>
 
-            <div className="calendario-page__form-row">
-              <div className="calendario-page__form-group">
-                <Label htmlFor="hora" className="calendario-page__form-label">
-                  Hora inicio (opcional)
-                </Label>
-                <Input
-                  id="hora"
-                  type="time"
-                  value={newEvent.hora || ''}
-                  onChange={(e) => setNewEvent({ ...newEvent, hora: e.target.value })}
-                  className="calendario-page__form-input"
-                />
-              </div>
-              <div className="calendario-page__form-group">
-                <Label htmlFor="horaFin" className="calendario-page__form-label">
-                  Hora fin (opcional)
-                </Label>
-                <Input
-                  id="horaFin"
-                  type="time"
-                  value={newEvent.horaFin || ''}
-                  onChange={(e) => setNewEvent({ ...newEvent, horaFin: e.target.value })}
-                  className="calendario-page__form-input"
-                />
-              </div>
-            </div>
-
             {/* Campos específicos según el tipo */}
             {selectedEventType === 'fechas-especiales' && (
               <>
@@ -1406,31 +1379,17 @@ export function CalendarioPage() {
                     className="calendario-page__form-input"
                   />
                 </div>
-                <div className="calendario-page__form-row">
-                  <div className="calendario-page__form-group">
-                    <Label htmlFor="hora" className="calendario-page__form-label">
-                      Hora
-                    </Label>
-                    <Input
-                      id="hora"
-                      type="time"
-                      value={newEvent.hora || ''}
-                      onChange={(e) => setNewEvent({ ...newEvent, hora: e.target.value })}
-                      className="calendario-page__form-input"
-                    />
-                  </div>
-                  <div className="calendario-page__form-group">
-                    <Label htmlFor="aeropuerto" className="calendario-page__form-label">
-                      Aeropuerto
-                    </Label>
-                    <Input
-                      id="aeropuerto"
-                      value={newEvent.aeropuerto || ''}
-                      onChange={(e) => setNewEvent({ ...newEvent, aeropuerto: e.target.value })}
-                      placeholder="Ej: MIA - Miami International Airport"
-                      className="calendario-page__form-input"
-                    />
-                  </div>
+                <div className="calendario-page__form-group">
+                  <Label htmlFor="aeropuerto" className="calendario-page__form-label">
+                    Aeropuerto
+                  </Label>
+                  <Input
+                    id="aeropuerto"
+                    value={newEvent.aeropuerto || ''}
+                    onChange={(e) => setNewEvent({ ...newEvent, aeropuerto: e.target.value })}
+                    placeholder="Ej: MIA - Miami International Airport"
+                    className="calendario-page__form-input"
+                  />
                 </div>
                 <div className="calendario-page__form-row">
                   <div className="calendario-page__form-group">
