@@ -42,14 +42,17 @@ export function DatePicker({
   const [endDate, setEndDate] = React.useState<Date | null>(dateRange?.to || null);
 
   React.useEffect(() => {
-    if (mode === 'single' && date) {
-      setStartDate(date);
-      setEndDate(null);
-    } else if (mode === 'range' && dateRange) {
+    // Sincronizar con las props externas
+    if (dateRange?.from || dateRange?.to) {
+      setSelectedMode('range');
       setStartDate(dateRange.from || null);
       setEndDate(dateRange.to || null);
+    } else if (date) {
+      setSelectedMode('single');
+      setStartDate(date);
+      setEndDate(null);
     }
-  }, [date, dateRange, mode]);
+  }, [date, dateRange]);
 
   const handleSingleDateChange = (date: Date | null) => {
     setStartDate(date);
@@ -117,6 +120,13 @@ export function DatePicker({
                 onClick={() => {
                   setSelectedMode('single');
                   setEndDate(null);
+                  // Notificar al padre que se cambió a modo single
+                  if (onSelect && startDate) {
+                    onSelect(startDate);
+                  }
+                  if (onSelectRange) {
+                    onSelectRange(null);
+                  }
                 }}
                 className={cn(
                   'text-xs',
@@ -129,7 +139,13 @@ export function DatePicker({
                 type="button"
                 size="sm"
                 variant={selectedMode === 'range' ? 'default' : 'outline'}
-                onClick={() => setSelectedMode('range')}
+                onClick={() => {
+                  setSelectedMode('range');
+                  // Notificar al padre que se cambió a modo range
+                  if (onSelect) {
+                    onSelect(null);
+                  }
+                }}
                 className={cn(
                   'text-xs',
                   selectedMode === 'range' && 'bg-slate-700 hover:bg-slate-800'

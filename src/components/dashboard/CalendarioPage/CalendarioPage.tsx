@@ -1371,7 +1371,6 @@ export function CalendarioPage() {
                   endDate: range?.to 
                 })}
                 placeholder="Seleccionar fecha"
-                mode="single"
               />
             </div>
 
