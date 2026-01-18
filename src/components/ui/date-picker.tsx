@@ -51,11 +51,11 @@ export function DatePicker({
     }
   }, [date, dateRange, mode]);
 
-  const handleDateChange = (dates: Date | [Date | null, Date | null] | null) => {
+  const handleDateChange = (dates: Date | Date[] | null) => {
     if (selectedMode === 'range' && Array.isArray(dates)) {
       const [start, end] = dates;
-      setStartDate(start);
-      setEndDate(end);
+      setStartDate(start || null);
+      setEndDate(end || null);
       if (onSelectRange) {
         onSelectRange(start || end ? { from: start || undefined, to: end || undefined } : null);
       }
