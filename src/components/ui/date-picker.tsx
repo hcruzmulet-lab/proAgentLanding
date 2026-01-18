@@ -51,21 +51,21 @@ export function DatePicker({
     }
   }, [date, dateRange, mode]);
 
-  const handleDateChange = (dates: Date | Date[] | null) => {
-    if (selectedMode === 'range' && Array.isArray(dates)) {
-      const [start, end] = dates;
-      setStartDate(start || null);
-      setEndDate(end || null);
-      if (onSelectRange) {
-        onSelectRange(start || end ? { from: start || undefined, to: end || undefined } : null);
-      }
-    } else if (selectedMode === 'single' && dates && !Array.isArray(dates)) {
-      setStartDate(dates);
-      setEndDate(null);
-      if (onSelect) {
-        onSelect(dates);
-      }
-      setIsOpen(false);
+  const handleSingleDateChange = (date: Date | null) => {
+    setStartDate(date);
+    setEndDate(null);
+    if (onSelect) {
+      onSelect(date);
+    }
+    setIsOpen(false);
+  };
+
+  const handleRangeDateChange = (dates: [Date | null, Date | null]) => {
+    const [start, end] = dates;
+    setStartDate(start);
+    setEndDate(end);
+    if (onSelectRange) {
+      onSelectRange(start || end ? { from: start || undefined, to: end || undefined } : null);
     }
   };
 
@@ -138,7 +138,7 @@ export function DatePicker({
               {selectedMode === 'single' ? (
                 <ReactDatePicker
                   selected={startDate}
-                  onChange={handleDateChange}
+                  onChange={handleSingleDateChange}
                   inline
                   locale="es"
                   dateFormat="dd/MM/yyyy"
@@ -147,7 +147,7 @@ export function DatePicker({
               ) : (
                 <ReactDatePicker
                   selected={startDate}
-                  onChange={handleDateChange}
+                  onChange={handleRangeDateChange}
                   startDate={startDate}
                   endDate={endDate}
                   selectsRange
