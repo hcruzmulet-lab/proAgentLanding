@@ -770,7 +770,6 @@ function CotizacionPreview({
       {/* Footer */}
       <div className="border-t pt-4 mt-6 text-center text-xs text-slate-500">
         <p>Gracias por confiar en Proagent by Azúcar Travel</p>
-        <p>Esta cotización es válida por 7 días a partir de la fecha de emisión</p>
       </div>
     </div>
   );

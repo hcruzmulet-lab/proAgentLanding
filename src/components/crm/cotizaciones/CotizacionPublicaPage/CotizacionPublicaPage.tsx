@@ -317,7 +317,6 @@ export function CotizacionPublicaPage() {
       {/* Footer */}
       <footer className="cotizacion-publica__footer">
         <p>© 2026 Proagent by Azúcar Travel. Todos los derechos reservados.</p>
-        <p>Esta cotización es válida por 7 días a partir de la fecha de emisión.</p>
       </footer>
     </div>
   );
