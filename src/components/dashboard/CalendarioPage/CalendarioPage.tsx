@@ -1486,23 +1486,43 @@ export function CalendarioPage() {
 
                 {/* Recordatorio */}
                 <div className="calendario-page__form-group">
-                  <Label htmlFor="recordatorio-especial" className="calendario-page__form-label">
+                  <Label className="calendario-page__form-label">
                     Recordatorio
                   </Label>
-                  <Select 
-                    value={newEvent.recordatorio || 'ninguno'} 
-                    onValueChange={(value) => setNewEvent({ ...newEvent, recordatorio: value as '15min' | '1hora' | '1dia' | 'ninguno' })}
-                  >
-                    <SelectTrigger className="calendario-page__form-input">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="ninguno">Sin recordatorio</SelectItem>
-                      <SelectItem value="15min">15 minutos antes</SelectItem>
-                      <SelectItem value="1hora">1 hora antes</SelectItem>
-                      <SelectItem value="1dia">1 día antes</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <div className="calendario-page__recordatorio-options">
+                    <button
+                      type="button"
+                      onClick={() => setNewEvent({ ...newEvent, recordatorio: 'ninguno' })}
+                      className={`calendario-page__recordatorio-option ${newEvent.recordatorio === 'ninguno' || !newEvent.recordatorio ? 'active' : ''}`}
+                    >
+                      <span className="material-symbols-outlined">notifications_off</span>
+                      Sin recordatorio
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setNewEvent({ ...newEvent, recordatorio: '15min' })}
+                      className={`calendario-page__recordatorio-option ${newEvent.recordatorio === '15min' ? 'active' : ''}`}
+                    >
+                      <span className="material-symbols-outlined">schedule</span>
+                      15 minutos antes
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setNewEvent({ ...newEvent, recordatorio: '1hora' })}
+                      className={`calendario-page__recordatorio-option ${newEvent.recordatorio === '1hora' ? 'active' : ''}`}
+                    >
+                      <span className="material-symbols-outlined">schedule</span>
+                      1 hora antes
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setNewEvent({ ...newEvent, recordatorio: '1dia' })}
+                      className={`calendario-page__recordatorio-option ${newEvent.recordatorio === '1dia' ? 'active' : ''}`}
+                    >
+                      <span className="material-symbols-outlined">event</span>
+                      1 día antes
+                    </button>
+                  </div>
                 </div>
               </>
             )}
@@ -1732,23 +1752,43 @@ export function CalendarioPage() {
 
                 {/* Recordatorio */}
                 <div className="calendario-page__form-group">
-                  <Label htmlFor="recordatorio-pago" className="calendario-page__form-label">
+                  <Label className="calendario-page__form-label">
                     Recordatorio
                   </Label>
-                  <Select 
-                    value={newEvent.recordatorio || 'ninguno'} 
-                    onValueChange={(value) => setNewEvent({ ...newEvent, recordatorio: value as '15min' | '1hora' | '1dia' | 'ninguno' })}
-                  >
-                    <SelectTrigger className="calendario-page__form-input">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="ninguno">Sin recordatorio</SelectItem>
-                      <SelectItem value="15min">15 minutos antes</SelectItem>
-                      <SelectItem value="1hora">1 hora antes</SelectItem>
-                      <SelectItem value="1dia">1 día antes</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <div className="calendario-page__recordatorio-options">
+                    <button
+                      type="button"
+                      onClick={() => setNewEvent({ ...newEvent, recordatorio: 'ninguno' })}
+                      className={`calendario-page__recordatorio-option ${newEvent.recordatorio === 'ninguno' || !newEvent.recordatorio ? 'active' : ''}`}
+                    >
+                      <span className="material-symbols-outlined">notifications_off</span>
+                      Sin recordatorio
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setNewEvent({ ...newEvent, recordatorio: '15min' })}
+                      className={`calendario-page__recordatorio-option ${newEvent.recordatorio === '15min' ? 'active' : ''}`}
+                    >
+                      <span className="material-symbols-outlined">schedule</span>
+                      15 minutos antes
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setNewEvent({ ...newEvent, recordatorio: '1hora' })}
+                      className={`calendario-page__recordatorio-option ${newEvent.recordatorio === '1hora' ? 'active' : ''}`}
+                    >
+                      <span className="material-symbols-outlined">schedule</span>
+                      1 hora antes
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setNewEvent({ ...newEvent, recordatorio: '1dia' })}
+                      className={`calendario-page__recordatorio-option ${newEvent.recordatorio === '1dia' ? 'active' : ''}`}
+                    >
+                      <span className="material-symbols-outlined">event</span>
+                      1 día antes
+                    </button>
+                  </div>
                 </div>
               </>
             )}
@@ -1997,23 +2037,43 @@ export function CalendarioPage() {
 
                 {/* Recordatorio */}
                 <div className="calendario-page__form-group">
-                  <Label htmlFor="recordatorio-accion" className="calendario-page__form-label">
+                  <Label className="calendario-page__form-label">
                     Recordatorio
                   </Label>
-                  <Select 
-                    value={newEvent.recordatorio || 'ninguno'} 
-                    onValueChange={(value) => setNewEvent({ ...newEvent, recordatorio: value as '15min' | '1hora' | '1dia' | 'ninguno' })}
-                  >
-                    <SelectTrigger className="calendario-page__form-input">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="ninguno">Sin recordatorio</SelectItem>
-                      <SelectItem value="15min">15 minutos antes</SelectItem>
-                      <SelectItem value="1hora">1 hora antes</SelectItem>
-                      <SelectItem value="1dia">1 día antes</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <div className="calendario-page__recordatorio-options">
+                    <button
+                      type="button"
+                      onClick={() => setNewEvent({ ...newEvent, recordatorio: 'ninguno' })}
+                      className={`calendario-page__recordatorio-option ${newEvent.recordatorio === 'ninguno' || !newEvent.recordatorio ? 'active' : ''}`}
+                    >
+                      <span className="material-symbols-outlined">notifications_off</span>
+                      Sin recordatorio
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setNewEvent({ ...newEvent, recordatorio: '15min' })}
+                      className={`calendario-page__recordatorio-option ${newEvent.recordatorio === '15min' ? 'active' : ''}`}
+                    >
+                      <span className="material-symbols-outlined">schedule</span>
+                      15 minutos antes
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setNewEvent({ ...newEvent, recordatorio: '1hora' })}
+                      className={`calendario-page__recordatorio-option ${newEvent.recordatorio === '1hora' ? 'active' : ''}`}
+                    >
+                      <span className="material-symbols-outlined">schedule</span>
+                      1 hora antes
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setNewEvent({ ...newEvent, recordatorio: '1dia' })}
+                      className={`calendario-page__recordatorio-option ${newEvent.recordatorio === '1dia' ? 'active' : ''}`}
+                    >
+                      <span className="material-symbols-outlined">event</span>
+                      1 día antes
+                    </button>
+                  </div>
                 </div>
               </>
             )}
@@ -2294,23 +2354,43 @@ export function CalendarioPage() {
 
                 {/* Recordatorio */}
                 <div className="calendario-page__form-group">
-                  <Label htmlFor="recordatorio-viaje" className="calendario-page__form-label">
+                  <Label className="calendario-page__form-label">
                     Recordatorio
                   </Label>
-                  <Select 
-                    value={newEvent.recordatorio || 'ninguno'} 
-                    onValueChange={(value) => setNewEvent({ ...newEvent, recordatorio: value as '15min' | '1hora' | '1dia' | 'ninguno' })}
-                  >
-                    <SelectTrigger className="calendario-page__form-input">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="ninguno">Sin recordatorio</SelectItem>
-                      <SelectItem value="15min">15 minutos antes</SelectItem>
-                      <SelectItem value="1hora">1 hora antes</SelectItem>
-                      <SelectItem value="1dia">1 día antes</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <div className="calendario-page__recordatorio-options">
+                    <button
+                      type="button"
+                      onClick={() => setNewEvent({ ...newEvent, recordatorio: 'ninguno' })}
+                      className={`calendario-page__recordatorio-option ${newEvent.recordatorio === 'ninguno' || !newEvent.recordatorio ? 'active' : ''}`}
+                    >
+                      <span className="material-symbols-outlined">notifications_off</span>
+                      Sin recordatorio
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setNewEvent({ ...newEvent, recordatorio: '15min' })}
+                      className={`calendario-page__recordatorio-option ${newEvent.recordatorio === '15min' ? 'active' : ''}`}
+                    >
+                      <span className="material-symbols-outlined">schedule</span>
+                      15 minutos antes
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setNewEvent({ ...newEvent, recordatorio: '1hora' })}
+                      className={`calendario-page__recordatorio-option ${newEvent.recordatorio === '1hora' ? 'active' : ''}`}
+                    >
+                      <span className="material-symbols-outlined">schedule</span>
+                      1 hora antes
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setNewEvent({ ...newEvent, recordatorio: '1dia' })}
+                      className={`calendario-page__recordatorio-option ${newEvent.recordatorio === '1dia' ? 'active' : ''}`}
+                    >
+                      <span className="material-symbols-outlined">event</span>
+                      1 día antes
+                    </button>
+                  </div>
                 </div>
               </>
             )}
