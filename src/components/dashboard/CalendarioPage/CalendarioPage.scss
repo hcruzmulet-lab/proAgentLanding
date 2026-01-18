@@ -798,8 +798,6 @@
   &__form-group {
     @include flex-column;
     gap: $spacing-xs;
-    position: relative;
-    z-index: 1;
   }
 
   &__form-row {
@@ -816,20 +814,72 @@
 
   &__form-input {
     width: 100%;
-    padding: $spacing-sm;
-    border: 1px solid #e2e8f0;
-    border-radius: 6px;
-    font-size: 0.875rem;
-    transition: all 0.2s;
     
-    &:focus {
+    &:focus-visible {
       outline: none;
       border-color: #334155;
       box-shadow: 0 0 0 3px rgba(51, 65, 85, 0.1);
     }
+  }
 
-    &::placeholder {
-      color: #94a3b8;
+  &__hora-selector {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+  }
+
+  &__hora-input {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+  }
+
+  &__hora-field {
+    width: 70px;
+    text-align: center;
+    padding: $spacing-xs $spacing-sm;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    
+    &:focus-visible {
+      outline: none;
+      border-color: #334155;
+      box-shadow: 0 0 0 2px rgba(51, 65, 85, 0.1);
+    }
+  }
+
+  &__hora-separator {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #64748b;
+  }
+
+  &__hora-period {
+    display: flex;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  &__hora-period-btn {
+    padding: $spacing-xs $spacing-md;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #64748b;
+    background: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 48px;
+
+    &:hover:not(.active) {
+      background-color: #f1f5f9;
+    }
+
+    &.active {
+      background-color: #334155;
+      color: white;
     }
   }
 
@@ -1035,29 +1085,6 @@
   &__hora-period {
     display: flex;
     gap: 4px;
-  }
-
-  &__hora-period-btn {
-    padding: 6px 12px;
-    background: white;
-    border: 1.5px solid #e2e8f0;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: #64748b;
-
-    &:hover {
-      border-color: #cbd5e1;
-      background-color: #f8fafc;
-    }
-
-    &.active {
-      border-color: #334155;
-      background-color: #334155;
-      color: white;
-    }
   }
 
   &__recordatorio-options {
