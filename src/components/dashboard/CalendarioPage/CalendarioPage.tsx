@@ -42,6 +42,20 @@ const defaultDepartures: CalendarEvent[] = [
   { id: 'd7', title: 'Grupo Oriente Mágico - Tokio', date: '05/01/2026', time: '10:20 AM', type: 'salida' },
 ];
 
+// Lista de clientes para buscador
+const defaultClientes = [
+  { id: '1', nombre: 'María González', email: 'maria.gonzalez@email.com' },
+  { id: '2', nombre: 'Juan Pérez', email: 'juan.perez@email.com' },
+  { id: '3', nombre: 'Ana Martínez', email: 'ana.martinez@email.com' },
+  { id: '4', nombre: 'Carlos López', email: 'carlos.lopez@email.com' },
+  { id: '5', nombre: 'Laura Rodríguez', email: 'laura.rodriguez@email.com' },
+  { id: '6', nombre: 'Pedro Sánchez', email: 'pedro.sanchez@email.com' },
+  { id: '7', nombre: 'Sofia García', email: 'sofia.garcia@email.com' },
+  { id: '8', nombre: 'Miguel Torres', email: 'miguel.torres@email.com' },
+  { id: '9', nombre: 'Carmen Díaz', email: 'carmen.diaz@email.com' },
+  { id: '10', nombre: 'Roberto Fernández', email: 'roberto.fernandez@email.com' },
+];
+
 type ViewMode = 'mes' | 'agenda';
 type FilterType = 'todos' | 'evento' | 'salida';
 
@@ -1093,13 +1107,31 @@ export function CalendarioPage() {
                   <Label htmlFor="cliente" className="calendario-page__form-label">
                     Cliente / Persona
                   </Label>
-                  <Input
-                    id="cliente"
-                    value={newEvent.cliente || ''}
-                    onChange={(e) => setNewEvent({ ...newEvent, cliente: e.target.value })}
-                    placeholder="Nombre del cliente o persona"
-                    className="calendario-page__form-input"
-                  />
+                  <Select 
+                    value={newEvent.clienteId || ''} 
+                    onValueChange={(value) => {
+                      const cliente = defaultClientes.find(c => c.id === value);
+                      setNewEvent({ 
+                        ...newEvent, 
+                        clienteId: value,
+                        cliente: cliente?.nombre || ''
+                      });
+                    }}
+                  >
+                    <SelectTrigger className="calendario-page__form-input">
+                      <SelectValue placeholder="Buscar y seleccionar cliente" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {defaultClientes.map((cliente) => (
+                        <SelectItem key={cliente.id} value={cliente.id}>
+                          <div className="flex flex-col">
+                            <span className="font-medium">{cliente.nombre}</span>
+                            <span className="text-xs text-slate-500">{cliente.email}</span>
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
 
                 <div className="calendario-page__form-group">
