@@ -19,6 +19,7 @@ import {
 } from '@/components/ui/breadcrumb';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { ImageSearchModal } from '@/components/shared/ImageSearchModal';
+import { DatePicker } from '@/components/ui/date-picker';
 
 interface Servicio {
   id: string;
@@ -526,20 +527,18 @@ export function NuevaCotizacionManualPage() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="fechaIda">Fecha de Ida *</Label>
-                  <Input
-                    id="fechaIda"
-                    type="date"
-                    value={cotizacion.fechaIda}
-                    onChange={(e) => setCotizacion({...cotizacion, fechaIda: e.target.value})}
+                  <DatePicker
+                    date={cotizacion.fechaIda ? new Date(cotizacion.fechaIda) : undefined}
+                    onSelect={(date) => setCotizacion({...cotizacion, fechaIda: date ? date.toISOString().split('T')[0] : ''})}
+                    placeholder="Seleccionar fecha de ida"
                   />
                 </div>
                 <div>
                   <Label htmlFor="fechaVuelta">Fecha de Vuelta *</Label>
-                  <Input
-                    id="fechaVuelta"
-                    type="date"
-                    value={cotizacion.fechaVuelta}
-                    onChange={(e) => setCotizacion({...cotizacion, fechaVuelta: e.target.value})}
+                  <DatePicker
+                    date={cotizacion.fechaVuelta ? new Date(cotizacion.fechaVuelta) : undefined}
+                    onSelect={(date) => setCotizacion({...cotizacion, fechaVuelta: date ? date.toISOString().split('T')[0] : ''})}
+                    placeholder="Seleccionar fecha de vuelta"
                   />
                 </div>
               </div>
@@ -817,11 +816,11 @@ function ServicioCard({ servicio, onUpdate, onDelete }: { servicio: Servicio; on
           </div>
           <div>
             <Label>Fecha Ida</Label>
-            <Input type="date" value={servicio.datos.fechaIda} onChange={(e) => onUpdate({...servicio.datos, fechaIda: e.target.value})} />
+            <DatePicker date={servicio.datos.fechaIda ? new Date(servicio.datos.fechaIda) : undefined} onSelect={(date) => onUpdate({...servicio.datos, fechaIda: date ? date.toISOString().split('T')[0] : ''})} placeholder="Fecha ida" />
           </div>
           <div>
             <Label>Fecha Vuelta</Label>
-            <Input type="date" value={servicio.datos.fechaVuelta} onChange={(e) => onUpdate({...servicio.datos, fechaVuelta: e.target.value})} />
+            <DatePicker date={servicio.datos.fechaVuelta ? new Date(servicio.datos.fechaVuelta) : undefined} onSelect={(date) => onUpdate({...servicio.datos, fechaVuelta: date ? date.toISOString().split('T')[0] : ''})} placeholder="Fecha vuelta" />
           </div>
           <div>
             <Label>Aerolínea</Label>
@@ -860,11 +859,11 @@ function ServicioCard({ servicio, onUpdate, onDelete }: { servicio: Servicio; on
           </div>
           <div>
             <Label>Check-in</Label>
-            <Input type="date" value={servicio.datos.checkIn} onChange={(e) => onUpdate({...servicio.datos, checkIn: e.target.value})} />
+            <DatePicker date={servicio.datos.checkIn ? new Date(servicio.datos.checkIn) : undefined} onSelect={(date) => onUpdate({...servicio.datos, checkIn: date ? date.toISOString().split('T')[0] : ''})} placeholder="Check-in" />
           </div>
           <div>
             <Label>Check-out</Label>
-            <Input type="date" value={servicio.datos.checkOut} onChange={(e) => onUpdate({...servicio.datos, checkOut: e.target.value})} />
+            <DatePicker date={servicio.datos.checkOut ? new Date(servicio.datos.checkOut) : undefined} onSelect={(date) => onUpdate({...servicio.datos, checkOut: date ? date.toISOString().split('T')[0] : ''})} placeholder="Check-out" />
           </div>
           <div>
             <Label>Noches</Label>
@@ -897,7 +896,7 @@ function ServicioCard({ servicio, onUpdate, onDelete }: { servicio: Servicio; on
           </div>
           <div>
             <Label>Fecha</Label>
-            <Input type="date" value={servicio.datos.fecha} onChange={(e) => onUpdate({...servicio.datos, fecha: e.target.value})} />
+            <DatePicker date={servicio.datos.fecha ? new Date(servicio.datos.fecha) : undefined} onSelect={(date) => onUpdate({...servicio.datos, fecha: date ? date.toISOString().split('T')[0] : ''})} placeholder="Fecha del traslado" />
           </div>
           <div>
             <Label>Tipo de Vehículo</Label>
@@ -922,7 +921,7 @@ function ServicioCard({ servicio, onUpdate, onDelete }: { servicio: Servicio; on
           </div>
           <div>
             <Label>Fecha</Label>
-            <Input type="date" value={servicio.datos.fecha} onChange={(e) => onUpdate({...servicio.datos, fecha: e.target.value})} />
+            <DatePicker date={servicio.datos.fecha ? new Date(servicio.datos.fecha) : undefined} onSelect={(date) => onUpdate({...servicio.datos, fecha: date ? date.toISOString().split('T')[0] : ''})} placeholder="Fecha" />
           </div>
           <div>
             <Label>{servicio.tipo === 'tren' ? 'Clase' : 'Compañía'}</Label>
@@ -947,11 +946,11 @@ function ServicioCard({ servicio, onUpdate, onDelete }: { servicio: Servicio; on
           </div>
           <div>
             <Label>Fecha Inicio</Label>
-            <Input type="date" value={servicio.datos.fechaInicio} onChange={(e) => onUpdate({...servicio.datos, fechaInicio: e.target.value})} />
+            <DatePicker date={servicio.datos.fechaInicio ? new Date(servicio.datos.fechaInicio) : undefined} onSelect={(date) => onUpdate({...servicio.datos, fechaInicio: date ? date.toISOString().split('T')[0] : ''})} placeholder="Fecha inicio" />
           </div>
           <div>
             <Label>Fecha Fin</Label>
-            <Input type="date" value={servicio.datos.fechaFin} onChange={(e) => onUpdate({...servicio.datos, fechaFin: e.target.value})} />
+            <DatePicker date={servicio.datos.fechaFin ? new Date(servicio.datos.fechaFin) : undefined} onSelect={(date) => onUpdate({...servicio.datos, fechaFin: date ? date.toISOString().split('T')[0] : ''})} placeholder="Fecha fin" />
           </div>
           <div>
             <Label>Tipo de Cabina</Label>
@@ -976,11 +975,11 @@ function ServicioCard({ servicio, onUpdate, onDelete }: { servicio: Servicio; on
           </div>
           <div>
             <Label>Fecha Inicio</Label>
-            <Input type="date" value={servicio.datos.fechaInicio} onChange={(e) => onUpdate({...servicio.datos, fechaInicio: e.target.value})} />
+            <DatePicker date={servicio.datos.fechaInicio ? new Date(servicio.datos.fechaInicio) : undefined} onSelect={(date) => onUpdate({...servicio.datos, fechaInicio: date ? date.toISOString().split('T')[0] : ''})} placeholder="Fecha inicio" />
           </div>
           <div>
             <Label>Fecha Fin</Label>
-            <Input type="date" value={servicio.datos.fechaFin} onChange={(e) => onUpdate({...servicio.datos, fechaFin: e.target.value})} />
+            <DatePicker date={servicio.datos.fechaFin ? new Date(servicio.datos.fechaFin) : undefined} onSelect={(date) => onUpdate({...servicio.datos, fechaFin: date ? date.toISOString().split('T')[0] : ''})} placeholder="Fecha fin" />
           </div>
           <div>
             <Label>Noches</Label>
@@ -1009,7 +1008,7 @@ function ServicioCard({ servicio, onUpdate, onDelete }: { servicio: Servicio; on
           </div>
           <div>
             <Label>Fecha</Label>
-            <Input type="date" value={servicio.datos.fecha} onChange={(e) => onUpdate({...servicio.datos, fecha: e.target.value})} />
+            <DatePicker date={servicio.datos.fecha ? new Date(servicio.datos.fecha) : undefined} onSelect={(date) => onUpdate({...servicio.datos, fecha: date ? date.toISOString().split('T')[0] : ''})} placeholder="Fecha" />
           </div>
           <div>
             <Label>Duración</Label>
@@ -1031,7 +1030,7 @@ function ServicioCard({ servicio, onUpdate, onDelete }: { servicio: Servicio; on
           <div className="grid grid-cols-2 gap-3">
             <div>
               <Label>Fecha</Label>
-              <Input type="date" value={servicio.datos.fecha} onChange={(e) => onUpdate({...servicio.datos, fecha: e.target.value})} />
+              <DatePicker date={servicio.datos.fecha ? new Date(servicio.datos.fecha) : undefined} onSelect={(date) => onUpdate({...servicio.datos, fecha: date ? date.toISOString().split('T')[0] : ''})} placeholder="Fecha" />
             </div>
             <div>
               <Label>Precio (USD)</Label>
