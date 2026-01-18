@@ -11,6 +11,7 @@ import { Card } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { DatePicker } from '@/components/ui/date-picker';
 import './CalendarioPage.scss';
 
 interface CalendarEvent {
@@ -1055,12 +1056,10 @@ export function CalendarioPage() {
                 <Label htmlFor="date" className="calendario-page__form-label">
                   Fecha inicio
                 </Label>
-                <Input
-                  id="date"
-                  type="date"
-                  value={newEvent.date ? format(newEvent.date, 'yyyy-MM-dd') : ''}
-                  onChange={(e) => setNewEvent({ ...newEvent, date: e.target.value ? new Date(e.target.value) : new Date() })}
-                  className="calendario-page__form-input"
+                <DatePicker
+                  date={newEvent.date}
+                  onSelect={(date) => setNewEvent({ ...newEvent, date: date || new Date() })}
+                  placeholder="Seleccionar fecha inicio"
                 />
               </div>
 
@@ -1068,12 +1067,10 @@ export function CalendarioPage() {
                 <Label htmlFor="endDate" className="calendario-page__form-label">
                   Fecha fin (opcional)
                 </Label>
-                <Input
-                  id="endDate"
-                  type="date"
-                  value={newEvent.endDate ? format(newEvent.endDate, 'yyyy-MM-dd') : ''}
-                  onChange={(e) => setNewEvent({ ...newEvent, endDate: e.target.value ? new Date(e.target.value) : undefined })}
-                  className="calendario-page__form-input"
+                <DatePicker
+                  date={newEvent.endDate}
+                  onSelect={(date) => setNewEvent({ ...newEvent, endDate: date })}
+                  placeholder="Seleccionar fecha fin"
                 />
               </div>
             </div>
