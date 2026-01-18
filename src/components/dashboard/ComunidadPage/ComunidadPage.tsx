@@ -53,10 +53,9 @@ export function ComunidadPage() {
               </svg>
             </div>
             <div className="comunidad-page__card-info">
-              <h2 className="comunidad-page__card-title">Grupo de WhatsApp</h2>
+              <h2 className="comunidad-page__card-title">Canal Oficial de ProAgent · WhatsApp</h2>
               <p className="comunidad-page__card-description">
-                Únete a nuestra comunidad de asesores de viajes en WhatsApp. Comparte experiencias, 
-                resuelve dudas y mantente conectado con el equipo de Proagent.
+                Canal oficial de comunicación de ProAgent. Aquí recibirás comunicados importantes, novedades de la plataforma, nuevos proveedores, entrenamientos y anuncios clave. Este es un canal informativo: solo el equipo ProAgent publica.
               </p>
             </div>
             <Button 
@@ -95,10 +94,9 @@ export function ComunidadPage() {
               </svg>
             </div>
             <div className="comunidad-page__card-info">
-              <h2 className="comunidad-page__card-title">Página de Facebook</h2>
+              <h2 className="comunidad-page__card-title">Comunidad ProAgent · Grupo Privado de Facebook</h2>
               <p className="comunidad-page__card-description">
-                Síguenos en Facebook para estar al día con las últimas ofertas, promociones, 
-                novedades y contenido exclusivo para asesores de viajes.
+                Espacio exclusivo para agentes ProAgent. Aquí puedes publicar preguntas, compartir experiencias, resolver dudas, intercambiar conocimientos y apoyarte con otros asesores de la comunidad. Un entorno colaborativo pensado para crecer juntos como profesionales del turismo.
               </p>
             </div>
             <Button 
