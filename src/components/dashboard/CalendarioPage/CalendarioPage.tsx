@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { DatePicker } from '@/components/ui/date-picker';
+import { Combobox } from '@/components/ui/combobox';
 import './CalendarioPage.scss';
 
 interface CalendarEvent {
@@ -1107,8 +1108,13 @@ export function CalendarioPage() {
                   <Label htmlFor="cliente" className="calendario-page__form-label">
                     Cliente / Persona
                   </Label>
-                  <Select 
-                    value={newEvent.clienteId || ''} 
+                  <Combobox
+                    options={defaultClientes.map((cliente) => ({
+                      value: cliente.id,
+                      label: cliente.nombre,
+                      sublabel: cliente.email,
+                    }))}
+                    value={newEvent.clienteId || ''}
                     onValueChange={(value) => {
                       const cliente = defaultClientes.find(c => c.id === value);
                       setNewEvent({ 
@@ -1117,21 +1123,11 @@ export function CalendarioPage() {
                         cliente: cliente?.nombre || ''
                       });
                     }}
-                  >
-                    <SelectTrigger className="calendario-page__form-input">
-                      <SelectValue placeholder="Buscar y seleccionar cliente" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {defaultClientes.map((cliente) => (
-                        <SelectItem key={cliente.id} value={cliente.id}>
-                          <div className="flex flex-col">
-                            <span className="font-medium">{cliente.nombre}</span>
-                            <span className="text-xs text-slate-500">{cliente.email}</span>
-                          </div>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                    placeholder="Buscar y seleccionar cliente"
+                    searchPlaceholder="Buscar por nombre o email..."
+                    emptyText="No se encontró ningún cliente"
+                    className="calendario-page__form-input"
+                  />
                 </div>
 
                 <div className="calendario-page__form-group">
