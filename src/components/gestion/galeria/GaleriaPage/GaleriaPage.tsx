@@ -408,7 +408,10 @@ export function GaleriaPage() {
                     <div className="galeria-page__grid">
                       {imagenesFiltradas.map((imagen) => (
                         <Card key={imagen.id} className="galeria-page__card">
-                          <div className="galeria-page__image-wrapper">
+                          <div 
+                            className="galeria-page__image-wrapper cursor-pointer"
+                            onClick={() => handleOpenLightbox(imagen)}
+                          >
                             <Image
                               src={imagen.url}
                               alt={imagen.nombre || 'Imagen'}
@@ -416,33 +419,26 @@ export function GaleriaPage() {
                               className="object-cover"
                               unoptimized
                             />
-                            <div className="galeria-page__overlay">
+                          </div>
+                          {imagen.nombre && (
+                            <CardContent className="pt-3 flex items-start justify-between gap-2">
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm font-medium truncate">{imagen.nombre}</p>
+                                <p className="text-xs text-slate-500 mt-1">{imagen.fechaSubida}</p>
+                              </div>
                               <Button
                                 variant="ghost"
                                 size="sm"
-                                onClick={() => handleOpenLightbox(imagen)}
-                                className="text-white hover:bg-white/20"
-                              >
-                                <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>
-                                  visibility
-                                </span>
-                              </Button>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => handleDelete(imagen.id)}
-                                className="text-white hover:bg-white/20"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleDelete(imagen.id);
+                                }}
+                                className="text-red-600 hover:text-red-700 hover:bg-red-50 shrink-0"
                               >
                                 <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>
                                   delete
                                 </span>
                               </Button>
-                            </div>
-                          </div>
-                          {imagen.nombre && (
-                            <CardContent className="pt-3">
-                              <p className="text-sm font-medium truncate">{imagen.nombre}</p>
-                              <p className="text-xs text-slate-500 mt-1">{imagen.fechaSubida}</p>
                             </CardContent>
                           )}
                         </Card>
