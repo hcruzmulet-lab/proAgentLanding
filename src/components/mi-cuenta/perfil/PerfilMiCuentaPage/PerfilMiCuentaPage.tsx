@@ -9,6 +9,7 @@ export function PerfilMiCuentaPage() {
   const [formData, setFormData] = useState({
     nombre: 'Arieldi Marrero',
     correo: 'arieldi.marrero@proagent.com',
+    correoRecuperacion: '',
     telefono: '+1 (305) 555-0123',
     direccion: '1234 Main Street, Miami, FL 33101'
   });
@@ -56,6 +57,22 @@ export function PerfilMiCuentaPage() {
                 className="perfil-mi-cuenta-page__input"
                 placeholder="tu@correo.com"
               />
+            </div>
+
+            <div className="perfil-mi-cuenta-page__form-group">
+              <label className="perfil-mi-cuenta-page__label">
+                Correo de recuperación
+              </label>
+              <Input
+                type="email"
+                value={formData.correoRecuperacion}
+                onChange={(e) => setFormData({...formData, correoRecuperacion: e.target.value})}
+                className="perfil-mi-cuenta-page__input"
+                placeholder="correo.recuperacion@ejemplo.com"
+              />
+              <p className="perfil-mi-cuenta-page__help-text">
+                Este correo se utilizará para recuperar tu cuenta en caso de olvidar tu contraseña
+              </p>
             </div>
 
             <div className="perfil-mi-cuenta-page__form-group">
