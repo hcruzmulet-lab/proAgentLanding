@@ -67,6 +67,10 @@ export function DatePicker({
     if (onSelectRange) {
       onSelectRange(start || end ? { from: start || undefined, to: end || undefined } : null);
     }
+    // Cerrar el calendario cuando se seleccionen ambas fechas
+    if (start && end) {
+      setIsOpen(false);
+    }
   };
 
   const formatDisplayValue = () => {
