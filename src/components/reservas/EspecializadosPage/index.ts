@@ -1,0 +1,1 @@
+export { EspecializadosPage } from './EspecializadosPage';

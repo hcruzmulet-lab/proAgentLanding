@@ -241,7 +241,7 @@ export function CotizacionesPage() {
                   <Card 
                     key={cotizacion.id} 
                     className="cursor-pointer hover:shadow-lg transition-shadow"
-                    onClick={() => router.push(`/crm/cotizaciones/${cotizacion.id}`)}
+                    onClick={() => router.push(`/es/crm/cotizaciones/${cotizacion.id}`)}
                   >
                     {cotizacion.imagen && (
                       <div className="relative h-48 w-full overflow-hidden rounded-t-lg">
