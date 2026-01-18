@@ -49,6 +49,7 @@ interface AgendaItem {
   text: string;
   type: 'viaje' | 'pago' | 'llamada' | 'salida' | 'cumpleanos' | 'cliente' | 'oportunidad' | 'fecha' | 'aniversario' | 'tarea' | 'evento';
   date?: Date;
+  endDate?: Date;
   priority?: 'alta' | 'media' | 'baja';
   destino?: string;
   hora?: string;
@@ -69,6 +70,9 @@ interface AgendaItem {
   pagoFacturaId?: string;
   pagoFacturaTipo?: 'pago' | 'factura';
   pagoFacturaNumero?: string;
+  crmTipo?: 'cotizacion' | 'expediente' | 'reserva' | 'itinerario';
+  crmId?: string;
+  crmNumero?: string;
 }
 
 type AgendaTab = 'hoy' | 'estaSemana' | 'esteMes';
@@ -1048,7 +1052,7 @@ export function CalendarioPage() {
             <div className="calendario-page__form-row">
               <div className="calendario-page__form-group">
                 <Label htmlFor="date" className="calendario-page__form-label">
-                  Fecha
+                  Fecha inicio
                 </Label>
                 <Input
                   id="date"
@@ -1060,14 +1064,41 @@ export function CalendarioPage() {
               </div>
 
               <div className="calendario-page__form-group">
+                <Label htmlFor="endDate" className="calendario-page__form-label">
+                  Fecha fin (opcional)
+                </Label>
+                <Input
+                  id="endDate"
+                  type="date"
+                  value={newEvent.endDate ? format(newEvent.endDate, 'yyyy-MM-dd') : ''}
+                  onChange={(e) => setNewEvent({ ...newEvent, endDate: e.target.value ? new Date(e.target.value) : undefined })}
+                  className="calendario-page__form-input"
+                />
+              </div>
+            </div>
+
+            <div className="calendario-page__form-row">
+              <div className="calendario-page__form-group">
                 <Label htmlFor="hora" className="calendario-page__form-label">
-                  Hora (opcional)
+                  Hora inicio (opcional)
                 </Label>
                 <Input
                   id="hora"
                   type="time"
                   value={newEvent.hora || ''}
                   onChange={(e) => setNewEvent({ ...newEvent, hora: e.target.value })}
+                  className="calendario-page__form-input"
+                />
+              </div>
+              <div className="calendario-page__form-group">
+                <Label htmlFor="horaFin" className="calendario-page__form-label">
+                  Hora fin (opcional)
+                </Label>
+                <Input
+                  id="horaFin"
+                  type="time"
+                  value={newEvent.horaFin || ''}
+                  onChange={(e) => setNewEvent({ ...newEvent, horaFin: e.target.value })}
                   className="calendario-page__form-input"
                 />
               </div>
@@ -1260,37 +1291,103 @@ export function CalendarioPage() {
                   <Label htmlFor="cliente" className="calendario-page__form-label">
                     Cliente
                   </Label>
-                  <Input
-                    id="cliente"
-                    value={newEvent.cliente || ''}
-                    onChange={(e) => setNewEvent({ ...newEvent, cliente: e.target.value })}
-                    placeholder="Nombre del cliente"
-                    className="calendario-page__form-input"
+                  <Select 
+                    value={newEvent.clienteId || ''} 
+                    onValueChange={(value) => {
+                      const selected = value.split('|');
+                      setNewEvent({ 
+                        ...newEvent, 
+                        clienteId: selected[0],
+                        cliente: selected[1]
+                      });
+                    }}
+                  >
+                    <SelectTrigger className="calendario-page__form-input">
+                      <SelectValue placeholder="Buscar cliente" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="1|María González">María González</SelectItem>
+                      <SelectItem value="2|Juan Pérez">Juan Pérez</SelectItem>
+                      <SelectItem value="3|Ana Martínez">Ana Martínez</SelectItem>
+                      <SelectItem value="4|Roberto Silva">Roberto Silva</SelectItem>
+                      <SelectItem value="5|Tech Solutions Inc.">Tech Solutions Inc.</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="calendario-page__form-group">
+                  <Label htmlFor="crm" className="calendario-page__form-label">
+                    Asociar a CRM
+                  </Label>
+                  <Select 
+                    value={newEvent.crmId || ''} 
+                    onValueChange={(value) => {
+                      const selected = value.split('|');
+                      setNewEvent({ 
+                        ...newEvent, 
+                        crmId: selected[0],
+                        crmTipo: selected[1] as 'cotizacion' | 'expediente' | 'reserva' | 'itinerario',
+                        crmNumero: selected[2]
+                      });
+                    }}
+                  >
+                    <SelectTrigger className="calendario-page__form-input">
+                      <SelectValue placeholder="Seleccionar cotización, expediente, reserva o itinerario" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="c1|cotizacion|COT-2026-001">Cotización COT-2026-001 - Punta Cana</SelectItem>
+                      <SelectItem value="c2|cotizacion|COT-2026-002">Cotización COT-2026-002 - Europa</SelectItem>
+                      <SelectItem value="e1|expediente|EXP-001">Expediente EXP-001 - Familia López</SelectItem>
+                      <SelectItem value="e2|expediente|EXP-002">Expediente EXP-002 - Tech Solutions</SelectItem>
+                      <SelectItem value="r1|reserva|RES-001">Reserva RES-001 - Hotel Barceló</SelectItem>
+                      <SelectItem value="r2|reserva|RES-002">Reserva RES-002 - Vuelo AA 1234</SelectItem>
+                      <SelectItem value="i1|itinerario|ITI-001">Itinerario ITI-001 - Tour Europa</SelectItem>
+                      <SelectItem value="i2|itinerario|ITI-002">Itinerario ITI-002 - Caribe Total</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <p className="calendario-page__form-helper">
+                    Opcional: Vincula esta tarea con un documento del CRM
+                  </p>
+                </div>
+
+                <div className="calendario-page__form-group">
+                  <Label htmlFor="descripcion" className="calendario-page__form-label">
+                    Descripción
+                  </Label>
+                  <textarea
+                    id="descripcion"
+                    value={newEvent.descripcion || ''}
+                    onChange={(e) => setNewEvent({ ...newEvent, descripcion: e.target.value })}
+                    placeholder="Descripción de la acción o tarea"
+                    className="calendario-page__form-input calendario-page__form-textarea"
+                    rows={3}
                   />
                 </div>
+
                 <div className="calendario-page__form-group">
-                  <Label htmlFor="numeroCotizacion" className="calendario-page__form-label">
-                    N° Cotización
+                  <Label htmlFor="archivos" className="calendario-page__form-label">
+                    Archivos adjuntos (opcional)
                   </Label>
                   <Input
-                    id="numeroCotizacion"
-                    value={newEvent.numeroCotizacion || ''}
-                    onChange={(e) => setNewEvent({ ...newEvent, numeroCotizacion: e.target.value })}
-                    placeholder="Ej: COT-2026-0123"
+                    id="archivos"
+                    type="file"
+                    multiple
+                    onChange={(e) => {
+                      const files = e.target.files ? Array.from(e.target.files) : [];
+                      setNewEvent({ ...newEvent, archivos: files });
+                    }}
                     className="calendario-page__form-input"
                   />
-                </div>
-                <div className="calendario-page__form-group">
-                  <Label htmlFor="hora" className="calendario-page__form-label">
-                    Hora
-                  </Label>
-                  <Input
-                    id="hora"
-                    type="time"
-                    value={newEvent.hora || ''}
-                    onChange={(e) => setNewEvent({ ...newEvent, hora: e.target.value })}
-                    className="calendario-page__form-input"
-                  />
+                  {newEvent.archivos && newEvent.archivos.length > 0 && (
+                    <div className="calendario-page__archivos-lista">
+                      {newEvent.archivos.map((archivo, index) => (
+                        <div key={index} className="calendario-page__archivo-item">
+                          <span className="material-symbols-outlined">attach_file</span>
+                          <span>{archivo.name}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </>
             )}
