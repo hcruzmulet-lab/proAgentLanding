@@ -53,6 +53,7 @@ interface AgendaItem {
   priority?: 'alta' | 'media' | 'baja';
   destino?: string;
   hora?: string;
+  horaFin?: string;
   aeropuerto?: string;
   cliente?: string;
   clienteId?: string;
