@@ -1383,30 +1383,34 @@ export function CalendarioPage() {
                   setHoraInicio(h);
                   setNewEvent({ ...newEvent, hora: convertTo24h(h.horas, h.minutos, h.periodo) });
                 }}
-                label="Hora (opcional)"
+                label="Hora"
               />
             )}
 
             {/* Hora Inicio y Fin - Solo para rango de fechas */}
             {newEvent.endDate && (
-              <>
-                <HoraSelector
-                  hora={horaInicio}
-                  onChange={(h) => {
-                    setHoraInicio(h);
-                    setNewEvent({ ...newEvent, hora: convertTo24h(h.horas, h.minutos, h.periodo) });
-                  }}
-                  label="Hora de Inicio (opcional)"
-                />
-                <HoraSelector
-                  hora={horaFin}
-                  onChange={(h) => {
-                    setHoraFin(h);
-                    setNewEvent({ ...newEvent, horaFin: convertTo24h(h.horas, h.minutos, h.periodo) });
-                  }}
-                  label="Hora de Fin (opcional)"
-                />
-              </>
+              <div className="calendario-page__form-row">
+                <div className="calendario-page__form-group">
+                  <HoraSelector
+                    hora={horaInicio}
+                    onChange={(h) => {
+                      setHoraInicio(h);
+                      setNewEvent({ ...newEvent, hora: convertTo24h(h.horas, h.minutos, h.periodo) });
+                    }}
+                    label="Hora de Inicio"
+                  />
+                </div>
+                <div className="calendario-page__form-group">
+                  <HoraSelector
+                    hora={horaFin}
+                    onChange={(h) => {
+                      setHoraFin(h);
+                      setNewEvent({ ...newEvent, horaFin: convertTo24h(h.horas, h.minutos, h.periodo) });
+                    }}
+                    label="Hora de Fin"
+                  />
+                </div>
+              </div>
             )}
 
             {/* Recordatorio */}

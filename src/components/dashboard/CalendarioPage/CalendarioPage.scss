@@ -792,12 +792,14 @@
     padding: $spacing-md 0;
     max-height: 60vh;
     overflow-y: auto;
-    overflow-x: hidden;
+    overflow-x: visible;
   }
 
   &__form-group {
     @include flex-column;
     gap: $spacing-xs;
+    position: relative;
+    z-index: 1;
   }
 
   &__form-row {

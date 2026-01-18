@@ -157,14 +157,26 @@
 .react-datepicker {
   display: flex;
   flex-direction: row;
+  min-width: fit-content;
 }
 
 .react-datepicker__month-container {
   float: none;
+  min-width: 280px;
 }
 
 .react-datepicker__month-container + .react-datepicker__month-container {
   margin-left: 1rem;
+}
+
+/* Prevent calendar from being cut off */
+.react-datepicker-popper {
+  z-index: 9999 !important;
+}
+
+.react-datepicker-wrapper {
+  display: block;
+  width: 100%;
 }
 
 /* Triangle removal */
