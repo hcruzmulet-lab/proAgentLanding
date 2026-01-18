@@ -54,6 +54,7 @@ interface AgendaItem {
   hora?: string;
   aeropuerto?: string;
   cliente?: string;
+  clienteId?: string;
   numeroCotizacion?: string;
   numeroVuelo?: string;
   aerolinea?: string;
@@ -65,6 +66,9 @@ interface AgendaItem {
   categoriaEspecial?: 'cumpleanos' | 'aniversario' | 'boda' | 'graduacion' | 'otro';
   descripcion?: string;
   archivos?: File[];
+  pagoFacturaId?: string;
+  pagoFacturaTipo?: 'pago' | 'factura';
+  pagoFacturaNumero?: string;
 }
 
 type AgendaTab = 'hoy' | 'estaSemana' | 'esteMes';
@@ -1189,60 +1193,91 @@ export function CalendarioPage() {
             {selectedEventType === 'pagos-cobros' && (
               <>
                 <div className="calendario-page__form-group">
+                  <Label htmlFor="pagoFactura" className="calendario-page__form-label">
+                    Pago o Factura
+                  </Label>
+                  <Select 
+                    value={newEvent.pagoFacturaId || ''} 
+                    onValueChange={(value) => {
+                      const selected = value.split('|');
+                      setNewEvent({ 
+                        ...newEvent, 
+                        pagoFacturaId: selected[0],
+                        pagoFacturaTipo: selected[1] as 'pago' | 'factura',
+                        pagoFacturaNumero: selected[2]
+                      });
+                    }}
+                  >
+                    <SelectTrigger className="calendario-page__form-input">
+                      <SelectValue placeholder="Buscar pago o factura existente" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="p1|pago|PAG-001">Pago PAG-001 - $2,450.00</SelectItem>
+                      <SelectItem value="p2|pago|PAG-002">Pago PAG-002 - $1,850.00</SelectItem>
+                      <SelectItem value="f1|factura|FAC-001">Factura FAC-001 - $3,200.00</SelectItem>
+                      <SelectItem value="f2|factura|FAC-002">Factura FAC-002 - $5,000.00</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <p className="calendario-page__form-helper">
+                    Selecciona un pago o factura existente para asociar al evento
+                  </p>
+                </div>
+
+                <div className="calendario-page__form-group">
                   <Label htmlFor="cliente" className="calendario-page__form-label">
                     Cliente
                   </Label>
+                  <Select 
+                    value={newEvent.clienteId || ''} 
+                    onValueChange={(value) => {
+                      const selected = value.split('|');
+                      setNewEvent({ 
+                        ...newEvent, 
+                        clienteId: selected[0],
+                        cliente: selected[1]
+                      });
+                    }}
+                  >
+                    <SelectTrigger className="calendario-page__form-input">
+                      <SelectValue placeholder="Buscar cliente" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="1|María González">María González</SelectItem>
+                      <SelectItem value="2|Juan Pérez">Juan Pérez</SelectItem>
+                      <SelectItem value="3|Ana Martínez">Ana Martínez</SelectItem>
+                      <SelectItem value="4|Roberto Silva">Roberto Silva</SelectItem>
+                      <SelectItem value="5|Tech Solutions Inc.">Tech Solutions Inc.</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <p className="calendario-page__form-helper">
+                    Selecciona el cliente asociado al pago o cobro
+                  </p>
+                </div>
+
+                <div className="calendario-page__form-group">
+                  <Label htmlFor="date" className="calendario-page__form-label">
+                    Fecha
+                  </Label>
                   <Input
-                    id="cliente"
-                    value={newEvent.cliente || ''}
-                    onChange={(e) => setNewEvent({ ...newEvent, cliente: e.target.value })}
-                    placeholder="Nombre del cliente"
+                    id="date"
+                    type="date"
+                    value={newEvent.date ? format(newEvent.date, 'yyyy-MM-dd') : ''}
+                    onChange={(e) => setNewEvent({ ...newEvent, date: e.target.value ? new Date(e.target.value) : new Date() })}
                     className="calendario-page__form-input"
                   />
                 </div>
-                <div className="calendario-page__form-row">
-                  <div className="calendario-page__form-group">
-                    <Label htmlFor="monto" className="calendario-page__form-label">
-                      Monto
-                    </Label>
-                    <Input
-                      id="monto"
-                      value={newEvent.monto || ''}
-                      onChange={(e) => setNewEvent({ ...newEvent, monto: e.target.value })}
-                      placeholder="Ej: $2,450.00"
-                      className="calendario-page__form-input"
-                    />
-                  </div>
-                  <div className="calendario-page__form-group">
-                    <Label htmlFor="estado" className="calendario-page__form-label">
-                      Estado
-                    </Label>
-                    <Select 
-                      value={newEvent.estado || 'pendiente'} 
-                      onValueChange={(value) => setNewEvent({ ...newEvent, estado: value as 'pendiente' | 'vencido' | 'proximo' | 'completado' })}
-                    >
-                      <SelectTrigger className="calendario-page__form-input">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="pendiente">Pendiente</SelectItem>
-                        <SelectItem value="vencido">Vencido</SelectItem>
-                        <SelectItem value="proximo">Próximo</SelectItem>
-                        <SelectItem value="completado">Completado</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
+
                 <div className="calendario-page__form-group">
-                  <Label htmlFor="numeroCotizacion" className="calendario-page__form-label">
-                    N° Cotización / Reserva
+                  <Label htmlFor="descripcion" className="calendario-page__form-label">
+                    Descripción
                   </Label>
-                  <Input
-                    id="numeroCotizacion"
-                    value={newEvent.numeroCotizacion || ''}
-                    onChange={(e) => setNewEvent({ ...newEvent, numeroCotizacion: e.target.value })}
-                    placeholder="Ej: COT-2026-0123"
-                    className="calendario-page__form-input"
+                  <textarea
+                    id="descripcion"
+                    value={newEvent.descripcion || ''}
+                    onChange={(e) => setNewEvent({ ...newEvent, descripcion: e.target.value })}
+                    placeholder="Descripción adicional del pago o cobro"
+                    className="calendario-page__form-input calendario-page__form-textarea"
+                    rows={3}
                   />
                 </div>
               </>
