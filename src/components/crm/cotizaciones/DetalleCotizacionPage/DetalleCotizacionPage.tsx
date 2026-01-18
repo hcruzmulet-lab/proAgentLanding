@@ -44,6 +44,8 @@ export function DetalleCotizacionPage() {
     fechaVuelta: '27 mar 2026',
     estado: 'pendiente',
     coverImage: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1200&h=600&fit=crop',
+    noches: 7,
+    precio: 5890,
     
     cliente: {
       tipoCliente: 'persona',
@@ -690,11 +692,11 @@ export function DetalleCotizacionPage() {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="text-sm font-medium text-slate-700 block mb-2">Pasajeros</label>
-                <Input value={cotizacion.detallesViaje.pasajeros} disabled />
+                <Input value={`${cotizacion.pasajeros.total} (${cotizacion.pasajeros.adultos} adultos, ${cotizacion.pasajeros.ninos} niños)`} disabled />
               </div>
               <div>
                 <label className="text-sm font-medium text-slate-700 block mb-2">Noches</label>
-                <Input value={cotizacion.detallesViaje.duracion} disabled />
+                <Input value={cotizacion.noches} disabled />
               </div>
             </div>
 
