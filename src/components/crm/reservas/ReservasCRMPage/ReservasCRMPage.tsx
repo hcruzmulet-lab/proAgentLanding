@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { DatePicker } from '@/components/ui/date-picker';
 import './ReservasCRMPage.scss';
 
 interface Reserva {
@@ -72,7 +73,9 @@ export function ReservasCRMPage() {
     buscar: 'todas',
     destino: '',
     localizador: '',
-    nombre: ''
+    nombre: '',
+    fechaDesde: undefined as Date | undefined,
+    fechaHasta: undefined as Date | undefined
   });
 
   const [reservas, setReservas] = useState<Reserva[]>(reservasMock);
@@ -86,7 +89,9 @@ export function ReservasCRMPage() {
       buscar: 'todas',
       destino: '',
       localizador: '',
-      nombre: ''
+      nombre: '',
+      fechaDesde: undefined,
+      fechaHasta: undefined
     });
   };
 
@@ -217,6 +222,24 @@ export function ReservasCRMPage() {
                     value={filtros.nombre}
                     onChange={(e) => setFiltros({...filtros, nombre: e.target.value})}
                     placeholder="Buscar nombre"
+                  />
+                </div>
+
+                <div className="flex-1">
+                  <label className="text-sm font-medium text-slate-700 mb-2 block">Fecha Desde</label>
+                  <DatePicker
+                    date={filtros.fechaDesde}
+                    onSelect={(date) => setFiltros({...filtros, fechaDesde: date || undefined})}
+                    placeholder="Seleccionar fecha"
+                  />
+                </div>
+
+                <div className="flex-1">
+                  <label className="text-sm font-medium text-slate-700 mb-2 block">Fecha Hasta</label>
+                  <DatePicker
+                    date={filtros.fechaHasta}
+                    onSelect={(date) => setFiltros({...filtros, fechaHasta: date || undefined})}
+                    placeholder="Seleccionar fecha"
                   />
                 </div>
 

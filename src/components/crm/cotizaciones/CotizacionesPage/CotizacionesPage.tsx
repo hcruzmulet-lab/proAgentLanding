@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { DatePicker } from '@/components/ui/date-picker';
 
 interface Cotizacion {
   id: string;
@@ -65,7 +66,9 @@ export function CotizacionesPage() {
     buscar: 'todas',
     destino: '',
     numeroCotizacion: '',
-    nombre: ''
+    nombre: '',
+    fechaDesde: undefined as Date | undefined,
+    fechaHasta: undefined as Date | undefined
   });
 
   const [cotizaciones, setCotizaciones] = useState<Cotizacion[]>(cotizacionesMock);
@@ -79,7 +82,9 @@ export function CotizacionesPage() {
       buscar: 'todas',
       destino: '',
       numeroCotizacion: '',
-      nombre: ''
+      nombre: '',
+      fechaDesde: undefined,
+      fechaHasta: undefined
     });
   };
 
@@ -219,6 +224,24 @@ export function CotizacionesPage() {
                     placeholder="Nombre del cliente" 
                     value={filtros.nombre}
                     onChange={(e) => setFiltros({...filtros, nombre: e.target.value})}
+                  />
+                </div>
+
+                <div className="flex-1">
+                  <label className="text-sm font-medium text-slate-700 mb-2 block">Fecha Desde:</label>
+                  <DatePicker
+                    date={filtros.fechaDesde}
+                    onSelect={(date) => setFiltros({...filtros, fechaDesde: date || undefined})}
+                    placeholder="Seleccionar fecha"
+                  />
+                </div>
+
+                <div className="flex-1">
+                  <label className="text-sm font-medium text-slate-700 mb-2 block">Fecha Hasta:</label>
+                  <DatePicker
+                    date={filtros.fechaHasta}
+                    onSelect={(date) => setFiltros({...filtros, fechaHasta: date || undefined})}
+                    placeholder="Seleccionar fecha"
                   />
                 </div>
 
