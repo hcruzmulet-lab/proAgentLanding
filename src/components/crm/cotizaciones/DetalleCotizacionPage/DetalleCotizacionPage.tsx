@@ -158,21 +158,21 @@ export function DetalleCotizacionPage() {
   };
 
   const handleCopiarEnlace = () => {
-    const enlacePublico = `${window.location.origin}/cotizacion/${cotizacion.numero}`;
+    const enlacePublico = `${window.location.origin}/es/cotizacion/${cotizacion.numero}`;
     navigator.clipboard.writeText(enlacePublico);
     // Mostrar feedback temporal
     alert('¡Enlace copiado al portapapeles!');
   };
 
   const handleCompartirWhatsApp = () => {
-    const enlacePublico = `${window.location.origin}/cotizacion/${cotizacion.numero}`;
+    const enlacePublico = `${window.location.origin}/es/cotizacion/${cotizacion.numero}`;
     const mensaje = `Hola ${cotizacion.cliente.nombre}, te comparto la cotización ${cotizacion.numero} para tu viaje a ${cotizacion.titulo}: ${enlacePublico}`;
     const urlWhatsApp = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
     window.open(urlWhatsApp, '_blank');
   };
 
   const handleCompartirEmail = () => {
-    const enlacePublico = `${window.location.origin}/cotizacion/${cotizacion.numero}`;
+    const enlacePublico = `${window.location.origin}/es/cotizacion/${cotizacion.numero}`;
     const asunto = `Cotización ${cotizacion.numero} - ${cotizacion.titulo}`;
     const cuerpo = `Hola ${cotizacion.cliente.nombre},\n\nTe comparto la cotización para tu viaje:\n\nCotización: ${cotizacion.numero}\nDestino: ${cotizacion.titulo}\nFecha de viaje: ${cotizacion.fechaViaje} - ${cotizacion.fechaVuelta}\n\nPuedes ver los detalles completos aquí:\n${enlacePublico}\n\nSaludos,\nEquipo Proagent`;
     const mailtoLink = `mailto:${cotizacion.cliente.email}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
