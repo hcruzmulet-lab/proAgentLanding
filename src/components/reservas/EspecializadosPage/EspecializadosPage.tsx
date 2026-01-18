@@ -71,6 +71,12 @@ const destinos = [
     imageUrl: 'https://images.pexels.com/photos/30785381/pexels-photo-30785381.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
     descripcion: 'Especialistas en Ecuador. Galápagos, Amazonía, Andes y experiencias únicas operadas con profundo conocimiento local.',
   },
+  {
+    id: 'peru',
+    nombre: 'DMC Perú',
+    imageUrl: 'https://images.pexels.com/photos/2356045/pexels-photo-2356045.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
+    descripcion: 'Expertos en destinos peruanos. Machu Picchu, Cusco, Lima, Amazonía y experiencias culturales con conocimiento profundo del país.',
+  },
 ];
 
 export function EspecializadosPage() {
