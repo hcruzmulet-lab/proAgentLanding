@@ -10,6 +10,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
+import { DatePicker } from '@/components/ui/date-picker';
 
 interface Pago {
   id: string;
@@ -536,11 +537,10 @@ export function PagosPage() {
                 </div>
                 <div>
                   <Label htmlFor="fechaPago">Fecha de Pago</Label>
-                  <Input
-                    id="fechaPago"
-                    type="date"
-                    value={newPago.fechaPago}
-                    onChange={(e) => setNewPago({...newPago, fechaPago: e.target.value})}
+                  <DatePicker
+                    date={newPago.fechaPago ? new Date(newPago.fechaPago) : undefined}
+                    onSelect={(date) => setNewPago({...newPago, fechaPago: date ? date.toISOString().split('T')[0] : ''})}
+                    placeholder="Seleccionar fecha de pago"
                   />
                 </div>
               </div>

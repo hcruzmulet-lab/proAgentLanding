@@ -1166,7 +1166,7 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
               {/* Expiry Date */}
               <div className="client-detail__form-field">
                 <Label className="client-detail__form-label">{t('loyaltyPrograms.modal.expiryDate')}</Label>
-                <Input type="date" placeholder={t('loyaltyPrograms.modal.expiryDatePlaceholder')} />
+                <DatePicker placeholder={t('loyaltyPrograms.modal.expiryDatePlaceholder')} />
               </div>
             </div>
 
@@ -1282,7 +1282,7 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
                   {/* Date of Birth */}
                   <div className="client-detail__form-field">
                     <Label className="client-detail__form-label">{t('associatedTravelers.modal.dateOfBirth')}</Label>
-                    <Input type="date" placeholder={t('associatedTravelers.modal.dateOfBirthPlaceholder')} />
+                    <DatePicker placeholder={t('associatedTravelers.modal.dateOfBirthPlaceholder')} />
                   </div>
                 </>
               )}
@@ -1353,10 +1353,10 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
           <div className="client-detail__modal-body">
             <div className="client-detail__form-field">
               <Label className="client-detail__form-label">Fecha *</Label>
-              <Input
-                type="date"
-                value={newDate.fecha}
-                onChange={(e) => setNewDate({ ...newDate, fecha: e.target.value })}
+              <DatePicker
+                date={newDate.fecha ? new Date(newDate.fecha) : undefined}
+                onSelect={(date) => setNewDate({ ...newDate, fecha: date ? date.toISOString().split('T')[0] : '' })}
+                placeholder="Seleccionar fecha"
                 className="client-detail__field-input"
               />
             </div>

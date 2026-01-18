@@ -18,6 +18,7 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 import { ImageSearchModal } from '@/components/shared/ImageSearchModal';
+import { DatePicker } from '@/components/ui/date-picker';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 interface Cliente {
@@ -725,20 +726,18 @@ export function NuevoExpedienteManualPage() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="fechaViaje">Fecha de Viaje *</Label>
-                  <Input
-                    id="fechaViaje"
-                    type="date"
-                    value={expediente.fechaViaje}
-                    onChange={(e) => setExpediente({...expediente, fechaViaje: e.target.value})}
+                  <DatePicker
+                    date={expediente.fechaViaje ? new Date(expediente.fechaViaje) : undefined}
+                    onSelect={(date) => setExpediente({...expediente, fechaViaje: date ? date.toISOString().split('T')[0] : ''})}
+                    placeholder="Seleccionar fecha de viaje"
                   />
                 </div>
                 <div>
                   <Label htmlFor="fechaRegreso">Fecha de Regreso</Label>
-                  <Input
-                    id="fechaRegreso"
-                    type="date"
-                    value={expediente.fechaRegreso}
-                    onChange={(e) => setExpediente({...expediente, fechaRegreso: e.target.value})}
+                  <DatePicker
+                    date={expediente.fechaRegreso ? new Date(expediente.fechaRegreso) : undefined}
+                    onSelect={(date) => setExpediente({...expediente, fechaRegreso: date ? date.toISOString().split('T')[0] : ''})}
+                    placeholder="Seleccionar fecha de regreso"
                   />
                 </div>
               </div>

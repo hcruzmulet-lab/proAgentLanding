@@ -10,6 +10,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
+import { DatePicker } from '@/components/ui/date-picker';
 
 interface Factura {
   id: string;
@@ -436,20 +437,18 @@ export function FacturasPage() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="fechaEmision">Fecha de Emisión</Label>
-                  <Input
-                    id="fechaEmision"
-                    type="date"
-                    value={newFactura.fechaEmision}
-                    onChange={(e) => setNewFactura({...newFactura, fechaEmision: e.target.value})}
+                  <DatePicker
+                    date={newFactura.fechaEmision ? new Date(newFactura.fechaEmision) : undefined}
+                    onSelect={(date) => setNewFactura({...newFactura, fechaEmision: date ? date.toISOString().split('T')[0] : ''})}
+                    placeholder="Seleccionar fecha de emisión"
                   />
                 </div>
                 <div>
                   <Label htmlFor="fechaVencimiento">Fecha de Vencimiento</Label>
-                  <Input
-                    id="fechaVencimiento"
-                    type="date"
-                    value={newFactura.fechaVencimiento}
-                    onChange={(e) => setNewFactura({...newFactura, fechaVencimiento: e.target.value})}
+                  <DatePicker
+                    date={newFactura.fechaVencimiento ? new Date(newFactura.fechaVencimiento) : undefined}
+                    onSelect={(date) => setNewFactura({...newFactura, fechaVencimiento: date ? date.toISOString().split('T')[0] : ''})}
+                    placeholder="Seleccionar fecha de vencimiento"
                   />
                 </div>
               </div>
