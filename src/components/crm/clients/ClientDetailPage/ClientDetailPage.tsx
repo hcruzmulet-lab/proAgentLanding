@@ -706,27 +706,27 @@ export function ClientDetailPage({ clientId }: ClientDetailPageProps) {
             <div className="client-detail__section-content">
               <div className="client-detail__tags-container">
                 <div className="client-detail__tag-item">
-                  <Checkbox id="viaja-ninos" defaultChecked />
+                  <Checkbox id="viaja-ninos" />
                   <Label htmlFor="viaja-ninos" className="client-detail__tag-label">Viaja con niños</Label>
                 </div>
                 <div className="client-detail__tag-item">
-                  <Checkbox id="pareja" defaultChecked />
+                  <Checkbox id="pareja" />
                   <Label htmlFor="pareja" className="client-detail__tag-label">Pareja</Label>
                 </div>
                 <div className="client-detail__tag-item">
-                  <Checkbox id="viaje-individual" defaultChecked />
+                  <Checkbox id="viaje-individual" />
                   <Label htmlFor="viaje-individual" className="client-detail__tag-label">Viaje individual</Label>
                 </div>
                 <div className="client-detail__tag-item">
-                  <Checkbox id="grupos-familia" defaultChecked />
+                  <Checkbox id="grupos-familia" />
                   <Label htmlFor="grupos-familia" className="client-detail__tag-label">Grupos / familia</Label>
                 </div>
                 <div className="client-detail__tag-item">
-                  <Checkbox id="multigeneracional" defaultChecked />
+                  <Checkbox id="multigeneracional" />
                   <Label htmlFor="multigeneracional" className="client-detail__tag-label">Multigeneracional</Label>
                 </div>
                 <div className="client-detail__tag-item">
-                  <Checkbox id="en-blanco" defaultChecked />
+                  <Checkbox id="en-blanco" />
                   <Label htmlFor="en-blanco" className="client-detail__tag-label">En blanco para rellenar</Label>
                 </div>
               </div>
