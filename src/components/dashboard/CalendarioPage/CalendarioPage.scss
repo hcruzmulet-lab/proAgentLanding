@@ -809,6 +809,44 @@
   &__form-input {
     width: 100%;
   }
+
+  &__form-textarea {
+    width: 100%;
+    padding: $spacing-sm;
+    border: 1px solid $border-color;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.875rem;
+    resize: vertical;
+    min-height: 80px;
+    
+    &:focus {
+      outline: none;
+      border-color: $brand-primary;
+      box-shadow: 0 0 0 3px rgba($brand-primary, 0.1);
+    }
+  }
+
+  &__archivos-lista {
+    @include flex-column;
+    gap: $spacing-xs;
+    margin-top: $spacing-sm;
+    padding: $spacing-sm;
+    background: $bg-subtle;
+    border-radius: 6px;
+  }
+
+  &__archivo-item {
+    @include flex-center;
+    gap: $spacing-xs;
+    font-size: 0.875rem;
+    color: $text-secondary;
+
+    .material-symbols-outlined {
+      font-size: 1rem;
+      color: $brand-primary;
+    }
+  }
 }
 
 // Responsive
