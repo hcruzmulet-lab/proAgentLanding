@@ -1738,6 +1738,57 @@ export function CalendarioPage() {
                     )}
                   </div>
                 </div>
+
+                <div className="calendario-page__form-group">
+                  <Label htmlFor="crm" className="calendario-page__form-label">
+                    Asociar a CRM (opcional)
+                  </Label>
+                  <div className="relative">
+                    <Input
+                      id="crm"
+                      value={buscarCRM}
+                      onChange={(e) => {
+                        setBuscarCRM(e.target.value);
+                        setMostrarSugerenciasCRM(e.target.value.length >= 2);
+                      }}
+                      onFocus={() => buscarCRM.length >= 2 && setMostrarSugerenciasCRM(true)}
+                      placeholder="Buscar cotización, expediente, reserva o itinerario"
+                      className="calendario-page__form-input"
+                    />
+                    {buscarCRM && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setBuscarCRM('');
+                          setMostrarSugerenciasCRM(false);
+                          setNewEvent({ ...newEvent, crmId: undefined, crmTipo: undefined, crmNumero: undefined });
+                        }}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center w-6 h-6 text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
+                      >
+                        <span className="material-symbols-outlined text-[14px]">close</span>
+                      </button>
+                    )}
+                    {mostrarSugerenciasCRM && getCRMFiltrados().length > 0 && (
+                      <div className="absolute z-50 w-full mt-1 bg-white border border-slate-200 rounded-md shadow-lg max-h-60 overflow-y-auto">
+                        {getCRMFiltrados().map((item) => (
+                          <div
+                            key={`${item.tipo}-${item.id}`}
+                            onClick={() => handleSeleccionarCRM(item)}
+                            className="px-4 py-3 cursor-pointer hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-0"
+                          >
+                            <div className="flex justify-between items-center font-medium text-slate-900">
+                              <span>{item.tipo} {item.numero}</span>
+                            </div>
+                            <div className="text-sm text-slate-500 mt-1">
+                              {item.titulo}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
                 <div className="calendario-page__form-group">
                   <Label htmlFor="destino" className="calendario-page__form-label">
                     Destino
@@ -1750,18 +1801,53 @@ export function CalendarioPage() {
                     className="calendario-page__form-input"
                   />
                 </div>
+
                 <div className="calendario-page__form-group">
                   <Label htmlFor="aeropuerto" className="calendario-page__form-label">
                     Aeropuerto
                   </Label>
-                  <Input
-                    id="aeropuerto"
-                    value={newEvent.aeropuerto || ''}
-                    onChange={(e) => setNewEvent({ ...newEvent, aeropuerto: e.target.value })}
-                    placeholder="Ej: MIA - Miami International Airport"
-                    className="calendario-page__form-input"
-                  />
+                  <Select 
+                    value={newEvent.aeropuerto || ''} 
+                    onValueChange={(value) => setNewEvent({ ...newEvent, aeropuerto: value })}
+                  >
+                    <SelectTrigger className="calendario-page__form-input">
+                      <SelectValue placeholder="Seleccionar aeropuerto" />
+                    </SelectTrigger>
+                    <SelectContent className="max-h-[300px]">
+                      <SelectItem value="AMS - Amsterdam Airport Schiphol (Países Bajos)">AMS - Amsterdam Airport Schiphol (Países Bajos)</SelectItem>
+                      <SelectItem value="ATL - Hartsfield-Jackson Atlanta International Airport (EE.UU.)">ATL - Hartsfield-Jackson Atlanta International Airport (EE.UU.)</SelectItem>
+                      <SelectItem value="BCN - Barcelona-El Prat Airport (España)">BCN - Barcelona-El Prat Airport (España)</SelectItem>
+                      <SelectItem value="BKK - Suvarnabhumi Airport (Tailandia)">BKK - Suvarnabhumi Airport (Tailandia)</SelectItem>
+                      <SelectItem value="BOG - El Dorado International Airport (Colombia)">BOG - El Dorado International Airport (Colombia)</SelectItem>
+                      <SelectItem value="CDG - Charles de Gaulle Airport (Francia)">CDG - Charles de Gaulle Airport (Francia)</SelectItem>
+                      <SelectItem value="CUN - Cancún International Airport (México)">CUN - Cancún International Airport (México)</SelectItem>
+                      <SelectItem value="DFW - Dallas/Fort Worth International Airport (EE.UU.)">DFW - Dallas/Fort Worth International Airport (EE.UU.)</SelectItem>
+                      <SelectItem value="DXB - Dubai International Airport (EAU)">DXB - Dubai International Airport (EAU)</SelectItem>
+                      <SelectItem value="EZE - Ministro Pistarini International Airport (Argentina)">EZE - Ministro Pistarini International Airport (Argentina)</SelectItem>
+                      <SelectItem value="FCO - Leonardo da Vinci-Fiumicino Airport (Italia)">FCO - Leonardo da Vinci-Fiumicino Airport (Italia)</SelectItem>
+                      <SelectItem value="FRA - Frankfurt Airport (Alemania)">FRA - Frankfurt Airport (Alemania)</SelectItem>
+                      <SelectItem value="GRU - São Paulo/Guarulhos International Airport (Brasil)">GRU - São Paulo/Guarulhos International Airport (Brasil)</SelectItem>
+                      <SelectItem value="HKG - Hong Kong International Airport (China)">HKG - Hong Kong International Airport (China)</SelectItem>
+                      <SelectItem value="ICN - Incheon International Airport (Corea del Sur)">ICN - Incheon International Airport (Corea del Sur)</SelectItem>
+                      <SelectItem value="JFK - John F. Kennedy International Airport (EE.UU.)">JFK - John F. Kennedy International Airport (EE.UU.)</SelectItem>
+                      <SelectItem value="LAX - Los Angeles International Airport (EE.UU.)">LAX - Los Angeles International Airport (EE.UU.)</SelectItem>
+                      <SelectItem value="LGA - LaGuardia Airport (EE.UU.)">LGA - LaGuardia Airport (EE.UU.)</SelectItem>
+                      <SelectItem value="LHR - London Heathrow Airport (Reino Unido)">LHR - London Heathrow Airport (Reino Unido)</SelectItem>
+                      <SelectItem value="LIM - Jorge Chávez International Airport (Perú)">LIM - Jorge Chávez International Airport (Perú)</SelectItem>
+                      <SelectItem value="MAD - Adolfo Suárez Madrid-Barajas Airport (España)">MAD - Adolfo Suárez Madrid-Barajas Airport (España)</SelectItem>
+                      <SelectItem value="MEX - Mexico City International Airport (México)">MEX - Mexico City International Airport (México)</SelectItem>
+                      <SelectItem value="MIA - Miami International Airport (EE.UU.)">MIA - Miami International Airport (EE.UU.)</SelectItem>
+                      <SelectItem value="NRT - Narita International Airport (Japón)">NRT - Narita International Airport (Japón)</SelectItem>
+                      <SelectItem value="ORD - O'Hare International Airport (EE.UU.)">ORD - O'Hare International Airport (EE.UU.)</SelectItem>
+                      <SelectItem value="PTY - Tocumen International Airport (Panamá)">PTY - Tocumen International Airport (Panamá)</SelectItem>
+                      <SelectItem value="PUJ - Punta Cana International Airport (República Dominicana)">PUJ - Punta Cana International Airport (República Dominicana)</SelectItem>
+                      <SelectItem value="SIN - Singapore Changi Airport (Singapur)">SIN - Singapore Changi Airport (Singapur)</SelectItem>
+                      <SelectItem value="STI - Cibao International Airport (República Dominicana)">STI - Cibao International Airport (República Dominicana)</SelectItem>
+                      <SelectItem value="SYD - Sydney Kingsford Smith Airport (Australia)">SYD - Sydney Kingsford Smith Airport (Australia)</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
+
                 <div className="calendario-page__form-row">
                   <div className="calendario-page__form-group">
                     <Label htmlFor="numeroVuelo" className="calendario-page__form-label">
@@ -1788,6 +1874,7 @@ export function CalendarioPage() {
                     />
                   </div>
                 </div>
+
                 <div className="calendario-page__form-row">
                   <div className="calendario-page__form-group">
                     <Label htmlFor="clase" className="calendario-page__form-label">
@@ -1814,6 +1901,20 @@ export function CalendarioPage() {
                       className="calendario-page__form-input"
                     />
                   </div>
+                </div>
+
+                <div className="calendario-page__form-group">
+                  <Label htmlFor="descripcion" className="calendario-page__form-label">
+                    Descripción (opcional)
+                  </Label>
+                  <textarea
+                    id="descripcion"
+                    value={newEvent.descripcion || ''}
+                    onChange={(e) => setNewEvent({ ...newEvent, descripcion: e.target.value })}
+                    placeholder="Detalles adicionales del viaje"
+                    className="calendario-page__form-input calendario-page__form-textarea"
+                    rows={3}
+                  />
                 </div>
               </>
             )}
