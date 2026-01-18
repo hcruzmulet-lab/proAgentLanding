@@ -12,7 +12,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { DatePicker } from '@/components/ui/date-picker';
-import { Combobox } from '@/components/ui/combobox';
 import './CalendarioPage.scss';
 
 interface CalendarEvent {
@@ -43,19 +42,13 @@ const defaultDepartures: CalendarEvent[] = [
   { id: 'd7', title: 'Grupo Oriente Mágico - Tokio', date: '05/01/2026', time: '10:20 AM', type: 'salida' },
 ];
 
-// Lista de clientes para buscador
-const defaultClientes = [
-  { id: '1', nombre: 'María González', email: 'maria.gonzalez@email.com' },
-  { id: '2', nombre: 'Juan Pérez', email: 'juan.perez@email.com' },
-  { id: '3', nombre: 'Ana Martínez', email: 'ana.martinez@email.com' },
-  { id: '4', nombre: 'Carlos López', email: 'carlos.lopez@email.com' },
-  { id: '5', nombre: 'Laura Rodríguez', email: 'laura.rodriguez@email.com' },
-  { id: '6', nombre: 'Pedro Sánchez', email: 'pedro.sanchez@email.com' },
-  { id: '7', nombre: 'Sofia García', email: 'sofia.garcia@email.com' },
-  { id: '8', nombre: 'Miguel Torres', email: 'miguel.torres@email.com' },
-  { id: '9', nombre: 'Carmen Díaz', email: 'carmen.diaz@email.com' },
-  { id: '10', nombre: 'Roberto Fernández', email: 'roberto.fernandez@email.com' },
-];
+interface Cliente {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email?: string;
+  phone?: string;
+}
 
 type ViewMode = 'mes' | 'agenda';
 type FilterType = 'todos' | 'evento' | 'salida';
@@ -112,6 +105,9 @@ export function CalendarioPage() {
   const [isCreateMenuOpen, setIsCreateMenuOpen] = useState(false);
   const [isNewEventModalOpen, setIsNewEventModalOpen] = useState(false);
   const [selectedEventType, setSelectedEventType] = useState<CategoryType | null>(null);
+  const [clientes, setClientes] = useState<Cliente[]>([]);
+  const [buscarCliente, setBuscarCliente] = useState('');
+  const [mostrarSugerenciasCliente, setMostrarSugerenciasCliente] = useState(false);
   const [newEvent, setNewEvent] = useState<Partial<AgendaItem>>({
     text: '',
     type: 'tarea',
@@ -128,13 +124,46 @@ export function CalendarioPage() {
     esteMes: [] 
   });
 
+  // Cargar clientes desde localStorage
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('crm_clients');
+      if (stored) {
+        const clientesData = JSON.parse(stored);
+        setClientes(clientesData);
+      }
+    }
+  }, []);
+
+  // Filtrar clientes para búsqueda
+  const getClientesFiltrados = () => {
+    if (buscarCliente.length < 2) return [];
+    return clientes.filter(cliente => {
+      const nombreCompleto = `${cliente.firstName} ${cliente.lastName}`.toLowerCase();
+      const email = (cliente.email || '').toLowerCase();
+      return nombreCompleto.includes(buscarCliente.toLowerCase()) || 
+             email.includes(buscarCliente.toLowerCase());
+    });
+  };
+
+  // Seleccionar un cliente
+  const handleSeleccionarCliente = (cliente: Cliente) => {
+    setNewEvent({
+      ...newEvent,
+      clienteId: cliente.id,
+      cliente: `${cliente.firstName} ${cliente.lastName}`,
+    });
+    setBuscarCliente(`${cliente.firstName} ${cliente.lastName}`);
+    setMostrarSugerenciasCliente(false);
+  };
+
   // Generar items de agenda organizados por categorías
   useEffect(() => {
     const today = new Date(2026, 0, 1);
     const tomorrow = addDays(today, 1);
     const nextWeek = addDays(today, 7);
 
-    // Cargar clientes desde localStorage
+    // Cargar clientes desde localStorage para los items del calendario
     let clients: any[] = [];
     if (typeof window !== 'undefined') {
       const stored = localStorage.getItem('crm_clients');
@@ -1108,26 +1137,39 @@ export function CalendarioPage() {
                   <Label htmlFor="cliente" className="calendario-page__form-label">
                     Cliente / Persona
                   </Label>
-                  <Combobox
-                    options={defaultClientes.map((cliente) => ({
-                      value: cliente.id,
-                      label: cliente.nombre,
-                      sublabel: cliente.email,
-                    }))}
-                    value={newEvent.clienteId || ''}
-                    onValueChange={(value) => {
-                      const cliente = defaultClientes.find(c => c.id === value);
-                      setNewEvent({ 
-                        ...newEvent, 
-                        clienteId: value,
-                        cliente: cliente?.nombre || ''
-                      });
-                    }}
-                    placeholder="Buscar y seleccionar cliente"
-                    searchPlaceholder="Buscar por nombre o email..."
-                    emptyText="No se encontró ningún cliente"
-                    className="calendario-page__form-input"
-                  />
+                  <div className="relative">
+                    <Input
+                      id="cliente"
+                      value={buscarCliente}
+                      onChange={(e) => {
+                        setBuscarCliente(e.target.value);
+                        setMostrarSugerenciasCliente(e.target.value.length >= 2);
+                      }}
+                      onFocus={() => buscarCliente.length >= 2 && setMostrarSugerenciasCliente(true)}
+                      placeholder="Buscar cliente por nombre o email"
+                      className="calendario-page__form-input"
+                    />
+                    {mostrarSugerenciasCliente && getClientesFiltrados().length > 0 && (
+                      <div className="absolute z-50 w-full mt-1 bg-white border border-slate-200 rounded-md shadow-lg max-h-60 overflow-y-auto">
+                        {getClientesFiltrados().map((cliente) => (
+                          <div
+                            key={cliente.id}
+                            onClick={() => handleSeleccionarCliente(cliente)}
+                            className="px-4 py-3 cursor-pointer hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-0"
+                          >
+                            <div className="font-medium text-slate-900">
+                              {cliente.firstName} {cliente.lastName}
+                            </div>
+                            {cliente.email && (
+                              <div className="text-sm text-slate-500 mt-1">
+                                {cliente.email}
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 <div className="calendario-page__form-group">
@@ -1261,26 +1303,39 @@ export function CalendarioPage() {
                   <Label htmlFor="cliente" className="calendario-page__form-label">
                     Cliente
                   </Label>
-                  <Combobox
-                    options={defaultClientes.map((cliente) => ({
-                      value: cliente.id,
-                      label: cliente.nombre,
-                      sublabel: cliente.email,
-                    }))}
-                    value={newEvent.clienteId || ''}
-                    onValueChange={(value) => {
-                      const cliente = defaultClientes.find(c => c.id === value);
-                      setNewEvent({ 
-                        ...newEvent, 
-                        clienteId: value,
-                        cliente: cliente?.nombre || ''
-                      });
-                    }}
-                    placeholder="Buscar cliente"
-                    searchPlaceholder="Buscar por nombre o email..."
-                    emptyText="No se encontró ningún cliente"
-                    className="calendario-page__form-input"
-                  />
+                  <div className="relative">
+                    <Input
+                      id="cliente"
+                      value={buscarCliente}
+                      onChange={(e) => {
+                        setBuscarCliente(e.target.value);
+                        setMostrarSugerenciasCliente(e.target.value.length >= 2);
+                      }}
+                      onFocus={() => buscarCliente.length >= 2 && setMostrarSugerenciasCliente(true)}
+                      placeholder="Buscar cliente por nombre o email"
+                      className="calendario-page__form-input"
+                    />
+                    {mostrarSugerenciasCliente && getClientesFiltrados().length > 0 && (
+                      <div className="absolute z-50 w-full mt-1 bg-white border border-slate-200 rounded-md shadow-lg max-h-60 overflow-y-auto">
+                        {getClientesFiltrados().map((cliente) => (
+                          <div
+                            key={cliente.id}
+                            onClick={() => handleSeleccionarCliente(cliente)}
+                            className="px-4 py-3 cursor-pointer hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-0"
+                          >
+                            <div className="font-medium text-slate-900">
+                              {cliente.firstName} {cliente.lastName}
+                            </div>
+                            {cliente.email && (
+                              <div className="text-sm text-slate-500 mt-1">
+                                {cliente.email}
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                   <p className="calendario-page__form-helper">
                     Selecciona el cliente asociado al pago o cobro
                   </p>
@@ -1308,26 +1363,39 @@ export function CalendarioPage() {
                   <Label htmlFor="cliente" className="calendario-page__form-label">
                     Cliente
                   </Label>
-                  <Combobox
-                    options={defaultClientes.map((cliente) => ({
-                      value: cliente.id,
-                      label: cliente.nombre,
-                      sublabel: cliente.email,
-                    }))}
-                    value={newEvent.clienteId || ''}
-                    onValueChange={(value) => {
-                      const cliente = defaultClientes.find(c => c.id === value);
-                      setNewEvent({ 
-                        ...newEvent, 
-                        clienteId: value,
-                        cliente: cliente?.nombre || ''
-                      });
-                    }}
-                    placeholder="Buscar cliente"
-                    searchPlaceholder="Buscar por nombre o email..."
-                    emptyText="No se encontró ningún cliente"
-                    className="calendario-page__form-input"
-                  />
+                  <div className="relative">
+                    <Input
+                      id="cliente"
+                      value={buscarCliente}
+                      onChange={(e) => {
+                        setBuscarCliente(e.target.value);
+                        setMostrarSugerenciasCliente(e.target.value.length >= 2);
+                      }}
+                      onFocus={() => buscarCliente.length >= 2 && setMostrarSugerenciasCliente(true)}
+                      placeholder="Buscar cliente por nombre o email"
+                      className="calendario-page__form-input"
+                    />
+                    {mostrarSugerenciasCliente && getClientesFiltrados().length > 0 && (
+                      <div className="absolute z-50 w-full mt-1 bg-white border border-slate-200 rounded-md shadow-lg max-h-60 overflow-y-auto">
+                        {getClientesFiltrados().map((cliente) => (
+                          <div
+                            key={cliente.id}
+                            onClick={() => handleSeleccionarCliente(cliente)}
+                            className="px-4 py-3 cursor-pointer hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-0"
+                          >
+                            <div className="font-medium text-slate-900">
+                              {cliente.firstName} {cliente.lastName}
+                            </div>
+                            {cliente.email && (
+                              <div className="text-sm text-slate-500 mt-1">
+                                {cliente.email}
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 <div className="calendario-page__form-group">
@@ -1443,26 +1511,39 @@ export function CalendarioPage() {
                   <Label htmlFor="cliente" className="calendario-page__form-label">
                     Cliente
                   </Label>
-                  <Combobox
-                    options={defaultClientes.map((cliente) => ({
-                      value: cliente.id,
-                      label: cliente.nombre,
-                      sublabel: cliente.email,
-                    }))}
-                    value={newEvent.clienteId || ''}
-                    onValueChange={(value) => {
-                      const cliente = defaultClientes.find(c => c.id === value);
-                      setNewEvent({ 
-                        ...newEvent, 
-                        clienteId: value,
-                        cliente: cliente?.nombre || ''
-                      });
-                    }}
-                    placeholder="Buscar cliente"
-                    searchPlaceholder="Buscar por nombre o email..."
-                    emptyText="No se encontró ningún cliente"
-                    className="calendario-page__form-input"
-                  />
+                  <div className="relative">
+                    <Input
+                      id="cliente"
+                      value={buscarCliente}
+                      onChange={(e) => {
+                        setBuscarCliente(e.target.value);
+                        setMostrarSugerenciasCliente(e.target.value.length >= 2);
+                      }}
+                      onFocus={() => buscarCliente.length >= 2 && setMostrarSugerenciasCliente(true)}
+                      placeholder="Buscar cliente por nombre o email"
+                      className="calendario-page__form-input"
+                    />
+                    {mostrarSugerenciasCliente && getClientesFiltrados().length > 0 && (
+                      <div className="absolute z-50 w-full mt-1 bg-white border border-slate-200 rounded-md shadow-lg max-h-60 overflow-y-auto">
+                        {getClientesFiltrados().map((cliente) => (
+                          <div
+                            key={cliente.id}
+                            onClick={() => handleSeleccionarCliente(cliente)}
+                            className="px-4 py-3 cursor-pointer hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-0"
+                          >
+                            <div className="font-medium text-slate-900">
+                              {cliente.firstName} {cliente.lastName}
+                            </div>
+                            {cliente.email && (
+                              <div className="text-sm text-slate-500 mt-1">
+                                {cliente.email}
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <div className="calendario-page__form-group">
                   <Label htmlFor="destino" className="calendario-page__form-label">
