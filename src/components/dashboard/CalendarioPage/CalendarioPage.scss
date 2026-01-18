@@ -835,12 +835,14 @@
   }
 
   &__hora-field {
-    width: 70px;
+    width: 80px;
     text-align: center;
-    padding: $spacing-xs $spacing-sm;
-    border: 1px solid #e2e8f0;
-    border-radius: 6px;
-    font-size: 0.875rem;
+    
+    button {
+      justify-content: center;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
     
     &:focus-visible {
       outline: none;

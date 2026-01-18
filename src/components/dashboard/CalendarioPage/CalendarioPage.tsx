@@ -838,38 +838,45 @@ export function CalendarioPage() {
     onChange: (hora: { horas: string; minutos: string; periodo: string }) => void;
     label: string;
   }) => {
+    const horasOpciones = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+    const minutosOpciones = ['00', '15', '30', '45'];
+
     return (
       <div className="calendario-page__form-group">
         <Label className="calendario-page__form-label">{label}</Label>
         <div className="calendario-page__hora-selector">
           <div className="calendario-page__hora-input">
-            <Input
-              type="number"
-              min="1"
-              max="12"
+            <Select
               value={hora.horas}
-              onChange={(e) => {
-                let val = parseInt(e.target.value) || 1;
-                if (val > 12) val = 12;
-                if (val < 1) val = 1;
-                onChange({ ...hora, horas: val.toString().padStart(2, '0') });
-              }}
-              className="calendario-page__hora-field"
-            />
+              onValueChange={(value) => onChange({ ...hora, horas: value })}
+            >
+              <SelectTrigger className="calendario-page__hora-field">
+                <SelectValue placeholder="HH" />
+              </SelectTrigger>
+              <SelectContent>
+                {horasOpciones.map((h) => (
+                  <SelectItem key={h} value={h}>
+                    {h}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
             <span className="calendario-page__hora-separator">:</span>
-            <Input
-              type="number"
-              min="0"
-              max="59"
+            <Select
               value={hora.minutos}
-              onChange={(e) => {
-                let val = parseInt(e.target.value) || 0;
-                if (val > 59) val = 59;
-                if (val < 0) val = 0;
-                onChange({ ...hora, minutos: val.toString().padStart(2, '0') });
-              }}
-              className="calendario-page__hora-field"
-            />
+              onValueChange={(value) => onChange({ ...hora, minutos: value })}
+            >
+              <SelectTrigger className="calendario-page__hora-field">
+                <SelectValue placeholder="MM" />
+              </SelectTrigger>
+              <SelectContent>
+                {minutosOpciones.map((m) => (
+                  <SelectItem key={m} value={m}>
+                    {m}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
           <div className="calendario-page__hora-period">
             <button
