@@ -1191,6 +1191,19 @@ export function CalendarioPage() {
                       placeholder="Buscar cliente por nombre o email"
                       className="calendario-page__form-input"
                     />
+                    {buscarCliente && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setBuscarCliente('');
+                          setMostrarSugerenciasCliente(false);
+                          setNewEvent({ ...newEvent, cliente: '', clienteId: undefined });
+                        }}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                      >
+                        <span className="material-symbols-outlined text-[20px]">close</span>
+                      </button>
+                    )}
                     {mostrarSugerenciasCliente && getClientesFiltrados().length > 0 && (
                       <div className="absolute z-50 w-full mt-1 bg-white border border-slate-200 rounded-md shadow-lg max-h-60 overflow-y-auto">
                         {getClientesFiltrados().map((cliente) => (
@@ -1326,6 +1339,19 @@ export function CalendarioPage() {
                       placeholder="Buscar por número, cliente o concepto"
                       className="calendario-page__form-input"
                     />
+                    {buscarPagoFactura && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setBuscarPagoFactura('');
+                          setMostrarSugerenciasPagoFactura(false);
+                          setNewEvent({ ...newEvent, pagoFacturaId: undefined, pagoFacturaTipo: undefined, pagoFacturaNumero: undefined });
+                        }}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                      >
+                        <span className="material-symbols-outlined text-[20px]">close</span>
+                      </button>
+                    )}
                     {mostrarSugerenciasPagoFactura && getPagosFacturasFiltrados().length > 0 && (
                       <div className="absolute z-50 w-full mt-1 bg-white border border-slate-200 rounded-md shadow-lg max-h-60 overflow-y-auto">
                         {getPagosFacturasFiltrados().map((item) => (
@@ -1378,6 +1404,19 @@ export function CalendarioPage() {
                       placeholder="Buscar cliente por nombre o email"
                       className="calendario-page__form-input"
                     />
+                    {buscarCliente && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setBuscarCliente('');
+                          setMostrarSugerenciasCliente(false);
+                          setNewEvent({ ...newEvent, cliente: '', clienteId: undefined });
+                        }}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                      >
+                        <span className="material-symbols-outlined text-[20px]">close</span>
+                      </button>
+                    )}
                     {mostrarSugerenciasCliente && getClientesFiltrados().length > 0 && (
                       <div className="absolute z-50 w-full mt-1 bg-white border border-slate-200 rounded-md shadow-lg max-h-60 overflow-y-auto">
                         {getClientesFiltrados().map((cliente) => (
@@ -1438,6 +1477,19 @@ export function CalendarioPage() {
                       placeholder="Buscar cliente por nombre o email"
                       className="calendario-page__form-input"
                     />
+                    {buscarCliente && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setBuscarCliente('');
+                          setMostrarSugerenciasCliente(false);
+                          setNewEvent({ ...newEvent, cliente: '', clienteId: undefined });
+                        }}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                      >
+                        <span className="material-symbols-outlined text-[20px]">close</span>
+                      </button>
+                    )}
                     {mostrarSugerenciasCliente && getClientesFiltrados().length > 0 && (
                       <div className="absolute z-50 w-full mt-1 bg-white border border-slate-200 rounded-md shadow-lg max-h-60 overflow-y-auto">
                         {getClientesFiltrados().map((cliente) => (
@@ -1586,6 +1638,19 @@ export function CalendarioPage() {
                       placeholder="Buscar cliente por nombre o email"
                       className="calendario-page__form-input"
                     />
+                    {buscarCliente && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setBuscarCliente('');
+                          setMostrarSugerenciasCliente(false);
+                          setNewEvent({ ...newEvent, cliente: '', clienteId: undefined });
+                        }}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                      >
+                        <span className="material-symbols-outlined text-[20px]">close</span>
+                      </button>
+                    )}
                     {mostrarSugerenciasCliente && getClientesFiltrados().length > 0 && (
                       <div className="absolute z-50 w-full mt-1 bg-white border border-slate-200 rounded-md shadow-lg max-h-60 overflow-y-auto">
                         {getClientesFiltrados().map((cliente) => (
