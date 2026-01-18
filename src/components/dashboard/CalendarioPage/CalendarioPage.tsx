@@ -1199,9 +1199,9 @@ export function CalendarioPage() {
                           setMostrarSugerenciasCliente(false);
                           setNewEvent({ ...newEvent, cliente: '', clienteId: undefined });
                         }}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center w-6 h-6 text-slate-400 hover:text-slate-600 transition-colors"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center w-6 h-6 text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
                       >
-                        <span className="material-symbols-outlined text-[16px]">close</span>
+                        <span className="material-symbols-outlined text-[14px]">close</span>
                       </button>
                     )}
                     {mostrarSugerenciasCliente && getClientesFiltrados().length > 0 && (
@@ -1347,9 +1347,9 @@ export function CalendarioPage() {
                           setMostrarSugerenciasPagoFactura(false);
                           setNewEvent({ ...newEvent, pagoFacturaId: undefined, pagoFacturaTipo: undefined, pagoFacturaNumero: undefined });
                         }}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center w-6 h-6 text-slate-400 hover:text-slate-600 transition-colors"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center w-6 h-6 text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
                       >
-                        <span className="material-symbols-outlined text-[16px]">close</span>
+                        <span className="material-symbols-outlined text-[14px]">close</span>
                       </button>
                     )}
                     {mostrarSugerenciasPagoFactura && getPagosFacturasFiltrados().length > 0 && (
@@ -1412,9 +1412,9 @@ export function CalendarioPage() {
                           setMostrarSugerenciasCliente(false);
                           setNewEvent({ ...newEvent, cliente: '', clienteId: undefined });
                         }}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center w-6 h-6 text-slate-400 hover:text-slate-600 transition-colors"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center w-6 h-6 text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
                       >
-                        <span className="material-symbols-outlined text-[16px]">close</span>
+                        <span className="material-symbols-outlined text-[14px]">close</span>
                       </button>
                     )}
                     {mostrarSugerenciasCliente && getClientesFiltrados().length > 0 && (
@@ -1485,9 +1485,9 @@ export function CalendarioPage() {
                           setMostrarSugerenciasCliente(false);
                           setNewEvent({ ...newEvent, cliente: '', clienteId: undefined });
                         }}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center w-6 h-6 text-slate-400 hover:text-slate-600 transition-colors"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center w-6 h-6 text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
                       >
-                        <span className="material-symbols-outlined text-[16px]">close</span>
+                        <span className="material-symbols-outlined text-[14px]">close</span>
                       </button>
                     )}
                     {mostrarSugerenciasCliente && getClientesFiltrados().length > 0 && (
@@ -1646,9 +1646,9 @@ export function CalendarioPage() {
                           setMostrarSugerenciasCliente(false);
                           setNewEvent({ ...newEvent, cliente: '', clienteId: undefined });
                         }}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center w-6 h-6 text-slate-400 hover:text-slate-600 transition-colors"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center w-6 h-6 text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
                       >
-                        <span className="material-symbols-outlined text-[16px]">close</span>
+                        <span className="material-symbols-outlined text-[14px]">close</span>
                       </button>
                     )}
                     {mostrarSugerenciasCliente && getClientesFiltrados().length > 0 && (
