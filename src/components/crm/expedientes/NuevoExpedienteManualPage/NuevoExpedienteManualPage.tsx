@@ -723,23 +723,16 @@ export function NuevoExpedienteManualPage() {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="fechaViaje">Fecha de Viaje *</Label>
-                  <DatePicker
-                    date={expediente.fechaViaje ? new Date(expediente.fechaViaje) : undefined}
-                    onSelect={(date) => setExpediente({...expediente, fechaViaje: date ? date.toISOString().split('T')[0] : ''})}
-                    placeholder="Seleccionar fecha de viaje"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="fechaRegreso">Fecha de Regreso</Label>
-                  <DatePicker
-                    date={expediente.fechaRegreso ? new Date(expediente.fechaRegreso) : undefined}
-                    onSelect={(date) => setExpediente({...expediente, fechaRegreso: date ? date.toISOString().split('T')[0] : ''})}
-                    placeholder="Seleccionar fecha de regreso"
-                  />
-                </div>
+              <div>
+                <Label htmlFor="fechaViaje">Fechas del Viaje *</Label>
+                <DatePicker
+                  date={expediente.fechaViaje ? new Date(expediente.fechaViaje) : undefined}
+                  dateRange={expediente.fechaViaje && expediente.fechaRegreso ? { from: new Date(expediente.fechaViaje), to: new Date(expediente.fechaRegreso) } : undefined}
+                  onSelect={(date) => setExpediente({...expediente, fechaViaje: date ? date.toISOString().split('T')[0] : '', fechaRegreso: ''})}
+                  onSelectRange={(range) => setExpediente({...expediente, fechaViaje: range?.from ? range.from.toISOString().split('T')[0] : '', fechaRegreso: range?.to ? range.to.toISOString().split('T')[0] : ''})}
+                  placeholder="Seleccionar fecha o rango"
+                  mode="range"
+                />
               </div>
             </CardContent>
           </Card>
