@@ -158,11 +158,13 @@
   display: flex;
   flex-direction: row;
   min-width: fit-content;
+  width: fit-content;
 }
 
 .react-datepicker__month-container {
   float: none;
-  min-width: 280px;
+  min-width: 300px;
+  width: 300px;
 }
 
 .react-datepicker__month-container + .react-datepicker__month-container {

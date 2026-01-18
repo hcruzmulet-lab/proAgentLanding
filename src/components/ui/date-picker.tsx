@@ -104,7 +104,7 @@ export function DatePicker({
             className="fixed inset-0 z-40"
             onClick={() => setIsOpen(false)}
           />
-          <div className="absolute left-0 top-full z-50 mt-2 rounded-lg border border-slate-200 bg-white shadow-lg overflow-visible">
+          <div className="absolute left-0 top-full z-50 mt-2 rounded-lg border border-slate-200 bg-white shadow-lg overflow-visible min-w-fit">
             <div className="flex gap-2 border-b border-slate-200 p-3">
               <Button
                 type="button"
