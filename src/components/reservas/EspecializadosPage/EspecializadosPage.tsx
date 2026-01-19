@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useRouter, useParams } from 'next/navigation';
 import Image from 'next/image';
 import './EspecializadosPage.scss';
 
@@ -80,6 +81,10 @@ const destinos = [
 ];
 
 export function EspecializadosPage() {
+  const router = useRouter();
+  const params = useParams();
+  const locale = params?.locale || 'es';
+
   return (
     <div className="especializados-page">
       <div>
@@ -90,7 +95,11 @@ export function EspecializadosPage() {
 
       <div className="especializados-page__grid">
         {destinos.map((destino) => (
-          <div key={destino.id} className="especializados-page__card">
+          <div 
+            key={destino.id} 
+            className="especializados-page__card"
+            onClick={() => router.push(`/${locale}/reservas/especializados/${destino.id}`)}
+          >
             <div className="especializados-page__image-container">
               <Image
                 src={destino.imageUrl}
