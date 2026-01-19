@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -79,6 +79,8 @@ const itinerariosMock: Itinerario[] = [
 
 export function ItinerariosIAPage() {
   const router = useRouter();
+  const params = useParams();
+  const locale = params?.locale || 'es';
   const [filtros, setFiltros] = useState({
     buscar: 'todos',
     destino: '',
@@ -291,11 +293,12 @@ export function ItinerariosIAPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {itinerarios.map((itinerario) => {
                 const estadoBadge = getEstadoBadge(itinerario.estado);
+                const isClickable = itinerario.id === '3'; // Solo el itinerario 3 es clickeable
                 return (
                   <Card 
                     key={itinerario.id} 
-                    className="cursor-pointer hover:shadow-lg transition-shadow"
-                    onClick={() => router.push(`/crm/itinerarios-ia/${itinerario.id}`)}
+                    className={isClickable ? "cursor-pointer hover:shadow-lg transition-shadow" : ""}
+                    onClick={isClickable ? () => router.push(`/${locale}/crm/itinerarios-ia/${itinerario.id}`) : undefined}
                   >
                     {itinerario.imagen && (
                       <div className="relative h-48 w-full overflow-hidden rounded-t-lg">
@@ -377,7 +380,7 @@ export function ItinerariosIAPage() {
               <button 
                 className="flex flex-col items-center gap-4 p-6 bg-slate-700 border-2 border-slate-700 rounded-lg hover:bg-slate-800 hover:border-slate-800 hover:shadow-lg transition-all cursor-pointer"
                 onClick={() => {
-                  router.push('/es/crm/itinerarios-ia/nuevo-manual');
+                  router.push(`/${locale}/crm/itinerarios-ia/nuevo-manual`);
                   setIsNewItinerarioModalOpen(false);
                 }}
               >

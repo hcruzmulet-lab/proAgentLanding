@@ -2,19 +2,21 @@ import { DetalleItinerarioPage } from '@/components/crm/itinerarios-ia/DetalleIt
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 
 interface PageProps {
-  params: {
+  params: Promise<{
     id: string;
     locale: string;
-  };
+  }>;
 }
 
-export default function ItinerarioDetallePage({ params }: PageProps) {
+export default async function ItinerarioDetallePage({ params }: PageProps) {
+  const { id } = await params;
+  
   return (
     <DashboardLayout
       currentModule="crm"
       currentSubModule="itinerarios-ia"
     >
-      <DetalleItinerarioPage id={params.id} />
+      <DetalleItinerarioPage id={id} />
     </DashboardLayout>
   );
 }
