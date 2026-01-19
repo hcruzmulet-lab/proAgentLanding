@@ -5,18 +5,14 @@ import './HeroSection.scss';
 interface HeroSectionProps {
   title: string;
   subtitle: string;
-  ctaPrimary: string;
   ctaSecondary: string;
-  onPrimaryClick: () => void;
   onSecondaryClick: () => void;
 }
 
 export function HeroSection({
   title,
   subtitle,
-  ctaPrimary,
   ctaSecondary,
-  onPrimaryClick,
   onSecondaryClick,
 }: HeroSectionProps) {
   return (
@@ -37,9 +33,6 @@ export function HeroSection({
           <h1 className="hero-section__title">{title}</h1>
           <p className="hero-section__subtitle">{subtitle}</p>
           <div className="hero-section__actions">
-            <Button size="lg" disabled className="hero-section__cta-primary">
-              {ctaPrimary}
-            </Button>
             <Button
               size="lg"
               variant="outline"

@@ -6,16 +6,10 @@ import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import Icon from '@mdi/react';
 import { mdiMenu, mdiClose } from '@mdi/js';
-import { Button } from '@/components/ui/button';
 import { LanguageSelector } from '@/components/shared/LanguageSelector';
 import './LandingNavbar.scss';
 
-interface LandingNavbarProps {
-  onLoginClick?: () => void;
-  onJoinClick?: () => void;
-}
-
-export function LandingNavbar({ onLoginClick, onJoinClick }: LandingNavbarProps) {
+export function LandingNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const t = useTranslations('landing.nav');
 
@@ -63,12 +57,6 @@ export function LandingNavbar({ onLoginClick, onJoinClick }: LandingNavbarProps)
         {/* Desktop Actions */}
         <div className="landing-navbar__actions landing-navbar__desktop-only">
           <LanguageSelector />
-          <Button variant="ghost" disabled className="landing-navbar__join">
-            {t('joinNow')}
-          </Button>
-          <Button variant="default" disabled className="landing-navbar__login">
-            {t('login')}
-          </Button>
         </div>
 
         {/* Mobile Menu Button */}
@@ -101,20 +89,6 @@ export function LandingNavbar({ onLoginClick, onJoinClick }: LandingNavbarProps)
           <div className="landing-navbar__mobile-language">
             <LanguageSelector />
           </div>
-          <Button
-            variant="ghost"
-            disabled
-            className="landing-navbar__mobile-join"
-          >
-            {t('joinNow')}
-          </Button>
-          <Button
-            variant="default"
-            disabled
-            className="landing-navbar__mobile-login"
-          >
-            {t('login')}
-          </Button>
         </div>
       </div>
 

@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { LandingNavbar } from '@/components/layout/LandingNavbar';
 import { LandingFooter } from '@/components/layout/LandingFooter';
@@ -15,9 +14,7 @@ import { partnersLogos } from './partners-logos';
 import './LandingPage.scss';
 
 export function LandingPageModule() {
-  const router = useRouter();
   const t = useTranslations('landing');
-  const tCommon = useTranslations('common');
 
   const features = [
     {
@@ -197,14 +194,6 @@ export function LandingPageModule() {
 
   const currentPrices = prices[billingPeriod];
 
-  const handleLogin = () => {
-    router.push('/login');
-  };
-
-  const handleJoin = () => {
-    router.push('/suscripcion');
-  };
-
   const handleRequestDemo = () => {
     const demoSection = document.getElementById('demo-request');
     if (demoSection) {
@@ -226,14 +215,12 @@ export function LandingPageModule() {
 
   return (
     <div className="landing-page-module">
-      <LandingNavbar onLoginClick={handleLogin} onJoinClick={handleJoin} />
+      <LandingNavbar />
 
       <HeroSection
         title={t('hero.title')}
         subtitle={t('hero.subtitle')}
-        ctaPrimary={t('hero.cta')}
         ctaSecondary={t('hero.ctaSecondary')}
-        onPrimaryClick={handleJoin}
         onSecondaryClick={handleRequestDemo}
       />
 
@@ -486,34 +473,6 @@ export function LandingPageModule() {
                   <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--bold">$450</td>
                 </tr>
                 
-                {/* Botones */}
-                <tr>
-                  <td className="landing-page-module__pricing-table-cell"></td>
-                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--button">
-                    <Button
-                      className="landing-page-module__pricing-select-button"
-                      disabled
-                    >
-                      Seleccionar
-                    </Button>
-                  </td>
-                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--button">
-                    <Button
-                      className="landing-page-module__pricing-select-button"
-                      disabled
-                    >
-                      Seleccionar
-                    </Button>
-                  </td>
-                  <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--button">
-                    <Button
-                      className="landing-page-module__pricing-select-button"
-                      disabled
-                    >
-                      Seleccionar
-                    </Button>
-                  </td>
-                </tr>
               </tbody>
             </table>
             
@@ -607,9 +566,6 @@ export function LandingPageModule() {
         <div className="landing-page-module__container landing-page-module__cta-container">
           <h2 className="landing-page-module__cta-title">{t('cta.title')}</h2>
           <p className="landing-page-module__cta-subtitle">{t('cta.subtitle')}</p>
-          <Button size="lg" disabled className="landing-page-module__cta-button">
-            {t('cta.button')}
-          </Button>
         </div>
       </section>
 
