@@ -12,10 +12,7 @@ export default async function ItinerarioDetallePage({ params }: PageProps) {
   const { id } = await params;
   
   return (
-    <DashboardLayout
-      currentModule="crm"
-      currentSubModule="itinerarios-ia"
-    >
+    <DashboardLayout activeModule="crm" activeSubItem="itinerarios-ia" title="CRM">
       <DetalleItinerarioPage id={id} />
     </DashboardLayout>
   );

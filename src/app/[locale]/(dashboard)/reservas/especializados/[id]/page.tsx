@@ -12,10 +12,7 @@ export default async function DMCDetallePage({ params }: PageProps) {
   const { id } = await params;
 
   return (
-    <DashboardLayout
-      currentModule="reservas"
-      currentSubModule="especializados"
-    >
+    <DashboardLayout activeModule="reservas" activeSubItem="especializados" title="Reservas">
       <DetalleDMCPage dmcId={id} />
     </DashboardLayout>
   );
