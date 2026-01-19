@@ -12,9 +12,10 @@ import './LoginForm.scss';
 interface LoginFormProps {
   onSubmit?: (data: { email: string; password: string; rememberMe: boolean }) => void;
   isLoading?: boolean;
+  error?: string | null;
 }
 
-export function LoginForm({ onSubmit, isLoading = false }: LoginFormProps) {
+export function LoginForm({ onSubmit, isLoading = false, error }: LoginFormProps) {
   const t = useTranslations('auth');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -38,6 +39,15 @@ export function LoginForm({ onSubmit, isLoading = false }: LoginFormProps) {
       </Link>
 
       <form className="login-form__form" onSubmit={handleSubmit}>
+        {error && (
+          <div className="login-form__error">
+            <span className="material-symbols-outlined login-form__error-icon">
+              error
+            </span>
+            <p className="login-form__error-text">{error}</p>
+          </div>
+        )}
+
         <div className="login-form__field">
           <Label htmlFor="email" className="login-form__label">
             Email

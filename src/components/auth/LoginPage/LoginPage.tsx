@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
@@ -17,20 +18,29 @@ export function LoginPage({
 }: LoginPageProps) {
   const t = useTranslations('auth');
   const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = (data: { email: string; password: string; rememberMe: boolean }) => {
+    setIsLoading(true);
+    setError(null);
+
     // Validar credenciales específicas
     const validEmail = 'arieldi.marrero@azucartravel.com';
     const validPassword = 'FITUR2026';
 
-    if (data.email === validEmail && data.password === validPassword) {
-      console.log('Login exitoso');
-      // Redirect to dashboard
-      router.push('/dashboard');
-    } else {
-      // Mostrar error de credenciales inválidas
-      alert('Credenciales inválidas. Por favor, verifica tu correo y contraseña.');
-    }
+    // Simular un pequeño delay para mejor UX
+    setTimeout(() => {
+      if (data.email === validEmail && data.password === validPassword) {
+        console.log('Login exitoso');
+        // Redirect to dashboard
+        router.push('/dashboard');
+      } else {
+        // Mostrar error de credenciales inválidas
+        setError('Credenciales inválidas. Por favor, verifica tu correo electrónico y contraseña.');
+        setIsLoading(false);
+      }
+    }, 500);
   };
 
   return (
@@ -67,7 +77,7 @@ export function LoginPage({
 
       {/* Right side - Login form */}
       <div className="login-page__form-container">
-        <LoginForm onSubmit={handleLogin} />
+        <LoginForm onSubmit={handleLogin} error={error} isLoading={isLoading} />
       </div>
     </div>
   );

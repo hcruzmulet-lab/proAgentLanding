@@ -18,6 +18,34 @@
     width: 100%;
   }
 
+  &__error {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-sm;
+    padding: $spacing-md;
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 6px;
+    width: 100%;
+  }
+
+  &__error-icon {
+    font-size: 20px;
+    color: #dc2626;
+    flex-shrink: 0;
+    margin-top: 1px;
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+  }
+
+  &__error-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    color: #991b1b;
+    margin: 0;
+    flex: 1;
+  }
+
   &__field {
     @include flex-column;
     gap: $spacing-xs;
