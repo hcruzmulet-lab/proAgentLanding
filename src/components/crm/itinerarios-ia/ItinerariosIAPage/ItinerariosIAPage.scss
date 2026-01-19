@@ -10,11 +10,6 @@
   padding-right: 0;
   width: 100%;
 
-  // Layout con iframe
-  &--with-iframe {
-    flex-direction: row;
-    height: calc(100vh - 120px);
-  }
 
   &__header {
     display: flex;
@@ -96,66 +91,10 @@
     color: #64748b;
   }
 
-  // Contenedor del iframe
-  &__iframe-container {
-    flex: 1;
-    height: calc(100vh - 120px);
-    background-color: white;
-    border-radius: $radius-lg;
-    overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-
-    iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      border-radius: $radius-lg;
-    }
-  }
-
-  // Columna izquierda cuando el iframe está visible
-  &__sidebar {
-    flex: 0 0 320px;
-    transition: all 0.3s ease;
-    overflow-y: auto;
-    height: calc(100vh - 120px);
-    
-    &::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    &::-webkit-scrollbar-track {
-      background: #f1f5f9;
-      border-radius: 3px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 3px;
-
-      &:hover {
-        background: #94a3b8;
-      }
-    }
-  }
 
   @media (max-width: 768px) {
     &__cards {
       grid-template-columns: 1fr;
-    }
-
-    &--with-iframe {
-      flex-direction: column;
-      height: auto;
-    }
-
-    &__sidebar {
-      flex: 1;
-      height: auto;
-    }
-
-    &__iframe-container {
-      height: 600px;
     }
   }
 }

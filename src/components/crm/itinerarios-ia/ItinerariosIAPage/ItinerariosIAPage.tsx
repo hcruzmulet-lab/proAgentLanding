@@ -145,38 +145,61 @@ export function ItinerariosIAPage() {
 
   return (
     <TooltipProvider>
-      <div className="itinerarios-page" style={{ display: 'flex', gap: showMotorIframe ? '16px' : '0', height: showMotorIframe ? '100%' : 'auto' }}>
-        {/* Columna izquierda - Contenido principal */}
-        <div style={{ flex: showMotorIframe ? '0 0 320px' : '1', transition: 'all 0.3s ease' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px', width: '100%' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <h1 style={{ fontSize: '1.125rem', fontWeight: 600, color: '#0f172a', letterSpacing: '-0.1px', margin: 0 }}>
-                {showMotorIframe ? 'Nuevo itinerario con motor' : 'Itinerarios IA'}
-              </h1>
-            </div>
-            <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start', paddingTop: '0px' }}>
-              {showMotorIframe ? (
-                <Button 
-                  className="bg-slate-500 hover:bg-slate-600 text-white"
-                  onClick={() => setShowMotorIframe(false)}
-                  style={{ marginTop: 0 }}
-                >
-                  <span className="material-symbols-outlined mr-2" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>close</span>
-                  Cancelar
-                </Button>
-              ) : (
-                <Button 
-                  className="bg-slate-700 hover:bg-slate-800 text-white"
-                  onClick={() => setIsNewItinerarioModalOpen(true)}
-                  style={{ marginTop: 0 }}
-                >
-                  <span className="material-symbols-outlined mr-2" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>add</span>
-                  Nuevo itinerario
-                </Button>
-              )}
-            </div>
+      <div className="itinerarios-page">
+        {/* Header */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px', width: '100%' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <h1 style={{ fontSize: '1.125rem', fontWeight: 600, color: '#0f172a', letterSpacing: '-0.1px', margin: 0 }}>
+              {showMotorIframe ? 'Nuevo itinerario con motor' : 'Itinerarios IA'}
+            </h1>
           </div>
-          <div className="space-y-6" style={{ display: showMotorIframe ? 'none' : 'block' }}>
+          <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start', paddingTop: '0px' }}>
+            {showMotorIframe ? (
+              <Button 
+                className="bg-slate-500 hover:bg-slate-600 text-white"
+                onClick={() => setShowMotorIframe(false)}
+                style={{ marginTop: 0 }}
+              >
+                <span className="material-symbols-outlined mr-2" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>close</span>
+                Cancelar
+              </Button>
+            ) : (
+              <Button 
+                className="bg-slate-700 hover:bg-slate-800 text-white"
+                onClick={() => setIsNewItinerarioModalOpen(true)}
+                style={{ marginTop: 0 }}
+              >
+                <span className="material-symbols-outlined mr-2" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 20" }}>add</span>
+                Nuevo itinerario
+              </Button>
+            )}
+          </div>
+        </div>
+
+        {/* Contenido principal o iframe */}
+        {showMotorIframe ? (
+          <div style={{ 
+            width: '100%',
+            height: 'calc(100vh - 180px)',
+            backgroundColor: 'white',
+            borderRadius: '8px',
+            overflow: 'hidden',
+            boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
+          }}>
+            <iframe
+              src={motorUrl}
+              style={{
+                width: '100%',
+                height: '100%',
+                border: 'none',
+                borderRadius: '8px'
+              }}
+              title="Motor de Itinerarios"
+              allow="fullscreen"
+            />
+          </div>
+        ) : (
+          <div className="space-y-6">
 
         {/* Cards informativos superiores */}
         <div className="grid grid-cols-4 gap-4">
@@ -352,7 +375,7 @@ export function ItinerariosIAPage() {
               })}
             </div>
         </div>
-        </div>
+        )}
 
         {/* Modal Nuevo Itinerario */}
         <Dialog open={isNewItinerarioModalOpen} onOpenChange={setIsNewItinerarioModalOpen}>
@@ -397,31 +420,6 @@ export function ItinerariosIAPage() {
             </div>
           </DialogContent>
         </Dialog>
-        </div>
-
-        {/* Columna derecha - Iframe del motor */}
-        {showMotorIframe && (
-          <div style={{ 
-            flex: '1', 
-            height: 'calc(100vh - 120px)', 
-            backgroundColor: 'white', 
-            borderRadius: '8px',
-            overflow: 'hidden',
-            boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
-          }}>
-            <iframe
-              src={motorUrl}
-              style={{
-                width: '100%',
-                height: '100%',
-                border: 'none',
-                borderRadius: '8px'
-              }}
-              title="Motor de Itinerarios"
-              allow="fullscreen"
-            />
-          </div>
-        )}
       </div>
     </TooltipProvider>
   );
