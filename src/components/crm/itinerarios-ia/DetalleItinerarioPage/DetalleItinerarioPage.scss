@@ -368,7 +368,7 @@
     align-items: center;
     justify-content: center;
     gap: $spacing-lg;
-    padding: $spacing-2xl * 2;
+    padding: calc(#{$spacing-2xl} * 2);
     text-align: center;
 
     .material-symbols-outlined {
