@@ -19,9 +19,18 @@ export function LoginPage({
   const router = useRouter();
 
   const handleLogin = (data: { email: string; password: string; rememberMe: boolean }) => {
-    console.log('Login data:', data);
-    // Redirect to dashboard
-    router.push('/dashboard');
+    // Validar credenciales específicas
+    const validEmail = 'arieldi.marrero@azucartravel.com';
+    const validPassword = 'FITUR2026';
+
+    if (data.email === validEmail && data.password === validPassword) {
+      console.log('Login exitoso');
+      // Redirect to dashboard
+      router.push('/dashboard');
+    } else {
+      // Mostrar error de credenciales inválidas
+      alert('Credenciales inválidas. Por favor, verifica tu correo y contraseña.');
+    }
   };
 
   return (
