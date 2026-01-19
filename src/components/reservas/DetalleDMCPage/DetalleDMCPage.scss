@@ -88,11 +88,23 @@
     }
   }
 
+  &__section-header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    margin-bottom: $spacing-lg;
+
+    .material-symbols-outlined {
+      font-size: 2rem;
+      color: #334155;
+    }
+  }
+
   &__section-title {
     font-size: 1.5rem;
     font-weight: 700;
     color: $text-primary;
-    margin-bottom: $spacing-lg;
+    margin: 0;
   }
 
   &__about-item {
@@ -173,6 +185,10 @@
       flex-direction: column;
       align-items: flex-start;
       gap: $spacing-md;
+    }
+
+    .detalle-dmc-page__section-header {
+      margin-bottom: 0;
     }
   }
 
@@ -295,10 +311,6 @@
     .material-symbols-outlined {
       font-size: 2rem;
       color: #f59e0b;
-    }
-
-    .detalle-dmc-page__section-title {
-      margin-bottom: 0;
     }
   }
 

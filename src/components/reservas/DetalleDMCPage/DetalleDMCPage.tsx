@@ -97,7 +97,10 @@ export function DetalleDMCPage({ dmcId }: DetalleDMCPageProps) {
       {/* About */}
       <Card className="detalle-dmc-page__section">
         <CardContent className="pt-6">
-          <h2 className="detalle-dmc-page__section-title">Acerca de</h2>
+          <div className="detalle-dmc-page__section-header">
+            <span className="material-symbols-outlined">info</span>
+            <h2 className="detalle-dmc-page__section-title">Acerca de</h2>
+          </div>
           
           <div className="detalle-dmc-page__about-item">
             <span className="material-symbols-outlined">location_on</span>
@@ -121,7 +124,10 @@ export function DetalleDMCPage({ dmcId }: DetalleDMCPageProps) {
       {/* Instrucciones de reserva */}
       <Card className="detalle-dmc-page__section">
         <CardContent className="pt-6">
-          <h2 className="detalle-dmc-page__section-title">Instrucciones de Reserva</h2>
+          <div className="detalle-dmc-page__section-header">
+            <span className="material-symbols-outlined">assignment</span>
+            <h2 className="detalle-dmc-page__section-title">Instrucciones de Reserva</h2>
+          </div>
           <p className="detalle-dmc-page__instructions-intro">
             Preséntate como asesor de Fora en tu email a{' '}
             <a href={`mailto:${dmcData.emailContacto}`} className="detalle-dmc-page__link">
@@ -140,7 +146,10 @@ export function DetalleDMCPage({ dmcId }: DetalleDMCPageProps) {
       {/* Notas */}
       <Card className="detalle-dmc-page__section">
         <CardContent className="pt-6">
-          <h2 className="detalle-dmc-page__section-title">Notas</h2>
+          <div className="detalle-dmc-page__section-header">
+            <span className="material-symbols-outlined">description</span>
+            <h2 className="detalle-dmc-page__section-title">Notas</h2>
+          </div>
           
           <div className="detalle-dmc-page__note-item">
             <strong>Comisión:</strong> {dmcData.comision}
@@ -192,7 +201,10 @@ export function DetalleDMCPage({ dmcId }: DetalleDMCPageProps) {
       <Card className="detalle-dmc-page__section">
         <CardContent className="pt-6">
           <div className="detalle-dmc-page__reviews-header">
-            <h2 className="detalle-dmc-page__section-title">Reseñas de asesores</h2>
+            <div className="detalle-dmc-page__section-header">
+              <span className="material-symbols-outlined">rate_review</span>
+              <h2 className="detalle-dmc-page__section-title">Reseñas de asesores</h2>
+            </div>
             <div className="detalle-dmc-page__reviews-stats">
               <span className="material-symbols-outlined">thumb_up</span>
               <span>{dmcData.reviews.filter(r => r.recomienda).length}/{dmcData.reviews.length} recomiendan trabajar con este partner</span>
