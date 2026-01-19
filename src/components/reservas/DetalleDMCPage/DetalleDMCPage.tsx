@@ -1,9 +1,16 @@
 'use client';
 
 import React from 'react';
-import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/button';
+import { useRouter, useParams } from 'next/navigation';
 import { Card, CardContent } from '@/components/ui/card';
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
 import './DetalleDMCPage.scss';
 
 interface DetalleDMCPageProps {
@@ -12,10 +19,12 @@ interface DetalleDMCPageProps {
 
 export function DetalleDMCPage({ dmcId }: DetalleDMCPageProps) {
   const router = useRouter();
+  const params = useParams();
+  const locale = params?.locale || 'es';
 
   // Mock data - en producción vendría de una API
   const dmcData = {
-    nombre: 'Destination Dubai',
+    nombre: 'DMC Dubái',
     destinos: 'Dubái, Abu Dhabi, Sharjah, Ras Al Khaimah, Fujairah, Ajman, Umm Al Quwain',
     isPreferred: true,
     imagenes: [
@@ -62,15 +71,24 @@ export function DetalleDMCPage({ dmcId }: DetalleDMCPageProps) {
 
   return (
     <div className="detalle-dmc-page">
-      {/* Botón volver */}
-      <Button
-        variant="ghost"
-        onClick={() => router.back()}
-        className="detalle-dmc-page__back-button"
-      >
-        <span className="material-symbols-outlined">arrow_back</span>
-        Volver
-      </Button>
+      {/* Breadcrumbs */}
+      <Breadcrumb className="detalle-dmc-page__breadcrumb">
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href={`/${locale}/reservas`}>Reservas</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink href={`/${locale}/reservas/especializados`}>
+              Especializados & DMC's
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>{dmcData.nombre}</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
 
       {/* Header */}
       <div className="detalle-dmc-page__header">

@@ -8,20 +8,8 @@
   @include flex-column;
   gap: $spacing-xl;
 
-  &__back-button {
-    @include flex-center;
-    gap: $spacing-xs;
-    color: $text-secondary;
-    font-size: 0.9375rem;
-    align-self: flex-start;
-    
-    .material-symbols-outlined {
-      font-size: 1.25rem;
-    }
-
-    &:hover {
-      color: $text-primary;
-    }
+  &__breadcrumb {
+    margin-bottom: $spacing-md;
   }
 
   &__header {
