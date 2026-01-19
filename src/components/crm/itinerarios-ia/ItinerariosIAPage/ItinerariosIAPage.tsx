@@ -11,6 +11,8 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { DatePicker } from '@/components/ui/date-picker';
 
+// Actualizado: 3 itinerarios disponibles
+
 interface Itinerario {
   id: string;
   numeroItinerario: string;
