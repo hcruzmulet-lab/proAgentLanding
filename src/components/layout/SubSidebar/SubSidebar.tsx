@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useUiStore } from '@/stores/ui/uiStore';
 import './SubSidebar.scss';
@@ -85,17 +84,6 @@ export function SubSidebar({
           );
         })}
       </nav>
-
-      {/* ProAgent Vertical Logo */}
-      <div className="sub-sidebar__footer">
-        <Image
-          src="/icons/proagent-vertical.svg"
-          alt="ProAgent"
-          width={25}
-          height={120}
-          className="sub-sidebar__vertical-logo"
-        />
-      </div>
     </aside>
   );
 }
