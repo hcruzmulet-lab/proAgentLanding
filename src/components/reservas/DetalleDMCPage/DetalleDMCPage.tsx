@@ -80,7 +80,7 @@ export function DetalleDMCPage({ dmcId }: DetalleDMCPageProps) {
         </div>
         {dmcData.isPreferred && (
           <div className="detalle-dmc-page__badge">
-            Partner Preferido
+            Recomendado
           </div>
         )}
       </div>
@@ -116,7 +116,7 @@ export function DetalleDMCPage({ dmcId }: DetalleDMCPageProps) {
 
           <div className="detalle-dmc-page__about-item">
             <span className="material-symbols-outlined">business_center</span>
-            <span>Partner Preferido DMC Fora</span>
+            <span>DMC Recomendado</span>
           </div>
         </CardContent>
       </Card>
