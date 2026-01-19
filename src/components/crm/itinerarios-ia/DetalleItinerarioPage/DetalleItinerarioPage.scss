@@ -1,0 +1,420 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+
+.detalle-itinerario-page {
+  @include flex-column;
+  gap: $spacing-lg;
+  padding: 0;
+  padding-bottom: $spacing-2xl;
+  max-width: 1000px;
+  margin: 0 auto;
+
+  &__header {
+    margin-bottom: $spacing-sm;
+  }
+
+  &__back-button {
+    @include flex-center;
+    gap: $spacing-xs;
+    color: $text-secondary;
+    font-size: 0.9375rem;
+    
+    .material-symbols-outlined {
+      font-size: 1.25rem;
+    }
+
+    &:hover {
+      color: $text-primary;
+    }
+  }
+
+  &__cover {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    border-radius: $radius-lg;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__cover-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    padding: $spacing-2xl;
+  }
+
+  &__cover-content {
+    @include flex-column;
+    gap: $spacing-sm;
+  }
+
+  &__title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: white;
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  &__subtitle {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+  }
+
+  &__info-card {
+    padding: $spacing-xl;
+    background: white;
+  }
+
+  &__info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: $spacing-lg;
+  }
+
+  &__info-item {
+    @include flex-center;
+    gap: $spacing-md;
+
+    .material-symbols-outlined {
+      font-size: 2rem;
+      color: #334155;
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 48;
+    }
+
+    > div {
+      @include flex-column;
+      gap: 4px;
+    }
+  }
+
+  &__info-label {
+    font-size: 0.875rem;
+    color: $text-muted;
+    font-weight: 500;
+  }
+
+  &__info-value {
+    font-size: 1rem;
+    color: $text-primary;
+    font-weight: 600;
+  }
+
+  &__content {
+    @include flex-column;
+    gap: $spacing-lg;
+  }
+
+  &__section {
+    padding: $spacing-xl;
+    background: white;
+
+    &--conclusion {
+      border-left: 4px solid #334155;
+    }
+
+    &--price {
+      background: linear-gradient(135deg, #334155 0%, #1e293b 100%);
+      color: white;
+      text-align: center;
+    }
+  }
+
+  &__section-header {
+    @include flex-center;
+    gap: $spacing-md;
+    margin-bottom: $spacing-lg;
+    padding-bottom: $spacing-md;
+    border-bottom: 2px solid #e2e8f0;
+
+    .material-symbols-outlined {
+      font-size: 2rem;
+      color: #334155;
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: $text-primary;
+      margin: 0;
+    }
+  }
+
+  &__text {
+    font-size: 1.0625rem; // 17px - más grande para mejor legibilidad
+    line-height: 1.8;
+    color: #334155;
+    margin-bottom: $spacing-md;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    strong {
+      font-weight: 600;
+      color: $text-primary;
+    }
+
+    &--large {
+      font-size: 1.125rem; // 18px
+      line-height: 1.9;
+    }
+  }
+
+  &__day {
+    @include flex-column;
+    gap: $spacing-md;
+    padding: $spacing-lg;
+    background: #f8fafc;
+    border-radius: $radius-md;
+    margin-bottom: $spacing-lg;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__day-header {
+    @include flex-center;
+    gap: $spacing-md;
+    padding-bottom: $spacing-sm;
+    border-bottom: 2px solid #cbd5e1;
+
+    .material-symbols-outlined {
+      font-size: 1.75rem;
+      color: #334155;
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: $text-primary;
+      margin: 0;
+    }
+  }
+
+  &__accommodation {
+    @include flex-center;
+    gap: $spacing-md;
+    padding: $spacing-md;
+    background: white;
+    border-radius: $radius-sm;
+    border-left: 4px solid #10b981;
+    margin-top: $spacing-sm;
+
+    .material-symbols-outlined {
+      font-size: 1.5rem;
+      color: #10b981;
+      flex-shrink: 0;
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+    }
+
+    > div {
+      flex: 1;
+
+      strong {
+        display: block;
+        margin-bottom: $spacing-xs;
+        color: $text-primary;
+        font-size: 1rem;
+      }
+
+      p {
+        margin: $spacing-xs 0 0;
+        font-size: 0.9375rem;
+        line-height: 1.6;
+      }
+    }
+  }
+
+  &__note {
+    @include flex-center;
+    gap: $spacing-md;
+    padding: $spacing-md;
+    background: #fef3c7;
+    border-radius: $radius-sm;
+    border-left: 4px solid #f59e0b;
+    margin-top: $spacing-sm;
+
+    .material-symbols-outlined {
+      font-size: 1.5rem;
+      color: #f59e0b;
+      flex-shrink: 0;
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+    }
+
+    p {
+      margin: 0;
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      color: #78350f;
+
+      strong {
+        color: #78350f;
+      }
+    }
+  }
+
+  &__hotel-list,
+  &__transport-list {
+    @include flex-column;
+    gap: $spacing-md;
+  }
+
+  &__hotel-item,
+  &__transport-item {
+    @include flex-center;
+    gap: $spacing-md;
+    padding: $spacing-md;
+    background: #f8fafc;
+    border-radius: $radius-sm;
+
+    .material-symbols-outlined {
+      font-size: 1.5rem;
+      color: #334155;
+      flex-shrink: 0;
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 48;
+    }
+
+    div {
+      flex: 1;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #334155;
+
+      strong {
+        color: $text-primary;
+      }
+    }
+  }
+
+  &__highlight-list {
+    @include flex-column;
+    gap: $spacing-md;
+  }
+
+  &__highlight-item {
+    @include flex-center;
+    gap: $spacing-md;
+
+    .material-symbols-outlined {
+      font-size: 1.5rem;
+      color: #10b981;
+      flex-shrink: 0;
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+    }
+
+    p {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #334155;
+
+      strong {
+        color: $text-primary;
+      }
+    }
+  }
+
+  &__price-content {
+    @include flex-column;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-lg;
+  }
+
+  &__price-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: white;
+    margin: 0;
+  }
+
+  &__price-amount {
+    font-size: 3rem;
+    font-weight: 700;
+    color: white;
+    margin: $spacing-sm 0;
+  }
+
+  &__price-detail {
+    font-size: 1.125rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+  }
+
+  &__price-note {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: $spacing-sm 0 0;
+    font-style: italic;
+  }
+
+  &__not-found {
+    @include flex-column;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-lg;
+    padding: $spacing-2xl * 2;
+    text-align: center;
+
+    .material-symbols-outlined {
+      color: $text-muted;
+      opacity: 0.5;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      color: $text-secondary;
+      margin: 0;
+    }
+  }
+
+  // Responsive
+  @media (max-width: 768px) {
+    &__cover {
+      height: 300px;
+    }
+
+    &__title {
+      font-size: 1.5rem;
+    }
+
+    &__subtitle {
+      font-size: 1rem;
+    }
+
+    &__info-grid {
+      grid-template-columns: 1fr;
+    }
+
+    &__section-header {
+      h2 {
+        font-size: 1.25rem;
+      }
+    }
+
+    &__day-header {
+      h3 {
+        font-size: 1.125rem;
+      }
+    }
+
+    &__price-amount {
+      font-size: 2.5rem;
+    }
+  }
+}

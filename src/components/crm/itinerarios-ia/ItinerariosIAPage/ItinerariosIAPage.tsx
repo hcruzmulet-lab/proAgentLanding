@@ -57,6 +57,21 @@ const itinerariosMock: Itinerario[] = [
     precio: 2800.00,
     estado: 'pendiente',
     imagen: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&h=300&fit=crop'
+  },
+  {
+    id: '3',
+    numeroItinerario: 'ITI-003',
+    fechaCreacion: '15 ene 2026',
+    fechaViaje: '24 ene 2026',
+    nombre: 'Cliente Europa',
+    destino: 'Madrid • Barcelona • Roma',
+    pasajeros: 2,
+    ubicaciones: 3,
+    hoteles: 4,
+    noches: 9,
+    precio: 2749.00,
+    estado: 'aceptado',
+    imagen: 'https://images.pexels.com/photos/460740/pexels-photo-460740.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop'
   }
 ];
 
@@ -163,7 +178,7 @@ export function ItinerariosIAPage() {
           <div className="flex items-center justify-between bg-[#f8fafc] rounded-lg px-[19px] py-[21px]">
             <div className="flex flex-col">
               <p className="text-base font-normal text-[#374151]">Itinerarios</p>
-              <p className="text-xl font-semibold text-[#374151] tracking-tight">2</p>
+              <p className="text-xl font-semibold text-[#374151] tracking-tight">3</p>
             </div>
             <span className="material-symbols-outlined text-[#cbd5e1] text-[32px]" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48" }}>description</span>
           </div>
@@ -171,7 +186,7 @@ export function ItinerariosIAPage() {
           <div className="flex items-center justify-between bg-[#f8fafc] rounded-lg px-[19px] py-[21px]">
             <div className="flex flex-col">
               <p className="text-base font-normal text-[#374151]">Destinos</p>
-              <p className="text-xl font-semibold text-[#374151] tracking-tight">2</p>
+              <p className="text-xl font-semibold text-[#374151] tracking-tight">5</p>
             </div>
             <span className="material-symbols-outlined text-[#cbd5e1] text-[32px]" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48" }}>map</span>
           </div>
@@ -179,7 +194,7 @@ export function ItinerariosIAPage() {
           <div className="flex items-center justify-between bg-[#f8fafc] rounded-lg px-[19px] py-[21px]">
             <div className="flex flex-col">
               <p className="text-base font-normal text-[#374151]">Pasajeros</p>
-              <p className="text-xl font-semibold text-[#374151] tracking-tight">6</p>
+              <p className="text-xl font-semibold text-[#374151] tracking-tight">8</p>
             </div>
             <span className="material-symbols-outlined text-[#cbd5e1] text-[32px]" style={{ fontVariationSettings: "'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48" }}>group</span>
           </div>

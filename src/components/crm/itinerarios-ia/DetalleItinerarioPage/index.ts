@@ -1,0 +1,1 @@
+export { DetalleItinerarioPage } from './DetalleItinerarioPage';
