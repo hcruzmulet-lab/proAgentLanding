@@ -53,46 +53,47 @@ export function PreferenciasPage() {
       </div>
 
       <div className="preferencias-page__content">
-        <div className="preferencias-page__two-column-layout">
-          {/* Columna 1: Configuración Regional */}
+        <div className="preferencias-page__form-card">
           <div className="preferencias-page__form-section">
             <h2 className="preferencias-page__section-title">Configuración Regional</h2>
             
-            <div className="preferencias-page__form-group">
-              <label className="preferencias-page__label">
-                Idioma
-              </label>
-              <select
-                value={preferencias.idioma}
-                onChange={(e) => setPreferencias({...preferencias, idioma: e.target.value})}
-                className="preferencias-page__select"
-              >
-                {idiomas.map((idioma) => (
-                  <option key={idioma.value} value={idioma.value}>
-                    {idioma.label}
-                  </option>
-                ))}
-              </select>
+            <div className="preferencias-page__form-row">
+              <div className="preferencias-page__form-group">
+                <label className="preferencias-page__label">
+                  Idioma
+                </label>
+                <select
+                  value={preferencias.idioma}
+                  onChange={(e) => setPreferencias({...preferencias, idioma: e.target.value})}
+                  className="preferencias-page__select"
+                >
+                  {idiomas.map((idioma) => (
+                    <option key={idioma.value} value={idioma.value}>
+                      {idioma.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="preferencias-page__form-group">
+                <label className="preferencias-page__label">
+                  Moneda
+                </label>
+                <select
+                  value={preferencias.moneda}
+                  onChange={(e) => setPreferencias({...preferencias, moneda: e.target.value})}
+                  className="preferencias-page__select"
+                >
+                  {monedas.map((moneda) => (
+                    <option key={moneda.value} value={moneda.value}>
+                      {moneda.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
 
-            <div className="preferencias-page__form-group">
-              <label className="preferencias-page__label">
-                Moneda
-              </label>
-              <select
-                value={preferencias.moneda}
-                onChange={(e) => setPreferencias({...preferencias, moneda: e.target.value})}
-                className="preferencias-page__select"
-              >
-                {monedas.map((moneda) => (
-                  <option key={moneda.value} value={moneda.value}>
-                    {moneda.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="preferencias-page__form-group">
+            <div className="preferencias-page__form-group preferencias-page__form-group--full">
               <label className="preferencias-page__label">
                 Huso horario
               </label>
@@ -110,7 +111,6 @@ export function PreferenciasPage() {
             </div>
           </div>
 
-          {/* Columna 2: Notificaciones */}
           <div className="preferencias-page__form-section">
             <h2 className="preferencias-page__section-title">Notificaciones</h2>
             
@@ -147,17 +147,16 @@ export function PreferenciasPage() {
                 Recibirás notificaciones importantes por mensaje de texto
               </p>
             </div>
-          </div>
-        </div>
 
-        {/* Botón de guardar fuera de las columnas */}
-        <div className="preferencias-page__form-actions">
-          <Button
-            onClick={handleSave}
-            className="preferencias-page__save-button"
-          >
-            Guardar Cambios
-          </Button>
+            <div className="preferencias-page__form-actions">
+              <Button
+                onClick={handleSave}
+                className="preferencias-page__save-button"
+              >
+                Guardar Cambios
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
