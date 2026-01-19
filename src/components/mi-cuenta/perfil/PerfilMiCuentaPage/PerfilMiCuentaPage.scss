@@ -67,12 +67,22 @@
   }
 
   &__form-card {
-    max-width: 600px;
+    max-width: 100%;
   }
 
   &__form-section {
     @include flex-column;
     gap: $spacing-lg;
+  }
+
+  &__form-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-md;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
   }
 
   &__section-title {
@@ -87,6 +97,10 @@
   &__form-group {
     @include flex-column;
     gap: $spacing-sm;
+
+    &--full {
+      grid-column: 1 / -1;
+    }
   }
 
   &__label {
@@ -138,6 +152,7 @@
     margin-top: $spacing-lg;
     padding-top: $spacing-lg;
     border-top: 1px solid #e2e8f0;
+    justify-content: flex-start;
   }
 
   &__cancel-button {
@@ -153,10 +168,11 @@
   }
 
   &__save-button {
-    flex: 1;
     background-color: $text-primary;
     color: white;
     font-weight: 500;
+    padding: $spacing-sm $spacing-xl;
+    min-width: 180px;
 
     &:hover {
       background-color: #1e293b;
