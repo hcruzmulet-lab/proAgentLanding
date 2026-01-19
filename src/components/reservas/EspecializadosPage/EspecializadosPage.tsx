@@ -82,7 +82,7 @@ const destinos = [
 export function EspecializadosPage() {
   return (
     <div className="especializados-page">
-      <div style={{ marginBottom: '24px' }}>
+      <div>
         <h1 style={{ fontSize: '1.125rem', fontWeight: 600, color: '#0f172a', letterSpacing: '-0.1px', margin: 0, lineHeight: '1.5' }}>
           Especializados & DMC's
         </h1>
