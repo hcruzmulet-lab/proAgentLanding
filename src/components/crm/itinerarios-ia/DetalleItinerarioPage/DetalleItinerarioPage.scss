@@ -84,13 +84,14 @@
   }
 
   &__info-item {
-    @include flex-center;
-    gap: $spacing-md;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
 
     .material-symbols-outlined {
-      font-size: 2rem;
-      color: #334155;
-      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 48;
+      font-size: 1.25rem;
+      color: #64748b;
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
     }
 
     > div {
@@ -121,7 +122,7 @@
     background: white;
 
     &--conclusion {
-      border-left: 4px solid #334155;
+      padding-left: $spacing-xl;
     }
 
     &--price {
@@ -132,30 +133,31 @@
   }
 
   &__section-header {
-    @include flex-center;
-    gap: $spacing-md;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
     margin-bottom: $spacing-lg;
-    padding-bottom: $spacing-md;
-    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: $spacing-sm;
+    border-bottom: 1px solid #e2e8f0;
 
     .material-symbols-outlined {
-      font-size: 2rem;
-      color: #334155;
-      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+      font-size: 1.25rem;
+      color: #64748b;
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
     }
 
     h2 {
-      font-size: 1.5rem;
-      font-weight: 700;
+      font-size: 1.25rem;
+      font-weight: 600;
       color: $text-primary;
       margin: 0;
     }
   }
 
   &__text {
-    font-size: 1.0625rem; // 17px - más grande para mejor legibilidad
-    line-height: 1.8;
-    color: #334155;
+    font-size: 0.9375rem; // 15px - más minimalista
+    line-height: 1.7;
+    color: #475569;
     margin-bottom: $spacing-md;
 
     &:last-child {
@@ -168,38 +170,38 @@
     }
 
     &--large {
-      font-size: 1.125rem; // 18px
-      line-height: 1.9;
+      font-size: 1rem; // 16px
+      line-height: 1.7;
     }
   }
 
   &__day {
     @include flex-column;
     gap: $spacing-md;
-    padding: $spacing-lg;
-    background: #f8fafc;
-    border-radius: $radius-md;
-    margin-bottom: $spacing-lg;
+    padding: $spacing-lg 0;
+    border-bottom: 1px solid #e2e8f0;
+    margin-bottom: $spacing-md;
 
     &:last-child {
       margin-bottom: 0;
+      border-bottom: none;
     }
   }
 
   &__day-header {
-    @include flex-center;
-    gap: $spacing-md;
-    padding-bottom: $spacing-sm;
-    border-bottom: 2px solid #cbd5e1;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-sm;
 
     .material-symbols-outlined {
-      font-size: 1.75rem;
-      color: #334155;
-      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+      font-size: 1.125rem;
+      color: #64748b;
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
     }
 
     h3 {
-      font-size: 1.25rem;
+      font-size: 1.125rem;
       font-weight: 600;
       color: $text-primary;
       margin: 0;
@@ -207,19 +209,17 @@
   }
 
   &__accommodation {
-    @include flex-center;
-    gap: $spacing-md;
-    padding: $spacing-md;
-    background: white;
-    border-radius: $radius-sm;
-    border-left: 4px solid #10b981;
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-sm;
+    padding: $spacing-md 0;
     margin-top: $spacing-sm;
 
     .material-symbols-outlined {
-      font-size: 1.5rem;
-      color: #10b981;
+      font-size: 1.125rem;
+      color: #64748b;
       flex-shrink: 0;
-      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
     }
 
     > div {
@@ -229,41 +229,42 @@
         display: block;
         margin-bottom: $spacing-xs;
         color: $text-primary;
-        font-size: 1rem;
+        font-size: 0.9375rem;
+        font-weight: 600;
       }
 
       p {
         margin: $spacing-xs 0 0;
         font-size: 0.9375rem;
         line-height: 1.6;
+        color: #64748b;
       }
     }
   }
 
   &__note {
-    @include flex-center;
-    gap: $spacing-md;
-    padding: $spacing-md;
-    background: #fef3c7;
-    border-radius: $radius-sm;
-    border-left: 4px solid #f59e0b;
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-sm;
+    padding: $spacing-md 0;
     margin-top: $spacing-sm;
 
     .material-symbols-outlined {
-      font-size: 1.5rem;
-      color: #f59e0b;
+      font-size: 1.125rem;
+      color: #64748b;
       flex-shrink: 0;
-      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
     }
 
     p {
       margin: 0;
       font-size: 0.9375rem;
       line-height: 1.6;
-      color: #78350f;
+      color: #64748b;
 
       strong {
-        color: #78350f;
+        color: $text-primary;
+        font-weight: 600;
       }
     }
   }
@@ -271,60 +272,64 @@
   &__hotel-list,
   &__transport-list {
     @include flex-column;
-    gap: $spacing-md;
+    gap: $spacing-sm;
   }
 
   &__hotel-item,
   &__transport-item {
-    @include flex-center;
-    gap: $spacing-md;
-    padding: $spacing-md;
-    background: #f8fafc;
-    border-radius: $radius-sm;
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-sm;
+    padding: $spacing-sm 0;
 
     .material-symbols-outlined {
-      font-size: 1.5rem;
-      color: #334155;
+      font-size: 1.125rem;
+      color: #64748b;
       flex-shrink: 0;
-      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 48;
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+      margin-top: 2px;
     }
 
     div {
       flex: 1;
-      font-size: 1rem;
+      font-size: 0.9375rem;
       line-height: 1.6;
       color: #334155;
 
       strong {
         color: $text-primary;
+        font-weight: 600;
       }
     }
   }
 
   &__highlight-list {
     @include flex-column;
-    gap: $spacing-md;
+    gap: $spacing-sm;
   }
 
   &__highlight-item {
-    @include flex-center;
-    gap: $spacing-md;
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-sm;
 
     .material-symbols-outlined {
-      font-size: 1.5rem;
-      color: #10b981;
+      font-size: 1.125rem;
+      color: #64748b;
       flex-shrink: 0;
-      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+      margin-top: 2px;
     }
 
     p {
       margin: 0;
-      font-size: 1rem;
+      font-size: 0.9375rem;
       line-height: 1.6;
       color: #334155;
 
       strong {
         color: $text-primary;
+        font-weight: 600;
       }
     }
   }
