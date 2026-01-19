@@ -168,6 +168,7 @@ export function DetalleCotizacionPage() {
   const handleCopiarEnlace = () => {
     const enlacePublico = `${window.location.origin}/es/cotizacion/${cotizacion.numero}`;
     navigator.clipboard.writeText(enlacePublico);
+    setShowShareModal(false);
     showToast({
       title: 'Enlace copiado',
       description: 'El enlace ha sido copiado al portapapeles'
