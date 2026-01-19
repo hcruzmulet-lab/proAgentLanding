@@ -82,6 +82,40 @@
       border-color: #334155;
       box-shadow: 0 0 0 2px rgba(51, 65, 85, 0.1);
     }
+
+    &--password {
+      padding-right: 40px;
+    }
+  }
+
+  &__password-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  &__password-toggle {
+    @include button-reset;
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    @include flex-center;
+    width: 32px;
+    height: 32px;
+    color: #64748b;
+    border-radius: 4px;
+    cursor: pointer;
+    @include transition(all);
+
+    &:hover {
+      background-color: #f1f5f9;
+      color: #334155;
+    }
+
+    .material-symbols-outlined {
+      font-size: 20px;
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+    }
   }
 
   &__checkbox-wrapper {

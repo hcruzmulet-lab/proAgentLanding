@@ -20,10 +20,15 @@ export function LoginForm({ onSubmit, isLoading = false, error }: LoginFormProps
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit?.({ email, password, rememberMe });
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -67,15 +72,27 @@ export function LoginForm({ onSubmit, isLoading = false, error }: LoginFormProps
           <Label htmlFor="password" className="login-form__label">
             {t('password')}
           </Label>
-          <Input
-            id="password"
-            type="password"
-            placeholder={t('password')}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="login-form__input"
-            required
-          />
+          <div className="login-form__password-wrapper">
+            <Input
+              id="password"
+              type={showPassword ? 'text' : 'password'}
+              placeholder={t('password')}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="login-form__input login-form__input--password"
+              required
+            />
+            <button
+              type="button"
+              onClick={togglePasswordVisibility}
+              className="login-form__password-toggle"
+              aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+            >
+              <span className="material-symbols-outlined">
+                {showPassword ? 'visibility_off' : 'visibility'}
+              </span>
+            </button>
+          </div>
         </div>
 
         <div className="login-form__checkbox-wrapper">
