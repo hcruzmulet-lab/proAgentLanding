@@ -177,10 +177,12 @@ export function NovedadesPage() {
                       <p className="novedades-page__news-excerpt">{item.excerpt}</p>
                     )}
                     <div className="novedades-page__news-footer">
-                      <span className="material-symbols-outlined novedades-page__news-icon">
-                        arrow_circle_right
-                      </span>
-                      <span className="novedades-page__news-link">Leer más</span>
+                      <button className="novedades-page__news-button">
+                        <span>Leer más</span>
+                        <span className="material-symbols-outlined novedades-page__news-icon">
+                          arrow_forward
+                        </span>
+                      </button>
                     </div>
                   </Card>
                 ))
