@@ -327,10 +327,24 @@ export function ItinerariosIAPage() {
                         </div>
                       </div>
                       <div className="pt-4 border-t border-slate-200">
-                        <div className="flex items-center justify-between">
+                        <div className="flex items-center justify-between mb-2">
                           <span className="text-sm text-slate-500">Precio</span>
                           <span className="text-xl font-semibold text-slate-900">US${itinerario.precio.toFixed(2)}</span>
                         </div>
+                        {isClickable && (
+                          <button
+                            className="w-full mt-2 flex items-center justify-center gap-2 px-4 py-2 bg-slate-700 hover:bg-slate-800 text-white rounded-lg transition-colors"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              const enlacePublico = `${window.location.origin}/es/itinerario/${itinerario.numeroItinerario}`;
+                              navigator.clipboard.writeText(enlacePublico);
+                              alert('Enlace copiado al portapapeles');
+                            }}
+                          >
+                            <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>share</span>
+                            <span>Compartir</span>
+                          </button>
+                        )}
                       </div>
                     </CardContent>
                   </Card>
