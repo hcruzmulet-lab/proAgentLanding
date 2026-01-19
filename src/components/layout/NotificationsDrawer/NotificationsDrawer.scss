@@ -77,15 +77,22 @@
     gap: $spacing-md;
     padding: $spacing-lg;
     border-bottom: 1px solid $bg-muted;
-    cursor: pointer;
     @include transition(all);
-
-    &:hover {
-      background-color: $bg-subtle;
-    }
 
     &:last-child {
       border-bottom: none;
+    }
+
+    &--clickable {
+      cursor: pointer;
+
+      &:hover {
+        background-color: $bg-subtle;
+      }
+
+      &:active {
+        background-color: #e2e8f0;
+      }
     }
   }
 

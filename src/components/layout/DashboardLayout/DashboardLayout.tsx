@@ -55,7 +55,7 @@ export function DashboardLayout({
           userName="Arieldi Marrero"
           isCollapsed={sidebarCollapsed}
           onToggleCollapse={toggleSidebarCollapsed}
-          notificationCount={3}
+          notificationCount={4}
         />
         {!sidebarCollapsed && (
           <SubSidebar
@@ -64,7 +64,7 @@ export function DashboardLayout({
             menuItems={getMenuItems()}
             isCollapsed={sidebarCollapsed}
             onToggleCollapse={toggleSidebarCollapsed}
-            notificationCount={3}
+            notificationCount={4}
           />
         )}
         <main className="dashboard-layout__content">
