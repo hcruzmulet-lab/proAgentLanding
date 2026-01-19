@@ -85,7 +85,6 @@ export function ItinerariosIAPage() {
     buscar: 'todos',
     destino: '',
     numeroItinerario: '',
-    nombre: '',
     fechaDesde: undefined as Date | undefined,
     fechaHasta: undefined as Date | undefined
   });
@@ -103,7 +102,6 @@ export function ItinerariosIAPage() {
       buscar: 'todos',
       destino: '',
       numeroItinerario: '',
-      nombre: '',
       fechaDesde: undefined,
       fechaHasta: undefined
     });
@@ -252,15 +250,6 @@ export function ItinerariosIAPage() {
                 </div>
 
                 <div className="flex-1">
-                  <label className="text-sm font-medium text-slate-700 mb-2 block">Nombre:</label>
-                  <Input 
-                    placeholder="Nombre del cliente" 
-                    value={filtros.nombre}
-                    onChange={(e) => setFiltros({...filtros, nombre: e.target.value})}
-                  />
-                </div>
-
-                <div className="flex-1">
                   <label className="text-sm font-medium text-slate-700 mb-2 block">Fecha Desde:</label>
                   <DatePicker
                     date={filtros.fechaDesde}
@@ -319,10 +308,6 @@ export function ItinerariosIAPage() {
                         </div>
                       </div>
                       <div className="space-y-2 mb-4">
-                        <div>
-                          <p className="text-sm text-slate-500">Cliente</p>
-                          <p className="text-base font-medium text-slate-900">{itinerario.nombre}</p>
-                        </div>
                         <div>
                           <p className="text-sm text-slate-500">Destino</p>
                           <p className="text-base text-slate-900">{itinerario.destino}</p>
