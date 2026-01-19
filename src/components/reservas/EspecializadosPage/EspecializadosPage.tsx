@@ -82,11 +82,10 @@ const destinos = [
 export function EspecializadosPage() {
   return (
     <div className="especializados-page">
-      <div className="especializados-page__header">
-        <h1 className="especializados-page__title">Destinos Especializados</h1>
-        <p className="especializados-page__subtitle">
-          Descubre experiencias únicas en los destinos más fascinantes del mundo
-        </p>
+      <div style={{ marginBottom: '24px' }}>
+        <h1 style={{ fontSize: '1.125rem', fontWeight: 600, color: '#0f172a', letterSpacing: '-0.1px', margin: 0, lineHeight: '1.5' }}>
+          Especializados & DMC's
+        </h1>
       </div>
 
       <div className="especializados-page__grid">
