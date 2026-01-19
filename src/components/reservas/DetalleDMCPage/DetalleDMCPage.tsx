@@ -165,6 +165,29 @@ export function DetalleDMCPage({ dmcId }: DetalleDMCPageProps) {
         </CardContent>
       </Card>
 
+      {/* Acceso a la plataforma */}
+      <Card className="detalle-dmc-page__section detalle-dmc-page__section--access">
+        <CardContent className="pt-6">
+          <div className="detalle-dmc-page__access-header">
+            <span className="material-symbols-outlined">vpn_key</span>
+            <h2 className="detalle-dmc-page__section-title">Acceso a la plataforma del partner</h2>
+          </div>
+          <p className="detalle-dmc-page__access-description">
+            Para solicitar credenciales de acceso a la plataforma de reservas de este partner, por favor envía un correo electrónico a:
+          </p>
+          <div className="detalle-dmc-page__access-email">
+            <span className="material-symbols-outlined">mail</span>
+            <a href="mailto:partners@proagent.com" className="detalle-dmc-page__access-link">
+              partners@proagent.com
+            </a>
+          </div>
+          <p className="detalle-dmc-page__access-note">
+            En tu solicitud, incluye tu nombre, agencia, y el nombre del partner para el cual necesitas acceso. 
+            El equipo de ProAgent procesará tu solicitud en un plazo de 24-48 horas hábiles.
+          </p>
+        </CardContent>
+      </Card>
+
       {/* Reviews */}
       <Card className="detalle-dmc-page__section">
         <CardContent className="pt-6">

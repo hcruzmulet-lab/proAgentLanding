@@ -81,6 +81,11 @@
     background-color: white;
     border: 1px solid #e2e8f0;
     border-radius: $radius-lg;
+
+    &--access {
+      background-color: #fffbeb;
+      border: 1px solid #fbbf24;
+    }
   }
 
   &__section-title {
@@ -279,5 +284,62 @@
   &__review-text {
     color: $text-secondary;
     line-height: 1.6;
+  }
+
+  &__access-header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    margin-bottom: $spacing-lg;
+
+    .material-symbols-outlined {
+      font-size: 2rem;
+      color: #f59e0b;
+    }
+
+    .detalle-dmc-page__section-title {
+      margin-bottom: 0;
+    }
+  }
+
+  &__access-description {
+    color: $text-secondary;
+    line-height: 1.6;
+    margin-bottom: $spacing-lg;
+  }
+
+  &__access-email {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-md;
+    background-color: white;
+    border-radius: $radius-md;
+    margin-bottom: $spacing-lg;
+
+    .material-symbols-outlined {
+      font-size: 1.5rem;
+      color: #334155;
+    }
+  }
+
+  &__access-link {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #334155;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__access-note {
+    color: $text-secondary;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    padding: $spacing-md;
+    background-color: white;
+    border-radius: $radius-md;
   }
 }
