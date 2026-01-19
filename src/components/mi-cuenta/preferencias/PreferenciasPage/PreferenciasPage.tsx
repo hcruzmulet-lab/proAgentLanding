@@ -53,47 +53,46 @@ export function PreferenciasPage() {
       </div>
 
       <div className="preferencias-page__content">
-        <div className="preferencias-page__form-card">
+        <div className="preferencias-page__two-column-layout">
+          {/* Columna 1: Configuración Regional */}
           <div className="preferencias-page__form-section">
             <h2 className="preferencias-page__section-title">Configuración Regional</h2>
             
-            <div className="preferencias-page__form-row">
-              <div className="preferencias-page__form-group">
-                <label className="preferencias-page__label">
-                  Idioma
-                </label>
-                <select
-                  value={preferencias.idioma}
-                  onChange={(e) => setPreferencias({...preferencias, idioma: e.target.value})}
-                  className="preferencias-page__select"
-                >
-                  {idiomas.map((idioma) => (
-                    <option key={idioma.value} value={idioma.value}>
-                      {idioma.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="preferencias-page__form-group">
-                <label className="preferencias-page__label">
-                  Moneda
-                </label>
-                <select
-                  value={preferencias.moneda}
-                  onChange={(e) => setPreferencias({...preferencias, moneda: e.target.value})}
-                  className="preferencias-page__select"
-                >
-                  {monedas.map((moneda) => (
-                    <option key={moneda.value} value={moneda.value}>
-                      {moneda.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
+            <div className="preferencias-page__form-group">
+              <label className="preferencias-page__label">
+                Idioma
+              </label>
+              <select
+                value={preferencias.idioma}
+                onChange={(e) => setPreferencias({...preferencias, idioma: e.target.value})}
+                className="preferencias-page__select"
+              >
+                {idiomas.map((idioma) => (
+                  <option key={idioma.value} value={idioma.value}>
+                    {idioma.label}
+                  </option>
+                ))}
+              </select>
             </div>
 
-            <div className="preferencias-page__form-group preferencias-page__form-group--full">
+            <div className="preferencias-page__form-group">
+              <label className="preferencias-page__label">
+                Moneda
+              </label>
+              <select
+                value={preferencias.moneda}
+                onChange={(e) => setPreferencias({...preferencias, moneda: e.target.value})}
+                className="preferencias-page__select"
+              >
+                {monedas.map((moneda) => (
+                  <option key={moneda.value} value={moneda.value}>
+                    {moneda.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="preferencias-page__form-group">
               <label className="preferencias-page__label">
                 Huso horario
               </label>
@@ -111,54 +110,54 @@ export function PreferenciasPage() {
             </div>
           </div>
 
+          {/* Columna 2: Notificaciones */}
           <div className="preferencias-page__form-section">
             <h2 className="preferencias-page__section-title">Notificaciones</h2>
             
-            <div className="preferencias-page__form-row">
-              <div className="preferencias-page__form-group">
-                <label className="preferencias-page__checkbox-label">
-                  <input
-                    type="checkbox"
-                    checked={preferencias.notificacionesCorreo}
-                    onChange={(e) => setPreferencias({...preferencias, notificacionesCorreo: e.target.checked})}
-                    className="preferencias-page__checkbox"
-                  />
-                  <span className="preferencias-page__checkbox-text">
-                    Recibir notificaciones por correo electrónico
-                  </span>
-                </label>
-                <p className="preferencias-page__checkbox-description">
-                  Recibirás notificaciones importantes en tu correo electrónico
-                </p>
-              </div>
-
-              <div className="preferencias-page__form-group">
-                <label className="preferencias-page__checkbox-label">
-                  <input
-                    type="checkbox"
-                    checked={preferencias.notificacionesSMS}
-                    onChange={(e) => setPreferencias({...preferencias, notificacionesSMS: e.target.checked})}
-                    className="preferencias-page__checkbox"
-                  />
-                  <span className="preferencias-page__checkbox-text">
-                    Recibir notificaciones por SMS
-                  </span>
-                </label>
-                <p className="preferencias-page__checkbox-description">
-                  Recibirás notificaciones importantes por mensaje de texto
-                </p>
-              </div>
+            <div className="preferencias-page__form-group">
+              <label className="preferencias-page__checkbox-label">
+                <input
+                  type="checkbox"
+                  checked={preferencias.notificacionesCorreo}
+                  onChange={(e) => setPreferencias({...preferencias, notificacionesCorreo: e.target.checked})}
+                  className="preferencias-page__checkbox"
+                />
+                <span className="preferencias-page__checkbox-text">
+                  Recibir notificaciones por correo electrónico
+                </span>
+              </label>
+              <p className="preferencias-page__checkbox-description">
+                Recibirás notificaciones importantes en tu correo electrónico
+              </p>
             </div>
 
-            <div className="preferencias-page__form-actions">
-              <Button
-                onClick={handleSave}
-                className="preferencias-page__save-button"
-              >
-                Guardar Cambios
-              </Button>
+            <div className="preferencias-page__form-group">
+              <label className="preferencias-page__checkbox-label">
+                <input
+                  type="checkbox"
+                  checked={preferencias.notificacionesSMS}
+                  onChange={(e) => setPreferencias({...preferencias, notificacionesSMS: e.target.checked})}
+                  className="preferencias-page__checkbox"
+                />
+                <span className="preferencias-page__checkbox-text">
+                  Recibir notificaciones por SMS
+                </span>
+              </label>
+              <p className="preferencias-page__checkbox-description">
+                Recibirás notificaciones importantes por mensaje de texto
+              </p>
             </div>
           </div>
+        </div>
+
+        {/* Botón de guardar fuera de las columnas */}
+        <div className="preferencias-page__form-actions">
+          <Button
+            onClick={handleSave}
+            className="preferencias-page__save-button"
+          >
+            Guardar Cambios
+          </Button>
         </div>
       </div>
     </div>
