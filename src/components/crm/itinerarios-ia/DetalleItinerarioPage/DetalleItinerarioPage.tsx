@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { useToast } from '@/contexts/ToastContext';
 import './DetalleItinerarioPage.scss';
 
 interface DetalleItinerarioPageProps {
@@ -14,6 +15,7 @@ interface DetalleItinerarioPageProps {
 export function DetalleItinerarioPage({ id, isPublic = false }: DetalleItinerarioPageProps) {
   const router = useRouter();
   const [showShareModal, setShowShareModal] = useState(false);
+  const { showToast } = useToast();
 
   // Mock data - en producción vendría de una API o base de datos
   const itinerario = {
@@ -56,7 +58,10 @@ export function DetalleItinerarioPage({ id, isPublic = false }: DetalleItinerari
         break;
       case 'link':
         navigator.clipboard.writeText(enlacePublico);
-        alert('Enlace copiado al portapapeles');
+        showToast({
+          title: 'Enlace copiado',
+          description: 'El enlace ha sido copiado al portapapeles'
+        });
         break;
     }
     setShowShareModal(false);

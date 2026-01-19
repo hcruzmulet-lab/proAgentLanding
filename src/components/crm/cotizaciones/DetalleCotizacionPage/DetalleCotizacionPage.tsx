@@ -16,6 +16,7 @@ import {
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useToast } from '@/contexts/ToastContext';
 import './DetalleCotizacionPage.scss';
 
 interface Servicio {
@@ -30,6 +31,7 @@ interface Servicio {
 
 export function DetalleCotizacionPage() {
   const router = useRouter();
+  const { showToast } = useToast();
   const [showShareModal, setShowShareModal] = useState(false);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [isFacturaModalOpen, setIsFacturaModalOpen] = useState(false);
@@ -166,8 +168,10 @@ export function DetalleCotizacionPage() {
   const handleCopiarEnlace = () => {
     const enlacePublico = `${window.location.origin}/es/cotizacion/${cotizacion.numero}`;
     navigator.clipboard.writeText(enlacePublico);
-    // Mostrar feedback temporal
-    alert('¡Enlace copiado al portapapeles!');
+    showToast({
+      title: 'Enlace copiado',
+      description: 'El enlace ha sido copiado al portapapeles'
+    });
   };
 
   const handleCompartirWhatsApp = () => {

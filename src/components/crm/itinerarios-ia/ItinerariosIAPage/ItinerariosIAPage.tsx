@@ -10,6 +10,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { DatePicker } from '@/components/ui/date-picker';
+import { useToast } from '@/contexts/ToastContext';
 
 // Actualizado: 3 itinerarios disponibles
 
@@ -81,6 +82,7 @@ export function ItinerariosIAPage() {
   const router = useRouter();
   const params = useParams();
   const locale = params?.locale || 'es';
+  const { showToast } = useToast();
   const [filtros, setFiltros] = useState({
     buscar: 'todos',
     destino: '',
@@ -359,7 +361,10 @@ export function ItinerariosIAPage() {
                               e.stopPropagation();
                               const enlacePublico = `${window.location.origin}/es/itinerario/${itinerario.numeroItinerario}`;
                               navigator.clipboard.writeText(enlacePublico);
-                              alert('Enlace copiado al portapapeles');
+                              showToast({
+                                title: 'Enlace copiado',
+                                description: 'El enlace ha sido copiado al portapapeles'
+                              });
                             }}
                           >
                             <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>share</span>
