@@ -180,6 +180,12 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     border-radius: 16px;
     overflow: hidden;
+
+    &--sticky {
+      position: sticky;
+      top: 1rem;
+      z-index: 10;
+    }
   }
 
   &__card-header {

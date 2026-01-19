@@ -526,7 +526,7 @@ export function DetalleCotizacionPage() {
             </Card>
 
             {/* Acciones Rápidas */}
-            <Card className="detalle-cotizacion-page__card">
+            <Card className="detalle-cotizacion-page__card detalle-cotizacion-page__card--sticky">
               <div className="detalle-cotizacion-page__card-header">
                 <div className="flex items-center gap-2">
                   <span className="material-symbols-outlined text-slate-700">bolt</span>
