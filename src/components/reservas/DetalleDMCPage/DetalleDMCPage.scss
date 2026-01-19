@@ -44,8 +44,8 @@
   }
 
   &__badge {
-    background-color: $slate-100;
-    color: $slate-700;
+    background-color: #f1f5f9;
+    color: #334155;
     padding: $spacing-sm $spacing-md;
     border-radius: $radius-md;
     font-size: 0.875rem;
@@ -99,12 +99,12 @@
 
     .material-symbols-outlined {
       font-size: 1.5rem;
-      color: $slate-700;
+      color: #334155;
     }
   }
 
   &__link {
-    color: $slate-700;
+    color: #334155;
     text-decoration: none;
     font-weight: 500;
 
@@ -154,7 +154,7 @@
 
     .material-symbols-outlined {
       font-size: 1.25rem;
-      color: $slate-700;
+      color: #334155;
     }
   }
 
@@ -175,7 +175,7 @@
     display: flex;
     align-items: center;
     gap: $spacing-sm;
-    color: $slate-700;
+    color: #334155;
     font-weight: 500;
 
     .material-symbols-outlined {
@@ -204,7 +204,7 @@
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background-color: $slate-700;
+    background-color: #334155;
     color: white;
     display: flex;
     align-items: center;
@@ -229,7 +229,7 @@
   }
 
   &__review-badge {
-    background-color: $slate-900;
+    background-color: #0f172a;
     color: white;
     padding: 2px 8px;
     border-radius: $radius-sm;
