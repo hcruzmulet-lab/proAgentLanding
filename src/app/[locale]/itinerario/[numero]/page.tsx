@@ -16,9 +16,5 @@ export default async function ItinerarioPublicoPage({ params }: PageProps) {
   // Convertir a número y luego a string para eliminar ceros a la izquierda
   const id = String(parseInt(numero.replace('ITI-', ''), 10));
   
-  return (
-    <div style={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
-      <DetalleItinerarioPage id={id} />
-    </div>
-  );
+  return <DetalleItinerarioPage id={id} isPublic={true} />;
 }

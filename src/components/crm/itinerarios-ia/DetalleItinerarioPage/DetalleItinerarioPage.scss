@@ -9,6 +9,26 @@
   max-width: 1000px;
   margin: 0 auto;
 
+  &__navbar {
+    background-color: white;
+    border-bottom: 1px solid $border-color;
+    padding: $spacing-lg 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-bottom: $spacing-lg;
+  }
+
+  &__navbar-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 $spacing-lg;
+    display: flex;
+    align-items: center;
+  }
+
   &__header {
     margin-bottom: $spacing-sm;
     display: flex;
