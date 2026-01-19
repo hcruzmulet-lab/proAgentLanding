@@ -66,25 +66,25 @@ export function DetalleItinerarioPage({ id }: DetalleItinerarioPageProps) {
       <Card className="detalle-itinerario-page__info-card">
         <div className="detalle-itinerario-page__info-grid">
           <div className="detalle-itinerario-page__info-item">
-            <span className="material-symbols-outlined">calendar_today</span>
-            <div>
+            <div className="detalle-itinerario-page__info-label-row">
+              <span className="material-symbols-outlined">calendar_today</span>
               <span className="detalle-itinerario-page__info-label">Salida</span>
-              <span className="detalle-itinerario-page__info-value">{itinerario.fechaSalida}</span>
             </div>
+            <span className="detalle-itinerario-page__info-value">{itinerario.fechaSalida}</span>
           </div>
           <div className="detalle-itinerario-page__info-item">
-            <span className="material-symbols-outlined">group</span>
-            <div>
+            <div className="detalle-itinerario-page__info-label-row">
+              <span className="material-symbols-outlined">group</span>
               <span className="detalle-itinerario-page__info-label">Pasajeros</span>
-              <span className="detalle-itinerario-page__info-value">{itinerario.pasajeros} adultos</span>
             </div>
+            <span className="detalle-itinerario-page__info-value">{itinerario.pasajeros} adultos</span>
           </div>
           <div className="detalle-itinerario-page__info-item">
-            <span className="material-symbols-outlined">payments</span>
-            <div>
+            <div className="detalle-itinerario-page__info-label-row">
+              <span className="material-symbols-outlined">payments</span>
               <span className="detalle-itinerario-page__info-label">Precio</span>
-              <span className="detalle-itinerario-page__info-value">US$ {itinerario.precio.toLocaleString()} por persona</span>
             </div>
+            <span className="detalle-itinerario-page__info-value">US$ {itinerario.precio.toLocaleString()} por persona</span>
           </div>
         </div>
       </Card>
