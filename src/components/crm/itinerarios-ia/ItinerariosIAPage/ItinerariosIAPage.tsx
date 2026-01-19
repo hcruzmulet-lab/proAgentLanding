@@ -236,8 +236,6 @@ export function ItinerariosIAPage() {
           </div>
         </div>
 
-        <div className="space-y-6">
-
           {/* Filtros */}
           <Card>
             <CardContent className="pt-6">
@@ -374,7 +372,7 @@ export function ItinerariosIAPage() {
                 );
               })}
             </div>
-        </div>
+          </div>
         )}
 
         {/* Modal Nuevo Itinerario */}
