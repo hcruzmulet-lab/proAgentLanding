@@ -43,8 +43,11 @@
         "name": "Nombre completo",
         "email": "Correo electrónico",
         "phone": "Teléfono",
-        "submit": "Solicitar Demo"
-      }
+        "submit": "Solicitar Demo",
+        "submitting": "Enviando..."
+      },
+      "success": "¡Gracias por tu interés! Nos pondremos en contacto contigo pronto.",
+      "error": "Hubo un error al enviar tu solicitud. Por favor, intenta de nuevo."
     },
     "why": {
       "title": "¿Por qué unirte a ProAgent?",

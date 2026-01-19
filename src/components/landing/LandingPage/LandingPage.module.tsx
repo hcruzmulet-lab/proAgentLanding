@@ -175,6 +175,7 @@ export function LandingPageModule() {
     email: '',
     phone: '',
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'annual'>('monthly');
 
@@ -201,12 +202,29 @@ export function LandingPageModule() {
     }
   };
 
-  const handleDemoSubmit = (e: React.FormEvent) => {
+  const handleDemoSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implementar envío del formulario
-    console.log('Demo request:', demoForm);
-    alert('¡Gracias por tu interés! Nos pondremos en contacto contigo pronto.');
-    setDemoForm({ name: '', email: '', phone: '' });
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('/api/demo-request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(demoForm),
+      });
+
+      if (response.ok) {
+        alert(t('demoRequest.success'));
+        setDemoForm({ name: '', email: '', phone: '' });
+      } else {
+        alert(t('demoRequest.error'));
+      }
+    } catch (error) {
+      console.error('Demo request error:', error);
+      alert(t('demoRequest.error'));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleDemoChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -542,8 +560,13 @@ export function LandingPageModule() {
                     className="landing-page-module__input"
                   />
                 </div>
-                <Button type="submit" size="lg" className="landing-page-module__demo-submit">
-                  {t('demoRequest.form.submit')}
+                <Button
+                  type="submit"
+                  size="lg"
+                  className="landing-page-module__demo-submit"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? t('demoRequest.form.submitting') : t('demoRequest.form.submit')}
                 </Button>
               </div>
             </form>
