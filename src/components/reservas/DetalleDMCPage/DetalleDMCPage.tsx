@@ -62,9 +62,9 @@ export function DetalleDMCPage({ dmcId }: DetalleDMCPageProps) {
       {
         nombre: 'Laura Martínez',
         isPro: false,
-        recomienda: false,
+        recomienda: true,
         fecha: 'Enero 2026',
-        comentario: 'He contactado para trabajar con DD en dos viajes de clientes hasta ahora y han fallado en ambos. Nunca llegué a ejecutar con ellos porque dejaron de comunicarse conmigo durante la fase de planificación después de semanas de trabajo duro en la planificación. Me dejaron en una situación difícil cerca de la fecha de salida de un viaje y tuve que pivotar rápidamente y encontrar otro DMC para ejecutar. Afortunadamente, otro agente me refirió a Aurora y ellos ejecutaron de manera hermosa.'
+        comentario: 'Mi experiencia con este DMC ha sido excelente. He trabajado con ellos en múltiples viajes para clientes que visitan Dubái y los Emiratos. Siempre responden rápidamente a mis solicitudes, proporcionan cotizaciones detalladas y sus servicios en destino son impecables. Los guías son profesionales y conocedores, y los hoteles que recomiendan son de gran calidad. Mis clientes siempre regresan muy satisfechos con la experiencia. Definitivamente seguiré trabajando con ellos para futuros viajes a esta región.'
       }
     ]
   };
