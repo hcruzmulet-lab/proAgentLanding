@@ -25,14 +25,6 @@ export function SubscriptionPayment() {
     router.push('/suscripcion/confirmacion');
   };
 
-  const handleLogin = () => {
-    router.push('/login');
-  };
-
-  const handleJoin = () => {
-    router.push('/suscripcion');
-  };
-
   // TODO: Get selected plan from state/URL params
   const selectedPlan = {
     name: 'ProAgent Plus',
@@ -45,7 +37,7 @@ export function SubscriptionPayment() {
   return (
     <div className="subscription-payment">
       {/* Navbar */}
-      <LandingNavbar onLoginClick={handleLogin} onJoinClick={handleJoin} />
+      <LandingNavbar />
 
       {/* Main Container */}
       <div className="subscription-payment__container">

@@ -12,18 +12,10 @@ export function SubscriptionConfirmation() {
     router.push('/login');
   };
 
-  const handleLogin = () => {
-    router.push('/login');
-  };
-
-  const handleJoin = () => {
-    router.push('/suscripcion');
-  };
-
   return (
     <div className="subscription-confirmation">
       {/* Navbar */}
-      <LandingNavbar onLoginClick={handleLogin} onJoinClick={handleJoin} />
+      <LandingNavbar />
 
       {/* Main Container */}
       <div className="subscription-confirmation__container">

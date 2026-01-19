@@ -24,14 +24,6 @@ export function SubscriptionPlans() {
     router.push('/suscripcion/pago');
   };
 
-  const handleLogin = () => {
-    router.push('/login');
-  };
-
-  const handleJoin = () => {
-    router.push('/suscripcion');
-  };
-
   // Precios según período de facturación
   const prices = {
     monthly: {
@@ -51,7 +43,7 @@ export function SubscriptionPlans() {
   return (
     <div className="subscription-plans">
       {/* Navbar */}
-      <LandingNavbar onLoginClick={handleLogin} onJoinClick={handleJoin} />
+      <LandingNavbar />
 
       {/* Main Container */}
       <div className="subscription-plans__container">

@@ -45,18 +45,10 @@ export function SubscriptionStep1() {
     router.push('/suscripcion/paso-2');
   };
 
-  const handleLogin = () => {
-    router.push('/login');
-  };
-
-  const handleJoin = () => {
-    router.push('/suscripcion');
-  };
-
   return (
     <div className="subscription-step1">
       {/* Navbar */}
-      <LandingNavbar onLoginClick={handleLogin} onJoinClick={handleJoin} />
+      <LandingNavbar />
 
       {/* Main Content */}
       <div className="subscription-step1__container">

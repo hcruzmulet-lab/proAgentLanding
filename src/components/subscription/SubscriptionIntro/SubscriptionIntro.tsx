@@ -15,14 +15,6 @@ export function SubscriptionIntro({ onStart }: SubscriptionIntroProps) {
   const t = useTranslations('subscription');
   const router = useRouter();
 
-  const handleLogin = () => {
-    router.push('/login');
-  };
-
-  const handleJoin = () => {
-    router.push('/suscripcion');
-  };
-
   const handleStart = () => {
     if (onStart) {
       onStart();
@@ -34,7 +26,7 @@ export function SubscriptionIntro({ onStart }: SubscriptionIntroProps) {
   return (
     <div className="subscription-intro">
       {/* Navbar */}
-      <LandingNavbar onLoginClick={handleLogin} onJoinClick={handleJoin} />
+      <LandingNavbar />
 
       {/* Main Content */}
       <div className="subscription-intro__container">

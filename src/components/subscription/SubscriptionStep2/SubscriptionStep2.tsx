@@ -40,14 +40,6 @@ export function SubscriptionStep2() {
     router.push('/suscripcion/paso-3');
   };
 
-  const handleLogin = () => {
-    router.push('/login');
-  };
-
-  const handleJoin = () => {
-    router.push('/suscripcion');
-  };
-
   const businessGoalOptions = [
     'Quiero crear mi propio negocio de viajes',
     'Quiero vender viajes bajo una marca reconocida',
@@ -71,7 +63,7 @@ export function SubscriptionStep2() {
   return (
     <div className="subscription-step2">
       {/* Navbar */}
-      <LandingNavbar onLoginClick={handleLogin} onJoinClick={handleJoin} />
+      <LandingNavbar />
 
       {/* Main Container */}
       <div className="subscription-step2__container">
