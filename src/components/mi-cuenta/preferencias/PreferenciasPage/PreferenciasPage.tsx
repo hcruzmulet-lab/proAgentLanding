@@ -114,38 +114,40 @@ export function PreferenciasPage() {
           <div className="preferencias-page__form-section">
             <h2 className="preferencias-page__section-title">Notificaciones</h2>
             
-            <div className="preferencias-page__form-group">
-              <label className="preferencias-page__checkbox-label">
-                <input
-                  type="checkbox"
-                  checked={preferencias.notificacionesCorreo}
-                  onChange={(e) => setPreferencias({...preferencias, notificacionesCorreo: e.target.checked})}
-                  className="preferencias-page__checkbox"
-                />
-                <span className="preferencias-page__checkbox-text">
-                  Recibir notificaciones por correo electrónico
-                </span>
-              </label>
-              <p className="preferencias-page__checkbox-description">
-                Recibirás notificaciones importantes en tu correo electrónico
-              </p>
-            </div>
+            <div className="preferencias-page__form-row">
+              <div className="preferencias-page__form-group">
+                <label className="preferencias-page__checkbox-label">
+                  <input
+                    type="checkbox"
+                    checked={preferencias.notificacionesCorreo}
+                    onChange={(e) => setPreferencias({...preferencias, notificacionesCorreo: e.target.checked})}
+                    className="preferencias-page__checkbox"
+                  />
+                  <span className="preferencias-page__checkbox-text">
+                    Recibir notificaciones por correo electrónico
+                  </span>
+                </label>
+                <p className="preferencias-page__checkbox-description">
+                  Recibirás notificaciones importantes en tu correo electrónico
+                </p>
+              </div>
 
-            <div className="preferencias-page__form-group">
-              <label className="preferencias-page__checkbox-label">
-                <input
-                  type="checkbox"
-                  checked={preferencias.notificacionesSMS}
-                  onChange={(e) => setPreferencias({...preferencias, notificacionesSMS: e.target.checked})}
-                  className="preferencias-page__checkbox"
-                />
-                <span className="preferencias-page__checkbox-text">
-                  Recibir notificaciones por SMS
-                </span>
-              </label>
-              <p className="preferencias-page__checkbox-description">
-                Recibirás notificaciones importantes por mensaje de texto
-              </p>
+              <div className="preferencias-page__form-group">
+                <label className="preferencias-page__checkbox-label">
+                  <input
+                    type="checkbox"
+                    checked={preferencias.notificacionesSMS}
+                    onChange={(e) => setPreferencias({...preferencias, notificacionesSMS: e.target.checked})}
+                    className="preferencias-page__checkbox"
+                  />
+                  <span className="preferencias-page__checkbox-text">
+                    Recibir notificaciones por SMS
+                  </span>
+                </label>
+                <p className="preferencias-page__checkbox-description">
+                  Recibirás notificaciones importantes por mensaje de texto
+                </p>
+              </div>
             </div>
 
             <div className="preferencias-page__form-actions">
