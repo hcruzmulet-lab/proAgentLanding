@@ -31,7 +31,7 @@
   }
 
   &__section-card {
-    padding: $spacing-2xl;
+    padding: $spacing-lg 0;
     border: 1px solid #e2e8f0;
   }
 
@@ -68,7 +68,7 @@
   &__form {
     @include flex-column;
     gap: $spacing-lg;
-    max-width: 500px;
+    max-width: 100%;
   }
 
   &__form-group {
