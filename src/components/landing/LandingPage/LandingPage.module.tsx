@@ -492,7 +492,7 @@ export function LandingPageModule() {
                   <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--button">
                     <Button
                       className="landing-page-module__pricing-select-button"
-                      onClick={handleJoin}
+                      disabled
                     >
                       Seleccionar
                     </Button>
@@ -500,7 +500,7 @@ export function LandingPageModule() {
                   <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--button">
                     <Button
                       className="landing-page-module__pricing-select-button"
-                      onClick={handleJoin}
+                      disabled
                     >
                       Seleccionar
                     </Button>
@@ -508,7 +508,7 @@ export function LandingPageModule() {
                   <td className="landing-page-module__pricing-table-cell landing-page-module__pricing-table-cell--button">
                     <Button
                       className="landing-page-module__pricing-select-button"
-                      onClick={handleJoin}
+                      disabled
                     >
                       Seleccionar
                     </Button>
@@ -607,7 +607,7 @@ export function LandingPageModule() {
         <div className="landing-page-module__container landing-page-module__cta-container">
           <h2 className="landing-page-module__cta-title">{t('cta.title')}</h2>
           <p className="landing-page-module__cta-subtitle">{t('cta.subtitle')}</p>
-          <Button size="lg" onClick={handleJoin} className="landing-page-module__cta-button">
+          <Button size="lg" disabled className="landing-page-module__cta-button">
             {t('cta.button')}
           </Button>
         </div>

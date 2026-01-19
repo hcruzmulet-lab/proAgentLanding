@@ -37,7 +37,7 @@ export function HeroSection({
           <h1 className="hero-section__title">{title}</h1>
           <p className="hero-section__subtitle">{subtitle}</p>
           <div className="hero-section__actions">
-            <Button size="lg" onClick={onPrimaryClick} className="hero-section__cta-primary">
+            <Button size="lg" disabled className="hero-section__cta-primary">
               {ctaPrimary}
             </Button>
             <Button

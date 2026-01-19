@@ -63,10 +63,10 @@ export function LandingNavbar({ onLoginClick, onJoinClick }: LandingNavbarProps)
         {/* Desktop Actions */}
         <div className="landing-navbar__actions landing-navbar__desktop-only">
           <LanguageSelector />
-          <Button variant="ghost" onClick={onJoinClick} className="landing-navbar__join">
+          <Button variant="ghost" disabled className="landing-navbar__join">
             {t('joinNow')}
           </Button>
-          <Button variant="default" onClick={onLoginClick} className="landing-navbar__login">
+          <Button variant="default" disabled className="landing-navbar__login">
             {t('login')}
           </Button>
         </div>
@@ -103,20 +103,14 @@ export function LandingNavbar({ onLoginClick, onJoinClick }: LandingNavbarProps)
           </div>
           <Button
             variant="ghost"
-            onClick={() => {
-              closeMenu();
-              onJoinClick?.();
-            }}
+            disabled
             className="landing-navbar__mobile-join"
           >
             {t('joinNow')}
           </Button>
           <Button
             variant="default"
-            onClick={() => {
-              closeMenu();
-              onLoginClick?.();
-            }}
+            disabled
             className="landing-navbar__mobile-login"
           >
             {t('login')}
