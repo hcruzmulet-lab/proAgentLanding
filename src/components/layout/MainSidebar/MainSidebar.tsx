@@ -81,7 +81,12 @@ export function MainSidebar({
   const { toggleNotifications } = useUiStore();
 
   const handleLogout = () => {
-    // TODO: Implement actual logout logic
+    // Limpiar autenticación
+    localStorage.removeItem('proagent_auth_token');
+    localStorage.removeItem('proagent_user_email');
+    localStorage.removeItem('proagent_redirect_after_login');
+    
+    // Redirigir al login
     router.push('/login');
   };
 

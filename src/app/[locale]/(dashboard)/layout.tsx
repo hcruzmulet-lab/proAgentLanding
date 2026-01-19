@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { AuthGuard } from '@/components/auth/AuthGuard';
 import './dashboard-layout-wrapper.scss';
 
 interface DashboardLayoutWrapperProps {
@@ -6,5 +7,9 @@ interface DashboardLayoutWrapperProps {
 }
 
 export default function DashboardLayoutWrapper({ children }: DashboardLayoutWrapperProps) {
-  return <div className="dashboard-layout-wrapper">{children}</div>;
+  return (
+    <AuthGuard>
+      <div className="dashboard-layout-wrapper">{children}</div>
+    </AuthGuard>
+  );
 }

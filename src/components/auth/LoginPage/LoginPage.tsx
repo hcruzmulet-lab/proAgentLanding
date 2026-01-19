@@ -33,8 +33,20 @@ export function LoginPage({
     setTimeout(() => {
       if (data.email === validEmail && data.password === validPassword) {
         console.log('Login exitoso');
-        // Redirect to dashboard
-        router.push('/dashboard');
+        
+        // Guardar token de autenticación
+        localStorage.setItem('proagent_auth_token', 'authenticated');
+        localStorage.setItem('proagent_user_email', data.email);
+        
+        // Verificar si hay una redirección guardada
+        const redirectPath = localStorage.getItem('proagent_redirect_after_login');
+        if (redirectPath) {
+          localStorage.removeItem('proagent_redirect_after_login');
+          router.push(redirectPath);
+        } else {
+          // Redirect to dashboard
+          router.push('/dashboard');
+        }
       } else {
         // Mostrar error de credenciales inválidas
         setError('Credenciales inválidas. Por favor, verifica tu correo electrónico y contraseña.');
