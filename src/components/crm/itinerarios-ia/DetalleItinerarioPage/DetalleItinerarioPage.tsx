@@ -73,13 +73,6 @@ export function DetalleItinerarioPage({ id }: DetalleItinerarioPageProps) {
             </div>
           </div>
           <div className="detalle-itinerario-page__info-item">
-            <span className="material-symbols-outlined">confirmation_number</span>
-            <div>
-              <span className="detalle-itinerario-page__info-label">Idea Ref</span>
-              <span className="detalle-itinerario-page__info-value">{itinerario.ideaRef}</span>
-            </div>
-          </div>
-          <div className="detalle-itinerario-page__info-item">
             <span className="material-symbols-outlined">group</span>
             <div>
               <span className="detalle-itinerario-page__info-label">Pasajeros</span>
